@@ -3,7 +3,7 @@
 ## Project Description
 
 ## Project Members
-Jay Lee (이지원)
+Jay Lee (이지원) <br>
 Sung Hyun Ahn (안성현)
 
 ## Project Code Base
