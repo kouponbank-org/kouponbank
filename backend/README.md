@@ -29,3 +29,14 @@ To run the server, go to backend/app:
 python manage.py runserver
 ```
 
+To access the server, go to the following localhost:
+http://127.0.0.1:8000/
+
+## SUPERUSER
+Superuser for API:
+Username: Kouponbank
+Email: kouponbank@gmail.com
+Password: znvhsqodzm1!
+
+
+
