@@ -21,7 +21,7 @@ Install Visual Studio Code and Atom <br>
 #### ----- Frontend Setup -----
 To install the required packages:
 
-'''
+```
 npm install
-'''
+```
 

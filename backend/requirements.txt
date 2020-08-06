@@ -1,1 +1,4 @@
 django
+djangorestframework
+djangorestframework-jwt
+django-rest-knox
