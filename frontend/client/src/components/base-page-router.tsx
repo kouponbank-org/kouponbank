@@ -2,14 +2,14 @@ import React, { useLayoutEffect, useState }from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
-import { HomePageR } from "./home-page";
+import { HomePageR } from "./homepage/home-page";
 import { LoginPageR } from "./login/login-page";
 
 /**
  * Represents the required properties of the BasePageRouter.
  */
 interface Prop {
-
+    
 }
 
 export const ApiContext = React.createContext(null);
