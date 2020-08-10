@@ -1,3 +1,7 @@
 django
 djangorestframework
+<<<<<<< HEAD
+djangorestframework-jwt
+=======
+>>>>>>> upstream/master
 django-rest-knox
