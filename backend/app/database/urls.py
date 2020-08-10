@@ -1,16 +1,19 @@
 from django.urls import path, include
+from .api import viewsets
 from . import views
-from rest_framework import routers
+from app.router import router
+# from rest_framework import routers
 
-router = routers.DefaultRouter()
-router.register('users', views.UserView)
+# router = routers.DefaultRouter()
+# router.register('users', viewsets.UserViewset, basename='users')
+
+app_name = 'kouponbank'
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('', views.apiOverview, name='api_overview'),
-    path('user-list/', views.user_list, name='user-list'),
-    path('user-detail/<str:pk>/', views.user_detail, name='user-detail'),
-    path('user-create/', views.user_create, name='user-create'),
-    path('user-update/<str:pk>/', views.user_update, name='user-update'),
-    path('user-delete/<str:pk>/', views.user_delete, name='user-delete'),
+    path('viewsets/', include(router.urls)),
+    path('viewsets/<int:id>/', include(router.urls)),
+    #path('generic/<int:id>/', views.GenericAPIView.as_view()),
+    ## API Class base
+    #path('users/', views.UserList.as_view()),
+    # path('user/<str:pk>/', views.UserDetail.as_view()),   
 ]
