@@ -3,6 +3,7 @@ import { ActionType } from "./action-type";
 
 export interface RoomState {
     roomId: number;
+
 }
 
 interface SetUserAction {
@@ -37,5 +38,9 @@ export const reducer = (
             })
         default:
             return state;
-     }
+    }
   };
+
+
+
+

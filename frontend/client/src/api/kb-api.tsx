@@ -18,6 +18,6 @@ export class KouponBankApi {
         return axios.delete(this.BASE_URL + "/users/" + userId).then(response => {
             return response.data;
         });
-    } 
+    }
 
 }

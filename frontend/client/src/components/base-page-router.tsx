@@ -2,12 +2,14 @@ import React, { useLayoutEffect, useState }from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
+import { HomePageR } from "./homepage/home-page";
+import { LoginPageR } from "./login/login-page";
 
 /**
  * Represents the required properties of the BasePageRouter.
  */
 interface Prop {
-
+    
 }
 
 export const ApiContext = React.createContext(null);
@@ -42,9 +44,10 @@ const BasePageRouter = (props: Prop) => {
         // provider is saying anyone can access this thing
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
-            <div>
-                <p>Hello</p>
-            </div>
+            <Switch>
+                <Route path="/login" component={LoginPageR} />
+                <Route exact path="/" component={HomePageR} />
+            </Switch>
         </ApiContext.Provider>
     )
 }
