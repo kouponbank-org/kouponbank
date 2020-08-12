@@ -1,9 +1,25 @@
+// React Components
 import React, { useLayoutEffect, useState }from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { KouponBankApi } from "../api/kb-api";
+
+// Koupon Bank Frontend Components
 import { HomePageR } from "./homepage/home-page";
 import { LoginPageR } from "./login/login-page";
+import { UserSignUpPageR } from "./signup/user-sign-up-page";
+
+// API Components
+import { KouponBankApi } from "../api/kb-api";
+
+// Material UI Components
+
+/**
+ * Import files should be aligned in the following order
+ * React Components
+ * Koupon Bank Frontend Components
+ * API Components
+ * Material UI Components
+ */
 
 /**
  * Represents the required properties of the BasePageRouter.
@@ -45,6 +61,7 @@ const BasePageRouter = (props: Prop) => {
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
             <Switch>
+                <Route path="/newuser" component = {UserSignUpPageR} />
                 <Route path="/login" component={LoginPageR} />
                 <Route exact path="/" component={HomePageR} />
             </Switch>

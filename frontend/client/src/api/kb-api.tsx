@@ -1,3 +1,7 @@
+// React Components
+// Koupon Bank Frontend Components
+// API Components
+// Material UI Components
 import axios from "axios";
 import { User } from "./kb-types";
 
@@ -14,8 +18,11 @@ export class KouponBankApi {
         });
     }
 
-    async createUser(name: string): Promise<User> {
-        return axios.post(this.BASE_URL + "/api/users", {"name": name}).then(response => {
+    async createUser(username: string, userPassword: number): Promise<User> {
+        return axios.post(this.BASE_URL + "/api/users", {
+            "username": username,
+            "password": userPassword
+        }).then(response => {
             return response.data;
         });
     }
