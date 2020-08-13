@@ -21,12 +21,12 @@ export interface Prop {
 
 export const LoginForm = (props: Prop) => {
 
-    const handleSubmit = (event): void => {
+    const createNewUserButton = (event): void => {
         props.clickCreateNewUser(event);
     }
 
     return (
-        <form onSubmit={handleSubmit} autoComplete="off">
+        <form onSubmit={createNewUserButton} autoComplete="off">
             <Button
                 type="submit"
                 fullWidth
