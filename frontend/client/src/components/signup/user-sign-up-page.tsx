@@ -10,11 +10,11 @@ export interface Prop {
 
 }
 
-export const HomePage = (props: Prop) => {
+export const UserSignUpPage = (props: Prop) => {
 
     return (
         <div>
-            <p>KouponBank Homepage</p>
+            User Signup Page
         </div>
     )
 }
@@ -26,4 +26,4 @@ const mapStateToProps = state => {
     }
 }
 
-export const HomePageR = connect(mapStateToProps)(HomePage);
+export const UserSignUpPageR = connect(mapStateToProps)(UserSignUpPage);

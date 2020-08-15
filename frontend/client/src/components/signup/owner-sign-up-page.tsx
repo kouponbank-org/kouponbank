@@ -1,14 +1,7 @@
-// React Components
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
-
-// Koupon Bank Frontend Components
-
-// API Components
-import { KouponBankApi } from "../../../api/kb-api";
-import { ApiContext } from "../../base-page-router";
-
-// Material UI Components
+import { KouponBankApi } from "../../api/kb-api";
+import { ApiContext } from "../base-page-router";
 
 /**
  * Represents the required properties of the HomePage.
@@ -33,4 +26,4 @@ const mapStateToProps = state => {
     }
 }
 
-export const OwnerSignUpPageR = connect(mapStateToProps)(OwnerSignUpPage);
+export const UserSignUpPageR = connect(mapStateToProps)(OwnerSignUpPage);
