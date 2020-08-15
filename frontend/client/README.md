@@ -7,7 +7,7 @@ npm install
 '''
 
 #### To Run Front End
-Current 다이렉토리에서 아래 코드를 Run하세요 <br>
+Client 다이렉토리에서 아래 코드를 Run하세요 <br>
 
 '''
 npm start

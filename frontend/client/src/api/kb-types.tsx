@@ -3,7 +3,5 @@
  */
 
 export interface User {
-    id: number;
-    username: string;
-    userPassword: number;
+    name: string;
 }
