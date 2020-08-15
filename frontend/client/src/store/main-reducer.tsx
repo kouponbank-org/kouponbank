@@ -102,12 +102,12 @@ export const reducer = (
   };
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
-export const createNewUser = (api: KouponBankApi, username: string, userPassword: number): any => {
+export const createNewUser = (api: KouponBankApi, username: string, userPassword: string): any => {
     return (dispatch): any => {
         dispatch({
             type: ActionType.CreateNewUserAction,
         } as CreateNewUserAction);
-        api.createUser(username, userPassword).then(user => {
+        return api.createUser(username, userPassword).then(user => {
             dispatch({
                 type: ActionType.CreateNewUserSuccessAction,
                 user: user

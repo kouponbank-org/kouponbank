@@ -13,13 +13,13 @@ export class KouponBankApi {
     }
 
     async getUser(userId: number): Promise<User> {
-        return axios.get(this.BASE_URL + "/api/users" + {"id": userId}).then(response => {
+        return axios.get(this.BASE_URL + "/api/users/" + {"id": userId}).then(response => {
             return response.data
         });
     }
 
-    async createUser(username: string, userPassword: number): Promise<User> {
-        return axios.post(this.BASE_URL + "/api/users", {
+    async createUser(username: string, userPassword: string): Promise<User> {
+        return axios.post(this.BASE_URL + "/api/users/", {
             "username": username,
             "password": userPassword
         }).then(response => {

@@ -6,10 +6,11 @@ import { Route, Switch } from "react-router-dom";
 // Koupon Bank Frontend Components
 import { HomePageR } from "./homepage/home-page";
 import { LoginPageR } from "./login/login-page";
-import { UserSignUpPageR } from "./signup/user-sign-up-page";
+import { UserSignUpPageR } from "./login/signup/user-sign-up-page";
 
 // API Components
 import { KouponBankApi } from "../api/kb-api";
+import { OwnerSignUpPageR } from "./login/signup/owner-sign-up-page";
 
 // Material UI Components
 
@@ -61,6 +62,7 @@ const BasePageRouter = (props: Prop) => {
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
             <Switch>
+                <Route path="/newowneruser" component = {OwnerSignUpPageR} />
                 <Route path="/newuser" component = {UserSignUpPageR} />
                 <Route path="/login" component={LoginPageR} />
                 <Route exact path="/" component={HomePageR} />

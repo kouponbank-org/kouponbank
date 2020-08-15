@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 // Koupon Bank Frontend Components
 
 // API Components
-import { KouponBankApi } from "../../api/kb-api";
-import { ApiContext } from "../base-page-router";
+import { KouponBankApi } from "../../../api/kb-api";
+import { ApiContext } from "../../base-page-router";
 
 // Material UI Components
 
