@@ -1,6 +1,7 @@
 /* Setting ActionTypes to be used in 'main-reducer.tsx' */
 
 export enum ActionType {
-    SetUserAction="SET_USER_ACTION",
-    SetRoomAction="SET_ROOM_ACTION",
+    CreateNewUserAction="CREATE_NEW_USER_ACTION",
+    CreateNewUserSuccessAction="CREATE_NEW_USER_SUCCESS_ACTION",
+    CreateNewUserFailAction="CREATE_NEW_USER_FAIL_ACTION",
 }
