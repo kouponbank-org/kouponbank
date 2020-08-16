@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication, BasicAuthentication
+from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -15,34 +16,34 @@ from .models import User
 from .api.serializers import UserSerializer
 
 #Making it looking like database --> Generic view
-class GenericAPIView(mixins.ListModelMixin,
-                  mixins.CreateModelMixin,
-                  mixins.UpdateModelMixin,
-                  mixins.RetrieveModelMixin,
-                  mixins.DestroyModelMixin,
-                  generics.GenericAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# class GenericAPIView(mixins.ListModelMixin,
+#                  mixins.CreateModelMixin,
+#                  mixins.UpdateModelMixin,
+#                  mixins.RetrieveModelMixin,
+#                  mixins.DestroyModelMixin,
+#                  generics.GenericAPIView):
+#    queryset = User.objects.all()
+#    serializer_class = UserSerializer
     
-    lookup_field = 'id'
+#    lookup_field = 'id'
     #authentication_classes = [SessionAuthentication, BasicAuthentication]
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    #authentication_classes = [TokenAuthentication]
+#    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, id=None):
-        if id:
-            return self.retrieve(request)
-        else:
-            return self.list(request)
+#    def get(self, request, id=None):
+#        if id:
+#            return self.retrieve(request)
+#        else:
+#            return self.list(request)
 
-    def post(self, request):
-        return self.create(request)
+#    def post(self, request):
+#        return self.create(request)
     
-    def put(self, request, id=None):
-        return self.update(request, id)
+#    def put(self, request, id=None):
+#        return self.update(request, id)
     
-    def delete(self, request, id=None):
-        return self.destroy(request, id)
+#    def delete(self, request, id=None):
+#        return self.destroy(request, id)
 
 
 #Class-based API view
