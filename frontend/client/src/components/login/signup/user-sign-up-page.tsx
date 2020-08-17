@@ -35,7 +35,7 @@ export const UserSignUpPage = (props: Prop) => {
 
     const createNewUserClick = (event): void => {
         store.dispatch(createNewUser(api, newUserName, newPassword)).then(() => {
-            console.log('lol')
+            console.log('after store.dispatch')
             history.push('/')
         }).catch(() => { 
 
@@ -47,23 +47,23 @@ export const UserSignUpPage = (props: Prop) => {
      * 이 variabled 줄이는 방법 알아내기 - 성현.
      * Conditional Operator 써야할듯.
      */
-    const firstNameInput =(event): void => {
+    const firstNameInput = (event): void => {
         setNewFirstName(event.target.value);
     }
 
-    const lastNameInput =(event): void => {
+    const lastNameInput = (event): void => {
         setNewLastName(event.target.value);
     } 
     
-    const userNameInput =(event): void => {
+    const userNameInput = (event): void => {
         setNewUserName(event.target.value);
     }
     
-    const emailInput =(event): void => {
+    const emailInput = (event): void => {
         setNewEmail(event.target.value);
     }    
     
-    const passwordInput =(event): void => {
+    const passwordInput = (event): void => {
         setNewPassword(event.target.value);
     }    
     

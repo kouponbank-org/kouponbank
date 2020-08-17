@@ -9,6 +9,7 @@ import { HomePageLoginButton } from "./home-page-login-button"
 // API Components
 import { ApiContext } from "../base-page-router";
 import { KouponBankApi } from "../../api/kb-api";
+import { User } from "../../api/kb-types";
 
 // Material UI Components
 
@@ -16,7 +17,7 @@ import { KouponBankApi } from "../../api/kb-api";
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-
+    user: User
 }
 
 export const HomePage = (props: Prop) => {
@@ -29,9 +30,12 @@ export const HomePage = (props: Prop) => {
 
     return (
         <div>
-            <HomePageLoginButton 
-                clickLoginButton={clickLoginButton}
-            />
+            {
+                !props.user ? 
+                <HomePageLoginButton 
+                    clickLoginButton={clickLoginButton}
+                /> : props.user.username
+            }
         </div>
     )
 }
@@ -39,7 +43,7 @@ export const HomePage = (props: Prop) => {
 const mapStateToProps = state => {
     console.log(state)
     return {
-
+        user: state.mainReducer.user
     }
 }
 

@@ -9,6 +9,7 @@ import { LoginForm } from "./login-form";
 // API Components
 import { KouponBankApi } from "../../api/kb-api";
 import { ApiContext } from "../base-page-router";
+import { User } from "../../api/kb-types";
 
 // Material UI Components
 
@@ -17,7 +18,7 @@ import { ApiContext } from "../base-page-router";
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-
+    user: User
 }
 
 export const LoginPage = (props: Prop) => {
@@ -41,7 +42,7 @@ export const LoginPage = (props: Prop) => {
 const mapStateToProps = state => {
     console.log(state)
     return {
-
+        user: state.mainReducer.user
     }
 }
 
