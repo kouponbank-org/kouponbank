@@ -111,7 +111,7 @@ export const createNewUser = (api: KouponBankApi, username: string, userPassword
             dispatch({
                 type: ActionType.CreateNewUserSuccessAction,
                 user: user
-            })
+            }) as CreateNewUserSuccessAction
         }).catch(err => {
             dispatch({
                 type: ActionType.CreateNewUserFailAction
