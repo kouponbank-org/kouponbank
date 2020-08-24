@@ -17,16 +17,16 @@ import { User } from "../../api/kb-types";
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    user: User
-}
+    user: User;
+};
 
 export const HomePage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
 
     const clickLoginButton = (event): void => {
-        history.push("/login")
-    }
+        history.push("/login");
+    };
 
     return (
         <div>
@@ -37,14 +37,13 @@ export const HomePage = (props: Prop) => {
                 /> : props.user.username
             }
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
-        user: state.mainReducer.user
-    }
-}
+        user: state.userReducer.user
+    };
+};
 
 export const HomePageR = connect(mapStateToProps)(HomePage);

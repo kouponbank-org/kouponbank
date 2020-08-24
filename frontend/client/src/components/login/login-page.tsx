@@ -19,7 +19,7 @@ import { User } from "../../api/kb-types";
  */
 export interface Prop {
     user: User
-}
+};
 
 export const LoginPage = (props: Prop) => {
     const [newUserName, setNewUserName] = useState("");
@@ -27,8 +27,8 @@ export const LoginPage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
 
     const clickCreateNewUser = (event): void => {
-        history.push("/newuser")
-    }
+        history.push("/newuser");
+    };
 
     return (
         <div>
@@ -36,14 +36,13 @@ export const LoginPage = (props: Prop) => {
                 clickCreateNewUser={clickCreateNewUser}
             />
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
-        user: state.mainReducer.user
-    }
-}
+        user: state.userReducer.user
+    };
+};
 
 export const LoginPageR = connect(mapStateToProps)(LoginPage);

@@ -25,9 +25,9 @@ Now the API model changes will exist in the database.
 
 ## RUNNING THE SERVER
 
-To reset the database, go to backend/app:
+To reset or drop the database, go to backend/app:
 ```
-python manage.py flush
+python manage.py reset_db
 ```
 
 To run the server, go to backend/app:
