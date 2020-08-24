@@ -23,6 +23,13 @@ To make migrations, go to backend/app:
 <br>
 Now the API model changes will exist in the database. 
 
+## RUNNING THE SERVER
+
+To reset or drop the database, go to backend/app:
+```
+python manage.py reset_db
+```
+
 To run the server, go to backend/app:
 ```
 python manage.py runserver

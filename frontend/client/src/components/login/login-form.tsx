@@ -17,13 +17,13 @@ import { Button } from "@material-ui/core";
  */
 export interface Prop {
     clickCreateNewUser: (event) => void;
-}
+};
 
 export const LoginForm = (props: Prop) => {
 
     const createNewUserButton = (event): void => {
         props.clickCreateNewUser(event);
-    }
+    };
 
     return (
         <form onSubmit={createNewUserButton} autoComplete="off">
@@ -38,4 +38,4 @@ export const LoginForm = (props: Prop) => {
             </Button>
         </form>
     );
-}
+};

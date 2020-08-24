@@ -9,15 +9,17 @@ import { LoginForm } from "./login-form";
 // API Components
 import { KouponBankApi } from "../../api/kb-api";
 import { ApiContext } from "../base-page-router";
+import { User } from "../../api/kb-types";
 
 // Material UI Components
+
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-
-}
+    user: User
+};
 
 export const LoginPage = (props: Prop) => {
     const [newUserName, setNewUserName] = useState("");
@@ -25,8 +27,8 @@ export const LoginPage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
 
     const clickCreateNewUser = (event): void => {
-        history.push("/newuser")
-    }
+        history.push("/newuser");
+    };
 
     return (
         <div>
@@ -34,14 +36,13 @@ export const LoginPage = (props: Prop) => {
                 clickCreateNewUser={clickCreateNewUser}
             />
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
-
-    }
-}
+        user: state.userReducer.user
+    };
+};
 
 export const LoginPageR = connect(mapStateToProps)(LoginPage);

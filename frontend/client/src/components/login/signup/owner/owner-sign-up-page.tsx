@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 // Koupon Bank Frontend Components
 
 // API Components
-import { KouponBankApi } from "../../../api/kb-api";
-import { ApiContext } from "../../base-page-router";
+import { KouponBankApi } from "../../../../api/kb-api";
+import { ApiContext } from "../../../base-page-router";
 
 // Material UI Components
 
@@ -15,7 +15,7 @@ import { ApiContext } from "../../base-page-router";
  */
 export interface Prop {
 
-}
+};
 
 export const OwnerSignUpPage = (props: Prop) => {
 
@@ -23,14 +23,13 @@ export const OwnerSignUpPage = (props: Prop) => {
         <div>
             Owner Signup Page
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
 
-    }
-}
+    };
+};
 
 export const OwnerSignUpPageR = connect(mapStateToProps)(OwnerSignUpPage);

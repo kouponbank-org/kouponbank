@@ -16,7 +16,7 @@ import { ApiContext } from "../base-page-router";
  */
 export interface Prop {
 
-}
+};
 
 export const UserProfilePage = (props: Prop) => {
 
@@ -24,14 +24,14 @@ export const UserProfilePage = (props: Prop) => {
         <div>
             User Profile Page
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = state => {
     console.log(state)
     return {
 
-    }
-}
+    };
+};
 
 export const UserProfilePageR = connect(mapStateToProps)(UserProfilePage);

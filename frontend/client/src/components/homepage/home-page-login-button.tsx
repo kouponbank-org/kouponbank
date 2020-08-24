@@ -6,20 +6,20 @@ import React from "react";
 // API Components
 
 // Material UI Components
-import { Button } from '@material-ui/core';
+import { Button } from "@material-ui/core";
 
 /**
  * Represents the required properties of the HomePageLoginButton.
  */
 export interface Prop {
     clickLoginButton: (event) => void;
-}
+};
 
 export const HomePageLoginButton = (props: Prop) => {
 
     const handleSubmit = (event): void => {
         props.clickLoginButton(event);
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit} autoComplete="off">
@@ -33,5 +33,5 @@ export const HomePageLoginButton = (props: Prop) => {
                 Log In
             </Button>
         </form>
-    )
-}
+    );
+};

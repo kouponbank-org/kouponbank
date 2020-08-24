@@ -6,11 +6,11 @@ import { Route, Switch } from "react-router-dom";
 // Koupon Bank Frontend Components
 import { HomePageR } from "./homepage/home-page";
 import { LoginPageR } from "./login/login-page";
-import { UserSignUpPageR } from "./login/signup/user-sign-up-page";
+import { UserSignUpPageR } from "./login/signup/user/sign-up-page";
 
 // API Components
 import { KouponBankApi } from "../api/kb-api";
-import { OwnerSignUpPageR } from "./login/signup/owner-sign-up-page";
+import { OwnerSignUpPageR } from "./login/signup/owner/owner-sign-up-page";
 
 // Material UI Components
 
@@ -27,7 +27,7 @@ import { OwnerSignUpPageR } from "./login/signup/owner-sign-up-page";
  */
 interface Prop {
     
-}
+};
 
 export const ApiContext = React.createContext(null);
 
@@ -50,11 +50,11 @@ const BasePageRouter = (props: Prop) => {
         setTimeout(() => {
             setShowPage(true);
         }, 0);
-    }, [])
+    }, []);
 
     if (!showPage) {
         return <div></div>
-    }
+    };
 
     return (
         // any child can access the api
@@ -68,8 +68,8 @@ const BasePageRouter = (props: Prop) => {
                 <Route exact path="/" component={HomePageR} />
             </Switch>
         </ApiContext.Provider>
-    )
-}
+    );
+};
 
 /**
  * Used to connect the state of the overall front end to the BasePageRouter.
@@ -80,7 +80,7 @@ const BasePageRouter = (props: Prop) => {
 const mapStateToProps = state => {
     return {
 
-    }
-}
+    };
+};
 
 export const BasePageRouterR = connect(mapStateToProps)(BasePageRouter);

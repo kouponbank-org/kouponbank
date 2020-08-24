@@ -1,12 +1,12 @@
 // React-Redux-Store Components
 import { produce } from "immer";
-import { ActionType } from "./action-type";
+import { UserActionType } from "./action-type";
 
 // Koupon Bank Frontend Components
 
 // API Components
-import { KouponBankApi } from "../api/kb-api";
-import { User } from "../api/kb-types";
+import { KouponBankApi } from "../../api/kb-api";
+import { User } from "../../api/kb-types";
 
 // 액션 Status 트래킹 Enum.
 export enum Status {
@@ -22,39 +22,37 @@ export enum Status {
  * Reducer이 정상적으로 돌아갈려면 필요한 아주 중요한 Interface. 
  */ 
 
-export interface KouponBankState {
+export interface userState {
     user: User;
-    roomId: number;
-    userId: number;
     fetchStatus: Status;
     updateStatus: Status;
 }
+
+const initialState: userState = {
+    user: {
+        username: "",
+        userPassword: "",
+        userEmail: "",
+    },
+    fetchStatus: Status.NotStarted,
+    updateStatus: Status.NotStarted
+};
 
 /**
  * 우리 Reducer가 사용하는 액션들을 설정하는 공간
  */
 
 interface CreateNewUserAction {
-    type: ActionType.CreateNewUserAction
+    type: UserActionType.CreateNewUserAction
 }
 
 interface CreateNewUserSuccessAction {
     user: User;
-    type: ActionType.CreateNewUserSuccessAction
+    type: UserActionType.CreateNewUserSuccessAction
 }
 
 interface CreateNewUserFailAction {
-    type: ActionType.CreateNewUserFailAction
-}
-
-/**
- * 나중에 다른파일들이나 API Call할때 필요할 수 있으니
- * 우리가 사용하는 액션들을 'Actions'라는 Dictionary에 추가하는 공간
- */
-export interface Actions {
-    CreateNewUserAction: CreateNewUserAction
-    CreateNewUserSuccessAction: CreateNewUserSuccessAction
-    CreateNewUserFailAction: CreateNewUserFailAction
+    type: UserActionType.CreateNewUserFailAction
 }
 
 /**
@@ -73,25 +71,20 @@ type Action =   CreateNewUserAction |
  * Reducer가 우리 Global State을 업데이트 시켜준다
  */
 export const reducer = (
-    state: KouponBankState = {
-        user: null,
-        roomId: null,
-        userId: null,
-        fetchStatus: Status.NotStarted,
-        updateStatus: Status.NotStarted,
-    }, action: Action
-): KouponBankState => {
+    state: userState = initialState,
+    action: Action
+): userState => {
     switch(action.type) {
-        case ActionType.CreateNewUserAction:
+        case UserActionType.CreateNewUserAction:
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Running;
             })
-        case ActionType.CreateNewUserSuccessAction: {
+        case UserActionType.CreateNewUserSuccessAction: {
             return produce(state, draftState => {
                 draftState.user = action.user
             })
         }
-        case ActionType.CreateNewUserFailAction: {
+        case UserActionType.CreateNewUserFailAction: {
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Failed;
             })
@@ -102,21 +95,25 @@ export const reducer = (
   };
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
-export const createNewUser = (api: KouponBankApi, username: string, userPassword: string): any => {
-    return (dispatch): any => {
+export const createNewUser = (
+        api: KouponBankApi,
+        username: string,
+        userPassword: string | number,
+        userEmail: string | number,
+        dispatch
+    ): any => {
         dispatch({
-            type: ActionType.CreateNewUserAction,
-        } as CreateNewUserAction);
-        return api.createUser(username, userPassword).then(user => {
+            type: UserActionType.CreateNewUserAction,
+        });
+        return api.createUser(username, userPassword, userEmail).then(user => {
             dispatch({
-                type: ActionType.CreateNewUserSuccessAction,
+                type: UserActionType.CreateNewUserSuccessAction,
                 user: user
             })
         }).catch(err => {
             dispatch({
-                type: ActionType.CreateNewUserFailAction
-            } as CreateNewUserFailAction);
-        })
+                type: UserActionType.CreateNewUserFailAction
+            });
+        });
     };
-};
 
