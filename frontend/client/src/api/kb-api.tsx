@@ -13,13 +13,13 @@ export class KouponBankApi {
     };
 
     async getUser(userId: number): Promise<User> {
-        return axios.get(this.BASE_URL + "/api/users/" + {"id": userId}).then(response => {
+        return axios.get(this.BASE_URL + "/users/" + {"id": userId}).then(response => {
             return response.data
         });
     };
 
-    async createUser(username: string, userPassword: string | number, userEmail: string | number): Promise<User> {
-        return axios.post(this.BASE_URL + "/api/users/", {
+    async createUser(username: string, userPassword: string): Promise<User> {
+        return axios.post(this.BASE_URL + "/users/", {
             "username": username,
             "user_password": userPassword,
             "user_email": userEmail
@@ -29,7 +29,7 @@ export class KouponBankApi {
     };
 
     async removeUser(userId: number): Promise<void> {
-        return axios.delete(this.BASE_URL + "/api/users/" + userId).then(response => {
+        return axios.delete(this.BASE_URL + "/users/" + userId).then(response => {
             return response.data;
         });
     };

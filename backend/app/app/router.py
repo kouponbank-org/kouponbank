@@ -4,6 +4,3 @@ from database import views
 
 router = routers.DefaultRouter()
 router.register('users', UserViewset, basename='users')
-
-#for url in router.urls:
-#    print(url, '\n')

@@ -13,12 +13,6 @@ app_name = 'kouponbank'
 urlpatterns = [
     path('users/', views.UserList.as_view()),
     path('users/<int:id>/', views.UserDetail.as_view()),
-    #path('viewsets/', include(router.urls)),
-    #path('viewsets/<int:id>/', include(router.urls)),
-    #path('generic/<int:id>/', views.GenericAPIView.as_view()),
-    ## API Class base
-    #path('users/', views.UserList.as_view()),
-    # path('user/<str:pk>/', views.UserDetail.as_view()),   
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
