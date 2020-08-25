@@ -31,10 +31,10 @@ export const HomePage = (props: Prop) => {
     return (
         <div>
             {
-                !props.user ? 
+                !props.user ?
                 <HomePageLoginButton 
                     clickLoginButton={clickLoginButton}
-                /> : props.user.username
+                /> :props.user.username
             }
         </div>
     );

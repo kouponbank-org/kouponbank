@@ -1,12 +1,12 @@
 // React-Redux-Store Components
 import { produce } from "immer";
-import { UserActionType } from "./action-type";
+import { OwnerActionType } from "./action-type";
 
 // Koupon Bank Frontend Components
 
 // API Components
 import { KouponBankApi } from "../../api/kb-api";
-import { User } from "../../api/kb-types";
+import { Owner } from "../../api/kb-types";
 
 // 액션 Status 트래킹 Enum.
 export enum Status {
@@ -22,17 +22,17 @@ export enum Status {
  * Reducer이 정상적으로 돌아갈려면 필요한 아주 중요한 Interface. 
  */ 
 
-export interface userState {
-    user: User;
+export interface ownerState {
+    owner: Owner;
     fetchStatus: Status;
     updateStatus: Status;
 }
 
-const initialState: userState = {
-    user: {
-        username: "",
-        userPassword: "",
-        userEmail: "",
+const initialState: ownerState = {
+    owner: {
+        ownerUsername: "",
+        ownerPassword: "",
+        ownerEmail: "",
     },
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted
@@ -42,17 +42,17 @@ const initialState: userState = {
  * 우리 Reducer가 사용하는 액션들을 설정하는 공간
  */
 
-interface CreateNewUserAction {
-    type: UserActionType.CreateNewUserAction
+interface CreateNewOwnerAction {
+    type: OwnerActionType.CreateNewOwnerAction
 }
 
-interface CreateNewUserSuccessAction {
-    user: User;
-    type: UserActionType.CreateNewUserSuccessAction
+interface CreateNewOwnerSuccessAction {
+    owner: Owner;
+    type: OwnerActionType.CreateNewOwnerSuccessAction
 }
 
-interface CreateNewUserFailAction {
-    type: UserActionType.CreateNewUserFailAction
+interface CreateNewOwnerFailAction {
+    type: OwnerActionType.CreateNewOwnerFailAction
 }
 
 /**
@@ -60,9 +60,9 @@ interface CreateNewUserFailAction {
  * "State"은 전에 "KouponBankState"로 설정하였고
  * 이제 우리가 사용할 "Action"들을 설정할시간  
  */
-type Action =   CreateNewUserAction |
-                CreateNewUserSuccessAction |
-                CreateNewUserFailAction;
+type Action =   CreateNewOwnerAction |
+                CreateNewOwnerSuccessAction |
+                CreateNewOwnerFailAction;
 
 /**
  * Reducer가 필요한 Parameters "state"하고 "action"
@@ -71,20 +71,20 @@ type Action =   CreateNewUserAction |
  * Reducer가 우리 Global State을 업데이트 시켜준다
  */
 export const reducer = (
-    state: userState = initialState,
+    state: ownerState = initialState,
     action: Action
-): userState => {
+): ownerState => {
     switch(action.type) {
-        case UserActionType.CreateNewUserAction:
+        case OwnerActionType.CreateNewOwnerAction:
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Running;
             })
-        case UserActionType.CreateNewUserSuccessAction: {
+        case OwnerActionType.CreateNewOwnerSuccessAction: {
             return produce(state, draftState => {
-                draftState.user = action.user
+                draftState.owner = action.owner
             })
         }
-        case UserActionType.CreateNewUserFailAction: {
+        case OwnerActionType.CreateNewOwnerFailAction: {
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Failed;
             })
@@ -95,24 +95,24 @@ export const reducer = (
   };
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
-export const createNewUser = (
+export const createNewOwner = (
         api: KouponBankApi,
-        username: string,
-        userPassword: string | number,
-        userEmail: string,
+        ownerUsername: string,
+        ownerPassword: string | number,
+        ownerEmail: string,
         dispatch
     ): any => {
         dispatch({
-            type: UserActionType.CreateNewUserAction,
+            type: OwnerActionType.CreateNewOwnerAction,
         });
-        return api.createUser(username, userPassword, userEmail).then(user => {
+        return api.createOwner(ownerUsername, ownerPassword, ownerEmail).then(owner => {
             dispatch({
-                type: UserActionType.CreateNewUserSuccessAction,
-                user: user
+                type: OwnerActionType.CreateNewOwnerSuccessAction,
+                owner: owner
             })
         }).catch(err => {
             dispatch({
-                type: UserActionType.CreateNewUserFailAction
+                type: OwnerActionType.CreateNewOwnerFailAction
             });
         });
     };

@@ -17,6 +17,7 @@ import { Button } from "@material-ui/core";
  */
 export interface Prop {
     clickCreateNewUser: (event) => void;
+    clickCreateNewOwner: (event) => void;
 };
 
 export const LoginForm = (props: Prop) => {
@@ -24,18 +25,34 @@ export const LoginForm = (props: Prop) => {
     const createNewUserButton = (event): void => {
         props.clickCreateNewUser(event);
     };
+    const createNewOwnerButton = (event): void => {
+        props.clickCreateNewOwner(event);
+    };
 
     return (
-        <form onSubmit={createNewUserButton} autoComplete="off">
+        <form autoComplete="off">
             <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className="button"
+                onClick={createNewUserButton}
             >
                 Create New User
             </Button>
+            <br />
+            <Button 
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className="button"
+                onClick={createNewOwnerButton}
+            >
+                Create New Owner User
+            </Button>
         </form>
+
     );
 };

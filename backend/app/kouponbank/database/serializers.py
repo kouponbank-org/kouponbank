@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from kouponbank.database.models import User
+from kouponbank.database.models import User, Owner
 
 # Serializers converts data into JSON
 # And validates the data.
@@ -10,3 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
         
+class OwnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Owner
+        fields = '__all__'

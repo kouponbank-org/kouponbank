@@ -1,5 +1,5 @@
-from kouponbank.database.models import User
-from kouponbank.database.serializers import UserSerializer
+from kouponbank.database.models import User, Owner
+from kouponbank.database.serializers import UserSerializer, OwnerSerializer
 
 from rest_framework import generics
 from rest_framework.decorators import api_view
@@ -16,5 +16,11 @@ class User(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+class OwnerList(generics.ListCreateAPIView):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer
 
+class Owner(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer
 

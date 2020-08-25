@@ -9,7 +9,7 @@ import { LoginForm } from "./login-form";
 // API Components
 import { KouponBankApi } from "../../api/kb-api";
 import { ApiContext } from "../base-page-router";
-import { User } from "../../api/kb-types";
+import { User, Owner } from "../../api/kb-types";
 
 // Material UI Components
 
@@ -19,6 +19,7 @@ import { User } from "../../api/kb-types";
  */
 export interface Prop {
     user: User
+    owner: Owner
 };
 
 export const LoginPage = (props: Prop) => {
@@ -30,10 +31,15 @@ export const LoginPage = (props: Prop) => {
         history.push("/newuser");
     };
 
+    const clickCreateNewOwner = (event): void => {
+        history.push("/newowneruser");
+    };
+
     return (
         <div>
             <LoginForm 
                 clickCreateNewUser={clickCreateNewUser}
+                clickCreateNewOwner={clickCreateNewOwner}
             />
         </div>
     );

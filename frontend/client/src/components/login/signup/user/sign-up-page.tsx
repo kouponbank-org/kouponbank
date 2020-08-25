@@ -67,7 +67,7 @@ const mapDispatchToProps = dispatch => {
             api: KouponBankApi,
             username: string,
             userPassword: string | number,
-            userEmail: string | number
+            userEmail: string
         ) => {
             return createNewUser(api, username, userPassword, userEmail, dispatch)
         }

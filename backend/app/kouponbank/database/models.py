@@ -18,9 +18,27 @@ class User(models.Model):
         )"
 
     
-
 # 유저 데이터
 class UserDetails(models.Model):
     #username 연계 어떻게?
     name = models.CharField(max_length=20, unique=False)
     gender = models.CharField(max_length=50, unique=False)
+
+
+#사업자 모델
+class Owner(models.Model):
+    owner_username = models.CharField("owner_username", max_length=50, unique=True, default="")
+    owner_password = models.CharField("owner_password", max_length=50, unique=False, default="")
+    owner_email = models.CharField("owner_email", max_length=50, unique=True, default="")
+
+    def __str__(self):
+        return f"<Owner>(owner_username: {self.owner_username}, \
+            owner_password: {self.owner_password}, \
+            owner_email: {self.owner_email}, \
+        )"
+
+# 사업자 데이터
+class OwnerDetails(models.Model):
+    name = models.CharField(max_length=20, unique=False)
+    location = models.CharField(max_length=50, unique=False)
+    picture = models.CharField(max_length=50, unique=False)

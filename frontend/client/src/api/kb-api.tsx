@@ -3,7 +3,7 @@
 // API Components
 // Material UI Components
 import axios from "axios";
-import { User } from "./kb-types";
+import { User, Owner } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -18,7 +18,7 @@ export class KouponBankApi {
         });
     };
 
-    async createUser(username: string, userPassword: string): Promise<User> {
+    async createUser(username: string, userPassword: string | number, userEmail: string): Promise<User> {
         return axios.post(this.BASE_URL + "/users/", {
             "username": username,
             "user_password": userPassword,
@@ -30,6 +30,28 @@ export class KouponBankApi {
 
     async removeUser(userId: number): Promise<void> {
         return axios.delete(this.BASE_URL + "/users/" + userId).then(response => {
+            return response.data;
+        });
+    };
+
+    async getOwner(userId: number): Promise<Owner> {
+        return axios.get(this.BASE_URL + "/owners/" + {"id": userId}).then(response => {
+            return response.data
+        });
+    };
+
+    async createOwner(ownerUsername: string, ownerPassword: string | number, ownerEmail: string): Promise<Owner> {
+        return axios.post(this.BASE_URL + "/owners/", {
+            "owner_username": ownerUsername,
+            "owner_password": ownerPassword,
+            "owner_email": ownerEmail
+        }).then(response => {
+            return response.data;
+        });
+    };
+
+    async removeOwner(userId: number): Promise<void> {
+        return axios.delete(this.BASE_URL + "/owners/" + userId).then(response => {
             return response.data;
         });
     };
