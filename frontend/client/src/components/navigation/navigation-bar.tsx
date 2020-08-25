@@ -13,7 +13,7 @@ export interface Prop {
     username: string;
     title: string;
     buttonName: string;
-    onLoginClick: (event) => void;
+    onClick: (event) => void;
 }
 
 export const NavBar = (props: Prop): ReactElement => {
@@ -43,21 +43,9 @@ export const NavBar = (props: Prop): ReactElement => {
                             )
                         }
                     </div>
-                    {
-                        props.title === ("Homepage") ? (
-                            props.username === ("") ? (
-                                <Button className="button" onClick={props.onLoginClick}>
-                                    {props.buttonName}
-                                </Button> 
-                            ) : (
-                                props.username
-                            )
-                        ) : (
-                            <Button className="button" onClick={props.onLoginClick}>
-                                {props.buttonName}
-                            </Button>
-                        )
-                    }
+                        <Button className="button" onClick={props.onClick}>
+                            {props.buttonName}
+                        </Button>
                 </Toolbar>
             </AppBar>
         </div>

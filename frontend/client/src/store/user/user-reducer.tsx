@@ -26,8 +26,8 @@ export interface userState {
 const initialState: userState = {
     user: {
         username: "",
-        userPassword: "",
-        userEmail: "",
+        password: "",
+        email: "",
     },
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted
@@ -93,14 +93,14 @@ export const reducer = (
 export const createNewUser = (
         api: KouponBankApi,
         username: string,
-        userPassword: string | number,
-        userEmail: string | number,
+        password: string | number,
+        email: string | number,
         dispatch
     ): any => {
         dispatch({
             type: UserActionType.CreateNewUserAction,
         });
-        return api.createUser(username, userPassword, userEmail).then(user => {
+        return api.createUser(username, password, email).then(user => {
             dispatch({
                 type: UserActionType.CreateNewUserSuccessAction,
                 user: user

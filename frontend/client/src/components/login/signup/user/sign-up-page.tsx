@@ -8,10 +8,6 @@ import { ApiContext } from "../../../base-page-router";
 import { SignUpPageForm } from "./sign-up-form";
 import './user-sign-up-page.scss';
 
-
-
-
-
 /**
  * Represents the required properties of the HomePage.
  */
@@ -26,7 +22,7 @@ export const UserSignUpPage = (props: Prop) => {
     const [userCredentials, setUserCredentials] = useState(props.user);
 
     const createNewUserClick = (event): void => {
-        props.createNewUser(api, userCredentials.username, userCredentials.userPassword, userCredentials.userEmail).then(() => {
+        props.createNewUser(api, userCredentials.username, userCredentials.password, userCredentials.email).then(() => {
             history.push('/')
         });
         event.preventDefault();
@@ -61,10 +57,10 @@ const mapDispatchToProps = dispatch => {
         createNewUser: (
             api: KouponBankApi,
             username: string,
-            userPassword: string | number,
-            userEmail: string | number
+            password: string | number,
+            email: string | number
         ) => {
-            return createNewUser(api, username, userPassword, userEmail, dispatch)
+            return createNewUser(api, username, password, email, dispatch)
         }
     };
 };

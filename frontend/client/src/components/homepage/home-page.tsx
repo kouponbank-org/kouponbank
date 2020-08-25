@@ -30,14 +30,15 @@ export const HomePage = (props: Prop) => {
             <NavBar
                 username={props.user.username}
                 title={"Homepage"}
-                buttonName={"Login"}
-                onClick={ props.user.username === ("") ? clickLoginButton : clickUserProfileButton}
+                buttonName={ props.user.username === ("") ? "Login" : "User Profile"}
+                onClick={ props.user.username === ("") ? clickLoginButton : clickUserProfileButton }
             />
         </div>
     );
 };
 
 const mapStateToProps = state => {
+    console.log(state)
     return {
         user: state.userReducer.user
     };

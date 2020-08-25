@@ -14,11 +14,11 @@ export class KouponBankApi {
         });
     };
 
-    async createUser(username: string, userPassword: string | number, userEmail: string | number): Promise<User> {
+    async createUser(username: string, password: string | number, email: string | number): Promise<User> {
         return axios.post(this.BASE_URL + "/users/", {
             "username": username,
-            "user_password": userPassword,
-            "user_email": userEmail
+            "user_password": password,
+            "user_email": email
         }).then(response => {
             return response.data;
         });
