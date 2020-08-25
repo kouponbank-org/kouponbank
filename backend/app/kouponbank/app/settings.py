@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'database',
+    'kouponbank',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,7 @@ MIDDLEWARE = [
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'kouponbank.app.urls'
 
 TEMPLATES = [
     {
@@ -77,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+WSGI_APPLICATION = 'kouponbank.app.wsgi.application'
 
 
 # Database

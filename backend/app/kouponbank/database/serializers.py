@@ -1,9 +1,10 @@
 from rest_framework import serializers
-from database.models import User
+from kouponbank.database.models import User
 
 # Serializers converts data into JSON
 # And validates the data.
 
+# Possible need to optimize Serializers.
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
