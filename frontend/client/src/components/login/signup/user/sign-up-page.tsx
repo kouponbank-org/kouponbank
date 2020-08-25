@@ -1,20 +1,15 @@
-// React Components
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-// Koupon Bank Frontend Components
-import { store } from "../../../../store";
-import { SignUpPageForm } from "./sign-up-form";
-
-// API Components
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
 import { createNewUser } from "../../../../store/user/user-reducer";
 import { ApiContext } from "../../../base-page-router";
+import { SignUpPageForm } from "./sign-up-form";
+import './user-sign-up-page.scss';
 
-// Material UI or CSS Components
-import './user-sign-up-page.css';
+
+
 
 
 /**

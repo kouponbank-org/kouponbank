@@ -1,7 +1,3 @@
-// React Components
-// Koupon Bank Frontend Components
-// API Components
-// Material UI Components
 import axios from "axios";
 import { User } from "./kb-types";
 
