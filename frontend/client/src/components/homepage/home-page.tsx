@@ -21,13 +21,17 @@ export const HomePage = (props: Prop) => {
         history.push("/login");
     };
 
+    const clickUserProfileButton = (event): void => {
+        history.push("/userprofile")
+    };
+
     return (
         <div>
             <NavBar
                 username={props.user.username}
                 title={"Homepage"}
                 buttonName={"Login"}
-                onLoginClick={clickLoginButton}
+                onClick={ props.user.username === ("") ? clickLoginButton : clickUserProfileButton}
             />
         </div>
     );

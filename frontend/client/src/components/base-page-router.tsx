@@ -6,6 +6,7 @@ import { HomePageR } from "./homepage/home-page";
 import { LoginPageR } from "./login/login-page";
 import { OwnerSignUpPageR } from "./login/signup/owner/owner-sign-up-page";
 import { UserSignUpPageR } from "./login/signup/user/sign-up-page";
+import { UserProfilePageR } from "./profile/user-profile-page";
 
 /**
  * Represents the required properties of the BasePageRouter.
@@ -47,6 +48,7 @@ const BasePageRouter = (props: Prop) => {
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
             <Switch>
+                <Route path="/userprofile" component = {UserProfilePageR} />
                 <Route path="/newowneruser" component = {OwnerSignUpPageR} />
                 <Route path="/newuser" component = {UserSignUpPageR} />
                 <Route path="/login" component={LoginPageR} />

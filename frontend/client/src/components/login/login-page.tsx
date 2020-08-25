@@ -28,7 +28,7 @@ export const LoginPage = (props: Prop) => {
                 username={null}
                 title={"Login Page"}
                 buttonName={"Create New User"}
-                onLoginClick={clickCreateNewUser}
+                onClick={clickCreateNewUser}
             />
         </div>
     );
