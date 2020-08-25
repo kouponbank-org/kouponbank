@@ -28,7 +28,6 @@ export const HomePage = (props: Prop) => {
     return (
         <div>
             <NavBar
-                username={props.user.username}
                 title={"Homepage"}
                 buttonName={ props.user.username === ("") ? "Login" : "User Profile"}
                 onClick={ props.user.username === ("") ? clickLoginButton : clickUserProfileButton }

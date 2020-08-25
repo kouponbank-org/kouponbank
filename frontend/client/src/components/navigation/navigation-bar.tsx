@@ -10,7 +10,6 @@ import React, { ReactElement } from "react";
 import "./navigation-bar.scss";
 
 export interface Prop {
-    username: string;
     title: string;
     buttonName: string;
     onClick: (event) => void;
