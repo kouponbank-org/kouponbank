@@ -18,7 +18,7 @@ export class KouponBankApi {
         });
     };
 
-    async createUser(username: string, userPassword: string): Promise<User> {
+    async createUser(username: string, userPassword: string | number, userEmail: string | number): Promise<User> {
         return axios.post(this.BASE_URL + "/users/", {
             "username": username,
             "user_password": userPassword,

@@ -1,26 +1,11 @@
-// React Components
-import React, { useLayoutEffect, useState }from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-
-// Koupon Bank Frontend Components
+import { KouponBankApi } from "../api/kb-api";
 import { HomePageR } from "./homepage/home-page";
 import { LoginPageR } from "./login/login-page";
-import { UserSignUpPageR } from "./login/signup/user/sign-up-page";
-
-// API Components
-import { KouponBankApi } from "../api/kb-api";
 import { OwnerSignUpPageR } from "./login/signup/owner/owner-sign-up-page";
-
-// Material UI Components
-
-/**
- * Import files should be aligned in the following order
- * React Components
- * Koupon Bank Frontend Components
- * API Components
- * Material UI Components
- */
+import { UserSignUpPageR } from "./login/signup/user/sign-up-page";
 
 /**
  * Represents the required properties of the BasePageRouter.

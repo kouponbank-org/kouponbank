@@ -1,12 +1,7 @@
-// React-Redux-Store Components
 import { produce } from "immer";
-import { UserActionType } from "./action-type";
-
-// Koupon Bank Frontend Components
-
-// API Components
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
+import { UserActionType } from "./action-type";
 
 // 액션 Status 트래킹 Enum.
 export enum Status {

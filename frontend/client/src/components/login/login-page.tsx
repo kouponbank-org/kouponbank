@@ -1,24 +1,16 @@
-// React Components
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-// Koupon Bank Frontend Components
-import { LoginForm } from "./login-form";
-
-// API Components
 import { KouponBankApi } from "../../api/kb-api";
-import { ApiContext } from "../base-page-router";
 import { User } from "../../api/kb-types";
-
-// Material UI Components
-
+import { ApiContext } from "../base-page-router";
+import { NavBar } from "../navigation/navigation-bar";
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    user: User
+    user: User;
 };
 
 export const LoginPage = (props: Prop) => {
@@ -32,8 +24,11 @@ export const LoginPage = (props: Prop) => {
 
     return (
         <div>
-            <LoginForm 
-                clickCreateNewUser={clickCreateNewUser}
+            <NavBar 
+                username={null}
+                title={"Login Page"}
+                buttonName={"Create New User"}
+                onLoginClick={clickCreateNewUser}
             />
         </div>
     );
