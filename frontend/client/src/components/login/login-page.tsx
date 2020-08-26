@@ -1,28 +1,22 @@
-// React Components
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-// Koupon Bank Frontend Components
-import { LoginForm } from "./login-form";
-
-// API Components
 import { KouponBankApi } from "../../api/kb-api";
-import { ApiContext } from "../base-page-router";
 import { User } from "../../api/kb-types";
-
-// Material UI Components
-
+import { ApiContext } from "../base-page-router";
+import { NavBar } from "../navigation/navigation-bar";
+import { LoginForm } from "./login-form";
+import './login.scss';
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    user: User
+    user: User;
 };
 
 export const LoginPage = (props: Prop) => {
-    const [newUserName, setNewUserName] = useState("");
+    const [userCredentials, setUserCredentials] = useState(props.user);
     const history = useHistory();
     const api = useContext<KouponBankApi>(ApiContext);
 
@@ -30,10 +24,30 @@ export const LoginPage = (props: Prop) => {
         history.push("/newuser");
     };
 
+    const userCredentialsInput = (event): void => {
+        setUserCredentials({
+            ...userCredentials,
+            [event.target.name]: event.target.value
+        });
+    }
+
+    const loginUserClick = (event): void => {
+        // does not make calls to API atm.
+        history.push("/")
+        event.preventDefault();
+    }
+
     return (
-        <div>
-            <LoginForm 
-                clickCreateNewUser={clickCreateNewUser}
+        <div className="background">
+            <NavBar 
+                title={"Login Page"}
+                buttonName={"Create New User"}
+                onClick={clickCreateNewUser}
+            />
+            <LoginForm
+                userCredentials={userCredentials}
+                userCredentialsInput={userCredentialsInput}
+                loginUserClick={loginUserClick}
             />
         </div>
     );
@@ -45,4 +59,8 @@ const mapStateToProps = state => {
     };
 };
 
-export const LoginPageR = connect(mapStateToProps)(LoginPage);
+const mapDispatchToProps = dispatch => {
+
+};
+
+export const LoginPageR = connect(mapStateToProps, mapDispatchToProps)(LoginPage);

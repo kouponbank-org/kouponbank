@@ -1,11 +1,8 @@
-// React Components
-import React, { useContext, useState } from "react";
-
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import React from "react";
 import { User } from "../../../../api/kb-types";
+import './user-sign-up-page.scss';
 
-// Material UI or CSS Components
-import { Grid, TextField, Button, Typography } from "@material-ui/core";
-import './user-sign-up-page.css';
 
 export interface Prop {
     userCredentials: User;
@@ -37,10 +34,10 @@ export const SignUpPageForm = (props: Prop) => {
                             fullWidth
                             id="email"
                             label="Email"
-                            name="userEmail"
+                            name="email"
                             autoComplete="on"
                             onChange={userCredentialsInput}
-                            value={props.userCredentials.userEmail}
+                            value={props.userCredentials.email}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -61,13 +58,13 @@ export const SignUpPageForm = (props: Prop) => {
                             variant="outlined"
                             required
                             fullWidth
-                            name="userPassword"
+                            name="password"
                             label="Password"
                             type="password"
                             id="password"
                             autoComplete="on"
                             onChange={userCredentialsInput}
-                            value={props.userCredentials.userPassword}
+                            value={props.userCredentials.password}
                         />
                     </Grid>
                 </Grid>

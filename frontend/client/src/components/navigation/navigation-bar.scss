@@ -1,0 +1,32 @@
+.nav-bar {
+    .title {
+        color: inherit;
+    }
+
+    .search {
+        position: relative;
+        width: 100%;
+
+        .search-icon {
+            height: 100%;
+            position: absolute;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar-root {
+            color: inherit;
+        }
+
+        .search-bar-input {
+            width: 100%;
+            padding-left: 2em;
+        }
+    }
+
+    .button {
+        color: inherit;
+    }
+}

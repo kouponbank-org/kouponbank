@@ -1,41 +1,71 @@
-// React Components
-import React, { useContext, useState } from "react";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-
-// Koupon Bank Frontend Components
-
-// API Components
-import { ApiContext } from "../base-page-router";
-import { KouponBankApi } from "../../api/kb-api";
-
-// Material UI Components
-import { Button } from "@material-ui/core";
+import { Button, Grid, TextField } from "@material-ui/core";
+import React from "react";
+import { User } from "../../api/kb-types";
+import './login.scss';
 
 /**
- * Represents the required properties of the LoginForm.
+ * Represents the required properties of the log in form.
  */
-export interface Prop {
-    clickCreateNewUser: (event) => void;
-};
+export interface Prop { 
+    userCredentials: User
+    userCredentialsInput: (event) => void;
+    loginUserClick: (event) => void;
+}
 
-export const LoginForm = (props: Prop) => {
+export const LoginForm = (props: Prop) => { 
 
-    const createNewUserButton = (event): void => {
-        props.clickCreateNewUser(event);
-    };
+    const loginUserClick = (event): void => { 
+        //props.loginUserClick(event);
+        event.preventDefault();
+    }
 
-    return (
-        <form onSubmit={createNewUserButton} autoComplete="off">
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className="button"
-            >
-                Create New User
-            </Button>
-        </form>
-    );
-};
+    const userCredentialsInput = (event): void => { 
+        props.userCredentialsInput(event);
+    }
+
+    return ( 
+        <div className="layout">
+            <form className="form" onSubmit={loginUserClick} autoComplete="off">
+                <Grid container>
+                    <Grid item xs={12}>
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            required
+                            name="email"
+                            id="email"
+                            label="Email"
+                            autoComplete="off"
+                            type="text"
+                            onChange={userCredentialsInput}
+                            value={props.userCredentials.email}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            variant="outlined"
+                            fullWidth
+                            required
+                            name="password"
+                            id="password"
+                            label="Password"
+                            autoComplete="off"
+                            type="text"
+                            onChange={userCredentialsInput}
+                            value={props.userCredentials.password}
+                        />
+                    </Grid>
+                </Grid>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="loginbutton"
+                >
+                    Sign In
+                </Button>
+            </form>
+        </div>
+    )
+}

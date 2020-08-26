@@ -1,12 +1,7 @@
-// React-Redux-Store Components
 import { produce } from "immer";
-import { UserActionType } from "./action-type";
-
-// Koupon Bank Frontend Components
-
-// API Components
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
+import { UserActionType } from "./action-type";
 
 // 액션 Status 트래킹 Enum.
 export enum Status {
@@ -31,8 +26,8 @@ export interface userState {
 const initialState: userState = {
     user: {
         username: "",
-        userPassword: "",
-        userEmail: "",
+        password: "",
+        email: "",
     },
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted
@@ -98,14 +93,14 @@ export const reducer = (
 export const createNewUser = (
         api: KouponBankApi,
         username: string,
-        userPassword: string | number,
-        userEmail: string | number,
+        password: string | number,
+        email: string | number,
         dispatch
     ): any => {
         dispatch({
             type: UserActionType.CreateNewUserAction,
         });
-        return api.createUser(username, userPassword, userEmail).then(user => {
+        return api.createUser(username, password, email).then(user => {
             dispatch({
                 type: UserActionType.CreateNewUserSuccessAction,
                 user: user
