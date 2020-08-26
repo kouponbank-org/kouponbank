@@ -1,12 +1,7 @@
-// React-Redux-Store Components
 import { produce } from "immer";
-import { UserActionType } from "./action-type";
-
-// Koupon Bank Frontend Components
-
-// API Components
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
+import { UserActionType } from "./action-type";
 
 // 액션 Status 트래킹 Enum.
 export enum Status {
@@ -31,8 +26,8 @@ export interface userState {
 const initialState: userState = {
     user: {
         username: "",
-        userPassword: "",
-        userEmail: "",
+        password: "",
+        email: "",
     },
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted
@@ -98,14 +93,14 @@ export const reducer = (
 export const createNewUser = (
         api: KouponBankApi,
         username: string,
-        userPassword: string | number,
-        userEmail: string,
+        password: string | number,
+        email: string | number,
         dispatch
     ): any => {
         dispatch({
             type: UserActionType.CreateNewUserAction,
         });
-        return api.createUser(username, userPassword, userEmail).then(user => {
+        return api.createUser(username, password, email).then(user => {
             dispatch({
                 type: UserActionType.CreateNewUserSuccessAction,
                 user: user
@@ -116,4 +111,27 @@ export const createNewUser = (
             });
         });
     };
+
+// 새로운 유저를 생성하기 위한 API Call + Reducer State Update
+export const createNewOwner = (
+    api: KouponBankApi,
+    username: string,
+    password: string | number,
+    email: string | number,
+    dispatch
+): any => {
+    dispatch({
+        type: UserActionType.CreateNewUserAction,
+    });
+    return api.createOwner(username, password, email).then(user => {
+        dispatch({
+            type: UserActionType.CreateNewUserSuccessAction,
+            user: user
+        })
+    }).catch(err => {
+        dispatch({
+            type: UserActionType.CreateNewUserFailAction
+        });
+    });
+};
 

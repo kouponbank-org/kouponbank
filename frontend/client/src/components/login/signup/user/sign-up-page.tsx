@@ -1,21 +1,12 @@
-// React Components
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-// Koupon Bank Frontend Components
-import { store } from "../../../../store";
-import { SignUpPageForm } from "./sign-up-form";
-
-// API Components
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
 import { createNewUser } from "../../../../store/user/user-reducer";
 import { ApiContext } from "../../../base-page-router";
-
-// Material UI or CSS Components
-import './user-sign-up-page.css';
-
+import { SignUpPageForm } from "./sign-up-form";
+import './user-sign-up-page.scss';
 
 /**
  * Represents the required properties of the HomePage.
@@ -31,10 +22,14 @@ export const UserSignUpPage = (props: Prop) => {
     const [userCredentials, setUserCredentials] = useState(props.user);
 
     const createNewUserClick = (event): void => {
-        props.createNewUser(api, userCredentials.username, userCredentials.userPassword, userCredentials.userEmail).then(() => {
+        props.createNewUser(api, userCredentials.username, userCredentials.password, userCredentials.email).then(() => {
             history.push('/')
         });
         event.preventDefault();
+    };
+
+    const ownerSignUpClick = (event): void => {
+        history.push("/newowneruser");
     };
 
     const userCredentialsInput = (event): void => {
@@ -48,6 +43,7 @@ export const UserSignUpPage = (props: Prop) => {
         <div className="background">
             <SignUpPageForm 
                 userCredentials={userCredentials}
+                ownerSignUpClick={ownerSignUpClick}
                 createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}
             />
@@ -66,10 +62,10 @@ const mapDispatchToProps = dispatch => {
         createNewUser: (
             api: KouponBankApi,
             username: string,
-            userPassword: string | number,
-            userEmail: string
+            password: string | number,
+            email: string | number
         ) => {
-            return createNewUser(api, username, userPassword, userEmail, dispatch)
+            return createNewUser(api, username, password, email, dispatch)
         }
     };
 };

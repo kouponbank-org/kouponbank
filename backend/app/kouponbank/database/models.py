@@ -17,7 +17,6 @@ class User(models.Model):
             user_email: {self.user_email}, \
         )"
 
-    
 # 유저 데이터
 class UserDetails(models.Model):
     #username 연계 어떻게?

@@ -1,15 +1,13 @@
-// React Components
-import React, { useContext, useState } from "react";
-
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import React from "react";
 import { User } from "../../../../api/kb-types";
+import './user-sign-up-page.scss';
 
-// Material UI or CSS Components
-import { Grid, TextField, Button, Typography } from "@material-ui/core";
-import './user-sign-up-page.css';
 
 export interface Prop {
     userCredentials: User;
     createNewUserClick: (event) => void;
+    ownerSignUpClick: (event) => void;
     userCredentialsInput: (event) => void;
 };
 
@@ -17,6 +15,10 @@ export const SignUpPageForm = (props: Prop) => {
 
     const createNewUserClick = (event): void => {
         props.createNewUserClick(event);
+    };
+
+    const ownerSignUpClick = (event): void => {
+        props.ownerSignUpClick(event);
     };
     
     const userCredentialsInput = (event): void => {
@@ -37,10 +39,10 @@ export const SignUpPageForm = (props: Prop) => {
                             fullWidth
                             id="email"
                             label="Email"
-                            name="userEmail"
+                            name="email"
                             autoComplete="on"
                             onChange={userCredentialsInput}
-                            value={props.userCredentials.userEmail}
+                            value={props.userCredentials.email}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -61,13 +63,13 @@ export const SignUpPageForm = (props: Prop) => {
                             variant="outlined"
                             required
                             fullWidth
-                            name="userPassword"
+                            name="password"
                             label="Password"
                             type="password"
                             id="password"
                             autoComplete="on"
                             onChange={userCredentialsInput}
-                            value={props.userCredentials.userPassword}
+                            value={props.userCredentials.password}
                         />
                     </Grid>
                 </Grid>
@@ -79,6 +81,17 @@ export const SignUpPageForm = (props: Prop) => {
                     className="signupbutton"
                 >
                     Sign Up
+                </Button>
+            </form>
+            <form className="form" onSubmit={ownerSignUpClick} noValidate>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="ownerSignUp"
+                >
+                    Are you an Owner?
                 </Button>
             </form>
         </div>
