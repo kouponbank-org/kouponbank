@@ -1,17 +1,10 @@
-// React Components
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-// Koupon Bank Frontend Components
-import { HomePageLoginButton } from "./home-page-login-button"
-
-// API Components
-import { ApiContext } from "../base-page-router";
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
-
-// Material UI Components
+import { ApiContext } from "../base-page-router";
+import { NavBar } from "../navigation/navigation-bar";
 
 /**
  * Represents the required properties of the HomePage.
@@ -28,19 +21,23 @@ export const HomePage = (props: Prop) => {
         history.push("/login");
     };
 
+    const clickUserProfileButton = (event): void => {
+        history.push("/userprofile")
+    };
+
     return (
         <div>
-            {
-                !props.user ?
-                <HomePageLoginButton 
-                    clickLoginButton={clickLoginButton}
-                /> :props.user.username
-            }
+            <NavBar
+                title={"Homepage"}
+                buttonName={ props.user.username === ("") ? "Login" : "User Profile"}
+                onClick={ props.user.username === ("") ? clickLoginButton : clickUserProfileButton }
+            />
         </div>
     );
 };
 
 const mapStateToProps = state => {
+    console.log(state)
     return {
         user: state.userReducer.user
     };
