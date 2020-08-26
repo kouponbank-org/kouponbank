@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 // Koupon Bank Frontend Components
-import { store } from "../../../../store";
 import { SignUpPageForm } from "./owner-sign-up-form";
 
 // API Components
 import { KouponBankApi } from "../../../../api/kb-api";
-import { Owner } from "../../../../api/kb-types";
-import { createNewOwner } from "../../../../store/owner/owner-reducer";
+import { User } from "../../../../api/kb-types";
+import { createNewOwner } from "../../../../store/user/user-reducer";
 import { ApiContext } from "../../../base-page-router";
 
 // Material UI or CSS Components
@@ -20,7 +19,7 @@ import './owner-sign-up-page.css';
  */
 export interface Prop {
     createNewOwner: Function;
-    owner: Owner;
+    owner: User;
 };
 
 export const OwnerSignUpPage = (props: Prop) => {
@@ -29,10 +28,14 @@ export const OwnerSignUpPage = (props: Prop) => {
     const [ownerCredentials, setOwnerCredentials] = useState(props.owner);
 
     const createNewOwnerClick = (event): void => {
-        props.createNewOwner(api, ownerCredentials.ownerUsername, ownerCredentials.ownerPassword, ownerCredentials.ownerEmail).then(() => {
+        props.createNewOwner(api, ownerCredentials.username, ownerCredentials.password, ownerCredentials.email).then(() => {
             history.push('/')
         });
         event.preventDefault();
+    };
+
+    const userSignUpClick = (event): void => {
+        history.push("/newuser");
     };
 
     const ownerCredentialsInput = (event): void => {
@@ -47,6 +50,7 @@ export const OwnerSignUpPage = (props: Prop) => {
             <SignUpPageForm 
                 ownerCredentials={ownerCredentials}
                 createNewOwnerClick={createNewOwnerClick}
+                userSignUpClick={userSignUpClick}
                 ownerCredentialsInput={ownerCredentialsInput}
             />
         </div>
@@ -55,7 +59,7 @@ export const OwnerSignUpPage = (props: Prop) => {
 
 const mapStateToProps = state => {
     return {
-        owner: state.ownerReducer.owner
+        owner: state.userReducer.user
     };
 };
 
@@ -63,11 +67,11 @@ const mapDispatchToProps = dispatch => {
     return {
         createNewOwner: (
             api: KouponBankApi,
-            ownerUsername: string,
-            ownerPassword: string | number,
-            ownerEmail: string
+            username: string,
+            password: string | number,
+            email: string | number,
         ) => {
-            return createNewOwner(api, ownerUsername, ownerPassword, ownerEmail, dispatch)
+            return createNewOwner(api, username, password, email, dispatch)
         }
     };
 };

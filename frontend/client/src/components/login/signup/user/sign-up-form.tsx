@@ -7,6 +7,7 @@ import './user-sign-up-page.scss';
 export interface Prop {
     userCredentials: User;
     createNewUserClick: (event) => void;
+    ownerSignUpClick: (event) => void;
     userCredentialsInput: (event) => void;
 };
 
@@ -14,6 +15,10 @@ export const SignUpPageForm = (props: Prop) => {
 
     const createNewUserClick = (event): void => {
         props.createNewUserClick(event);
+    };
+
+    const ownerSignUpClick = (event): void => {
+        props.ownerSignUpClick(event);
     };
     
     const userCredentialsInput = (event): void => {
@@ -76,6 +81,17 @@ export const SignUpPageForm = (props: Prop) => {
                     className="signupbutton"
                 >
                     Sign Up
+                </Button>
+            </form>
+            <form className="form" onSubmit={ownerSignUpClick} noValidate>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="ownerSignUp"
+                >
+                    Are you an Owner?
                 </Button>
             </form>
         </div>
