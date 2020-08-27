@@ -30,4 +30,26 @@ export class KouponBankApi {
         });
     };
 
+    async getOwner(userId: number): Promise<User> {
+        return axios.get(this.BASE_URL + "/owners/" + {"id": userId}).then(response => {
+            return response.data
+        });
+    };
+
+    async createOwner(username: string, password: string | number, email: string | number): Promise<User> {
+        return axios.post(this.BASE_URL + "/owners/", {
+            "owner_username": username,
+            "owner_password": password,
+            "owner_email": email
+        }).then(response => {
+            return response.data;
+        });
+    };
+
+    async removeOwner(userId: number): Promise<void> {
+        return axios.delete(this.BASE_URL + "/owners/" + userId).then(response => {
+            return response.data;
+        });
+    };
+
 };

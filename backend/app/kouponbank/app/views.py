@@ -6,4 +6,5 @@ from rest_framework.reverse import reverse
 def api_root(request, format=None):
     return Response({
        'Users': reverse('users:user-list', request=request, format=format),
+       'Owners': reverse('owners:owner-list', request=request, format=format),
     })
