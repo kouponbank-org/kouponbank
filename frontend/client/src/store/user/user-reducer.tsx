@@ -112,3 +112,26 @@ export const createNewUser = (
         });
     };
 
+// 새로운 유저를 생성하기 위한 API Call + Reducer State Update
+export const createNewOwner = (
+    api: KouponBankApi,
+    username: string,
+    password: string | number,
+    email: string | number,
+    dispatch
+): any => {
+    dispatch({
+        type: UserActionType.CreateNewUserAction,
+    });
+    return api.createOwner(username, password, email).then(user => {
+        dispatch({
+            type: UserActionType.CreateNewUserSuccessAction,
+            user: user
+        })
+    }).catch(err => {
+        dispatch({
+            type: UserActionType.CreateNewUserFailAction
+        });
+    });
+};
+

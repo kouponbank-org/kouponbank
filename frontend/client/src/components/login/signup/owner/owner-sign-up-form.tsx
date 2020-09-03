@@ -1,28 +1,31 @@
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
-import React from "react";
-import { User } from "../../../../api/kb-types";
-import './user-sign-up-page.scss';
+// React Components
+import React, { useContext, useState } from "react";
 
+import { User } from "../../../../api/kb-types";
+
+// Material UI or CSS Components
+import { Grid, TextField, Button, Typography } from "@material-ui/core";
+import './owner-sign-up-page.css';
 
 export interface Prop {
-    userCredentials: User;
-    createNewUserClick: (event) => void;
-    ownerSignUpClick: (event) => void;
-    userCredentialsInput: (event) => void;
+    ownerCredentials: User;
+    createNewOwnerClick: (event) => void;
+    ownerCredentialsInput: (event) => void;
+    userSignUpClick: (event) => void;
 };
 
 export const SignUpPageForm = (props: Prop) => {
 
-    const createNewUserClick = (event): void => {
-        props.createNewUserClick(event);
-    };
-
-    const ownerSignUpClick = (event): void => {
-        props.ownerSignUpClick(event);
+    const createNewOwnerClick = (event): void => {
+        props.createNewOwnerClick(event);
     };
     
-    const userCredentialsInput = (event): void => {
-        props.userCredentialsInput(event);
+    const ownerCredentialsInput = (event): void => {
+        props.ownerCredentialsInput(event);
+    };
+
+    const userSignUpClick = (event): void => {
+        props.userSignUpClick(event);
     };
 
     return (
@@ -30,7 +33,7 @@ export const SignUpPageForm = (props: Prop) => {
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>
-            <form className="form" onSubmit={createNewUserClick} noValidate>
+            <form className="form" onSubmit={createNewOwnerClick} noValidate>
                 <Grid container>
                     <Grid item xs={12}>
                         <TextField
@@ -41,8 +44,8 @@ export const SignUpPageForm = (props: Prop) => {
                             label="Email"
                             name="email"
                             autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.email}
+                            onChange={ownerCredentialsInput}
+                            value={props.ownerCredentials.email}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -54,8 +57,8 @@ export const SignUpPageForm = (props: Prop) => {
                             label="Username"
                             name="username"
                             autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.username}
+                            onChange={ownerCredentialsInput}
+                            value={props.ownerCredentials.username}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -68,8 +71,8 @@ export const SignUpPageForm = (props: Prop) => {
                             type="password"
                             id="password"
                             autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.password}
+                            onChange={ownerCredentialsInput}
+                            value={props.ownerCredentials.password}
                         />
                     </Grid>
                 </Grid>
@@ -83,7 +86,7 @@ export const SignUpPageForm = (props: Prop) => {
                     Sign Up
                 </Button>
             </form>
-            <form className="form" onSubmit={ownerSignUpClick} noValidate>
+            <form className="form" onSubmit={userSignUpClick} noValidate>
                 <Button
                     type="submit"
                     fullWidth
@@ -91,7 +94,7 @@ export const SignUpPageForm = (props: Prop) => {
                     color="primary"
                     className="ownerSignUp"
                 >
-                    Are you an Owner?
+                    Are you an User?
                 </Button>
             </form>
         </div>

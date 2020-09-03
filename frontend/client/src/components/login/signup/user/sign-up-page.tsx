@@ -28,6 +28,10 @@ export const UserSignUpPage = (props: Prop) => {
         event.preventDefault();
     };
 
+    const ownerSignUpClick = (event): void => {
+        history.push("/newowneruser");
+    };
+
     const userCredentialsInput = (event): void => {
         setUserCredentials({
             ...userCredentials,
@@ -39,6 +43,7 @@ export const UserSignUpPage = (props: Prop) => {
         <div className="background">
             <SignUpPageForm 
                 userCredentials={userCredentials}
+                ownerSignUpClick={ownerSignUpClick}
                 createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}
             />
