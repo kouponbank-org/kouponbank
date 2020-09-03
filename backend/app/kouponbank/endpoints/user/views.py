@@ -1,5 +1,5 @@
-from kouponbank.database.models import User
-from kouponbank.database.serializers import UserSerializer
+from kouponbank.database.user import User, UserSerializer
+from django.urls import path
 
 from rest_framework import generics
 from rest_framework.decorators import api_view
@@ -15,6 +15,5 @@ class UserList(generics.ListCreateAPIView):
 class User(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
 
 

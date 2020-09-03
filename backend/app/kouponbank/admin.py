@@ -1,5 +1,5 @@
 from django.contrib import admin
-from kouponbank.database.models import User
+from kouponbank.database.user import User
 
 # Register your models here.
 admin.site.register(User)
