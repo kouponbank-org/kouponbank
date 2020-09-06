@@ -126,7 +126,7 @@ pipenv/
 *.db
 
 # Migrations
-migrations/
+app/kouponbank/migrations/
 
 # DB
-db.sqlite3
+app/kouponbank/db.sqlite3
