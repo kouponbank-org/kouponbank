@@ -124,3 +124,9 @@ pipenv/
 .ropeproject
 
 *.db
+
+# Migrations
+migrations/
+
+# DB
+db.sqlite3
