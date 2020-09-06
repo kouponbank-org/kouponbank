@@ -1,5 +1,7 @@
 # 쿠폰뱅크 - Koupon Bank
 
+<span style="color:#fff; font-family: 'Nanum Pen Script'; font-size: 23px;">내 주변의 혜택을 쿠폰으로 손쉽게</span>
+
 ## 프로젝트 설명
 
 <br>
