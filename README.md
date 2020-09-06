@@ -6,10 +6,14 @@
 Jay Lee (이지원) <br>
 Sung Hyun Ahn (안성현)
 
+<br>
+
 ## 프로젝트 코드 베이스
 Front-End: ReactJS/TypeScript <br>
 Back-End: Python/Django/Django REST Framework <br>
 DB: MySQL
+
+<br>
 
 ## 기본 셋업
 #### Node.js
@@ -33,7 +37,7 @@ npm install
 
 <br>
 
-#### Frontend 실행
+### Frontend 실행
 Frontend를 실행하실려면 <br>
 아래 코드를 'frontend/client' 다이렉토리에서 아래 코드를 Run하세요 <br>
 
@@ -75,7 +79,7 @@ python manage.py reset_db
 
 <br>
 
-#### Backend 실행
+### Backend 실행
 Backend를 실행하실려면 <br>
 아래 코드를 'backend/app' 다이렉토리에서 아래 코드를 Run하세요 <br>
 ```
