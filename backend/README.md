@@ -5,46 +5,36 @@ Go to the backend directory and follow the instructions:
 <br>
 
 ### To Install virtual env:
-<br>
 
 #### On macOS and Linux:
 ```
 python3 -m pip install --user virtualenv
 
 ```
-<br>
-
 #### On Windows:
 ```
 py -m pip install --user virtualenv
 ```
-<br>
-
 ### Creating a virtual environment:
+
 #### On macOS and Linux:
 ```
 python3 -m venv env
 ```
-<br>
-
 #### On Windows:
 ```
 py -m venv env
 ```
-<br>
-
 ### Activating a virtual environment:
+
 #### On macOS and Linux:
 ```
 source env/bin/activate
 ```
-<br>
-
 #### On Windows:
 ```
 .\env\Scripts\activate
 ```
-<br>
 
 ## Setup
 To install the required packages:
