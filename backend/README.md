@@ -1,19 +1,57 @@
 # Backend
 
-## Setup
-Setup your venv in the backend directory.
+## Virtual Environment Setup
+Go to the backend directory and follow the instructions:
+<br>
 
+### To Install virtual env:
+<br>
+
+#### On macOS and Linux:
+```
+python3 -m pip install --user virtualenv
+
+```
+<br>
+
+#### On Windows:
+```
+py -m pip install --user virtualenv
+```
+<br>
+
+### Creating a virtual environment:
+#### On macOS and Linux:
+```
+python3 -m venv env
+```
+<br>
+
+#### On Windows:
+```
+py -m venv env
+```
+<br>
+
+### Activating a virtual environment:
+#### On macOS and Linux:
+```
+source env/bin/activate
+```
+<br>
+
+#### On Windows:
+```
+.\env\Scripts\activate
+```
+<br>
+
+## Setup
 To install the required packages:
 ```
 pip install -r requirements.txt
 ```
-
-OR
-
-To install the require packages and keep them in the Pipfile/venv file
-```
-venv/pipenv install (package names)
-```
+<br>
 <br>
 To make migrations, go to backend/app:
 ```
@@ -21,7 +59,6 @@ To make migrations, go to backend/app:
 2. python manage.py migrate
 ```
 <br>
-Now the API model changes will exist in the database. 
 
 ## RUNNING THE SERVER
 
@@ -37,6 +74,10 @@ python manage.py runserver
 
 To access the server, go to the following localhost:
 http://127.0.0.1:8000/
+
+## ACCESS
+To access swagger: http://127.0.0.1:8000/
+To access endpoints: http://127.0.0.1:8000/{endpoints}
 
 ## SUPERUSER
 Superuser for API: <br>

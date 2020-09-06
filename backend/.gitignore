@@ -124,3 +124,9 @@ pipenv/
 .ropeproject
 
 *.db
+
+# Migrations
+app/kouponbank/migrations/
+
+# DB
+app/kouponbank/db.sqlite3
