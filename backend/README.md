@@ -62,13 +62,18 @@ To reset or drop the database, go to backend/app:
 python manage.py reset_db
 ```
 
+<br>
+
 To run the server, go to backend/app:
 ```
 python manage.py runserver
 ```
 
+<br>
+
 To access the server, go to the following localhost:
 http://127.0.0.1:8000/
+
 <br>
 
 ## ACCESS
