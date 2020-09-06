@@ -17,8 +17,8 @@ export class KouponBankApi {
     async createUser(username: string, password: string | number, email: string | number): Promise<User> {
         return axios.post(this.BASE_URL + "/users/", {
             "username": username,
-            "user_password": password,
-            "user_email": email
+            "password": password,
+            "email": email
         }).then(response => {
             return response.data;
         });
@@ -38,9 +38,9 @@ export class KouponBankApi {
 
     async createOwner(username: string, password: string | number, email: string | number): Promise<User> {
         return axios.post(this.BASE_URL + "/owners/", {
-            "owner_username": username,
-            "owner_password": password,
-            "owner_email": email
+            "username": username,
+            "password": password,
+            "email": email
         }).then(response => {
             return response.data;
         });
