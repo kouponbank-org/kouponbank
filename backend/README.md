@@ -69,10 +69,12 @@ python manage.py runserver
 
 To access the server, go to the following localhost:
 http://127.0.0.1:8000/
+<br>
 
 ## ACCESS
 To access swagger: http://127.0.0.1:8000/
 To access endpoints: http://127.0.0.1:8000/{endpoints}
+<br>
 
 ## SUPERUSER
 Superuser for API: <br>
