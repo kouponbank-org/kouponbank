@@ -2,6 +2,7 @@
 
 ![쿠폰뱅크 메인사진](/images/쿠폰뱅크.PNG)
 
+***
 ## 프로젝트 설명
 
 <br>
@@ -16,27 +17,13 @@
 
 <br>
 
-### 쿠폰 뱅크 시스템: 사업자
-  - 사업장 및 사업 배너 설정/등록
-  - 제공하는 쿠폰 설정/등록
-  - 쿠폰뱅크 마케팅
-
-<br> 
-
-### 쿠폰 뱅크 시스템: 소비자
-  - 원하는 쿠폰 다운로드
-  - 해당 사업장에서 결제 시 다운로드한 쿠폰을 보여주기
-  - 쿠폰 혜택 받기
-
-<br>
-
-## 프로젝트 멤버
+### 프로젝트 멤버
 Jay Lee (이지원) <br>
 Sung Hyun Ahn (안성현)
 
 <br>
 
-## 프로젝트 코드 베이스
+### 프로젝트 코드 베이스
 Front-End: ReactJS/TypeScript <br>
 Back-End: Python/Django/Django REST Framework <br>
 DB: MySQL
