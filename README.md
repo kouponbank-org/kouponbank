@@ -43,6 +43,7 @@ DB: MySQL
 
 <br>
 
+*** 
 ## 기본 셋업
 #### Node.js
 Frontend에 필요한 Node.js package를 다운로드 해야 합니다. <br>
@@ -55,6 +56,7 @@ Node.js package는 terminal command-line package manager 'npm'을 활성화합�
 
 <br>
 
+***
 ## Frontend 셋업 
 Frontend를 실행하기 위한 패키지 셋업을 위해서 <br>
 아래 코드를 'frontend/client 다이렉토리에서' Run 하세요. <br>
@@ -80,6 +82,7 @@ frontend를 수정하시면 페이지가 새로 고쳐질 것입니다.
 
 <br>
 
+***
 ## Backend 셋업
 Backend를 실행하기 위한 패키지 셋업을 위해서 <br>
 아래 코드를 backend virtual environment에서 Run 하세요. <br>
