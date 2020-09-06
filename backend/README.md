@@ -78,7 +78,11 @@ http://127.0.0.1:8000/
 
 ## ACCESS
 To access swagger: http://127.0.0.1:8000/
+
+<br>
+
 To access endpoints: http://127.0.0.1:8000/{endpoints}
+
 <br>
 
 ## SUPERUSER
