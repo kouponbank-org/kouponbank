@@ -29,21 +29,23 @@ Node.js package는 terminal command-line package manager 'npm'을 활성화 시�
 
 ## Frontend 셋업 
 Frontend를 실행하기 위한 팩키지 셋업을 위해서 <br>
-아래 코드를 'frontend/client 다이렉토리에서' Run하세요. <br>
+아래 코드를 'frontend/client 다이렉토리에서' Run하세요. 
 
-'''
+<br>
+
+```
 npm install
-'''
+```
 
 <br>
 
 ### Frontend 실행
 Frontend를 실행하실려면 <br>
-아래 코드를 'frontend/client' 다이렉토리에서 아래 코드를 Run하세요 <br>
+아래 코드를 'frontend/client' 다이렉토리에서 아래 코드를 Run하세요 <br> 
 
-'''
+```
 npm start
-'''
+```
 
 <br>
 
