@@ -15,6 +15,7 @@ python3 -m pip install --user virtualenv
 ```
 py -m pip install --user virtualenv
 ```
+<br>
 ### Creating a virtual environment:
 
 #### On macOS and Linux:
@@ -25,6 +26,7 @@ python3 -m venv env
 ```
 py -m venv env
 ```
+<br>
 ### Activating a virtual environment:
 
 #### On macOS and Linux:
@@ -35,7 +37,7 @@ source env/bin/activate
 ```
 .\env\Scripts\activate
 ```
-
+<br>
 ## Setup
 To install the required packages:
 ```
