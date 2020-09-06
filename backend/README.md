@@ -47,8 +47,8 @@ To install the required packages:
 pip install -r requirements.txt
 ```
 <br>
-<br>
-To make migrations, go to backend/app:
+
+To setup database, go to backend/app:
 ```
 1. python manage.py makemigrations
 2. python manage.py migrate
