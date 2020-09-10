@@ -56,13 +56,13 @@ class OwnerAPI(APIView):
     @swagger_auto_schema(
         responses={200: OwnerSerializer(many=True)},
     )
-    def get(self, request, pk):
-        owner = self.__get_owner(pk)
+    def get(self, request, owner_id):
+        owner = self.__get_owner(owner_id)
         serializer = OwnerSerializer(owner)
         return Response(serializer.data)
-    def __get_owner(self, pk):
+    def __get_owner(self, owner_id):
         try:
-            return Owner.objects.get(pk=pk)
+            return Owner.objects.get(pk=owner_id)
         except Owner.DoesNotExist:
             raise Http404("Owner not found")
 
@@ -93,8 +93,8 @@ class OwnerAPI(APIView):
             )
         ]
     )
-    def put(self, request, pk):
-        owner = self.__get_owner(pk)
+    def put(self, request, owner_id):
+        owner = self.__get_owner(owner_id)
         serializer = OwnerSerializer(owner, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -104,8 +104,8 @@ class OwnerAPI(APIView):
     @swagger_auto_schema(
         responses={200: OwnerSerializer(many=True)}
     )
-    def delete(self, request, pk):
-        user = self.__get_owner(pk)
+    def delete(self, request, owner_id):
+        user = self.__get_owner(owner_id)
         if user is None:
             raise Http404("Owner not found")
         user.delete()

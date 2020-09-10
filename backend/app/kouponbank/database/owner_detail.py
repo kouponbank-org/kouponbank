@@ -1,4 +1,5 @@
 from django.db import models
+from kouponbank.database.business import Business, BusinessSerializer
 from rest_framework import serializers
 
 
@@ -9,6 +10,8 @@ class OwnerDetail(models.Model):
     picture = models.CharField(max_length=50, unique=False)
 
 class OwnerDetailSerializer(serializers.ModelSerializer):
+    #businesses = BusinessSerializer(source="business", required=False)
+
     class Meta:
         model = OwnerDetail
         fields = ("name", "location", "picture")

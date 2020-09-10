@@ -62,13 +62,13 @@ class UserAPI(APIView):
     @swagger_auto_schema(
         responses={200: UserSerializer(many=True)},
     )
-    def get(self, request, pk):
-        user = self.__get_user(pk)
+    def get(self, request, user_id):
+        user = self.__get_user(user_id)
         serializer = UserSerializer(user)
         return Response(serializer.data)
-    def __get_user(self, pk):
+    def __get_user(self, user_id):
         try:
-            return User.objects.get(pk=pk)
+            return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             raise Http404("User not found")
 
@@ -99,8 +99,8 @@ class UserAPI(APIView):
             )
         ]
     )
-    def put(self, request, pk):
-        user = self.__get_user(pk)
+    def put(self, request, user_id):
+        user = self.__get_user(user_id)
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -110,8 +110,8 @@ class UserAPI(APIView):
     @swagger_auto_schema(
         responses={200: UserSerializer(many=True)}
     )
-    def delete(self, request, pk):
-        user = self.__get_user(pk)
+    def delete(self, request, user_id):
+        user = self.__get_user(user_id)
         if user is None:
             raise Http404("User not found")
         user.delete()
