@@ -4,8 +4,9 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from kouponbank.endpoints import (business_api, menu_api, owner_api,
-                                  owner_detail_api, user_api, user_detail_api)
+from kouponbank.endpoints import (business_api, coupon_api, menu_api,
+                                  owner_api, owner_detail_api, user_api,
+                                  user_detail_api)
 
 from .router import router
 
@@ -33,5 +34,7 @@ urlpatterns = [
    path('owners/<int:owner_id>/detail/business/', business_api.BusinessListAPI.as_view()),
    path('owners/<int:owner_id>/detail/business/<int:business_id>/', business_api.BusinessAPI.as_view()),
    path('owners/<int:owner_id>/detail/business/<int:business_id>/menu/', menu_api.MenuListAPI.as_view()),
-   path('owners/<int:owner_id>/detail/business/<int:business_id>/menu/<int:menu_id>', menu_api.MenuAPI.as_view()),
+   path('owners/<int:owner_id>/detail/business/<int:business_id>/menu/<int:menu_id>/', menu_api.MenuAPI.as_view()),
+   path('owners/<int:owner_id>/detail/business/<int:business_id>/coupon/', coupon_api.CouponListAPI.as_view()),
+   path('owners/<int:owner_id>/detail/business/<int:business_id>/coupon/<int:coupon_id/', coupon_api.CouponAPI.as_view()),
 ]

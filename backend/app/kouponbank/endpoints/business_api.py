@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema

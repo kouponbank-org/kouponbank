@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from kouponbank.database.owner import Owner
-from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from kouponbank.database.owner import Owner
+from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
 
 
 class OwnerDetailAPI(APIView):
@@ -59,7 +60,7 @@ class OwnerDetailAPI(APIView):
             openapi.Parameter(
                 'name',
                 openapi.IN_QUERY,
-                description="Updates the name of the user",
+                description="Updates the name of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),

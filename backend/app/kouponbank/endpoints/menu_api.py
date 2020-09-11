@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -7,10 +6,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from kouponbank.database.business import Business, BusinessSerializer
+from kouponbank.database.business import Business
 from kouponbank.database.menu import Menu, MenuSerializer
-from kouponbank.database.owner import Owner
-from kouponbank.database.owner_detail import OwnerDetail
 
 
 class MenuListAPI(APIView):
@@ -92,7 +89,7 @@ class MenuAPI(APIView):
     )
     def put(self, request, owner_id, business_id, menu_id):
         menu = self.__get_menu(menu_id)
-        serializer = MenuSerializer(business, data=request.data)
+        serializer = MenuSerializer(menu, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
