@@ -5,15 +5,12 @@ Go to the backend directory and follow the instructions:
 <br>
 
 ### To Install virtual env:
-<br>
 
 #### On macOS and Linux:
 ```
 python3 -m pip install --user virtualenv
 
 ```
-<br>
-
 #### On Windows:
 ```
 py -m pip install --user virtualenv
@@ -21,12 +18,11 @@ py -m pip install --user virtualenv
 <br>
 
 ### Creating a virtual environment:
+
 #### On macOS and Linux:
 ```
 python3 -m venv env
 ```
-<br>
-
 #### On Windows:
 ```
 py -m venv env
@@ -34,12 +30,11 @@ py -m venv env
 <br>
 
 ### Activating a virtual environment:
+
 #### On macOS and Linux:
 ```
 source env/bin/activate
 ```
-<br>
-
 #### On Windows:
 ```
 .\env\Scripts\activate
@@ -52,8 +47,8 @@ To install the required packages:
 pip install -r requirements.txt
 ```
 <br>
-<br>
-To make migrations, go to backend/app:
+
+To setup database, go to backend/app:
 ```
 1. python manage.py makemigrations
 2. python manage.py migrate
@@ -67,17 +62,28 @@ To reset or drop the database, go to backend/app:
 python manage.py reset_db
 ```
 
+<br>
+
 To run the server, go to backend/app:
 ```
 python manage.py runserver
 ```
 
+<br>
+
 To access the server, go to the following localhost:
 http://127.0.0.1:8000/
 
+<br>
+
 ## ACCESS
 To access swagger: http://127.0.0.1:8000/
+
+<br>
+
 To access endpoints: http://127.0.0.1:8000/{endpoints}
+
+<br>
 
 ## SUPERUSER
 Superuser for API: <br>
