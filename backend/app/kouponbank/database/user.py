@@ -17,20 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ("username", "password", "email", "user_detail")
 
     def create(self, validated_data):
-        #user_detail_data = validated_data.pop('user_detail')
         user = User.objects.create(**validated_data)
         UserDetail.objects.create(
             user=user,
             name="",
             gender="",
         )
-        #for user_detail in user_detail_data:
-        #    UserDetail.objects.create(user=user, **user_detail)
 
         return user
-
-    # def update(sef, instance, validated_data):
-    #     user_detail_data = validated_data.pop('user_detail')
-    #     user_detail = (instance.user_detail).all()
-    #     user_detail = list(user_detail)
-    #     instance.
