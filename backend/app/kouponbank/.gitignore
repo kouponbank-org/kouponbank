@@ -1,0 +1,5 @@
+# migrations
+migrations/
+
+# DB
+db.sqlite3

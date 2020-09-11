@@ -32,19 +32,19 @@ class UserDetailAPI(APIView):
         ]
     )
     # This allows us to get UserDetail @ /users/user_id(pk)/detail
-    def get(self, request, pk):
-        user = self.__get_user(pk)
+    def get(self, request, user_id):
+        user = self.__get_user(user_id)
         # related name = user_details (check user_detail.py)
         serializer = UserDetailSerializer(user.user_details)
         return Response(serializer.data)
-    def __get_user(self, pk):
+    def __get_user(self, user_id):
         try:
-            return User.objects.get(pk=pk)
+            return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             raise Http404("User not found")
-    def __get_user_detail(self, pk):
+    def __get_user_detail(self, user_id):
         try:
-            return UserDetail.objects.get(pk=pk)
+            return UserDetail.objects.get(pk=user_id)
         except UserDetail.DoesNotExist:
             raise Http404("User details not found")
 
@@ -68,8 +68,8 @@ class UserDetailAPI(APIView):
             ),
         ]
     )
-    def put(self, request, pk):
-        user_detail = self.__get_user_detail(pk)
+    def put(self, request, user_id):
+        user_detail = self.__get_user_detail(user_id)
         serializer = UserDetailSerializer(user_detail, data=request.data)
         if serializer.is_valid():
             serializer.save()
