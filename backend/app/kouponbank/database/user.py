@@ -10,11 +10,9 @@ class User(models.Model):
     email = models.CharField(max_length=50, unique=True, default="")
 
 class UserSerializer(serializers.ModelSerializer):
-    user_detail = UserDetailSerializer(source="user_details", read_only=True)
-
     class Meta:
         model = User
-        fields = ("username", "password", "email", "user_detail")
+        fields = ("username", "password", "email")
 
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
@@ -22,6 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
             user=user,
             name="",
             gender="",
+            birthday="",
+            location=""
         )
 
         return user

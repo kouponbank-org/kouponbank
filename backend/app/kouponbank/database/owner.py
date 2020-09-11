@@ -20,8 +20,9 @@ class OwnerSerializer(serializers.ModelSerializer):
         OwnerDetail.objects.create(
             owner=owner,
             name="",
-            location="",
-            picture="",
+            gender="",
+            birthday="",
+            location=""
         )
 
         return owner
