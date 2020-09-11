@@ -25,6 +25,11 @@ class BusinessListAPI(APIView):
             return Owner.objects.get(pk=owner_id)
         except Owner.DoesNotExist:
             raise Http404("Owner not found")
+    def __get_owner_detail(self, owner_id):
+        try:
+            return OwnerDetail.objects.get(pk=owner_id)
+        except OwnerDetail.DoesNotExist:
+            raise Http404("ownerDetail not found")
 
     @swagger_auto_schema(
         responses={200: BusinessSerializer(many=True)},
@@ -54,9 +59,11 @@ class BusinessListAPI(APIView):
         ]
     )
     def post(self, request, owner_id):
+        business_owner = self.__get_owner_detail(owner_id)
         serializer = BusinessSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            # This business_owner=business_owner is important in linking the urls
+            serializer.save(business_owner=business_owner)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -65,21 +72,14 @@ class BusinessAPI(APIView):
         responses={200: BusinessSerializer(many=True)},
     )
     def get(self, request, owner_id, business_id):
-        print(owner_id)
-        print(business_id)
-        business = self.__get_owner_detail(owner_id)
-        serializer = BusinessSerializer(business.businesses.objects.get(pk=business_id))
+        business = self.__get_business(business_id)
+        serializer = BusinessSerializer(business)
         return Response(serializer.data)
     def __get_business(self, business_id):
         try:
             return Business.objects.get(pk=business_id)
         except Business.DoesNotExist:
             raise Http404("Business not found")
-    def __get_owner_detail(self, owner_id):
-        try:
-            return OwnerDetail.objects.get(pk=owner_id)
-        except OwnerDetail.DoesNotExist:
-            raise Http404("Owner not found")
 
     @swagger_auto_schema(
         responses={200: BusinessSerializer(many=True)},

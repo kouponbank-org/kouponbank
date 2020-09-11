@@ -10,8 +10,6 @@ class OwnerDetail(models.Model):
     picture = models.CharField(max_length=50, unique=False)
 
 class OwnerDetailSerializer(serializers.ModelSerializer):
-    #businesses = BusinessSerializer(source="business", required=False)
-
     class Meta:
         model = OwnerDetail
         fields = ("name", "location", "picture")

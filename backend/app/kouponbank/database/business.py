@@ -1,6 +1,7 @@
 from django.db import models
 from rest_framework import serializers
 
+import kouponbank.database.owner_detail
 
 class Business(models.Model):
     business_owner = models.ForeignKey(to="kouponbank.OwnerDetail", on_delete=models.CASCADE, related_name="business", null=True)
@@ -12,7 +13,3 @@ class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
         model = Business
         fields = ("business_name", "description", "location")
-
-    def create(self, validated_data):
-        business = Business.objects.create(**validated_data)
-        return business
