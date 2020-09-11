@@ -1,10 +1,10 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from drf_yasg import openapi
-from drf_yasg.utils import swagger_auto_schema
 from kouponbank.database.owner import Owner, OwnerSerializer
 from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
 
@@ -109,4 +109,4 @@ class OwnerAPI(APIView):
         if user is None:
             raise Http404("Owner not found")
         user.delete()
-        return
+        return Response(status=status.HTTP_204_NO_CONTENT)

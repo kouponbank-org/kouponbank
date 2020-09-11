@@ -115,4 +115,4 @@ class UserAPI(APIView):
         if user is None:
             raise Http404("User not found")
         user.delete()
-        return
+        return Response(status=status.HTTP_204_NO_CONTENT)

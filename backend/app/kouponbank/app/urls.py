@@ -4,11 +4,12 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from kouponbank.endpoints import (owner_api, owner_detail_api, user_api,
-                                  user_detail_api, business_api)
+from kouponbank.endpoints import (business_api, menu_api, owner_api,
+                                  owner_detail_api, user_api, user_detail_api)
 
 from .router import router
 
+# Swagger View
 schema_view = get_schema_view(
    openapi.Info(
       title="Koupon Bank API",
@@ -19,7 +20,7 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
-#URL Directory
+#URL Route Directory
 urlpatterns = [
    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    path('admin/', admin.site.urls),
@@ -31,4 +32,6 @@ urlpatterns = [
    path('owners/<int:owner_id>/detail/', owner_detail_api.OwnerDetailAPI.as_view()),
    path('owners/<int:owner_id>/detail/business/', business_api.BusinessListAPI.as_view()),
    path('owners/<int:owner_id>/detail/business/<int:business_id>/', business_api.BusinessAPI.as_view()),
+   path('owners/<int:owner_id>/detail/business/<int:business_id>/menu/', menu_api.MenuListAPI.as_view()),
+   path('owners/<int:owner_id>/detail/business/<int:business_id>/menu/<int:menu_id>', menu_api.MenuAPI.as_view()),
 ]
