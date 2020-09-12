@@ -7,7 +7,7 @@ from kouponbank.database.user_detail import UserDetail, UserDetailSerializer
 class User(models.Model):
     username = models.CharField(max_length=50, unique=True, default="")
     password = models.CharField(max_length=50, unique=False, default="")
-    email = models.CharField(max_length=50, unique=True, default="")
+    email = models.EmailField(max_length=254, unique=True, default="")
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

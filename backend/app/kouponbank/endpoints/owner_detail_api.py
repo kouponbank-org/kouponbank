@@ -23,6 +23,20 @@ class OwnerDetailAPI(APIView):
                 required=True
             ),
             openapi.Parameter(
+                'gender',
+                openapi.IN_QUERY,
+                description="Gets the gender of the owner",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'birthday',
+                openapi.IN_QUERY,
+                description="Gets the birthday of the owner",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
                 'location',
                 openapi.IN_QUERY,
                 description="Gets the location of the owner",
@@ -61,6 +75,20 @@ class OwnerDetailAPI(APIView):
                 'name',
                 openapi.IN_QUERY,
                 description="Updates the name of the owner",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'gender',
+                openapi.IN_QUERY,
+                description="Updates the gender of the owner",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'birthday',
+                openapi.IN_QUERY,
+                description="Updates the birthday of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),

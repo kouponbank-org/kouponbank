@@ -6,9 +6,9 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from kouponbank.endpoints import (business_api, coupon_api, menu_api,
-                                  owner_api, owner_detail_api, user_api,
-                                  user_detail_api)
+from kouponbank.endpoints import (business_api, coupon_api, login_api,
+                                  menu_api, owner_api, owner_detail_api,
+                                  user_api, user_detail_api)
 
 from .router import router
 
@@ -27,6 +27,8 @@ schema_view = get_schema_view(
 urlpatterns = [
    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    path('admin/', admin.site.urls),
+   path('login/user/', login_api.LoginUserApi.as_view()),
+   path('login/owner/', login_api.LoginOwnerApi.as_view()),
    path('users/', user_api.UserListAPI.as_view()),
    path('users/<int:user_id>/', user_api.UserAPI.as_view()),
    path('users/<int:user_id>/detail/', user_detail_api.UserDetailAPI.as_view()),

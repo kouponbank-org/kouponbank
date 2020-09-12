@@ -42,6 +42,13 @@ class MenuListAPI(APIView):
                 description="Creates the description of the menu",
                 type=openapi.TYPE_STRING,
                 required=True
+            ),
+            openapi.Parameter(
+                "menu picture",
+                openapi.IN_QUERY,
+                description="Creates the menu picture of the menu",
+                type=openapi.TYPE_STRING,
+                required=True
             )
         ]
     )
@@ -82,6 +89,13 @@ class MenuAPI(APIView):
                 "description",
                 openapi.IN_QUERY,
                 description="Updates the description of the menu",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                "menu picture",
+                openapi.IN_QUERY,
+                description="Updates the menu picture of the menu",
                 type=openapi.TYPE_STRING,
                 required=True
             )

@@ -18,7 +18,7 @@ class Menu(models.Model):
         null=True
     )
     menu_title = models.CharField(max_length=50, default="")
-    description = models.TextField(default="")
+    description = models.TextField(default="", blank=True)
     menu_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,

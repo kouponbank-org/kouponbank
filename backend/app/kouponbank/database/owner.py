@@ -7,7 +7,7 @@ from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
 class Owner(models.Model):
     username = models.CharField(max_length=50, unique=True, default="")
     password = models.CharField(max_length=50, unique=False, default="")
-    email = models.CharField(max_length=50, unique=True, default="")
+    email = models.EmailField(max_length=254, unique=True, default="")
 
 class OwnerSerializer(serializers.ModelSerializer):
     #owner_detail = OwnerDetailSerializer(source="owner_details", read_only=True)

@@ -38,6 +38,13 @@ class BusinessListAPI(APIView):
                 required=True
             ),
             openapi.Parameter(
+                "business email",
+                openapi.IN_QUERY,
+                description="Creates the business email of the business",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
                 "description",
                 openapi.IN_QUERY,
                 description="Creates the description of the business",
@@ -50,7 +57,14 @@ class BusinessListAPI(APIView):
                 description="Creates the location of the business",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
+            openapi.Parameter(
+                "business picture",
+                openapi.IN_QUERY,
+                description="Creates the business picture of the business",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
         ]
     )
     def post(self, request, owner_id):
@@ -93,6 +107,13 @@ class BusinessAPI(APIView):
                 required=True
             ),
             openapi.Parameter(
+                "business email",
+                openapi.IN_QUERY,
+                description="Updates the business email of the business",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
                 "description",
                 openapi.IN_QUERY,
                 description="Updates the description of the business",
@@ -105,7 +126,14 @@ class BusinessAPI(APIView):
                 description="Updates the location of the business",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
+            openapi.Parameter(
+                "business picture",
+                openapi.IN_QUERY,
+                description="Updates the business picture of the business",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
         ]
     )
     def put(self, request, owner_id, business_id):

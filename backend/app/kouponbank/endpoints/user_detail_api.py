@@ -18,17 +18,38 @@ class UserDetailAPI(APIView):
             openapi.Parameter(
                 'name',
                 openapi.IN_QUERY,
-                description="Updates the name of the user",
+                description="Gets the name of the user",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
                 'gender',
                 openapi.IN_QUERY,
-                description="Updates the gender of the user",
+                description="Gets the gender of the user",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
+            openapi.Parameter(
+                'birthday',
+                openapi.IN_QUERY,
+                description="Gets the birthday of the userr",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'location',
+                openapi.IN_QUERY,
+                description="Gset the location of the user",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'picture',
+                openapi.IN_QUERY,
+                description="Gets the picture of the user",
+                type=openapi.TYPE_STRING,
+                required=True
+            )
         ]
     )
     # This allows us to get UserDetail @ /users/user_id(pk)/detail
@@ -66,6 +87,27 @@ class UserDetailAPI(APIView):
                 type=openapi.TYPE_STRING,
                 required=True
             ),
+            openapi.Parameter(
+                'birthday',
+                openapi.IN_QUERY,
+                description="Updates the birthday of the userr",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'location',
+                openapi.IN_QUERY,
+                description="Updates the location of the user",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'picture',
+                openapi.IN_QUERY,
+                description="Updates the picture of the user",
+                type=openapi.TYPE_STRING,
+                required=True
+            )
         ]
     )
     def put(self, request, user_id):
