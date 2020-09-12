@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from rest_framework import serializers
 
@@ -6,6 +8,7 @@ def upload_to(instance, filename):
     return '/'.join([str(instance.owner.username), filename])
 
 class OwnerDetail(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     owner = models.OneToOneField(
         to="kouponbank.Owner",
         on_delete=models.CASCADE,
@@ -25,6 +28,7 @@ class OwnerDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = OwnerDetail
         fields = (
+            "id",
             "name",
             "gender",
             "birthday",
