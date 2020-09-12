@@ -9,3 +9,4 @@ drf-yasg
 pylint
 pylint-django
 isort
+Pillow
