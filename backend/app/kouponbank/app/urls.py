@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from drf_yasg import openapi
@@ -38,3 +40,6 @@ urlpatterns = [
    path('owners/<int:owner_id>/detail/business/<int:business_id>/coupon/', coupon_api.CouponListAPI.as_view()),
    path('owners/<int:owner_id>/detail/business/<int:business_id>/coupon/<int:coupon_id/', coupon_api.CouponAPI.as_view()),
 ]
+
+# For Photos
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

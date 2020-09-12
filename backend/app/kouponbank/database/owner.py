@@ -1,6 +1,7 @@
 from django.db import models
-from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
 from rest_framework import serializers
+
+from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
 
 
 class Owner(models.Model):
@@ -13,7 +14,11 @@ class OwnerSerializer(serializers.ModelSerializer):
     #To include owner_detail in the db and api list, add 'owner_detail' to fields
     class Meta:
         model = Owner
-        fields = ("username", "password", "email")
+        fields = (
+            "username",
+            "password",
+            "email"
+        )
 
     def create(self, validated_data):
         owner = Owner.objects.create(**validated_data)
