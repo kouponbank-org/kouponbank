@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
@@ -19,6 +19,20 @@ class OwnerDetailAPI(APIView):
                 'name',
                 openapi.IN_QUERY,
                 description="Gets the name of the owner",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'gender',
+                openapi.IN_QUERY,
+                description="Gets the gender of the owner",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'birthday',
+                openapi.IN_QUERY,
+                description="Gets the birthday of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
@@ -61,6 +75,20 @@ class OwnerDetailAPI(APIView):
                 'name',
                 openapi.IN_QUERY,
                 description="Updates the name of the owner",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'gender',
+                openapi.IN_QUERY,
+                description="Updates the gender of the owner",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                'birthday',
+                openapi.IN_QUERY,
+                description="Updates the birthday of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),

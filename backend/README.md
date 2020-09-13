@@ -9,7 +9,6 @@ Go to the backend directory and follow the instructions:
 #### On macOS and Linux:
 ```
 python3 -m pip install --user virtualenv
-
 ```
 #### On Windows:
 ```
@@ -18,6 +17,7 @@ py -m pip install --user virtualenv
 <br>
 
 ### Creating a virtual environment:
+'kouponbank/backend' 다이렉토리에서
 
 #### On macOS and Linux:
 ```

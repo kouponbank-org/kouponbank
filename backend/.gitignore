@@ -127,7 +127,11 @@ pipenv/
 db.sqlite3
 
 # Migrations
-app/kouponbank/migrations/
+0001_initial.py
+*_auto_*
 
 # DB
 app/kouponbank/db.sqlite3
+
+# media
+app/kouponbank/media/

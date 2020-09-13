@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
@@ -56,7 +56,14 @@ class CouponListAPI(APIView):
                 description="Creates the coupon code of the coupon",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
+            openapi.Parameter(
+                "coupon picture",
+                openapi.IN_QUERY,
+                description="Creates the coupon picture of the coupon",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
         ]
     )
     def post(self, request, owner_id, business_id):
@@ -112,7 +119,14 @@ class CouponAPI(APIView):
                 description="Updates the coupon code of the coupon",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
+            openapi.Parameter(
+                "coupon picture",
+                openapi.IN_QUERY,
+                description="Updates the coupon picture of the coupon",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
         ]
     )
     def put(self, request, owner_id, business_id, coupon_id):

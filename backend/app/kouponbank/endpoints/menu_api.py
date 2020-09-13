@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -42,6 +43,13 @@ class MenuListAPI(APIView):
                 description="Creates the description of the menu",
                 type=openapi.TYPE_STRING,
                 required=True
+            ),
+            openapi.Parameter(
+                "menu picture",
+                openapi.IN_QUERY,
+                description="Creates the menu picture of the menu",
+                type=openapi.TYPE_STRING,
+                required=True
             )
         ]
     )
@@ -82,6 +90,13 @@ class MenuAPI(APIView):
                 "description",
                 openapi.IN_QUERY,
                 description="Updates the description of the menu",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                "menu picture",
+                openapi.IN_QUERY,
+                description="Updates the menu picture of the menu",
                 type=openapi.TYPE_STRING,
                 required=True
             )
