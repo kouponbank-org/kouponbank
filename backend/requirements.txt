@@ -5,6 +5,7 @@ django-rest-knox
 django-cors-headers
 django-cors-middleware
 django-extensions
+django-uuidfield
 drf-yasg
 pylint
 pylint-django
