@@ -20,7 +20,6 @@ class Coupon(models.Model):
         related_name="business_coupon",
         null=True
     )
-    business_key = models.IntegerField()
     coupon_title = models.CharField(max_length=50, default="")
     description = models.TextField(default="", blank=True)
     coupon_code = models.CharField(max_length=50, default="", unique=True)
@@ -35,7 +34,6 @@ class CouponSerializer(serializers.ModelSerializer):
         model = Coupon
         fields = (
             "id",
-            "business_key",
             "coupon_title",
             "description",
             "coupon_code",
