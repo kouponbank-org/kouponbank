@@ -23,7 +23,7 @@ export const UserSignUpPage = (props: Prop) => {
 
     const createNewUserClick = (event): void => {
         props.createNewUser(api, userCredentials.username, userCredentials.password, userCredentials.email).then(() => {
-            history.push('/')
+            history.push("/")
         });
         event.preventDefault();
     };
@@ -59,12 +59,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        // 저희가 이 파일에서 사용할 Function을 만드는거에요
         createNewUser: (
             api: KouponBankApi,
             username: string,
             password: string | number,
             email: string | number
         ) => {
+            // API Call이에요 -> UserReducer에 있는 export const createNewUser.
             return createNewUser(api, username, password, email, dispatch)
         }
     };
