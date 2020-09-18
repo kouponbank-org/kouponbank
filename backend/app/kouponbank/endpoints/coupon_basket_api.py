@@ -1,94 +1,94 @@
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from kouponbank.database.business import Business, BusinessSerializer
-from kouponbank.database.coupon import Coupon, CouponSerializer
+from kouponbank.database.business import Business
+from kouponbank.database.coupon import Coupon
+from kouponbank.database.coupon_basket import (CouponBasket,
+                                               CouponBasketSerializer)
+from kouponbank.database.user import User
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-class CouponListAPI(APIView):
+class CouponBasketListAPI(APIView):
     @swagger_auto_schema(
-        responses={200: CouponSerializer(many=True)}
+        responses={200: CouponBasketSerializer(many=True)}
     )
-    def get(self, request, owner_id, business_id):
-        business = self.__get_business(business_id)
-        coupons = business.business_coupon
-        serializer = CouponSerializer(coupons, many=True)
+    def get(self, request, user_id):
+        user = self.__get_user(user_id)
+        coupons = user.user_coupon_basket
+        serializer = CouponBasketSerializer(coupons, many=True)
         return Response(serializer.data)
-    def __get_business(self, business_id):
+    def __get_user(self, user_id):
         try:
-            return Business.objects.get(pk=business_id)
-        except Business.DoesNotExist:
-            raise Http404("Business not found")
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            raise Http404("User not found")
 
     @swagger_auto_schema(
-        responses={200: CouponSerializer(many=True)},
+        responses={200: CouponBasketSerializer(many=True)},
         manual_parameters=
         [
             openapi.Parameter(
                 "business key",
                 openapi.IN_QUERY,
-                description="Configures the business_id of the coupon",
+                description="Configures the business_id of the coupon that user downloads",
                 type=openapi.TYPE_INTEGER,
                 required=True
             ),
             openapi.Parameter(
-                "coupon title",
+                "business name",
                 openapi.IN_QUERY,
-                description="Creates the coupon title of the coupon",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                "description",
-                openapi.IN_QUERY,
-                description="Creates the description of the coupon",
+                description="Configures the business name of the coupon that user downloads",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
                 "coupon code",
                 openapi.IN_QUERY,
-                description="Creates the coupon code of the coupon",
+                description="Configures the coupon code of the coupon that user downloads",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                "coupon picture",
+                "coupon_title",
                 openapi.IN_QUERY,
-                description="Creates the coupon picture of the coupon",
+                description="Creates the description of the coupon",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
         ]
     )
-    def post(self, request, owner_id, business_id):
-        business = self.__get_business(business_id)
-        serializer = CouponSerializer(data=request.data)
+    def post(self, request, user_id):
+        user = self.__get_user(user_id)
+        serializer = CouponBasketSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(business=business)
+            serializer.save(
+                coupon_id=request.data["coupon_id"],
+                user=user,
+                business_key=request.data["business_key"]
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CouponAPI(APIView):
+class CouponBasketAPI(APIView):
     @swagger_auto_schema(
-        responses={200: CouponSerializer(many=True)},
+        responses={200: CouponBasketSerializer(many=True)},
     )
-    def get(self, request, owner_id, business_id, coupon_id):
+    def get(self, request, user_id, coupon_id):
         coupon = self.__get_coupon(coupon_id)
-        serializer = CouponSerializer(coupon)
+        serializer = CouponBasketSerializer(coupon)
         return Response(serializer.data)
     def __get_coupon(self, coupon_id):
         try:
-            return Coupon.objects.get(pk=coupon_id)
-        except Coupon.DoesNotExist:
+            return CouponBasket.objects.get(pk=coupon_id)
+        except CouponBasket.DoesNotExist:
             raise Http404("Coupon not found")
 
     @swagger_auto_schema(
-        responses={200: CouponSerializer(many=True)},
+        responses={200: CouponBasketSerializer(many=True)},
         manual_parameters=
         [
             openapi.Parameter(
@@ -128,18 +128,18 @@ class CouponAPI(APIView):
             ),
         ]
     )
-    def put(self, request, owner_id, business_id, coupon_id):
+    def put(self, request, user_id, coupon_id):
         coupon = self.__get_coupon(coupon_id)
-        serializer = CouponSerializer(coupon, data=request.data)
+        serializer = CouponBasketSerializer(coupon, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
-        responses={200: CouponSerializer(many=True)}
+        responses={200: CouponBasketSerializer(many=True)}
     )
-    def delete(self, request, owner_id, business_id, coupon_id):
+    def delete(self, request, user_id, coupon_id):
         coupon = self.__get_coupon(coupon_id)
         if coupon is None:
             raise Http404("Coupon not found")
