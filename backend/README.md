@@ -76,6 +76,15 @@ http://127.0.0.1:8000/
 
 <br>
 
+## TESTING
+
+To test the code, go to backend/app:
+```
+python manage.py test kouponbank
+```
+
+<br>
+
 ## ACCESS
 To access swagger: http://127.0.0.1:8000/
 

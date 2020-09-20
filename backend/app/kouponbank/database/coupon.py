@@ -20,9 +20,9 @@ class Coupon(models.Model):
         related_name="business_coupon",
         null=True
     )
-    coupon_title = models.CharField(max_length=50, default="")
-    description = models.TextField(default="", blank=True)
-    coupon_code = models.CharField(max_length=50, default="", unique=True)
+    coupon_title = models.CharField(max_length=50, blank=False)
+    description = models.TextField(blank=False)
+    coupon_code = models.CharField(max_length=50, unique=True, blank=False)
     coupon_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,

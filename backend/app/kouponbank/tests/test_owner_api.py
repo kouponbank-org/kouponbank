@@ -4,8 +4,8 @@ from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
 
-class UserAPITest(APITestCase):
-    test_user = {
+class OwnerAPITest(APITestCase):
+    test_owner = {
         "username": "Test Username",
         "email": "kouponbank@gmail.com",
         "password": "Test Password"
@@ -15,63 +15,63 @@ class UserAPITest(APITestCase):
         self.client = APIClient()
 
     def test_get(self):
-        """Tests GET at /users/<uuid:user_id>/"""
+        """Tests GET at /owners/<uuid:owner_id>/"""
         post_response = self.client.post(
-            "/users/",
-            self.test_user,
+            "/owners/",
+            self.test_owner,
             format="json"
         )
         get_response = self.client.get(
-            f"/users/{json.loads(post_response.content)['id']}/"
+            f"/owners/{json.loads(post_response.content)['id']}/"
         )
         self.assertEqual(post_response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(get_response.status_code, status.HTTP_200_OK)
         
     def test_get_invalid_id(self):
-        """Tests GET at /users/<uuid:user_id>/ with invalid id"""
-        get_response = self.client.get("/users/0/")
+        """Tests GET at /owners/<uuid:owner_id>/ with invalid id"""
+        get_response = self.client.get("/owners/0/")
         self.assertEqual(get_response.status_code, status.HTTP_404_NOT_FOUND)
         
     def test_get_all(self):
-        """Tests GET at /users/"""
-        get_response = self.client.get("/users/")
+        """Tests GET at /owners/"""
+        get_response = self.client.get("/owners/")
         self.assertEqual(json.loads(get_response.content), [])
 
     def test_post(self):
-        """Tests POST at /users/"""
+        """Tests POST at /owners/"""
         post_response = self.client.post(
-            "/users/",
-            self.test_user,
+            "/owners/",
+            self.test_owner,
             format="json"
         )
         response = json.loads(post_response.content)
-        self.assertEqual(response['username'], self.test_user['username'])
+        self.assertEqual(response['username'], self.test_owner['username'])
 
     def test_post_invalid_request(self):
-        """Tests POST at /users/ with invalid request body"""
+        """Tests POST at /owners/ with invalid request body"""
         post_response = self.client.post(
-            "/users/",
+            "/owners/",
             {},
             format="json"
         )
         self.assertEqual(post_response.status_code, status.HTTP_400_BAD_REQUEST)
     
     def test_put(self):
-        """Tests PUT at /users/<uuid:user_id>/"""
-        updated_user = {
+        """Tests PUT at /owners/<uuid:owner_id>/"""
+        updated_owner = {
             "username": "Updated User",
             "email": "info@kouponbank.com",
             "password": "Updated Password"
         }
         post_response = self.client.post(
-            "/users/",
-            self.test_user,
+            "/owners/",
+            self.test_owner,
             format="json"
         )
-        updated_user['id'] = json.loads(post_response.content)['id']
+        updated_owner['id'] = json.loads(post_response.content)['id']
         put_response = self.client.put(
-            f"/users/{json.loads(post_response.content)['id']}/", 
-            updated_user,
+            f"/owners/{json.loads(post_response.content)['id']}/", 
+            updated_owner,
             format="json"
         )
         for key in json.loads(post_response.content).keys():
@@ -87,50 +87,50 @@ class UserAPITest(APITestCase):
                 )
     
     def test_put_invalid_id(self):
-        """Tests PUT at /users/<uuid:user_id>/ with invalid user_id"""
-        updated_user = {
+        """Tests PUT at /owners/<uuid:owner_id>/ with invalid owner_id"""
+        updated_owner = {
             "username": "Updated User",
             "email": "info@kouponbank.com",
             "password": "Updated Password"
         }
         put_response = self.client.put(
-            "/users/0/", 
-            updated_user,
+            "/owners/0/", 
+            updated_owner,
             format="json"
         )
         self.assertEqual(put_response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_put_invalid_request(self):
-        """Tests PUT at /users/<uuid:user_id>/ with invalid request body"""
+        """Tests PUT at /owners/<uuid:owner_id>/ with invalid request body"""
         post_response = self.client.post(
-            "/users/",
-            self.test_user,
+            "/owners/",
+            self.test_owner,
             format="json"
         )
         put_response = self.client.put(
-            f"/users/{json.loads(post_response.content)['id']}/", 
+            f"/owners/{json.loads(post_response.content)['id']}/", 
             {},
             format="json"
         )
         self.assertEqual(put_response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_delete(self):
-        """Tests DELETE at /users/<uuid:user_id>/"""
+        """Tests DELETE at /owners/<uuid:owner_id>/"""
         post_response = self.client.post(
-            "/users/",
-            self.test_user,
+            "/owners/",
+            self.test_owner,
             format="json"
         )
         delete_response = self.client.delete(
-            f"/users/{json.loads(post_response.content)['id']}/"
+            f"/owners/{json.loads(post_response.content)['id']}/"
         )
         self.assertEqual(delete_response.status_code, status.HTTP_204_NO_CONTENT)
         get_response = self.client.get(
-            f"/users/{json.loads(post_response.content)['id']}/"
+            f"/owners/{json.loads(post_response.content)['id']}/"
         )
         self.assertEqual(get_response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_invalid_id(self):
-        """Tests DELETE at /users/<uuid:user_id>/ with invalid id"""
-        delete_response = self.client.delete("/users/0/")
+        """Tests DELETE at /owners/<uuid:owner_id>/ with invalid id"""
+        delete_response = self.client.delete("/owners/0/")
         self.assertEqual(delete_response.status_code, status.HTTP_404_NOT_FOUND)

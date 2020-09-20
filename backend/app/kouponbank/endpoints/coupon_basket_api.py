@@ -1,15 +1,16 @@
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from kouponbank.database.business import Business
 from kouponbank.database.coupon import Coupon
 from kouponbank.database.coupon_basket import (CouponBasket,
                                                CouponBasketSerializer)
 from kouponbank.database.user import User
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 
 class CouponBasketListAPI(APIView):
@@ -86,55 +87,6 @@ class CouponBasketAPI(APIView):
             return CouponBasket.objects.get(pk=coupon_id)
         except CouponBasket.DoesNotExist:
             raise Http404("Coupon not found")
-
-    @swagger_auto_schema(
-        responses={200: CouponBasketSerializer(many=True)},
-        manual_parameters=
-        [
-            openapi.Parameter(
-                "business key",
-                openapi.IN_QUERY,
-                description="Configures the business_id of the coupon",
-                type=openapi.TYPE_INTEGER,
-                required=True
-            ),
-            openapi.Parameter(
-                "coupon title",
-                openapi.IN_QUERY,
-                description="Updates the coupon title of the coupon",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                "description",
-                openapi.IN_QUERY,
-                description="Updates the description of the coupon",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                "coupon code",
-                openapi.IN_QUERY,
-                description="Updates the coupon code of the coupon",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                "coupon picture",
-                openapi.IN_QUERY,
-                description="Updates the coupon picture of the coupon",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-        ]
-    )
-    def put(self, request, user_id, coupon_id):
-        coupon = self.__get_coupon(coupon_id)
-        serializer = CouponBasketSerializer(coupon, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
         responses={200: CouponBasketSerializer(many=True)}

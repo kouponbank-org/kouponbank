@@ -46,17 +46,17 @@ class LoginUserApi(APIView):
         )
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def __login_user(self, username, email, password):
         try:
-            return Owner.objects.get(
+            return User.objects.get(
                 username=username,
                 email=email,
                 password=password
             ) 
-        except Owner.DoesNotExist:
-            raise Http404("Owner Not Found")
+        except User.DoesNotExist:
+            raise Http404("User Not Found")
         
 class LoginOwnerApi(APIView):
     @swagger_auto_schema(
@@ -94,7 +94,7 @@ class LoginOwnerApi(APIView):
         )
         serializer = OwnerSerializer(owner, data=request.data)
         if serializer.is_valid():
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def __login_owner(self, username, email, password):
         try:
