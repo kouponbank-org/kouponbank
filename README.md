@@ -102,9 +102,17 @@ python manage.py reset_db
 
 ### Backend 실행:
 Backend를 실행하시려면 <br>
-아래 코드를 'backend/app' 다이렉토리에서 아래 코드를 Run 하세요 <br>
+아래 코드를 'backend/app' 다이렉토리에서 Run 하세요 <br>
 ```
 python manage.py runserver
+```
+
+<br>
+
+Backend Testing을 시작하시려면 <br>
+아래 코드를 'backend/app' 다이렉토리에서 Run 하세요 <br>
+```
+python manage.py test kouponbank
 ```
 
 <br>

@@ -13,9 +13,9 @@ class CouponBasket(models.Model):
         null=True
     )
     business_key = models.UUIDField(editable=False)
-    business_name = models.CharField(max_length=50)
-    coupon_code = models.CharField(max_length=50, default="", unique=True)
-    coupon_title = models.CharField(max_length=50)
+    business_name = models.CharField(max_length=50, blank=False)
+    coupon_code = models.CharField(max_length=50, blank=False, unique=True)
+    coupon_title = models.CharField(max_length=50, blank=False)
 
 
 class CouponBasketSerializer(serializers.ModelSerializer):

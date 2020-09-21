@@ -19,16 +19,14 @@ class Business(models.Model):
         related_name="business",
         null=True
     )
-    business_name = models.CharField(max_length=50, default="")
+    business_name = models.CharField(max_length=50, blank=False)
     business_email = models.EmailField(
         max_length=254,
         unique=True,
-        default="",
-        blank=True,
-        null=True
+        blank=False,
     )
-    description = models.TextField(default="", blank=True)
-    location = models.CharField(max_length=50, default="", blank=True)
+    description = models.TextField(blank=False)
+    location = models.CharField(max_length=50, blank=False)
     business_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,
