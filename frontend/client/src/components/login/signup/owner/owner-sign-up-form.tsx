@@ -1,11 +1,9 @@
-// React Components
-import React, { useContext, useState } from "react";
-
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import React from "react";
 import { User } from "../../../../api/kb-types";
+import './owner-sign-up-page.scss';
 
-// Material UI or CSS Components
-import { Grid, TextField, Button, Typography } from "@material-ui/core";
-import './owner-sign-up-page.css';
+
 
 export interface Prop {
     ownerCredentials: User;

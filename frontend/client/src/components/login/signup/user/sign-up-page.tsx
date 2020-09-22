@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
 import { createNewUser } from "../../../../store/user/user-reducer";
-import { ApiContext } from "../../../base-page-router";
+import { ApiContext, UrlPaths } from "../../../base-page-router";
 import { SignUpPageForm } from "./sign-up-form";
 import './user-sign-up-page.scss';
 
@@ -23,13 +23,13 @@ export const UserSignUpPage = (props: Prop) => {
 
     const createNewUserClick = (event): void => {
         props.createNewUser(api, userCredentials.username, userCredentials.password, userCredentials.email).then(() => {
-            history.push("/")
+            history.push(UrlPaths.Home)
         });
         event.preventDefault();
     };
 
     const ownerSignUpClick = (event): void => {
-        history.push("/newowneruser");
+        history.push(UrlPaths.OwnerSignUp);
     };
 
     const userCredentialsInput = (event): void => {
