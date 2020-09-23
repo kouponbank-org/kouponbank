@@ -17,13 +17,13 @@ export enum Status {
  * Reducer이 정상적으로 돌아갈려면 필요한 아주 중요한 Interface. 
  */ 
 
-export interface userState {
+export interface UserState {
     user: User;
     fetchStatus: Status;
     updateStatus: Status;
 }
 
-const initialState: userState = {
+const initialState: UserState = {
     user: {
         username: "",
         password: "",
@@ -66,9 +66,9 @@ type Action =   CreateNewUserAction |
  * Reducer가 우리 Global State을 업데이트 시켜준다
  */
 export const reducer = (
-    state: userState = initialState,
+    state: UserState = initialState,
     action: Action
-): userState => {
+): UserState => {
     switch(action.type) {
         case UserActionType.CreateNewUserAction:
             return produce(state, draftState => {

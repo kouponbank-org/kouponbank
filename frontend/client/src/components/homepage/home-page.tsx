@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
-import { ApiContext } from "../base-page-router";
+import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBar } from "../navigation/navigation-bar";
 
 /**
@@ -18,11 +18,11 @@ export const HomePage = (props: Prop) => {
     const history = useHistory();
 
     const clickLoginButton = (event): void => {
-        history.push("/login");
+        history.push(UrlPaths.Login);
     };
 
     const clickUserProfileButton = (event): void => {
-        history.push("/userprofile")
+        history.push(UrlPaths.UserProfile)
     };
 
     return (

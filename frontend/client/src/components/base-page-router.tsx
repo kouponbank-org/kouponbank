@@ -17,6 +17,14 @@ interface Prop {
 
 export const ApiContext = React.createContext(null);
 
+export enum UrlPaths {
+    Home = "/",
+    Login = "/login",
+    UserSignUp = "/usu",
+    OwnerSignUp = "/osu",
+    UserProfile = "profile"
+}
+
 /**
  * Routes the App to the BasePage.
  *
@@ -48,11 +56,11 @@ const BasePageRouter = (props: Prop) => {
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
             <Switch>
-                <Route path="/userprofile" component = {UserProfilePageR} />
-                <Route path="/newowneruser" component = {OwnerSignUpPageR} />
-                <Route path="/newuser" component = {UserSignUpPageR} />
-                <Route path="/login" component={LoginPageR} />
-                <Route exact path="/" component={HomePageR} />
+                <Route path={UrlPaths.UserProfile} component = {UserProfilePageR} />
+                <Route path={UrlPaths.OwnerSignUp} component = {OwnerSignUpPageR} />
+                <Route path={UrlPaths.UserSignUp} component = {UserSignUpPageR} />
+                <Route path={UrlPaths.Login} component={LoginPageR} />
+                <Route exact path={UrlPaths.Home} component={HomePageR} />
             </Switch>
         </ApiContext.Provider>
     );

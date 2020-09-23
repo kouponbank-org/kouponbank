@@ -1,18 +1,15 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-// Koupon Bank Frontend Components
-import { SignUpPageForm } from "./owner-sign-up-form";
-
-// API Components
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
 import { createNewOwner } from "../../../../store/user/user-reducer";
-import { ApiContext } from "../../../base-page-router";
+import { ApiContext, UrlPaths } from "../../../base-page-router";
+import { SignUpPageForm } from "./owner-sign-up-form";
+import './owner-sign-up-page.scss';
 
-// Material UI or CSS Components
-import './owner-sign-up-page.css';
+
+
 
 /**
  * Represents the required properties of the HomePage.
@@ -29,13 +26,13 @@ export const OwnerSignUpPage = (props: Prop) => {
 
     const createNewOwnerClick = (event): void => {
         props.createNewOwner(api, ownerCredentials.username, ownerCredentials.password, ownerCredentials.email).then(() => {
-            history.push('/')
+            history.push(UrlPaths.Home)
         });
         event.preventDefault();
     };
 
     const userSignUpClick = (event): void => {
-        history.push("/newuser");
+        history.push(UrlPaths.UserSignUp);
     };
 
     const ownerCredentialsInput = (event): void => {

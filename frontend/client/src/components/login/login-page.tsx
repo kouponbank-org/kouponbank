@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
-import { ApiContext } from "../base-page-router";
+import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBar } from "../navigation/navigation-bar";
 import { LoginForm } from "./login-form";
 import './login.scss';
@@ -21,7 +21,7 @@ export const LoginPage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
 
     const clickCreateNewUser = (event): void => {
-        history.push("/newuser");
+        history.push(UrlPaths.UserSignUp);
     };
 
     const userCredentialsInput = (event): void => {
@@ -33,7 +33,7 @@ export const LoginPage = (props: Prop) => {
 
     const loginUserClick = (event): void => {
         // does not make calls to API atm.
-        history.push("/")
+        history.push(UrlPaths.Home)
         event.preventDefault();
     }
 
