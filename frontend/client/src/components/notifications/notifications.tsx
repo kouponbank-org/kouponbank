@@ -2,7 +2,7 @@ import { Collapse, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import React from "react";
-import { NotificationType } from "../../store/notifications/notification-reducer";
+import { NotificationType } from "../../store/notification/notification-reducer";
 import "./notifications.scss";
 
 export interface Prop {
