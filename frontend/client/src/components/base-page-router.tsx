@@ -5,7 +5,7 @@ import { KouponBankApi } from "../api/kb-api";
 import { HomePageR } from "./homepage/home-page";
 import { LoginPageR } from "./login/login-page";
 import { OwnerSignUpPageR } from "./login/signup/owner/owner-sign-up-page";
-import { UserSignUpPageR } from "./login/signup/user/sign-up-page";
+import { UserSignUpPageR } from "./login/signup/user/user-sign-up-page";
 import { UserProfilePageR } from "./profile/user-profile-page";
 
 /**
@@ -56,9 +56,9 @@ const BasePageRouter = (props: Prop) => {
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
             <Switch>
-                <Route path={UrlPaths.UserProfile} component = {UserProfilePageR} />
-                <Route path={UrlPaths.OwnerSignUp} component = {OwnerSignUpPageR} />
-                <Route path={UrlPaths.UserSignUp} component = {UserSignUpPageR} />
+                <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
+                <Route path={UrlPaths.OwnerSignUp} component={OwnerSignUpPageR} />
+                <Route path={UrlPaths.UserSignUp} component={UserSignUpPageR} />
                 <Route path={UrlPaths.Login} component={LoginPageR} />
                 <Route exact path={UrlPaths.Home} component={HomePageR} />
             </Switch>

@@ -1,6 +1,8 @@
 import { produce } from "immer";
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
+import { NotificationActionType } from "../notification/actionType";
+import { ShowErrorNotification } from "../notification/notification-reducer";
 import { UserActionType } from "./action-type";
 
 // 액션 Status 트래킹 Enum.
@@ -109,6 +111,11 @@ export const createNewUser = (
             dispatch({
                 type: UserActionType.CreateNewUserFailAction
             });
+            dispatch({
+                type: NotificationActionType.ShowErrorNotification,
+                header: "다시 시도해 주세요",
+                body: err.toString()
+            } as ShowErrorNotification)
         });
     };
 
@@ -132,6 +139,11 @@ export const createNewOwner = (
         dispatch({
             type: UserActionType.CreateNewUserFailAction
         });
+        dispatch({
+            type: NotificationActionType.ShowErrorNotification,
+            header: "다시 시도해 주세요",
+            body: err.toString()
+        } as ShowErrorNotification)
     });
 };
 

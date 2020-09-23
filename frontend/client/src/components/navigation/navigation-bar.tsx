@@ -10,9 +10,9 @@ import React, { ReactElement } from "react";
 import "./navigation-bar.scss";
 
 export interface Prop {
-    title: string;
-    buttonName: string;
-    onClick: (event) => void;
+    title?: string;
+    buttonName?: string;
+    onClick?: (event) => void;
 }
 
 export const NavBar = (props: Prop): ReactElement => {
@@ -25,7 +25,7 @@ export const NavBar = (props: Prop): ReactElement => {
                     </Typography>
                     <div className="search">
                         {
-                            props.title === ("Homepage") ? (  
+                            props.title === ("쿠폰뱅크") ? (  
                                 <Search 
                                 /> &&
                                 <InputBase

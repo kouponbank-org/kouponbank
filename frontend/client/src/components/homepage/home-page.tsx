@@ -28,8 +28,8 @@ export const HomePage = (props: Prop) => {
     return (
         <div>
             <NavBar
-                title={"Homepage"}
-                buttonName={ props.user.username === ("") ? "Login" : "User Profile"}
+                title={"쿠폰뱅크"}
+                buttonName={ props.user.username === ("") ? "로그인" : "나만의 공간"}
                 onClick={ props.user.username === ("") ? clickLoginButton : clickUserProfileButton }
             />
         </div>

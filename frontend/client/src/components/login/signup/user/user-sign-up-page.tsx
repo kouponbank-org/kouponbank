@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
+import { NotificationState } from "../../../../store/notification/notification-reducer";
 import { createNewUser } from "../../../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../../../base-page-router";
-import { SignUpPageForm } from "./sign-up-form";
+import { Notifications } from "../../../notifications/notifications";
+import { SignUpPageForm } from "./user-sign-up-form";
 import './user-sign-up-page.scss';
 
 /**
@@ -14,22 +16,20 @@ import './user-sign-up-page.scss';
 export interface Prop {
     createNewUser: Function;
     user: User;
+    notificationState: NotificationState;
 };
 
 export const UserSignUpPage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const [userCredentials, setUserCredentials] = useState(props.user);
+    const [showNotifications, setShowNotifications] = useState(true);
 
     const createNewUserClick = (event): void => {
         props.createNewUser(api, userCredentials.username, userCredentials.password, userCredentials.email).then(() => {
-            history.push(UrlPaths.Home)
+            history.push(UrlPaths.Home);
         });
         event.preventDefault();
-    };
-
-    const ownerSignUpClick = (event): void => {
-        history.push(UrlPaths.OwnerSignUp);
     };
 
     const userCredentialsInput = (event): void => {
@@ -37,13 +37,20 @@ export const UserSignUpPage = (props: Prop) => {
             ...userCredentials,
             [event.target.name]: event.target.value
         });
-    }; 
+    };
 
     return (
         <div className="background">
+            <Notifications
+                onClose={() => {setShowNotifications(false)}}
+                showNotifications={showNotifications}
+                displayNotification={props.notificationState.displayNotification}
+                notificationType={props.notificationState.notificationType}
+                notificationHeader={props.notificationState.notificationHeader}
+                notificationBody={props.notificationState.notificationBody}
+            />
             <SignUpPageForm 
                 userCredentials={userCredentials}
-                ownerSignUpClick={ownerSignUpClick}
                 createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}
             />
@@ -53,7 +60,8 @@ export const UserSignUpPage = (props: Prop) => {
 
 const mapStateToProps = state => {
     return {
-        user: state.userReducer.user
+        user: state.userReducer.user,
+        notificationState: state.notificationReducer
     };
 };
 

@@ -21,19 +21,19 @@ const initialState: NotificationState = {
 };
 
 
-interface ShowSuccessNotification {
+export interface ShowSuccessNotification {
     type: NotificationActionType.ShowSuccessNotification;
     header: string | JSX.Element;
     body: string | JSX.Element;
 }
 
-interface ShowErrorNotification {
+export interface ShowErrorNotification {
     type: NotificationActionType.ShowErrorNotification;
     header: string | JSX.Element;
     body: string | JSX.Element;
 }
 
-interface HideNotification {
+export interface HideNotification {
     type: NotificationActionType.HideNotification;
 }
 

@@ -7,7 +7,7 @@ import "./notifications.scss";
 
 export interface Prop {
     onClose?: () => void;
-    showBaseModal: boolean
+    showNotifications: boolean
     displayNotification: boolean;
     notificationType: NotificationType;
     notificationHeader: string | JSX.Element;
@@ -17,7 +17,7 @@ export interface Prop {
 export const Notifications = (props: Prop) => {
     if (props.displayNotification === true) {
         return <div className="notification">
-          <Collapse in={props.showBaseModal}>
+          <Collapse in={props.showNotifications}>
             <Alert 
               severity={props.notificationType === NotificationType.Failure ? "error" : "success"}
               action={ 

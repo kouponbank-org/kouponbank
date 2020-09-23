@@ -19,11 +19,7 @@ export const LoginPage = (props: Prop) => {
     const [userCredentials, setUserCredentials] = useState(props.user);
     const history = useHistory();
     const api = useContext<KouponBankApi>(ApiContext);
-
-    const clickCreateNewUser = (event): void => {
-        history.push(UrlPaths.UserSignUp);
-    };
-
+    
     const userCredentialsInput = (event): void => {
         setUserCredentials({
             ...userCredentials,
@@ -37,14 +33,22 @@ export const LoginPage = (props: Prop) => {
         event.preventDefault();
     }
 
+    const ownerSignUpClick = (event): void => {
+        history.push(UrlPaths.OwnerSignUp);
+    };
+
+    const userSignUpClick = (event): void => {
+        history.push(UrlPaths.UserSignUp);
+    };
+
     return (
         <div className="background">
             <NavBar 
                 title={"Login Page"}
-                buttonName={"Create New User"}
-                onClick={clickCreateNewUser}
             />
             <LoginForm
+                userSignUpClick={userSignUpClick}
+                ownerSignUpClick={ownerSignUpClick}
                 userCredentials={userCredentials}
                 userCredentialsInput={userCredentialsInput}
                 loginUserClick={loginUserClick}
