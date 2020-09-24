@@ -14,7 +14,12 @@ import './user-sign-up-page.scss';
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    createNewUser: Function;
+    createNewUser: (
+        api: KouponBankApi,
+        username: string,
+        password: string | number,
+        email: string | number,
+    ) => Promise<void>;
     user: User;
     notificationState: NotificationState;
 };
@@ -26,7 +31,13 @@ export const UserSignUpPage = (props: Prop) => {
     const [showNotifications, setShowNotifications] = useState(true);
 
     const createNewUserClick = (event): void => {
-        props.createNewUser(api, userCredentials.username, userCredentials.password, userCredentials.email).then(() => {
+        props.createNewUser(
+            api,
+            userCredentials.username,
+            userCredentials.password,
+            userCredentials.email
+        )
+        .then(() => {
             history.push(UrlPaths.Home);
         });
         event.preventDefault();

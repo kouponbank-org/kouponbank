@@ -115,7 +115,8 @@ export const createNewUser = (
                 type: NotificationActionType.ShowErrorNotification,
                 header: "다시 시도해 주세요",
                 body: err.toString()
-            } as ShowErrorNotification)
+            } as ShowErrorNotification);
+            throw err;
         });
     };
 
@@ -143,7 +144,8 @@ export const createNewOwner = (
             type: NotificationActionType.ShowErrorNotification,
             header: "다시 시도해 주세요",
             body: err.toString()
-        } as ShowErrorNotification)
+        } as ShowErrorNotification);
+        throw err;
     });
 };
 

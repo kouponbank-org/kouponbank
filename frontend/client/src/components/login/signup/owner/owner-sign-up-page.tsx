@@ -17,7 +17,12 @@ import './owner-sign-up-page.scss';
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    createNewOwner: Function;
+    createNewOwner: (
+        api: KouponBankApi,
+        username: string,
+        password: string | number,
+        email: string | number,
+    ) => Promise<void>;
     owner: User;
     notificationState: NotificationState;
 };
@@ -29,7 +34,13 @@ export const OwnerSignUpPage = (props: Prop) => {
     const [showNotifications, setShowNotifications] = useState(true);
 
     const createNewOwnerClick = (event): void => {
-        props.createNewOwner(api, ownerCredentials.username, ownerCredentials.password, ownerCredentials.email).then(() => {
+        props.createNewOwner(
+            api,
+            ownerCredentials.username,
+            ownerCredentials.password,
+            ownerCredentials.email
+        )
+        .then(() => {
             history.push(UrlPaths.Home)
         });
         event.preventDefault();
