@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Dispatch } from "redux";
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
 import { NotificationState } from "../../../../store/notification/notification-reducer";
+import { RootReducer } from "../../../../store/reducer";
 import { createNewUser } from "../../../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../../../base-page-router";
 import { Notifications } from "../../../notifications/notifications";
@@ -69,14 +71,14 @@ export const UserSignUpPage = (props: Prop) => {
     );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
         notificationState: state.notificationReducer
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         // 저희가 이 파일에서 사용할 Function을 만드는거에요
         createNewUser: (

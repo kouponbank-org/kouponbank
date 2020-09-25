@@ -8,6 +8,36 @@ export class KouponBankApi {
         this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
     };
 
+    /*LOGIN API*/
+    async loginUser(
+        username: string,
+        password: string | number,
+        email: string | number
+    ): Promise<User> {
+        return axios.post(this.BASE_URL + "/login/user/", {
+            "username": username,
+            "password": password,
+            "email": email
+        }).then(response => {
+            return response.data
+        });
+    };
+
+    async loginOwner(
+        username: string,
+        password: string | number,
+        email: string | number
+    ): Promise<User> {
+        return axios.post(this.BASE_URL + "/login/owner/", {
+            "username": username,
+            "password": password,
+            "email": email
+        }).then(response => {
+            return response.data
+        });
+    };
+    
+    /*USER API*/
     async getUser(userId: number): Promise<User> {
         return axios.get(this.BASE_URL + "/users/" + {"id": userId}).then(response => {
             return response.data
@@ -30,6 +60,7 @@ export class KouponBankApi {
         });
     };
 
+    /* Owner API */
     async getOwner(userId: number): Promise<User> {
         return axios.get(this.BASE_URL + "/owners/" + {"id": userId}).then(response => {
             return response.data

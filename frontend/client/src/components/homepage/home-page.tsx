@@ -1,46 +1,51 @@
-import React, { useContext } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { KouponBankApi } from "../../api/kb-api";
+import { Dispatch } from "redux";
 import { User } from "../../api/kb-types";
-import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBar } from "../navigation/navigation-bar";
+import { RootReducer } from "../../store/reducer";
+import { UrlPaths } from "../base-page-router";
+import { NavBarR } from "../navigation/navigation-bar";
+import "./homepage.scss";
+
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
+    resetUser: () => void;
     user: User;
 };
 
 export const HomePage = (props: Prop) => {
-    const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
 
-    const clickLoginButton = (event): void => {
-        history.push(UrlPaths.Login);
-    };
-
-    const clickUserProfileButton = (event): void => {
-        history.push(UrlPaths.UserProfile)
-    };
+    const directToUserLogin = (event): void => {
+        history.push(UrlPaths.UserLogin)
+    }
 
     return (
         <div>
-            <NavBar
+            <NavBarR
                 title={"쿠폰뱅크"}
-                buttonName={ props.user.username === ("") ? "로그인" : "나만의 공간"}
-                onClick={ props.user.username === ("") ? clickLoginButton : clickUserProfileButton }
+                buttonName={"로그인"}
+                onClick={directToUserLogin}
             />
         </div>
     );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: RootReducer) => {
     console.log(state)
     return {
         user: state.userReducer.user
     };
 };
 
-export const HomePageR = connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+
+    }
+}
+
+export const HomePageR = connect(mapStateToProps, null)(HomePage);

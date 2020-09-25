@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
+import { loginOwner } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBar } from "../navigation/navigation-bar";
+import { NavBarR } from "../navigation/navigation-bar";
 import { LoginForm } from "./login-form";
 import './login.scss';
 
@@ -12,10 +13,16 @@ import './login.scss';
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
+    loginOwner: (
+        api: KouponBankApi,
+        username: string,
+        password: string | number,
+        email: string | number,
+    ) => Promise<void>;
     user: User;
 };
 
-export const LoginPage = (props: Prop) => {
+export const OwnerLoginPage = (props: Prop) => {
     const [userCredentials, setUserCredentials] = useState(props.user);
     const history = useHistory();
     const api = useContext<KouponBankApi>(ApiContext);
@@ -28,27 +35,31 @@ export const LoginPage = (props: Prop) => {
     }
 
     const loginUserClick = (event): void => {
-        // does not make calls to API atm.
-        history.push(UrlPaths.Home)
+        props.loginOwner(
+            api,
+            userCredentials.username,
+            userCredentials.password,
+            userCredentials.email
+        )
+        .then(() => {
+            history.push(UrlPaths.Home)
+        });
         event.preventDefault();
     }
 
-    const ownerSignUpClick = (event): void => {
-        history.push(UrlPaths.OwnerSignUp);
-    };
+    const toUserLoginClick = (event): void => {
+        history.push(UrlPaths.UserLogin)
+    }
 
-    const userSignUpClick = (event): void => {
-        history.push(UrlPaths.UserSignUp);
-    };
 
     return (
         <div className="background">
-            <NavBar 
+            <NavBarR 
                 title={"Login Page"}
+                buttonName={"유저 로그인하기"}
+                onClick={toUserLoginClick}
             />
             <LoginForm
-                userSignUpClick={userSignUpClick}
-                ownerSignUpClick={ownerSignUpClick}
                 userCredentials={userCredentials}
                 userCredentialsInput={userCredentialsInput}
                 loginUserClick={loginUserClick}
@@ -64,7 +75,16 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-
+    return {
+        loginOwner: (
+            api: KouponBankApi,
+            username: string,
+            password: string | number,
+            email: string | number,
+        ) => {
+            return loginOwner(api, username, password, email, dispatch);
+        }
+    };
 };
 
-export const LoginPageR = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export const OwnerLoginPageR = connect(mapStateToProps, mapDispatchToProps)(OwnerLoginPage);

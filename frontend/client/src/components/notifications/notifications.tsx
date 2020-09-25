@@ -7,7 +7,7 @@ import "./notifications.scss";
 
 export interface Prop {
     onClose?: () => void;
-    showNotifications: boolean
+    showNotifications: boolean;
     displayNotification: boolean;
     notificationType: NotificationType;
     notificationHeader: string | JSX.Element;
@@ -15,26 +15,28 @@ export interface Prop {
 }
 
 export const Notifications = (props: Prop) => {
-    if (props.displayNotification === true) {
+    if (props.displayNotification) {
         return <div className="notification">
-          <Collapse in={props.showNotifications}>
-            <Alert 
-              severity={props.notificationType === NotificationType.Failure ? "error" : "success"}
-              action={ 
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={props.onClose}
+            <Collapse in={props.showNotifications}>
+                <Alert
+                    severity={props.notificationType === NotificationType.Failure ? "error" : "success"}
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={props.onClose}
+                        >
+                            <Close className="close-button"/>
+                        </IconButton>
+                    }
                 >
-                  <Close className="close-button"/>
-                </IconButton>
-              }
-            >
-              <AlertTitle>{props.notificationHeader}</AlertTitle>
-              {props.notificationBody}
-            </Alert>
-          </Collapse>
+                    <AlertTitle>
+                        {props.notificationHeader}
+                    </AlertTitle>
+                    {props.notificationBody}
+                </Alert>
+            </Collapse>
         </div>
     } else {
         return null;

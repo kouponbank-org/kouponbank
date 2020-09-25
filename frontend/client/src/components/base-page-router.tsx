@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
 import { HomePageR } from "./homepage/home-page";
-import { LoginPageR } from "./login/login-page";
+import { OwnerLoginPageR } from "./login/owner-login-page";
 import { OwnerSignUpPageR } from "./login/signup/owner/owner-sign-up-page";
 import { UserSignUpPageR } from "./login/signup/user/user-sign-up-page";
+import { UserLoginPageR } from "./login/user-login-page";
 import { UserProfilePageR } from "./profile/user-profile-page";
 
 /**
@@ -19,7 +20,8 @@ export const ApiContext = React.createContext(null);
 
 export enum UrlPaths {
     Home = "/",
-    Login = "/login",
+    UserLogin = "/ulogin",
+    OwnerLogin = "/ologin",
     UserSignUp = "/usu",
     OwnerSignUp = "/osu",
     UserProfile = "profile"
@@ -59,7 +61,8 @@ const BasePageRouter = (props: Prop) => {
                 <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
                 <Route path={UrlPaths.OwnerSignUp} component={OwnerSignUpPageR} />
                 <Route path={UrlPaths.UserSignUp} component={UserSignUpPageR} />
-                <Route path={UrlPaths.Login} component={LoginPageR} />
+                <Route path={UrlPaths.OwnerLogin} component={OwnerLoginPageR} />
+                <Route path={UrlPaths.UserLogin} component={UserLoginPageR} />
                 <Route exact path={UrlPaths.Home} component={HomePageR} />
             </Switch>
         </ApiContext.Provider>

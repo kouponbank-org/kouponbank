@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Dispatch } from "redux";
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
 import { NotificationState } from "../../../../store/notification/notification-reducer";
+import { RootReducer } from "../../../../store/reducer";
 import { createNewOwner } from "../../../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../../../base-page-router";
 import { Notifications } from "../../../notifications/notifications";
@@ -72,14 +74,14 @@ export const OwnerSignUpPage = (props: Prop) => {
     );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: RootReducer) => {
     return {
         owner: state.userReducer.user,
         notificationState: state.notificationReducer
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         createNewOwner: (
             api: KouponBankApi,
@@ -87,7 +89,7 @@ const mapDispatchToProps = dispatch => {
             password: string | number,
             email: string | number,
         ) => {
-            return createNewOwner(api, username, password, email, dispatch)
+            return createNewOwner(api, username, password, email, dispatch);
         }
     };
 };

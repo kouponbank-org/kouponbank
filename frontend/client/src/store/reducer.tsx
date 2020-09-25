@@ -6,3 +6,5 @@ export const reducer = combineReducers({
     userReducer: userReducer,
     notificationReducer: notificationReducer,
 });
+
+export type RootReducer = ReturnType<typeof reducer>;

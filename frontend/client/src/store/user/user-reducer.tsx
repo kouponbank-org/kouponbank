@@ -1,4 +1,5 @@
 import { produce } from "immer";
+import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
 import { NotificationActionType } from "../notification/actionType";
@@ -40,16 +41,33 @@ const initialState: UserState = {
  */
 
 interface CreateNewUserAction {
-    type: UserActionType.CreateNewUserAction
+    type: UserActionType.CreateNewUserAction;
 }
 
 interface CreateNewUserSuccessAction {
     user: User;
-    type: UserActionType.CreateNewUserSuccessAction
+    type: UserActionType.CreateNewUserSuccessAction;
 }
 
 interface CreateNewUserFailAction {
-    type: UserActionType.CreateNewUserFailAction
+    type: UserActionType.CreateNewUserFailAction;
+}
+
+interface LoginUserAction {
+    type: UserActionType.LoginUserAction;
+}
+
+interface LoginUserSuccessAction {
+    user: User;
+    type: UserActionType.LoginUserSucessAction;
+}
+
+interface LoginUserFailAction {
+    type: UserActionType.LoginUserFailAction;
+}
+
+interface SignOutAction {
+    type: UserActionType.SignOutAction;
 }
 
 /**
@@ -57,9 +75,14 @@ interface CreateNewUserFailAction {
  * "State"은 전에 "KouponBankState"로 설정하였고
  * 이제 우리가 사용할 "Action"들을 설정할시간  
  */
-type Action =   CreateNewUserAction |
-                CreateNewUserSuccessAction |
-                CreateNewUserFailAction;
+type Action =   
+    | CreateNewUserAction 
+    | CreateNewUserSuccessAction 
+    | CreateNewUserFailAction 
+    | LoginUserAction 
+    | LoginUserSuccessAction 
+    | LoginUserFailAction
+    | SignOutAction;
 
 /**
  * Reducer가 필요한 Parameters "state"하고 "action"
@@ -75,21 +98,41 @@ export const reducer = (
         case UserActionType.CreateNewUserAction:
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Running;
-            })
-        case UserActionType.CreateNewUserSuccessAction: {
+            });
+        case UserActionType.CreateNewUserSuccessAction:
             return produce(state, draftState => {
+                draftState.updateStatus = Status.Succeeded;
                 draftState.user = action.user
-            })
-        }
-        case UserActionType.CreateNewUserFailAction: {
+            });
+        case UserActionType.CreateNewUserFailAction:
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Failed;
-            })
-        }
+            });
+        case UserActionType.LoginUserAction:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Running;
+            });
+        case UserActionType.LoginUserSucessAction:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Succeeded;
+                draftState.user = action.user
+            });
+        case UserActionType.LoginUserFailAction:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Failed;
+            });
+        case UserActionType.SignOutAction:
+                return produce(state, (draftState) => {
+                    draftState.user = {
+                        username: "",
+                        password: "",
+                        email: "",
+                    };
+                });
         default:
             return state;
     }
-  };
+};
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
 export const createNewUser = (
@@ -97,28 +140,28 @@ export const createNewUser = (
         username: string,
         password: string | number,
         email: string | number,
-        dispatch
-    ): any => {
+        dispatch: Dispatch,
+): Promise<void> => {
+    dispatch({
+        type: UserActionType.CreateNewUserAction,
+    });
+    return api.createUser(username, password, email).then(user => {
         dispatch({
-            type: UserActionType.CreateNewUserAction,
+            type: UserActionType.CreateNewUserSuccessAction,
+            user: user
+        })
+    }).catch(err => {
+        dispatch({
+            type: UserActionType.CreateNewUserFailAction
         });
-        return api.createUser(username, password, email).then(user => {
-            dispatch({
-                type: UserActionType.CreateNewUserSuccessAction,
-                user: user
-            })
-        }).catch(err => {
-            dispatch({
-                type: UserActionType.CreateNewUserFailAction
-            });
-            dispatch({
-                type: NotificationActionType.ShowErrorNotification,
-                header: "다시 시도해 주세요",
-                body: err.toString()
-            } as ShowErrorNotification);
-            throw err;
-        });
-    };
+        dispatch({
+            type: NotificationActionType.ShowErrorNotification,
+            header: "다시 시도해 주세요",
+            body: err.toString()
+        } as ShowErrorNotification);
+        throw err;
+    });
+};
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
 export const createNewOwner = (
@@ -126,8 +169,8 @@ export const createNewOwner = (
     username: string,
     password: string | number,
     email: string | number,
-    dispatch
-): any => {
+    dispatch: Dispatch,
+): Promise<void> => {
     dispatch({
         type: UserActionType.CreateNewUserAction,
     });
@@ -149,3 +192,70 @@ export const createNewOwner = (
     });
 };
 
+export const loginUser = (
+    api: KouponBankApi,
+    username: string,
+    password: string | number,
+    email: string | number,
+    dispatch: Dispatch,
+): Promise<void> => {
+    dispatch({
+        type: UserActionType.LoginUserAction,
+    });
+    return api.loginUser(username, password, email).then(user => {
+        dispatch({
+            type: UserActionType.LoginUserSucessAction,
+            user: user,
+        });
+    }).catch(err => {
+        dispatch({
+            type: UserActionType.LoginUserFailAction
+        });
+        dispatch({
+            type: NotificationActionType.ShowErrorNotification,
+            header: "다시 시도해 주세요",
+            body: err.toString()
+        } as ShowErrorNotification);
+        throw err;
+    });
+};
+
+export const loginOwner = (
+    api: KouponBankApi,
+    username: string,
+    password: string | number,
+    email: string | number,
+    dispatch: Dispatch,
+): Promise<void> => {
+    dispatch({
+        type: UserActionType.LoginUserAction,
+    });
+    return api.loginOwner(username, password, email).then(user => {
+        dispatch({
+            type: UserActionType.LoginUserSucessAction,
+            user: user,
+        });
+    }).catch(err => {
+        dispatch({
+            type: UserActionType.LoginUserFailAction
+        });
+        dispatch({
+            type: NotificationActionType.ShowErrorNotification,
+            header: "다시 시도해 주세요",
+            body: err.toString()
+        } as ShowErrorNotification);
+        throw err;
+    });
+};
+
+export const signOut = (dispatch: Dispatch): void => {
+    dispatch({
+        type: UserActionType.SignOutAction,
+    });
+};
+
+export const setUserState = (dispatch: Dispatch): void => {
+    dispatch({
+        type: UserActionType.SignOutAction,
+    });
+};
