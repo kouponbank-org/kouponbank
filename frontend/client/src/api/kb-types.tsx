@@ -22,3 +22,14 @@ export interface Alert {
     alertHeader: string | JSX.Element;
     alertBody: string | JSX.Element;
 }
+/**
+ * Represents the required properties of a UserDetail
+ */
+export interface UserDetail {
+    id?: string;
+    name: string;
+    gender: string;
+    birthday: string;
+    location: number | string;
+    profile_picture?: null;
+};
