@@ -1,8 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 import { BasePageRouterR } from "./components/base-page-router";
-import { store } from "./store";
+import { persistor, store } from "./store";
 
 /**
  * @constructor App representing the current front end for our application.
@@ -22,9 +23,11 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
-          <Route path="/" component={BasePageRouterR} />
-        </Router>
+        <PersistGate loading={null} persistor={persistor}>
+          <Router>
+            <Route path="/" component={BasePageRouterR} />
+          </Router>
+        </PersistGate>
       </Provider>
     );
   }

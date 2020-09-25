@@ -20,8 +20,8 @@ class Menu(models.Model):
         related_name="business_menu",
         null=True
     )
-    menu_title = models.CharField(max_length=50, default="")
-    description = models.TextField(default="", blank=True)
+    menu_title = models.CharField(max_length=50, blank=False)
+    description = models.TextField(default="", blank=False)
     menu_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,

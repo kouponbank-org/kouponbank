@@ -1,20 +1,17 @@
-// React Components
-import React, { useContext, useState } from "react";
-
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import React from "react";
 import { User } from "../../../../api/kb-types";
+import './owner-sign-up-page.scss';
 
-// Material UI or CSS Components
-import { Grid, TextField, Button, Typography } from "@material-ui/core";
-import './owner-sign-up-page.css';
+
 
 export interface Prop {
     ownerCredentials: User;
     createNewOwnerClick: (event) => void;
     ownerCredentialsInput: (event) => void;
-    userSignUpClick: (event) => void;
 };
 
-export const SignUpPageForm = (props: Prop) => {
+export const OwnerSignUpPageForm = (props: Prop) => {
 
     const createNewOwnerClick = (event): void => {
         props.createNewOwnerClick(event);
@@ -22,10 +19,6 @@ export const SignUpPageForm = (props: Prop) => {
     
     const ownerCredentialsInput = (event): void => {
         props.ownerCredentialsInput(event);
-    };
-
-    const userSignUpClick = (event): void => {
-        props.userSignUpClick(event);
     };
 
     return (
@@ -84,17 +77,6 @@ export const SignUpPageForm = (props: Prop) => {
                     className="signupbutton"
                 >
                     Sign Up
-                </Button>
-            </form>
-            <form className="form" onSubmit={userSignUpClick} noValidate>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="ownerSignUp"
-                >
-                    Are you an User?
                 </Button>
             </form>
         </div>
