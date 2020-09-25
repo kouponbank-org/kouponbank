@@ -7,3 +7,18 @@ export interface User {
     password: string | number;
     email: string | number;
 };
+
+export enum AlertType {
+    SUCCESS = "success",
+    FAILURE = "failure",
+}
+
+/**
+ *
+ */
+export interface Alert {
+    displayAlert: boolean;
+    alertType: AlertType;
+    alertHeader: string | JSX.Element;
+    alertBody: string | JSX.Element;
+}

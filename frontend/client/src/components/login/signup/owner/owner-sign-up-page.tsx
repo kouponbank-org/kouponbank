@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
-import { NotificationState } from "../../../../store/notification/notification-reducer";
+import { AlertState } from "../../../../store/notification/notification-reducer";
 import { RootReducer } from "../../../../store/reducer";
 import { createNewOwner } from "../../../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../../../base-page-router";
@@ -26,14 +26,15 @@ export interface Prop {
         email: string | number,
     ) => Promise<void>;
     owner: User;
-    notificationState: NotificationState;
+    alertState: AlertState;
 };
 
 export const OwnerSignUpPage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
+    const alert = props.alertState.alert
     const [ownerCredentials, setOwnerCredentials] = useState(props.owner);
-    const [showNotifications, setShowNotifications] = useState(true);
+    const [showAlert, setShowAlert] = useState(true);
 
     const createNewOwnerClick = (event): void => {
         props.createNewOwner(
@@ -57,18 +58,18 @@ export const OwnerSignUpPage = (props: Prop) => {
 
     return (
         <div className="background">
-            <Notifications
-                onClose={() => {setShowNotifications(false)}}
-                showNotifications={showNotifications}
-                displayNotification={props.notificationState.displayNotification}
-                notificationType={props.notificationState.notificationType}
-                notificationHeader={props.notificationState.notificationHeader}
-                notificationBody={props.notificationState.notificationBody}
-            />
             <OwnerSignUpPageForm 
                 ownerCredentials={ownerCredentials}
                 createNewOwnerClick={createNewOwnerClick}
                 ownerCredentialsInput={ownerCredentialsInput}
+            />
+            <Notifications
+                onClose={() => {setShowAlert(false)}}
+                showAlert={showAlert}
+                displayAlert={alert.displayAlert}
+                alertType={alert.alertType}
+                alertHeader={alert.alertHeader}
+                alertBody={alert.alertBody}
             />
         </div>
     );
@@ -77,7 +78,7 @@ export const OwnerSignUpPage = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         owner: state.userReducer.user,
-        notificationState: state.notificationReducer
+        alertState: state.notificationReducer
     };
 };
 

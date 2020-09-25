@@ -1,72 +1,61 @@
 import produce from "immer";
-import { NotificationActionType } from "./actionType";
+import { Alert, AlertType } from "../../api/kb-types";
+import { AlertsActionType } from "./action-type";
 
-export enum NotificationType {
-    Successs = "SUCCESS",
-    Failure = "Failure",
+export interface AlertState {
+    alert: Alert;
 }
 
-export interface NotificationState {
-    displayNotification: boolean;
-    notificationType: NotificationType;
-    notificationHeader: string | JSX.Element;
-    notificationBody: string | JSX.Element;
-}
-
-const initialState: NotificationState = {
-    displayNotification: false,
-    notificationType: NotificationType.Successs,
-    notificationHeader: "",
-    notificationBody: "",
+const initialState: AlertState = {
+    alert: {
+        displayAlert: false,
+        alertType: null,
+        alertHeader: "",
+        alertBody: "",
+    },
 };
 
-
-export interface ShowSuccessNotification {
-    type: NotificationActionType.ShowSuccessNotification;
+export interface DisplaySuccess {
+    type: AlertsActionType.DisplaySuccess;
     header: string | JSX.Element;
     body: string | JSX.Element;
 }
 
-export interface ShowErrorNotification {
-    type: NotificationActionType.ShowErrorNotification;
+export interface DisplayError {
+    type: AlertsActionType.DisplayError;
     header: string | JSX.Element;
     body: string | JSX.Element;
 }
 
-export interface HideNotification {
-    type: NotificationActionType.HideNotification;
+export interface HideAlert {
+    type: AlertsActionType.HideAlert;
 }
 
-type Action =   ShowSuccessNotification |
-                ShowErrorNotification |
-                HideNotification;
+type Action = DisplaySuccess | DisplayError | HideAlert;
 
-export const reducer = (
-    state: NotificationState = initialState,
-    action: Action
-): NotificationState => {
+export const reducer = (state: AlertState = initialState, action: Action): AlertState => {
     switch (action.type) {
-        case NotificationActionType.ShowSuccessNotification:
-            return produce(state, draftState => {
-                draftState.displayNotification = true;
-                draftState.notificationType = NotificationType.Successs;
-                draftState.notificationHeader = action.header;
-                draftState.notificationBody = action.body;
+        case AlertsActionType.DisplaySuccess:
+            return produce(state, (draftState) => {
+                draftState.alert.displayAlert = true;
+                draftState.alert.alertType = AlertType.SUCCESS;
+                draftState.alert.alertHeader = action.header;
+                draftState.alert.alertBody = action.body;
             });
-        case NotificationActionType.ShowErrorNotification:
-            return produce(state, draftState => {
-                draftState.displayNotification = true;
-                draftState.notificationType = NotificationType.Failure;
-                draftState.notificationHeader = action.header;
-                draftState.notificationBody = action.body;
+        case AlertsActionType.DisplayError:
+            return produce(state, (draftState) => {
+                draftState.alert.displayAlert = true;
+                draftState.alert.alertType = AlertType.FAILURE;
+                draftState.alert.alertHeader = action.header;
+                draftState.alert.alertBody = action.body;
             });
-        case NotificationActionType.HideNotification:
-            return produce(state, draftState => {
-                draftState.displayNotification = false;
-                draftState.notificationHeader = "";
-                draftState.notificationBody = "";
+        case AlertsActionType.HideAlert:
+            return produce(state, (draftState) => {
+                draftState.alert.displayAlert = false;
+                draftState.alert.alertHeader = "";
+                draftState.alert.alertBody = "";
             });
         default:
             return state;
     }
-}
+};

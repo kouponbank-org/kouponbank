@@ -2,8 +2,8 @@ import { produce } from "immer";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
-import { NotificationActionType } from "../notification/actionType";
-import { ShowErrorNotification } from "../notification/notification-reducer";
+import { AlertsActionType } from "../notification/action-type";
+import { DisplayError } from "../notification/notification-reducer";
 import { UserActionType } from "./action-type";
 
 // 액션 Status 트래킹 Enum.
@@ -155,10 +155,10 @@ export const createNewUser = (
             type: UserActionType.CreateNewUserFailAction
         });
         dispatch({
-            type: NotificationActionType.ShowErrorNotification,
-            header: "다시 시도해 주세요",
-            body: err.toString()
-        } as ShowErrorNotification);
+            type: AlertsActionType.DisplayError,
+            header: "ERROR",
+            body: "다시 시도해 주세요",
+        } as DisplayError);
         throw err;
     });
 };
@@ -184,10 +184,10 @@ export const createNewOwner = (
             type: UserActionType.CreateNewUserFailAction
         });
         dispatch({
-            type: NotificationActionType.ShowErrorNotification,
-            header: "다시 시도해 주세요",
-            body: err.toString()
-        } as ShowErrorNotification);
+            type: AlertsActionType.DisplayError,
+            header: "ERROR",
+            body: "다시 시도해 주세요",
+        } as DisplayError);
         throw err;
     });
 };
@@ -212,10 +212,10 @@ export const loginUser = (
             type: UserActionType.LoginUserFailAction
         });
         dispatch({
-            type: NotificationActionType.ShowErrorNotification,
-            header: "다시 시도해 주세요",
-            body: err.toString()
-        } as ShowErrorNotification);
+            type: AlertsActionType.DisplayError,
+            header: "ERROR",
+            body: "다시 시도해 주세요",
+        } as DisplayError);
         throw err;
     });
 };
@@ -240,10 +240,10 @@ export const loginOwner = (
             type: UserActionType.LoginUserFailAction
         });
         dispatch({
-            type: NotificationActionType.ShowErrorNotification,
-            header: "다시 시도해 주세요",
-            body: err.toString()
-        } as ShowErrorNotification);
+            type: AlertsActionType.DisplayError,
+            header: "ERROR",
+            body: "다시 시도해 주세요",
+        } as DisplayError);
         throw err;
     });
 };

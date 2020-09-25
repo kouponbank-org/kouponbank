@@ -38,6 +38,12 @@ const BasePageRouter = (props: Prop) => {
     const [api, setApi] = useState(null as KouponBankApi);
     const [showPage, setShowPage] = useState(false);
 
+    /*
+    window.onbeforeunload = function() {
+        localStorage.clear();
+    }
+    */
+
     useLayoutEffect(() => {
         const kouponBankApi = new KouponBankApi();
 

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../../../api/kb-api";
 import { User } from "../../../../api/kb-types";
-import { NotificationState } from "../../../../store/notification/notification-reducer";
+import { AlertState } from "../../../../store/notification/notification-reducer";
 import { RootReducer } from "../../../../store/reducer";
 import { createNewUser } from "../../../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../../../base-page-router";
@@ -23,14 +23,15 @@ export interface Prop {
         email: string | number,
     ) => Promise<void>;
     user: User;
-    notificationState: NotificationState;
+    alertState: AlertState;
 };
 
 export const UserSignUpPage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
+    const alert = props.alertState.alert
     const [userCredentials, setUserCredentials] = useState(props.user);
-    const [showNotifications, setShowNotifications] = useState(true);
+    const [showAlert, setShowAlert] = useState(true);
 
     const createNewUserClick = (event): void => {
         props.createNewUser(
@@ -55,12 +56,12 @@ export const UserSignUpPage = (props: Prop) => {
     return (
         <div className="background">
             <Notifications
-                onClose={() => {setShowNotifications(false)}}
-                showNotifications={showNotifications}
-                displayNotification={props.notificationState.displayNotification}
-                notificationType={props.notificationState.notificationType}
-                notificationHeader={props.notificationState.notificationHeader}
-                notificationBody={props.notificationState.notificationBody}
+                onClose={() => {setShowAlert(false)}}
+                showAlert={showAlert}
+                displayAlert={alert.displayAlert}
+                alertType={alert.alertType}
+                alertHeader={alert.alertHeader}
+                alertBody={alert.alertBody}
             />
             <SignUpPageForm 
                 userCredentials={userCredentials}
@@ -74,7 +75,7 @@ export const UserSignUpPage = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        notificationState: state.notificationReducer
+        alertState: state.notificationReducer
     };
 };
 

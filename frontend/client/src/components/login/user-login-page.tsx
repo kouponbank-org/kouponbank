@@ -4,10 +4,12 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
+import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
 import { loginUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
+import { Notifications } from "../notifications/notifications";
 import { LoginForm } from "./login-form";
 import './login.scss';
 
@@ -22,12 +24,15 @@ export interface Prop {
         email: string | number,
     ) => Promise<void>;
     user: User;
+    alertState: AlertState;
 };
 
 export const UserLoginPage = (props: Prop) => {
-    const [userCredentials, setUserCredentials] = useState(props.user);
-    const history = useHistory();
     const api = useContext<KouponBankApi>(ApiContext);
+    const alert = props.alertState.alert
+    const history = useHistory();
+    const [userCredentials, setUserCredentials] = useState(props.user);
+    const [showAlert, setShowAlert] = useState(true);
     
     const userCredentialsInput = (event): void => {
         setUserCredentials({
@@ -75,6 +80,14 @@ export const UserLoginPage = (props: Prop) => {
                 userCredentialsInput={userCredentialsInput}
                 loginUserClick={loginUserClick}
             />
+            <Notifications
+                onClose={() => {setShowAlert(false)}}
+                showAlert={showAlert}
+                displayAlert={alert.displayAlert}
+                alertType={alert.alertType}
+                alertHeader={alert.alertHeader}
+                alertBody={alert.alertBody}
+            />
         </div>
     );
 };
@@ -82,7 +95,8 @@ export const UserLoginPage = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     console.log(state)
     return {
-        user: state.userReducer.user
+        user: state.userReducer.user,
+        alertState: state.notificationReducer
     };
 };
 
