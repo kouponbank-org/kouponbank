@@ -33,7 +33,7 @@ export const HomePage = (props: Prop) => {
                 onClick={directToUserLogin}
             />
             <NaverMap
-                classname="naver-map"
+                className="naver-map"
                 mapDivId={"maps-getting-started-uncontrolled"} // default: react-naver-map
                 style={{
                     width: "50%",
