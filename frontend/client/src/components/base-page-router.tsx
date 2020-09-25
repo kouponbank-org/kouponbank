@@ -1,11 +1,13 @@
 import React, { useLayoutEffect, useState } from "react";
+import { RenderAfterNavermapsLoaded } from 'react-naver-maps';
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
 import { HomePageR } from "./homepage/home-page";
-import { LoginPageR } from "./login/login-page";
+import { OwnerLoginPageR } from "./login/owner-login-page";
 import { OwnerSignUpPageR } from "./login/signup/owner/owner-sign-up-page";
-import { UserSignUpPageR } from "./login/signup/user/sign-up-page";
+import { UserSignUpPageR } from "./login/signup/user/user-sign-up-page";
+import { UserLoginPageR } from "./login/user-login-page";
 import { UserProfilePageR } from "./profile/user-profile-page";
 
 /**
@@ -19,7 +21,8 @@ export const ApiContext = React.createContext(null);
 
 export enum UrlPaths {
     Home = "/",
-    Login = "/login",
+    UserLogin = "/ulogin",
+    OwnerLogin = "/ologin",
     UserSignUp = "/usu",
     OwnerSignUp = "/osu",
     UserProfile = "profile"
@@ -35,6 +38,12 @@ export enum UrlPaths {
 const BasePageRouter = (props: Prop) => {
     const [api, setApi] = useState(null as KouponBankApi);
     const [showPage, setShowPage] = useState(false);
+
+    /*
+    window.onbeforeunload = function() {
+        localStorage.clear();
+    }
+    */
 
     useLayoutEffect(() => {
         const kouponBankApi = new KouponBankApi();
@@ -55,13 +64,20 @@ const BasePageRouter = (props: Prop) => {
         // provider is saying anyone can access this thing
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
-            <Switch>
-                <Route path={UrlPaths.UserProfile} component = {UserProfilePageR} />
-                <Route path={UrlPaths.OwnerSignUp} component = {OwnerSignUpPageR} />
-                <Route path={UrlPaths.UserSignUp} component = {UserSignUpPageR} />
-                <Route path={UrlPaths.Login} component={LoginPageR} />
-                <Route exact path={UrlPaths.Home} component={HomePageR} />
-            </Switch>
+            <RenderAfterNavermapsLoaded
+                ncpClientId="yyqw4ikek8"
+                error={<p>로딩을 실패하였습니다</p>}
+                loading={<p>로딩중...</p>}
+            >
+                <Switch>
+                    <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
+                    <Route path={UrlPaths.OwnerSignUp} component={OwnerSignUpPageR} />
+                    <Route path={UrlPaths.UserSignUp} component={UserSignUpPageR} />
+                    <Route path={UrlPaths.OwnerLogin} component={OwnerLoginPageR} />
+                    <Route path={UrlPaths.UserLogin} component={UserLoginPageR} />
+                    <Route exact path={UrlPaths.Home} component={HomePageR} />
+                </Switch>
+            </RenderAfterNavermapsLoaded>
         </ApiContext.Provider>
     );
 };
