@@ -1,4 +1,5 @@
 import React from "react";
+import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
@@ -30,6 +31,16 @@ export const HomePage = (props: Prop) => {
                 title={"쿠폰뱅크"}
                 buttonName={"로그인"}
                 onClick={directToUserLogin}
+            />
+            <NaverMap
+                classname="naver-map"
+                mapDivId={"maps-getting-started-uncontrolled"} // default: react-naver-map
+                style={{
+                    width: "50%",
+                    height: "400px"
+                }}
+                defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
+                defaultZoom={14}
             />
         </div>
     );
