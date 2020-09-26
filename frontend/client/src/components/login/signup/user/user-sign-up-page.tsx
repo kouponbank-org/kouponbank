@@ -95,3 +95,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 };
 
 export const UserSignUpPageR = connect(mapStateToProps, mapDispatchToProps)(UserSignUpPage);
+

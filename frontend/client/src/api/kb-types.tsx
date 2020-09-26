@@ -20,8 +20,23 @@ export interface Alert {
     alertBody: string | JSX.Element;
 }
 
+/**
+ * Represents the required properties of Naver Map Marker
+ */
 export interface BusinessCoordinates {
     businessTitle?: string | number;
     lat: number;
     lng: number;
 }
+
+/**
+ * Represents the required properties of a UserDetail
+ */
+export interface UserDetail {
+    id?: string;
+    name: string;
+    gender: string;
+    birthday: string;
+    location: number | string;
+    profile_picture?: null;
+};
