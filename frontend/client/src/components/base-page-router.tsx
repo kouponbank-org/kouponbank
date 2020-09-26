@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useState } from "react";
-import { RenderAfterNavermapsLoaded } from 'react-naver-maps';
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
@@ -38,6 +37,7 @@ export enum UrlPaths {
 const BasePageRouter = (props: Prop) => {
     const [api, setApi] = useState(null as KouponBankApi);
     const [showPage, setShowPage] = useState(false);
+    //const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
 
     /*
     window.onbeforeunload = function() {
@@ -64,20 +64,14 @@ const BasePageRouter = (props: Prop) => {
         // provider is saying anyone can access this thing
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
-            <RenderAfterNavermapsLoaded
-                ncpClientId="yyqw4ikek8"
-                error={<p>로딩을 실패하였습니다</p>}
-                loading={<p>로딩중...</p>}
-            >
-                <Switch>
-                    <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
-                    <Route path={UrlPaths.OwnerSignUp} component={OwnerSignUpPageR} />
-                    <Route path={UrlPaths.UserSignUp} component={UserSignUpPageR} />
-                    <Route path={UrlPaths.OwnerLogin} component={OwnerLoginPageR} />
-                    <Route path={UrlPaths.UserLogin} component={UserLoginPageR} />
-                    <Route exact path={UrlPaths.Home} component={HomePageR} />
-                </Switch>
-            </RenderAfterNavermapsLoaded>
+            <Switch>
+                <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
+                <Route path={UrlPaths.OwnerSignUp} component={OwnerSignUpPageR} />
+                <Route path={UrlPaths.UserSignUp} component={UserSignUpPageR} />
+                <Route path={UrlPaths.OwnerLogin} component={OwnerLoginPageR} />
+                <Route path={UrlPaths.UserLogin} component={UserLoginPageR} />
+                <Route exact path={UrlPaths.Home} component={HomePageR} />
+            </Switch>
         </ApiContext.Provider>
     );
 };

@@ -13,12 +13,15 @@ export enum AlertType {
     FAILURE = "failure",
 }
 
-/**
- *
- */
 export interface Alert {
     displayAlert: boolean;
     alertType: AlertType;
     alertHeader: string | JSX.Element;
     alertBody: string | JSX.Element;
+}
+
+export interface BusinessCoordinates {
+    businessTitle?: string | number;
+    lat: number;
+    lng: number;
 }

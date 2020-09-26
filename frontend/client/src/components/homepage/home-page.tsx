@@ -1,11 +1,11 @@
 import React from "react";
-import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
+import { NaverMapMarker } from "../naver-map/naver-map";
 import { NavBarR } from "../navigation/navigation-bar";
 import "./homepage.scss";
 
@@ -32,16 +32,7 @@ export const HomePage = (props: Prop) => {
                 buttonName={"로그인"}
                 onClick={directToUserLogin}
             />
-            <NaverMap
-                className="naver-map"
-                mapDivId={"maps-getting-started-uncontrolled"} // default: react-naver-map
-                style={{
-                    width: "50%",
-                    height: "400px"
-                }}
-                defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
-                defaultZoom={14}
-            />
+            <NaverMapMarker />
         </div>
     );
 };
