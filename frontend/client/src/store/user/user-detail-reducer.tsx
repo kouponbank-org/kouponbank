@@ -10,7 +10,7 @@ export enum Status {
     Running="RUNNING",
     Succeeded="SUCCEEDED",
     Failed="FAILED",
-}
+};
 
 /**
  * 프로젝트 Global Variable State 트래킹
@@ -22,7 +22,7 @@ export interface userDetailState {
     userDetail: UserDetail;
     fetchStatus: Status;
     updateStatus: Status;
-}
+};
 
 //Frontend initial state --> not needed.
 const initialState: userDetailState = {
@@ -43,16 +43,16 @@ const initialState: userDetailState = {
 
 interface UpdateUserDetailAction {
     type: UserActionType.UpdateUserDetailAction
-}
+};
 
 interface UpdateUserDetailSuccessAction {
     userDetail: UserDetail;
     type: UserActionType.UpdateUserDetailSuccessAction
-}
+};
 
 interface UpdateUserDetailFailAction {
     type: UserActionType.UpdateUserDetailFailAction
-}
+};
 
 
 /**
@@ -60,9 +60,10 @@ interface UpdateUserDetailFailAction {
  * "State"은 전에 "KouponBankState"로 설정하였고
  * 이제 우리가 사용할 "Action"들을 설정할시간  
  */
-type Action =   UpdateUserDetailAction |
-                UpdateUserDetailSuccessAction |
-                UpdateUserDetailFailAction;
+type Action =   
+    | UpdateUserDetailAction 
+    | UpdateUserDetailSuccessAction 
+    | UpdateUserDetailFailAction;
 
 /**
  * Reducer가 필요한 Parameters "state"하고 "action"
@@ -92,7 +93,7 @@ export const reducer = (
         default:
             return state;
     }
-  };
+};
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
 export const UpdateUserDetail = (
@@ -104,20 +105,20 @@ export const UpdateUserDetail = (
         location: string | number,
         profile_picture: null,
         dispatch
-    ): any => {
+): any => {
+    dispatch({
+        type: UserActionType.UpdateUserDetailAction,
+    });
+    return api.updateUserDetail(id, name, gender, birthday, location, profile_picture).then(userDetail => {
         dispatch({
-            type: UserActionType.UpdateUserDetailAction,
+            type: UserActionType.UpdateUserDetailSuccessAction,
+            userDetail: userDetail
+        })
+    }).catch(err => {
+        dispatch({
+            type: UserActionType.UpdateUserDetailFailAction
         });
-        return api.updateUserDetail(id, name, gender, birthday, location, profile_picture).then(userDetail => {
-            dispatch({
-                type: UserActionType.UpdateUserDetailSuccessAction,
-                userDetail: userDetail
-            })
-        }).catch(err => {
-            dispatch({
-                type: UserActionType.UpdateUserDetailFailAction
-            });
-        });
-    };
+    });
+};
 
 

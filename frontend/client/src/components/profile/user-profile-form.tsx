@@ -28,11 +28,11 @@ export const UserProfileForm = (props: Prop) =>  {
 const [open, setOpen] = React.useState(false);
 const handleClickOpen = () => {
     setOpen(true);
-    };
+};
 
 const handleClose = () => {
     setOpen(false);
-    };
+};
 
 const moveHompageClick = (event): void => {
     props.moveHompageClick(event);
@@ -145,47 +145,46 @@ const submitChange = (event): void => {
             >
                 <DialogTitle id="form-dialog">Update Profile</DialogTitle>
                 <DialogContent>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    name="name"
-                    id="name-update"
-                    label="Name"
-                    fullWidth
-                    onChange={editDetails}
-                    value={props.updatedInfo.name}
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    name="gender"
-                    id="gender-update"
-                    label="Gender"
-                    fullWidth
-                    onChange={editDetails}
-                    value={props.updatedInfo.gender}
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    name="birthday"
-                    id="birthday-update"
-                    label="Birthday"
-                    fullWidth
-                    onChange={editDetails}
-                    value={props.updatedInfo.birthday}
-                />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="name"
+                        id="name-update"
+                        label="Name"
+                        fullWidth
+                        onChange={editDetails}
+                        value={props.updatedInfo.name}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="gender"
+                        id="gender-update"
+                        label="Gender"
+                        fullWidth
+                        onChange={editDetails}
+                        value={props.updatedInfo.gender}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="birthday"
+                        id="birthday-update"
+                        label="Birthday"
+                        fullWidth
+                        onChange={editDetails}
+                        value={props.updatedInfo.birthday}
+                    />
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Cancel
-                </Button>
-                <Button onClick={submitChange} color="primary">
-                    Update
-                </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={submitChange} color="primary">
+                        Update
+                    </Button>
                 </DialogActions>
             </Dialog>
-        
         </form>
       </div>
     );

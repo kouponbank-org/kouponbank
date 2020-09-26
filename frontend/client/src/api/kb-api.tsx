@@ -54,29 +54,6 @@ export class KouponBankApi {
         });
     };
 
-    async getUserDetail(userId: string): Promise<UserDetail> {
-        return axios.get(this.BASE_URL + "/users/"+ userId +"/detail/").then(response => {
-            return response.data
-        });
-    };
-
-    async updateUserDetail(userId: string,
-                           name: string, 
-                           gender: string, 
-                           birthday: string, 
-                           location: string | number, 
-                           profile_picture: null): Promise<UserDetail> {
-        return axios.put(this.BASE_URL + "/users/"+ userId +"/detail/", {
-            "name": name,
-            "gender": gender,
-            "birthday": birthday,
-            "location": location,
-            "profile_picture": profile_picture,
-        }).then(response => {
-            return response.data;
-        });
-    };
-
     async removeUser(userId: string): Promise<void> {
         return axios.delete(this.BASE_URL + "/users/" + userId).then(response => {
             return response.data;
@@ -105,4 +82,31 @@ export class KouponBankApi {
         });
     };
 
+
+    /*User Detail API*/
+    async getUserDetail(userId: string): Promise<UserDetail> {
+        return axios.get(this.BASE_URL + "/users/"+ userId +"/detail/").then(response => {
+            return response.data
+        });
+    };
+
+    async updateUserDetail(userId: string,
+                           name: string, 
+                           gender: string, 
+                           birthday: string, 
+                           location: string | number, 
+                           profile_picture: null): Promise<UserDetail> {
+        return axios.put(this.BASE_URL + "/users/"+ userId +"/detail/", {
+            "name": name,
+            "gender": gender,
+            "birthday": birthday,
+            "location": location,
+            "profile_picture": profile_picture,
+        }).then(response => {
+            return response.data;
+        });
+    };
+
 };
+
+ 
