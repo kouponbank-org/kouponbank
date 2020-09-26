@@ -25,7 +25,7 @@ export enum UrlPaths {
     OwnerLogin = "/ologin",
     UserSignUp = "/usu",
     OwnerSignUp = "/osu",
-    UserProfile = "profile"
+    UserProfile = "/profile"
 }
 
 /**
