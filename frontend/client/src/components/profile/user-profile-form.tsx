@@ -20,7 +20,6 @@ export interface Prop {
     };
     userDetailCredentials: UserDetail; 
     userCredentials: User;
-    moveHompageClick: (event) => void;
 };
 
 
@@ -34,18 +33,14 @@ const handleClose = () => {
     setOpen(false);
 };
 
-const moveHompageClick = (event): void => {
-    props.moveHompageClick(event);
-};
-
 const editDetails = (event): void => {
     props.editDetails(event);
-}
+};
 
 const submitChange = (event): void => {
     props.submitChange(event);
     handleClose();
-}
+};
 
     return (
       <div className='layout'>
@@ -128,22 +123,13 @@ const submitChange = (event): void => {
                         수정하기
                 </Button>
             </form>
-            <form className="form">
-                <Button fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="editbutton"
-                    onClick={moveHompageClick}>
-                        홈으로
-                </Button>
-            </form>
             </Grid>
             <Dialog 
-            open={open} 
-            onClose={handleClose} 
-            aria-labelledby="form-dialog"
+                open={open} 
+                onClose={handleClose} 
+                aria-labelledby="form-dialog"
             >
-                <DialogTitle id="form-dialog">Update Profile</DialogTitle>
+                <DialogTitle id="form-dialog">프로필 수정</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus

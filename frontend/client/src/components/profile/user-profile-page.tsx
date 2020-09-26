@@ -8,10 +8,11 @@ import { ApiContext, UrlPaths } from "../base-page-router";
 import { RootReducer } from "../../store/reducer";
 import { Dispatch } from "redux";
 import { UserProfileForm } from "./user-profile-form";
+import { NavBarR } from "../navigation/navigation-bar";
 import './user-profile-page.scss';
 
 /**
- * Represents the required properties of the HomePage.
+ * Represents the required properties of the User Profile Page
  */
 export interface Prop {
     userDetail: UserDetail; 
@@ -44,10 +45,6 @@ export const UserProfilePage = (props: Prop) =>  {
             [event.target.name]: event.target.value
         });
     };
-    
-    const moveHompageClick = (event): void => {
-        history.push(UrlPaths.Home);
-    };
 
     const submitChange = (event): void => {
         props.UpdateUserDetail(api,
@@ -65,15 +62,15 @@ export const UserProfilePage = (props: Prop) =>  {
 
     return (
         <div className="background">
-        <UserProfileForm 
-            userCredentials={props.user}
-            userDetailCredentials={props.userDetail}
-            editDetails={editDetails}
-            submitChange={submitChange}
-            updatedInfo={userInfo}
-            moveHompageClick={moveHompageClick}
-        />
-    </div>
+            <NavBarR/>
+            <UserProfileForm 
+                userCredentials={props.user}
+                userDetailCredentials={props.userDetail}
+                editDetails={editDetails}
+                submitChange={submitChange}
+                updatedInfo={userInfo}
+            />
+        </div>
     );
 };
 
