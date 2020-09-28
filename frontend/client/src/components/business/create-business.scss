@@ -1,0 +1,40 @@
+/*Login Page Background layout*/
+.background {
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #49D49D 10%, #A2C7E5 90%);
+};
+
+/*Login Component layout*/
+.layout {
+    width: 90%;
+    max-width: 340px;
+    margin: 10vh auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+};
+
+/*Login Form layout*/
+.form {
+    width: 100%;
+    margin-top: 24px;
+};
+
+/*Login Button layout*/
+.createbutton {
+    margin-top: 24px;
+    padding: 0px 24px;
+};
+
+/*Information Grid layout*/
+.grid {
+    opacity: 0;
+};

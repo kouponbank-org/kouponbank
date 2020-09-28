@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useState } from "react";
-import { RenderAfterNavermapsLoaded } from 'react-naver-maps';
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
+import { CreateBusinessPageR } from "./business/create-business-page";
 import { HomePageR } from "./homepage/home-page";
 import { OwnerLoginPageR } from "./login/owner-login-page";
 import { OwnerSignUpPageR } from "./login/signup/owner/owner-sign-up-page";
@@ -25,7 +25,8 @@ export enum UrlPaths {
     OwnerLogin = "/ologin",
     UserSignUp = "/usu",
     OwnerSignUp = "/osu",
-    UserProfile = "/profile"
+    UserProfile = "/profile",
+    CreateBusiness = "/newbusiness"
 }
 
 /**
@@ -38,7 +39,6 @@ export enum UrlPaths {
 const BasePageRouter = (props: Prop) => {
     const [api, setApi] = useState(null as KouponBankApi);
     const [showPage, setShowPage] = useState(false);
-
     /*
     window.onbeforeunload = function() {
         localStorage.clear();
@@ -64,20 +64,15 @@ const BasePageRouter = (props: Prop) => {
         // provider is saying anyone can access this thing
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
-            <RenderAfterNavermapsLoaded
-                ncpClientId="yyqw4ikek8"
-                error={<p>로딩을 실패하였습니다</p>}
-                loading={<p>로딩중...</p>}
-            >
-                <Switch>
-                    <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
-                    <Route path={UrlPaths.OwnerSignUp} component={OwnerSignUpPageR} />
-                    <Route path={UrlPaths.UserSignUp} component={UserSignUpPageR} />
-                    <Route path={UrlPaths.OwnerLogin} component={OwnerLoginPageR} />
-                    <Route path={UrlPaths.UserLogin} component={UserLoginPageR} />
-                    <Route exact path={UrlPaths.Home} component={HomePageR} />
-                </Switch>
-            </RenderAfterNavermapsLoaded>
+            <Switch>
+                <Route path={UrlPaths.CreateBusiness} component={CreateBusinessPageR} />
+                <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
+                <Route path={UrlPaths.OwnerSignUp} component={OwnerSignUpPageR} />
+                <Route path={UrlPaths.UserSignUp} component={UserSignUpPageR} />
+                <Route path={UrlPaths.OwnerLogin} component={OwnerLoginPageR} />
+                <Route path={UrlPaths.UserLogin} component={UserLoginPageR} />
+                <Route exact path={UrlPaths.Home} component={HomePageR} />
+            </Switch>
         </ApiContext.Provider>
     );
 };

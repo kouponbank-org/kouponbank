@@ -65,20 +65,22 @@ export const NavBar = (props: Prop): ReactElement => {
                             )
                         }
                     </div>
-                    {props.user.username !== "" ? (
-                        <Fragment>
-                            <Button className="profile-details" onClick={redirectToUserProfile}>
-                                나만의 공간
+                    {
+                        props.user.username !== "" ? (
+                            <Fragment>
+                                <Button className="profile-details" onClick={redirectToUserProfile}>
+                                    나만의 공간
+                                </Button>
+                                <Button className="logout" onClick={signOut}>
+                                    로그아웃
+                                </Button>
+                            </Fragment>
+                        ) : (
+                            <Button onClick={props.onClick}>
+                                {props.buttonName}
                             </Button>
-                            <Button className="logout" onClick={signOut}>
-                                로그아웃
-                            </Button>
-                        </Fragment>
-                    ) : (
-                        <Button onClick={props.onClick}>
-                            {props.buttonName}
-                        </Button>
-                    )}
+                        )
+                    }
                 </Toolbar>
             </AppBar>
         </div>

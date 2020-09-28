@@ -1,17 +1,7 @@
 import { produce } from "immer";
 import { KouponBankApi } from "../../api/kb-api";
-import { UserDetail } from "../../api/kb-types";
+import { Status, UserDetail } from "../../api/kb-types";
 import { UserActionType } from "./action-type";
-
-
-// 액션 Status 트래킹 Enum.
-export enum Status {
-    NotStarted="NOT_STARTED",
-    Running="RUNNING",
-    Succeeded="SUCCEEDED",
-    Failed="FAILED",
-};
-
 /**
  * 프로젝트 Global Variable State 트래킹
  * 파일들이 필요한 Props들이 저장된 'KouponBankState' Dictionary
