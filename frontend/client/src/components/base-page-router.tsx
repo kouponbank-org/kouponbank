@@ -39,7 +39,6 @@ export enum UrlPaths {
 const BasePageRouter = (props: Prop) => {
     const [api, setApi] = useState(null as KouponBankApi);
     const [showPage, setShowPage] = useState(false);
-    //const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
 
     /*
     window.onbeforeunload = function() {

@@ -19,6 +19,7 @@ export const MapMarker = (props: Prop) => {
                                     lat: business.y, 
                                     lng: business.x
                                 }}
+                                animation={1}
                                 onClick={() => {
                                     alert(business.jibeon)
                                 }}

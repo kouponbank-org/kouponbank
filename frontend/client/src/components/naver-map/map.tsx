@@ -35,12 +35,9 @@ export const Map = (props: Prop) => {
         setNaverMapBound(mapSpan)
     }
 
-    console.log(naverMapBound)
     const handleChangeBounds = (bounds) => {
-        console.log(bounds)
         calculateMapSpan(bounds)
         props.naverMapBoundChanged(naverMapBound);
-        /*여기에다 GET REQUEST FOR MAP MARKER AND BUSINESS LOCATION*/
         props.getAllBusinessWithinNaverMapBounds(api, naverMapBound);
     }; 
 

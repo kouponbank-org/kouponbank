@@ -32,10 +32,10 @@ class App extends React.Component {
   render() {
     return (
       <RenderAfterNavermapsLoaded
-      ncpClientId={NAVER_API_KEY}
-      error={<p>로딩을 실패하였습니다</p>}
-      loading={<p>로딩중...</p>}
-      submodules={['drawing','geocoder']}
+        ncpClientId={NAVER_API_KEY}
+        error={<p>로딩을 실패하였습니다</p>}
+        loading={<p>로딩중...</p>}
+        submodules={['drawing','geocoder']}
       >
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
