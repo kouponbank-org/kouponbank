@@ -26,7 +26,8 @@ export interface Prop {
     business: Business;
     businessLocation: BusinessLocation;
 };
-
+// TODO:
+// get Business ID, X, Y values into businessLocation.
 export const CreateBusinessPage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
@@ -61,16 +62,19 @@ export const CreateBusinessPage = (props: Prop) => {
             }
     
             const result = response.result, // 검색 결과의 컨테이너
-                items = result.items, // 검색 결과의 배열
+                items = result.items[0], // 검색 결과의 배열
                 point = items.point; // 검색 결과의 좌표
-            
+            console.log(address)
+            console.log(result)
+            console.log(items)
+
             // 좌표를 businessLocation local state에 저장하기
-            Object.entries(point).forEach(([key, value]) => {
-                setBusinessLocation({
-                    ...businessLocation,
-                    [key]: value
-                });
+            setBusinessLocation({
+                ...businessLocation,
+                x: point.x,
+                y: point.y
             });
+            console.log(businessLocation)
         });
     };
 
@@ -81,7 +85,7 @@ export const CreateBusinessPage = (props: Prop) => {
      * @param event 
      */
     const createBusinessClick = (event): void => {
-        getLatLngFromAddress(props.businessLocation.jibeon);
+        getLatLngFromAddress(businessLocation.jibeon);
         apiCall();
         event.preventDefault();
     };
@@ -107,7 +111,7 @@ export const CreateBusinessPage = (props: Prop) => {
             history.push(UrlPaths.Home)
         });
     };
-
+    
     return (
         <div className="background">
             <CreateBusinessForm 
@@ -124,7 +128,8 @@ export const CreateBusinessPage = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        business: state.businessReducer.business
+        business: state.businessReducer.business,
+        businessLocation: state.businessReducer.businessLocation
     };
 };
 
