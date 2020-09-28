@@ -1,14 +1,13 @@
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from kouponbank.database.business import Business, BusinessSerializer
+from kouponbank.database.owner import Owner
+from kouponbank.database.owner_detail import OwnerDetail
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from kouponbank.database.business import Business, BusinessSerializer
-from kouponbank.database.owner import Owner
-from kouponbank.database.owner_detail import OwnerDetail
 
 
 class BusinessListAPI(APIView):
@@ -52,9 +51,9 @@ class BusinessListAPI(APIView):
                 required=True
             ),
             openapi.Parameter(
-                "location",
+                "address",
                 openapi.IN_QUERY,
-                description="Creates the location of the business",
+                description="Creates the address of the business",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
@@ -121,9 +120,9 @@ class BusinessAPI(APIView):
                 required=True
             ),
             openapi.Parameter(
-                "location",
+                "address",
                 openapi.IN_QUERY,
-                description="Updates the location of the business",
+                description="Updates the address of the business",
                 type=openapi.TYPE_STRING,
                 required=True
             ),

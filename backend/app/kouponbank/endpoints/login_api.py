@@ -1,16 +1,15 @@
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from kouponbank.database.owner import Owner, OwnerSerializer
+from kouponbank.database.user import User, UserSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from kouponbank.database.owner import Owner, OwnerSerializer
-from kouponbank.database.user import User, UserSerializer
 
-
-class LoginUserApi(APIView):
+class LoginUserAPI(APIView):
     @swagger_auto_schema(
         responses={200: UserSerializer(many=True)},
         manual_parameters=
@@ -58,7 +57,7 @@ class LoginUserApi(APIView):
         except User.DoesNotExist:
             raise Http404("User Not Found")
         
-class LoginOwnerApi(APIView):
+class LoginOwnerAPI(APIView):
     @swagger_auto_schema(
         responses={200: OwnerSerializer(many=True)},
         manual_parameters=

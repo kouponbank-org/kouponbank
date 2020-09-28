@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 import { User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
-import { NaverMapMarker } from "../naver-map/naver-map";
+import { MapR } from "../naver-map/map";
 import { NavBarR } from "../navigation/navigation-bar";
 import "./homepage.scss";
 
@@ -14,7 +14,6 @@ import "./homepage.scss";
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    resetUser: () => void;
     user: User;
 };
 
@@ -32,7 +31,7 @@ export const HomePage = (props: Prop) => {
                 buttonName={"로그인"}
                 onClick={directToUserLogin}
             />
-            <NaverMapMarker />
+            <MapR />
         </div>
     );
 };
@@ -40,7 +39,7 @@ export const HomePage = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     console.log(state)
     return {
-        user: state.userReducer.user
+        user: state.userReducer.user,
     };
 };
 
@@ -50,4 +49,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-export const HomePageR = connect(mapStateToProps, null)(HomePage);
+export const HomePageR = connect(mapStateToProps, mapDispatchToProps)(HomePage);

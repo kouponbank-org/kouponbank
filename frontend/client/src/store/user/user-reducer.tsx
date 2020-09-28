@@ -1,18 +1,10 @@
 import { produce } from "immer";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { User } from "../../api/kb-types";
+import { Status, User } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
 import { UserActionType } from "./action-type";
-
-// 액션 Status 트래킹 Enum.
-export enum Status {
-    NotStarted="NOT_STARTED",
-    Running="RUNNING",
-    Succeeded="SUCCEEDED",
-    Failed="FAILED",
-}
 
 /**
  * 프로젝트 Global Variable State 트래킹
@@ -124,6 +116,7 @@ export const reducer = (
         case UserActionType.SignOutAction:
                 return produce(state, (draftState) => {
                     draftState.user = {
+                        id: null,
                         username: "",
                         password: "",
                         email: "",
