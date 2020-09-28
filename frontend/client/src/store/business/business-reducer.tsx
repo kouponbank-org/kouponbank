@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, BusinessLocation, Status } from "../../api/kb-types";
+import { Business, BusinessLocation, Coordinate, Status } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
 import { BusinessActionType } from "./action-type";
@@ -108,7 +108,7 @@ export const createBusiness = (
     userId: string,
     business: Business,
     dispatch: Dispatch,
-): Promise<void> => {
+): Promise<Business> => {
     dispatch({
         type: BusinessActionType.CreateBusiness,
     });
@@ -117,6 +117,7 @@ export const createBusiness = (
             type: BusinessActionType.CreateBusinessSuccess,
             business: business
         })
+        return business
     }).catch(err => {
         dispatch({
             type: BusinessActionType.CreateBusinessFail,
@@ -132,13 +133,21 @@ export const createBusiness = (
 
 export const createBusinessLocation = (
     api: KouponBankApi,
+    businessId: string,
+    businessName: string,
+    latlng: Coordinate,
     businessLocation: BusinessLocation,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: BusinessActionType.CreateBusinessLocation,
     });
-    return api.createBusinessLocation(businessLocation).then(businessLocation => {
+    return api.createBusinessLocation(
+        businessId,
+        businessName,
+        latlng,
+        businessLocation
+    ).then(businessLocation => {
         dispatch({
             type: BusinessActionType.CreateBusinessLocationSuccess,
             businessLocation: businessLocation,

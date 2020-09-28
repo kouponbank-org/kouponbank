@@ -1,11 +1,13 @@
 import axios from "axios";
-import { Business, BusinessLocation, NaverMapBound, User, UserDetail } from "./kb-types";
+import { Business, BusinessLocation, Coordinate, NaverMapBound, User, UserDetail } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
+    BASE_NAVER_MAP_API_KEY: string;
 
     constructor() {
-        this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        this.BASE_URL = process.env.REACT_APP_API_BASE_URL
+        this.BASE_NAVER_MAP_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
     };
 
     /*LOGIN API*/
@@ -159,11 +161,22 @@ export class KouponBankApi {
     };
 
     async createBusinessLocation(
+        businessId: string,
+        businessName: string,
+        latlng: Coordinate,
         businessLocation: BusinessLocation
     ): Promise<BusinessLocation> {
         return axios.post(
             `${this.BASE_URL}/map/`,
-            businessLocation
+            {
+                "id": businessId,
+                "business_name": businessName,
+                "doromyeong": businessLocation.doromyeong,
+                "jibeon": businessLocation.jibeon,
+                "postal_code": businessLocation.postal_code,
+                "x": latlng.x,
+                "y": latlng.y
+            }
         )
         .then(response => {
             return response.data;
@@ -189,7 +202,6 @@ export class KouponBankApi {
             return response.data
         });
     };
-
 };
 
  

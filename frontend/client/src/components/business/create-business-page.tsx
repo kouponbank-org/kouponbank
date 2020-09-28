@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, BusinessLocation, User } from "../../api/kb-types";
+import { Business, BusinessLocation, Coordinate, User } from "../../api/kb-types";
 import { createBusiness, createBusinessLocation } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
@@ -17,9 +17,12 @@ export interface Prop {
         api: KouponBankApi,
         userId: string,
         business: Business,
-    ) => Promise<void>;
+    ) => Promise<Business>;
     createBusinessLocation: (
         api: KouponBankApi,
+        businessId: string,
+        businessName: string,
+        latlng: Coordinate,
         businessLocation: BusinessLocation,
     ) => Promise<void>;
     user: User;
@@ -33,7 +36,8 @@ export const CreateBusinessPage = (props: Prop) => {
     const history = useHistory();
     const [business, setBusiness] = useState(props.business);
     const [businessLocation, setBusinessLocation] = useState(props.businessLocation);
-    
+    const [point, setPoint] = useState({})
+
     // 사업장 정보 (이름, 이메일)
     const businessInformationInput = (event): void => {
         setBusiness({
@@ -51,31 +55,17 @@ export const CreateBusinessPage = (props: Prop) => {
     };    
     
     // 사업장 주소에서 좌표 가져오는 Naver Maps API Call
-    const getLatLngFromAddress = (address) => {
+    const getLatLngFromAddress = (address, getLatLng) => {
         // Param 주소를 가지고 네이버 Geocode를 사용해서
         // 정확한 주소와 좌표를 찾기
-        window.naver.maps.Service.geocode({
-            address: address
-        }, function(status, response) {
-            if (status !== window.naver.maps.Service.Status.OK) {
-                return alert('주소를 못 찾았습니다');
+        window.naver.maps.Service.geocode({address: address}, 
+            function(status, response) {
+                if (status !== window.naver.maps.Service.Status.OK) {
+                    return alert('주소를 못 찾았습니다');
+                }
+                getLatLng(response.result.items[0].point)
             }
-    
-            const result = response.result, // 검색 결과의 컨테이너
-                items = result.items[0], // 검색 결과의 배열
-                point = items.point; // 검색 결과의 좌표
-            console.log(address)
-            console.log(result)
-            console.log(items)
-
-            // 좌표를 businessLocation local state에 저장하기
-            setBusinessLocation({
-                ...businessLocation,
-                x: point.x,
-                y: point.y
-            });
-            console.log(businessLocation)
-        });
+        )
     };
 
     /**
@@ -85,8 +75,9 @@ export const CreateBusinessPage = (props: Prop) => {
      * @param event 
      */
     const createBusinessClick = (event): void => {
-        getLatLngFromAddress(businessLocation.jibeon);
-        apiCall();
+        getLatLngFromAddress(businessLocation.jibeon, function(latlng) {
+            createBusinessAndBusinessLocation(latlng)
+        })
         event.preventDefault();
     };
 
@@ -98,18 +89,22 @@ export const CreateBusinessPage = (props: Prop) => {
      * @param event 
      */
 
-    const apiCall = (): void => {
+    const createBusinessAndBusinessLocation = (latlng): void => {
         props.createBusiness(
             api,
             props.user.id,
             business
-        );
-        props.createBusinessLocation(
-            api,
-            businessLocation
-        ).then(() => {
-            history.push(UrlPaths.Home)
-        });
+        ).then((business) => {
+            props.createBusinessLocation(
+                api,
+                business.id,
+                business.business_name,
+                latlng,
+                businessLocation
+            ).then(() => {
+                history.push(UrlPaths.Home)
+            });
+        })
     };
     
     return (
@@ -126,6 +121,7 @@ export const CreateBusinessPage = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
+    console.log(state)
     return {
         user: state.userReducer.user,
         business: state.businessReducer.business,
@@ -144,9 +140,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         },
         createBusinessLocation: (
             api: KouponBankApi,
+            businessId: string,
+            businessName: string,
+            latlng: Coordinate,
             businessLocation: BusinessLocation,
         ) => {
-            return createBusinessLocation(api, businessLocation, dispatch)
+            return createBusinessLocation(api, businessId, businessName, latlng, businessLocation, dispatch)
         }
     };
 };
