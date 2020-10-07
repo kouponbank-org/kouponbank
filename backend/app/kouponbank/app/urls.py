@@ -4,18 +4,19 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import permissions
-
 from kouponbank.endpoints.business_api import BusinessAPI, BusinessListAPI
+from kouponbank.endpoints.business_map_api import (BusinessMapAPI,
+                                                   BusinessMapListAPI)
 from kouponbank.endpoints.coupon_api import CouponAPI, CouponListAPI
 from kouponbank.endpoints.coupon_basket_api import (CouponBasketAPI,
                                                     CouponBasketListAPI)
-from kouponbank.endpoints.login_api import LoginOwnerApi, LoginUserApi
+from kouponbank.endpoints.login_api import LoginOwnerAPI, LoginUserAPI
 from kouponbank.endpoints.menu_api import MenuAPI, MenuListAPI
 from kouponbank.endpoints.owner_api import OwnerAPI, OwnerListAPI
 from kouponbank.endpoints.owner_detail_api import OwnerDetailAPI
 from kouponbank.endpoints.user_api import UserAPI, UserListAPI
 from kouponbank.endpoints.user_detail_api import UserDetailAPI
+from rest_framework import permissions
 
 from .router import router
 
@@ -34,8 +35,10 @@ schema_view = get_schema_view(
 urlpatterns = [
    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    path('admin/', admin.site.urls),
-   path('login/user/', LoginUserApi.as_view(), name="login-user"),
-   path('login/owner/', LoginOwnerApi.as_view(), name="login-owner"),
+   path('login/user/', LoginUserAPI.as_view(), name="login-user"),
+   path('login/owner/', LoginOwnerAPI.as_view(), name="login-owner"),
+   path('map/', BusinessMapListAPI.as_view(), name="business-map-list"),
+   path('map/<uuid:business_id>/', BusinessMapAPI.as_view(), name="business-map"),
    path('users/', UserListAPI.as_view(), name="user-list"),
    path('users/<uuid:user_id>/', UserAPI.as_view(), name="user"),
    path('users/<uuid:user_id>/detail/', UserDetailAPI.as_view(), name="user-detail-list"),

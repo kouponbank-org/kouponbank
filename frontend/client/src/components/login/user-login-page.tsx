@@ -93,7 +93,6 @@ export const UserLoginPage = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state)
     return {
         user: state.userReducer.user,
         alertState: state.notificationReducer

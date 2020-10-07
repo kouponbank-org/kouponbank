@@ -26,7 +26,6 @@ class Business(models.Model):
         blank=False,
     )
     description = models.TextField(blank=False)
-    location = models.CharField(max_length=50, blank=False)
     business_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,
@@ -41,6 +40,5 @@ class BusinessSerializer(serializers.ModelSerializer):
             "business_name",
             "business_email",
             "description",
-            "location",
-            "business_picture"
+            "business_picture",
         )
