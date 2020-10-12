@@ -48,9 +48,9 @@ export interface Business {
 export interface BusinessLocation {
     id?: string;
     business_name: string;
-    doromyeong: string;
-    jibeon: string;
-    postal_code: string;
+    jibunAddress: string;
+    roadAddress: string;
+    zipcode: string;
     // lng
     x: string;
     // lat
@@ -82,4 +82,31 @@ export interface UserDetail {
     birthday: string;
     location: number | string;
     profile_picture?: null;
+};
+
+export interface AddressDetail {
+    admCd?: string;
+    bdKdcd?: string;
+    bdMgtSn?: string;
+    bdNm?: string;
+    buldMnnm?: string;
+    buldSlno?: string;
+    detBdNmList?: string;
+    emdNm?: string;
+    emdNo?: string;
+    engAddr?: string;
+    jibunAddr?: string;
+    liNm?: string;
+    lnbrMnnm?: string;
+    lnbrSlno?: string;
+    mtYn?: string;
+    rn?: string;
+    rnMgtSn?: string;
+    roadAddr?: string;
+    roadAddrPart1?: string;
+    roadAddrPart2?: string;
+    sggNm?: string;
+    siNm?: string;
+    udrtYn?: string;
+    zipNo?: string;
 };

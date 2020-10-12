@@ -1,13 +1,17 @@
 import axios from "axios";
-import { Business, BusinessLocation, Coordinate, NaverMapBound, User, UserDetail } from "./kb-types";
+import { AddressDetail, Business, BusinessLocation, Coordinate, NaverMapBound, User, UserDetail } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
     BASE_NAVER_MAP_API_KEY: string;
+    BASE_JUSO_API_KEY: string;
+    BASE_JUSO_URL: string;
 
     constructor() {
-        this.BASE_URL = process.env.REACT_APP_API_BASE_URL
+        this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        this.BASE_JUSO_URL = process.env.REACT_APP_JUST_API_BASE_URL;
         this.BASE_NAVER_MAP_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
+        this.BASE_JUSO_API_KEY = process.env.REACT_APP_JUSO_KR_API_KEY;
     };
 
     /*LOGIN API*/
@@ -171,9 +175,9 @@ export class KouponBankApi {
             {
                 "id": businessId,
                 "business_name": businessName,
-                "doromyeong": businessLocation.doromyeong,
-                "jibeon": businessLocation.jibeon,
-                "postal_code": businessLocation.postal_code,
+                "doromyeong": businessLocation.roadAddress,
+                "jibeon": businessLocation.jibunAddress,
+                "postal_code": businessLocation.zipcode,
                 "x": latlng.x,
                 "y": latlng.y
             }
@@ -202,6 +206,16 @@ export class KouponBankApi {
             return response.data
         });
     };
+
+    async findAddress (
+        address: string,
+    ): Promise<AddressDetail[]> {
+        return axios.get(
+            `${this.BASE_JUSO_URL}?currrentPage=1&countPerPage=10&keyword=${address}&confmKey=${this.BASE_JUSO_API_KEY}=&resultType=json`
+        )
+        .then(response => {
+            return response.data.results.juso
+        })
+    }
 };
 
- 
