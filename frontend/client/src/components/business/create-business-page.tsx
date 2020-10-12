@@ -4,9 +4,10 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, BusinessLocation, Coordinate, User } from "../../api/kb-types";
-import { createBusiness, createBusinessLocation } from "../../store/business/business-reducer";
+import { createBusiness, createBusinessLocation, initialState } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
+import { NavBarR } from "../navigation/navigation-bar";
 import { CreateBusinessForm } from "./create-business-form";
 
 /**
@@ -36,7 +37,6 @@ export const CreateBusinessPage = (props: Prop) => {
     const history = useHistory();
     const [business, setBusiness] = useState(props.business);
     const [businessLocation, setBusinessLocation] = useState(props.businessLocation);
-    const [point, setPoint] = useState({})
 
     // 사업장 정보 (이름, 이메일)
     const businessInformationInput = (event): void => {
@@ -47,11 +47,8 @@ export const CreateBusinessPage = (props: Prop) => {
     };
 
     // 사업장 주소 (도로명, 지번, 우편번호)
-    const businessLocationInput = (event): void => {
-        setBusinessLocation({
-            ...businessLocation,
-            [event.target.name]: event.target.value
-        });
+    const businessLocationSet = (address): void => {
+        setBusinessLocation(address);
     };    
     
     // 사업장 주소에서 좌표 가져오는 Naver Maps API Call
@@ -75,9 +72,12 @@ export const CreateBusinessPage = (props: Prop) => {
      * @param event 
      */
     const createBusinessClick = (event): void => {
-        getLatLngFromAddress(businessLocation.jibeon, function(latlng) {
-            createBusinessAndBusinessLocation(latlng)
-        })
+        getLatLngFromAddress(
+            businessLocation.jibunAddress, 
+            function(latlng) {createBusinessAndBusinessLocation(latlng)}
+        )
+        setBusiness(initialState.business);
+        setBusinessLocation(initialState.businessLocation);
         event.preventDefault();
     };
 
@@ -109,11 +109,14 @@ export const CreateBusinessPage = (props: Prop) => {
     
     return (
         <div className="background">
+            <NavBarR 
+                title={"비즈니스"}
+            />
             <CreateBusinessForm 
                 business={business}
                 businessLocation={businessLocation}
                 businessInformationInput={businessInformationInput}
-                businessLocationInput={businessLocationInput}
+                businessLocationSet={businessLocationSet}
                 createBusinessClick={createBusinessClick}
             />
         </div>

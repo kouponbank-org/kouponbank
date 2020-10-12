@@ -14,7 +14,7 @@ export interface BusinessState {
     updateStatus: Status;
 }
 
-const initialState: BusinessState = {
+export const initialState: BusinessState = {
     business: {
         business_name: "",
         business_email: "",
@@ -23,9 +23,9 @@ const initialState: BusinessState = {
     businesses: [],
     businessLocation: {
         business_name: "",
-        doromyeong: "",
-        jibeon: "",
-        postal_code: "",
+        roadAddress: "",
+        jibunAddress: "",
+        zipcode: "",
         x: "",
         y: "",
     },
