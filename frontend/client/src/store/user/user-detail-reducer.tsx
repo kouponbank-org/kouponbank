@@ -24,7 +24,7 @@ const initialState: userDetailState = {
         profile_picture: null,
     },
     fetchStatus: Status.NotStarted,
-    updateStatus: Status.NotStarted
+    updateStatus: Status.NotStarted,
 };
 
 /**
@@ -43,7 +43,6 @@ interface UpdateUserDetailSuccessAction {
 interface UpdateUserDetailFailAction {
     type: UserActionType.UpdateUserDetailFailAction
 };
-
 
 /**
  * Reducer가 활성화 될려면 필요한 "Action" 하고 "State" Declaration.
@@ -85,7 +84,7 @@ export const reducer = (
     }
 };
 
-// 새로운 유저를 생성하기 위한 API Call + Reducer State Update
+// 유저 (소비자) 디테일을 업데이트 하기 위한 API Call + Reducer State Update
 export const UpdateUserDetail = (
         api: KouponBankApi,
         id: string, 
@@ -109,6 +108,32 @@ export const UpdateUserDetail = (
             type: UserActionType.UpdateUserDetailFailAction
         });
     });
+};
+
+// 유저 (사업자) 디테일을 업데이트 하기 위한 API Call + Reducer State Update
+export const UpdateOwnerDetail = (
+    api: KouponBankApi,
+    id: string, 
+    name: string,
+    gender: string,
+    birthday: string,
+    location: string | number,
+    profile_picture: null,
+    dispatch
+): any => {
+dispatch({
+    type: UserActionType.UpdateUserDetailAction,
+});
+return api.updateOwnerDetail(id, name, gender, birthday, location, profile_picture).then(userDetail => {
+    dispatch({
+        type: UserActionType.UpdateUserDetailSuccessAction,
+        userDetail: userDetail
+    })
+}).catch(err => {
+    dispatch({
+        type: UserActionType.UpdateUserDetailFailAction
+    });
+});
 };
 
 

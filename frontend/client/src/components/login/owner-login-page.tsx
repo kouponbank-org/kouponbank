@@ -19,6 +19,7 @@ export interface Prop {
         username: string,
         password: string | number,
         email: string | number,
+        isOwner: boolean,
     ) => Promise<void>;
     user: User;
     alertState: AlertState;
@@ -29,12 +30,12 @@ export const OwnerLoginPage = (props: Prop) => {
     const [showAlert, setShowAlert] = useState(true);
     const history = useHistory();
     const api = useContext<KouponBankApi>(ApiContext);
-    const alert = props.alertState.alert
+    const alert = props.alertState.alert;
     
     const userCredentialsInput = (event): void => {
         setUserCredentials({
             ...userCredentials,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,            
         });
     }
 
@@ -43,7 +44,8 @@ export const OwnerLoginPage = (props: Prop) => {
             api,
             userCredentials.username,
             userCredentials.password,
-            userCredentials.email
+            userCredentials.email,
+            true,
         )
         .then(() => {
             history.push(UrlPaths.Home)
@@ -54,7 +56,6 @@ export const OwnerLoginPage = (props: Prop) => {
     const toUserLoginClick = (event): void => {
         history.push(UrlPaths.UserLogin)
     }
-
 
     return (
         <div className="background">
@@ -94,8 +95,9 @@ const mapDispatchToProps = dispatch => {
             username: string,
             password: string | number,
             email: string | number,
+            isOwner: boolean,
         ) => {
-            return loginOwner(api, username, password, email, dispatch);
+            return loginOwner(api, username, password, email, isOwner, dispatch);
         }
     };
 };

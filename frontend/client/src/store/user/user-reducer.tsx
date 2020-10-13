@@ -7,6 +7,7 @@ import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
 import { UserActionType } from "./action-type";
 
+
 /**
  * 프로젝트 Global Variable State 트래킹
  * 파일들이 필요한 Props들이 저장된 'KouponBankState' Dictionary
@@ -24,6 +25,7 @@ const initialState: UserState = {
         username: "",
         password: "",
         email: "",
+        isOwner: false,
     },
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted
@@ -185,12 +187,13 @@ export const loginUser = (
     username: string,
     password: string | number,
     email: string | number,
+    isOwner: boolean,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.LoginUserAction,
     });
-    return api.loginUser(username, password, email).then(user => {
+    return api.loginUser(username, password, email, isOwner).then(user => {
         dispatch({
             type: UserActionType.LoginUserSucessAction,
             user: user,
@@ -213,12 +216,13 @@ export const loginOwner = (
     username: string,
     password: string | number,
     email: string | number,
+    isOwner: boolean,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.LoginUserAction,
     });
-    return api.loginOwner(username, password, email).then(user => {
+    return api.loginOwner(username, password, email, isOwner).then(user => {
         dispatch({
             type: UserActionType.LoginUserSucessAction,
             user: user,

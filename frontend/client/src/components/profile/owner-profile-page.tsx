@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { KouponBankApi } from "../../api/kb-api";
 import { User, UserDetail } from "../../api/kb-types";
-import { UpdateUserDetail } from "../../store/user/user-detail-reducer";
+import { UpdateOwnerDetail } from "../../store/user/user-detail-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { RootReducer } from "../../store/reducer";
 import { Dispatch } from "redux";
@@ -17,7 +17,7 @@ import './user-profile-page.scss';
 export interface Prop {
     userDetail: UserDetail; 
     user: User;
-    UpdateUserDetail: (
+    UpdateOwnerDetail: (
         api: KouponBankApi,
         id: string,
         name: string,
@@ -28,7 +28,7 @@ export interface Prop {
     ) => Promise<void>;
 };
 
-export const UserProfilePage = (props: Prop) =>  {
+export const OwnerProfilePage = (props: Prop) =>  {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const [userCredentials, setUserCredentials] = useState(props.user);
@@ -47,7 +47,7 @@ export const UserProfilePage = (props: Prop) =>  {
     };
 
     const submitChange = (event): void => {
-        props.UpdateUserDetail(api,
+        props.UpdateOwnerDetail(api,
                                userCredentials.id,
                                userInfo.name,
                                userInfo.gender,
@@ -84,7 +84,7 @@ export const UserProfilePage = (props: Prop) =>  {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        UpdateUserDetail: (
+        UpdateOwnerDetail: (
             api: KouponBankApi,
             id: string,
             name: string,
@@ -93,10 +93,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             location: string | number,
             profile_picture: null,
         ) => {
-            return UpdateUserDetail(api, id, name, gender, birthday, location, profile_picture, dispatch)
+            return UpdateOwnerDetail(api, id, name, gender, birthday, location, profile_picture, dispatch)
         }    
     };
 
 };
 
-export const UserProfilePageR = connect(mapStateToProps, mapDispatchToProps)(UserProfilePage);
+export const OwnerProfilePageR = connect(mapStateToProps, mapDispatchToProps)(OwnerProfilePage);

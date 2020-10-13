@@ -41,7 +41,7 @@ export const OwnerSignUpPage = (props: Prop) => {
             api,
             ownerCredentials.username,
             ownerCredentials.password,
-            ownerCredentials.email
+            ownerCredentials.email,
         )
         .then(() => {
             history.push(UrlPaths.Home)

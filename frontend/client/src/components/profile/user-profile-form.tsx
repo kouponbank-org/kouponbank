@@ -24,23 +24,23 @@ export interface Prop {
 
 
 export const UserProfileForm = (props: Prop) =>  {
-const [open, setOpen] = React.useState(false);
-const handleClickOpen = () => {
-    setOpen(true);
-};
+    const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    console.log(props.userDetailCredentials);
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-const handleClose = () => {
-    setOpen(false);
-};
+    const editDetails = (event): void => {
+        props.editDetails(event);
+    };
 
-const editDetails = (event): void => {
-    props.editDetails(event);
-};
-
-const submitChange = (event): void => {
-    props.submitChange(event);
-    handleClose();
-};
+    const submitChange = (event): void => {
+        props.submitChange(event);
+        handleClose();
+    };
 
     return (
       <div className='layout'>

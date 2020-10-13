@@ -22,6 +22,7 @@ export interface Prop {
         username: string,
         password: string | number,
         email: string | number,
+        isOwner: boolean,
     ) => Promise<void>;
     user: User;
     alertState: AlertState;
@@ -46,14 +47,14 @@ export const UserLoginPage = (props: Prop) => {
             api,
             userCredentials.username,
             userCredentials.password,
-            userCredentials.email
+            userCredentials.email,
+            false,
         )
         .then(() => {
             history.push(UrlPaths.Home)
         });
         event.preventDefault();
     }
-
     const toOwnerLoginClick = (event): void => {
         history.push(UrlPaths.OwnerLogin)
     }
@@ -106,8 +107,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             username: string,
             password: string | number,
             email: string | number,
+            isOwner: boolean,
         ) => {
-            return loginUser(api, username, password, email, dispatch);
+            return loginUser(api, username, password, email, isOwner, dispatch);
         }
     };
 };

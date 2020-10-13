@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AddressDetail, Business, BusinessLocation, Coordinate, NaverMapBound, User, UserDetail } from "./kb-types";
+import { AddressDetail, Business, BusinessLocation, Coordinate, NaverMapBound, User, UserDetail, Coupon, CouponBasket } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -8,8 +8,9 @@ export class KouponBankApi {
     BASE_JUSO_URL: string;
 
     constructor() {
-        this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        //this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
         this.BASE_JUSO_URL = process.env.REACT_APP_JUST_API_BASE_URL;
+        this.BASE_URL = "http://127.0.0.1:8000"
         this.BASE_NAVER_MAP_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
         this.BASE_JUSO_API_KEY = process.env.REACT_APP_JUSO_KR_API_KEY;
     };
@@ -18,14 +19,15 @@ export class KouponBankApi {
     async loginUser(
         username: string,
         password: string | number,
-        email: string | number
+        email: string | number,
+        isOwner: boolean,
     ): Promise<User> {
         return axios.post(
             `${this.BASE_URL}/login/user/`,
             {
                 "username": username,
                 "password": password,
-                "email": email
+                "email": email,
             }
         )
         .then(response => {
@@ -36,14 +38,15 @@ export class KouponBankApi {
     async loginOwner(
         username: string,
         password: string | number,
-        email: string | number
+        email: string | number,
+        isOwner: boolean
     ): Promise<User> {
         return axios.post(
             `${this.BASE_URL}/login/owner/`,
             {
                 "username": username,
                 "password": password,
-                "email": email
+                "email": email,
             }
         )
         .then(response => {
@@ -58,7 +61,7 @@ export class KouponBankApi {
             {
                 "username": username,
                 "password": password,
-                "email": email
+                "email": email,
             }
         )
         .then(response => {
@@ -90,7 +93,7 @@ export class KouponBankApi {
             {
                 "username": username,
                 "password": password,
-                "email": email
+                "email": email,
             }
         )
         .then(response => {
@@ -151,6 +154,30 @@ export class KouponBankApi {
     };
 
     /* Business API */
+    async getBusiness(
+        userId: string,
+        businessId: string,
+    ): Promise<Business> {
+        return axios.get(
+            `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    async removeBusiness(
+        userId: string,
+        businessId: string,
+    ): Promise<void> {
+        return axios.delete(
+            `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
     async createBusiness(
         userId: string,
         business: Business
@@ -164,6 +191,21 @@ export class KouponBankApi {
         });
     };
 
+    async updateBusiness(
+        userId: string,
+        businessId: string,
+        business: Business
+    ): Promise<Business> {
+        return axios.put(
+            `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`,
+            business
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    //Business Location API
     async createBusinessLocation(
         businessId: string,
         businessName: string,
@@ -172,6 +214,29 @@ export class KouponBankApi {
     ): Promise<BusinessLocation> {
         return axios.post(
             `${this.BASE_URL}/map/`,
+            {
+                "id": businessId,
+                "business_name": businessName,
+                "doromyeong": businessLocation.roadAddress,
+                "jibeon": businessLocation.jibunAddress,
+                "postal_code": businessLocation.zipcode,
+                "x": latlng.x,
+                "y": latlng.y
+            }
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    async updateBusinessLocation(
+        businessId: string,
+        businessName: string,
+        latlng: Coordinate,
+        businessLocation: BusinessLocation
+    ): Promise<BusinessLocation> {
+        return axios.put(
+            `${this.BASE_URL}/map/${businessId}/`,
             {
                 "id": businessId,
                 "business_name": businessName,
@@ -217,5 +282,98 @@ export class KouponBankApi {
             return response.data.results.juso
         })
     }
+    /*Owner Detail API*/
+    async getOwnerDetail(userId: string): Promise<UserDetail> {
+        return axios.get(
+            `${this.BASE_URL}/owners/${userId}/detail/`
+        )
+        .then(response => {
+            return response.data
+        });
+    };
+
+    async updateOwnerDetail(
+        userId: string,
+        name: string, 
+        gender: string, 
+        birthday: string, 
+        location: string | number, 
+        profile_picture: null
+    ): Promise<UserDetail> {
+        return axios.put(
+            `${this.BASE_URL}/owners/${userId}/detail/`, 
+            {
+                "name": name,
+                "gender": gender,
+                "birthday": birthday,
+                "location": location,
+                "profile_picture": profile_picture,
+            }
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    /* Coupon API */
+    async getCoupon(
+        userId: string,
+        businessId: string,
+        couponId: string
+    ): Promise<Coupon> {
+        return axios.get(
+            `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    async removeCoupon(
+        userId: string,
+        businessId: string,
+        couponId: string
+    ): Promise<void> {
+        return axios.delete(
+            `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    async createCoupon(
+        userId: string,
+        businessId: string,
+        coupon: Coupon
+    ): Promise<Coupon> {
+        return axios.post(
+            `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/`,
+            {
+                "coupon_title": coupon.coupon_title,
+                "description": coupon.description,
+                "coupon_code": coupon.coupon_code,
+                "coupon_picture": null,
+            }
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    async updateCoupon(
+        userId: string,
+        businessId: string,
+        couponId: string,
+        coupon: Coupon
+    ): Promise<Coupon> {
+        return axios.put(
+            `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
+            coupon
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
 };
 

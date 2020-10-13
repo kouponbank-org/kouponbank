@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { KouponBankApi } from "../../api/kb-api";
 import { Dispatch } from "redux";
-import { User } from "../../api/kb-types";
+import { User, Coupon, Business, BusinessLocation } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
-import { UrlPaths } from "../base-page-router";
-import { MapR } from "../naver-map/map";
+import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
+import { HomepageForm } from "./home-page-form";
+import { OwnerHomepageForm } from "./owner-home-page-form"
 import "./homepage.scss";
 
 
@@ -15,14 +17,26 @@ import "./homepage.scss";
  */
 export interface Prop {
     user: User;
+    coupon: Coupon;
+    business: Business;
+    businessLocation: BusinessLocation;
 };
 
 export const HomePage = (props: Prop) => {
     const history = useHistory();
+    const api = useContext<KouponBankApi>(ApiContext);
 
     const directToUserLogin = (event): void => {
-        history.push(UrlPaths.UserLogin)
+        history.push(UrlPaths.UserLogin);
     }
+
+    const couponClick = (event): void => {
+        history.push(UrlPaths.CreateCoupon);
+    };
+
+    const businessClick = (event): void => {
+        history.push(UrlPaths.CreateBusiness);
+    };
 
     return (
         <div>
@@ -31,7 +45,22 @@ export const HomePage = (props: Prop) => {
                 buttonName={"로그인"}
                 onClick={directToUserLogin}
             />
-            <MapR />
+            {
+                props.user.isOwner==true ? (
+                    <OwnerHomepageForm
+                        coupon={props.coupon}
+                        business={props.business}
+                        businessLocation={props.businessLocation}
+                        couponClick={couponClick}
+                        businessClick={businessClick}
+                    />
+                ) : (
+                    <HomepageForm
+                        coupon={props.coupon}
+                        couponClick={couponClick}
+                    />
+                )
+            }
         </div>
     );
 };
@@ -39,6 +68,9 @@ export const HomePage = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
+        coupon: state.couponReducer.coupon,
+        business: state.businessReducer.business,
+        businessLocation: state.businessReducer.businessLocation,
     };
 };
 

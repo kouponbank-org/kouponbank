@@ -64,7 +64,7 @@ export const CreateBusinessPage = (props: Prop) => {
             }
         )
     };
-
+    console.log(business)
     /**
      * 사업장 가입하기 클립하면 
      * 1) getLatLngFromAddress를 먼저 발동하고

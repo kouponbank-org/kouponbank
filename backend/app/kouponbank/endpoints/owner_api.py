@@ -43,7 +43,14 @@ class OwnerListAPI(APIView):
                 description="Creates the password of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
+            openapi.Parameter(
+                "isOwner",
+                openapi.IN_QUERY,
+                description="Creates the password of the owner",
+                type=openapi.TYPE_BOOLEAN,
+                required=True
+            ),
         ]
     )
     def post(self, request):
@@ -91,7 +98,14 @@ class OwnerAPI(APIView):
                 description="Updates the password of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
+            openapi.Parameter(
+                "isOwner",
+                openapi.IN_QUERY,
+                description="Creates the password of the owner",
+                type=openapi.TYPE_BOOLEAN,
+                required=True
+            ),
         ]
     )
     def put(self, request, owner_id):
