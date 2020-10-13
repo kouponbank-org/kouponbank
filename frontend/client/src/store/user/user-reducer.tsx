@@ -1,5 +1,6 @@
 import { produce } from "immer";
 import { Dispatch } from "redux";
+import storage from 'redux-persist/lib/storage';
 import { KouponBankApi } from "../../api/kb-api";
 import { Status, User } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
@@ -114,14 +115,8 @@ export const reducer = (
                 draftState.updateStatus = Status.Failed;
             });
         case UserActionType.SignOutAction:
-                return produce(state, (draftState) => {
-                    draftState.user = {
-                        id: null,
-                        username: "",
-                        password: "",
-                        email: "",
-                    };
-                });
+            storage.removeItem('persist:root');    
+            return initialState;
         default:
             return state;
     }

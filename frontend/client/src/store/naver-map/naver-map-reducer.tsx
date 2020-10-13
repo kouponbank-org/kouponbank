@@ -1,7 +1,7 @@
 import produce from "immer";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { BusinessLocation, NaverMapBound, Status } from "../../api/kb-types";
+import { AddressDetail, BusinessLocation, NaverMapBound, Status } from "../../api/kb-types";
 import { NaverMapActionType } from "./action-type";
 
 export interface NaverMapState {
@@ -126,3 +126,15 @@ export const getAllBusinessWithinNaverMapBounds = (
         throw err;
     });
 };
+
+export const getJusoSearchResult = (
+    api: KouponBankApi,
+    address: string
+): Promise<AddressDetail[]> => {
+    return api.findAddress(
+        address
+    )
+    .then(address => {
+        return address
+    })
+}

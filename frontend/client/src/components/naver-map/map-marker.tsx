@@ -21,7 +21,7 @@ export const MapMarker = (props: Prop) => {
                                 }}
                                 animation={1}
                                 onClick={() => {
-                                    alert(business.jibeon)
+                                    alert(business.roadAddress)
                                 }}
                             />
                         )

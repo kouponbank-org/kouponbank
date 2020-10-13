@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import storageSession from 'redux-persist/lib/storage/session';
 import thunk from "redux-thunk";
 import { reducer } from "./reducer";
 
@@ -8,7 +8,7 @@ const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
 
 const persistConfig = {
     key: "root",
-    storage,
+    storage: storageSession,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
