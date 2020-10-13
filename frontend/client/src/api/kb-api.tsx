@@ -8,9 +8,9 @@ export class KouponBankApi {
     BASE_JUSO_URL: string;
 
     constructor() {
-        //this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
+        this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
         this.BASE_JUSO_URL = process.env.REACT_APP_JUST_API_BASE_URL;
-        this.BASE_URL = "http://127.0.0.1:8000"
+        //this.BASE_URL = "http://127.0.0.1:8000"
         this.BASE_NAVER_MAP_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
         this.BASE_JUSO_API_KEY = process.env.REACT_APP_JUSO_KR_API_KEY;
     };
