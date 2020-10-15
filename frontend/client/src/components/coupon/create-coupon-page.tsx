@@ -51,7 +51,6 @@ export const CreateCouponPage = (props: Prop) => {
                 history.push(UrlPaths.Home);
             });
         event.preventDefault();
-        console.log(coupon)
     };
 
     return (
@@ -66,7 +65,6 @@ export const CreateCouponPage = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state)
     return {
         user: state.userReducer.user,
         business: state.businessReducer.business,

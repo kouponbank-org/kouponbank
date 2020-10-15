@@ -75,7 +75,6 @@ export const UserProfilePage = (props: Prop) =>  {
 };
 
   const mapStateToProps = (state: RootReducer) => {
-    console.log(state)
     return {
         user: state.userReducer.user,
         userDetail: state.userDetailReducer.userDetail,

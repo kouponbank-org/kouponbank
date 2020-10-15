@@ -35,7 +35,6 @@ export const OwnerSignUpPage = (props: Prop) => {
     const alert = props.alertState.alert
     const [ownerCredentials, setOwnerCredentials] = useState(props.owner);
     const [showAlert, setShowAlert] = useState(true);
-
     const createNewOwnerClick = (event): void => {
         props.createNewOwner(
             api,

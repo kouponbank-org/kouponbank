@@ -10,7 +10,6 @@ export class KouponBankApi {
     constructor() {
         this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
         this.BASE_JUSO_URL = process.env.REACT_APP_JUST_API_BASE_URL;
-        //this.BASE_URL = "http://127.0.0.1:8000"
         this.BASE_NAVER_MAP_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
         this.BASE_JUSO_API_KEY = process.env.REACT_APP_JUSO_KR_API_KEY;
     };
@@ -20,7 +19,6 @@ export class KouponBankApi {
         username: string,
         password: string | number,
         email: string | number,
-        isOwner: boolean,
     ): Promise<User> {
         return axios.post(
             `${this.BASE_URL}/login/user/`,
@@ -38,8 +36,7 @@ export class KouponBankApi {
     async loginOwner(
         username: string,
         password: string | number,
-        email: string | number,
-        isOwner: boolean
+        email: string | number
     ): Promise<User> {
         return axios.post(
             `${this.BASE_URL}/login/owner/`,
@@ -55,7 +52,11 @@ export class KouponBankApi {
     };
     
     /*USER API*/
-    async createUser(username: string, password: string | number, email: string | number): Promise<User> {
+    async createUser(
+        username: string, 
+        password: string | number, 
+        email: string | number
+    ): Promise<User> {
         return axios.post(
             `${this.BASE_URL}/users/`,
             {
@@ -87,7 +88,11 @@ export class KouponBankApi {
         });
     };
 
-    async createOwner(username: string, password: string | number, email: string | number): Promise<User> {
+    async createOwner(
+        username: string, 
+        password: string | number, 
+        email: string | number
+    ): Promise<User> {
         return axios.post(
             `${this.BASE_URL}/owners/`,
             {

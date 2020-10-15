@@ -19,7 +19,6 @@ export interface Prop {
         username: string,
         password: string | number,
         email: string | number,
-        isOwner: boolean,
     ) => Promise<void>;
     user: User;
     alertState: AlertState;
@@ -45,7 +44,6 @@ export const OwnerLoginPage = (props: Prop) => {
             userCredentials.username,
             userCredentials.password,
             userCredentials.email,
-            true,
         )
         .then(() => {
             history.push(UrlPaths.Home)
@@ -95,9 +93,8 @@ const mapDispatchToProps = dispatch => {
             username: string,
             password: string | number,
             email: string | number,
-            isOwner: boolean,
         ) => {
-            return loginOwner(api, username, password, email, isOwner, dispatch);
+            return loginOwner(api, username, password, email, dispatch);
         }
     };
 };

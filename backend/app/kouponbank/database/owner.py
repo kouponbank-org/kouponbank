@@ -11,7 +11,6 @@ class Owner(models.Model):
     username = models.CharField(max_length=50, unique=True, blank=False)
     password = models.CharField(max_length=50, unique=False, blank=False)
     email = models.EmailField(max_length=254, unique=True, blank=False)
-    isOwner = models.BooleanField(default=True)
 
 class OwnerSerializer(serializers.ModelSerializer):
     #owner_detail = OwnerDetailSerializer(source="owner_details", read_only=True)
@@ -23,7 +22,6 @@ class OwnerSerializer(serializers.ModelSerializer):
             "username",
             "password",
             "email",
-            "isOwner"
         )
 
     def create(self, validated_data):

@@ -7,8 +7,6 @@ import { BasePageRouterR } from "./components/base-page-router";
 import { persistor, store } from "./store";
 
 const NAVER_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
-
-//const NAVER_API_KEY = "yyqw4ikek8";
 declare global {
   interface Window {
       naver: any;

@@ -59,8 +59,8 @@ export const OwnerHomepageForm = (props: Prop) => {
                                     />
                                     <TextField
                                         fullWidth
-                                        name="doromyeong"
-                                        id="doromyeong"
+                                        name="roadAddress"
+                                        id="roadAddress"
                                         label="도로명 주소"
                                         disabled
                                         value={props.businessLocation.roadAddress}
@@ -88,14 +88,14 @@ export const OwnerHomepageForm = (props: Prop) => {
             {
                 props.coupon.id !== "" ? (
                     <Grid container>
-                    <Paper className="paper" variant="outlined">
-                        <Grid item>
-                            <ButtonBase 
-                                onClick={couponClick}
-                                className="image">
-                            <img alt="complex" src= {props.coupon.coupon_picture}/>
-                            </ButtonBase>
-                        </Grid>
+                        <Paper className="paper" variant="outlined">
+                            <Grid item>
+                                <ButtonBase 
+                                    onClick={couponClick}
+                                    className="image">
+                                <img alt="complex" src= {props.coupon.coupon_picture}/>
+                                </ButtonBase>
+                            </Grid>
                             <Grid item xs={12} sm container>
                                 <Grid>
                                 <TextField
@@ -117,7 +117,7 @@ export const OwnerHomepageForm = (props: Prop) => {
                                 </Grid>
                             </Grid>
                         </Paper>
-                </Grid>
+                    </Grid>
                 ) : (
                     <Grid container>
                         <Paper className="paper" variant="outlined">

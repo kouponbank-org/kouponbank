@@ -15,8 +15,7 @@ export interface User {
     id?: string;
     username: string;
     password: string | number;
-    email: string | number;
-    isOwner?: boolean;
+    email: string | number
 };
 
 /**

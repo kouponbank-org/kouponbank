@@ -17,6 +17,7 @@ import "./homepage.scss";
  */
 export interface Prop {
     user: User;
+    isOwner: Boolean;
     coupon: Coupon;
     business: Business;
     businessLocation: BusinessLocation;
@@ -37,7 +38,7 @@ export const HomePage = (props: Prop) => {
     const businessClick = (event): void => {
         history.push(UrlPaths.CreateBusiness);
     };
-
+    
     return (
         <div>
             <NavBarR
@@ -46,7 +47,7 @@ export const HomePage = (props: Prop) => {
                 onClick={directToUserLogin}
             />
             {
-                props.user.isOwner==true ? (
+                props.isOwner==true ? (
                     <OwnerHomepageForm
                         coupon={props.coupon}
                         business={props.business}
@@ -68,6 +69,7 @@ export const HomePage = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
+        isOwner: state.userReducer.isOwner,
         coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
         businessLocation: state.businessReducer.businessLocation,

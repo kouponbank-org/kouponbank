@@ -18,6 +18,7 @@ import "./navigation-bar.scss";
 export interface Prop {
     user: User;
     title?: string;
+    isOwner: boolean;
     buttonName?: string;
     onClick?: (event) => void;
     signOut: () => void;
@@ -74,7 +75,7 @@ export const NavBar = (props: Prop): ReactElement => {
                         props.user.username !== "" ? (
                             <Fragment>
                                 {
-                                    props.user.isOwner == true ? (
+                                    props.isOwner == true ? (
                                         <Button className="profile-details" onClick={redirectToOwnerProfile}>
                                             나만의 공간 
                                         </Button>
@@ -103,6 +104,7 @@ export const NavBar = (props: Prop): ReactElement => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
+        isOwner: state.userReducer.isOwner,
     };
 };
 
