@@ -1,3 +1,4 @@
+import { FastForward } from "@material-ui/icons";
 import { produce } from "immer";
 import { Dispatch } from "redux";
 import storage from 'redux-persist/lib/storage';
@@ -7,6 +8,7 @@ import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
 import { UserActionType } from "./action-type";
 
+
 /**
  * 프로젝트 Global Variable State 트래킹
  * 파일들이 필요한 Props들이 저장된 'KouponBankState' Dictionary
@@ -15,6 +17,7 @@ import { UserActionType } from "./action-type";
 
 export interface UserState {
     user: User;
+    isOwner: boolean;
     fetchStatus: Status;
     updateStatus: Status;
 }
@@ -25,8 +28,9 @@ const initialState: UserState = {
         password: "",
         email: "",
     },
+    isOwner: false,
     fetchStatus: Status.NotStarted,
-    updateStatus: Status.NotStarted
+    updateStatus: Status.NotStarted,
 };
 
 /**
@@ -40,6 +44,7 @@ interface CreateNewUserAction {
 interface CreateNewUserSuccessAction {
     user: User;
     type: UserActionType.CreateNewUserSuccessAction;
+    isOwner: boolean;
 }
 
 interface CreateNewUserFailAction {
@@ -53,6 +58,7 @@ interface LoginUserAction {
 interface LoginUserSuccessAction {
     user: User;
     type: UserActionType.LoginUserSucessAction;
+    isOwner: boolean;
 }
 
 interface LoginUserFailAction {
@@ -95,7 +101,8 @@ export const reducer = (
         case UserActionType.CreateNewUserSuccessAction:
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Succeeded;
-                draftState.user = action.user
+                draftState.user = action.user;
+                draftState.isOwner = action.isOwner;
             });
         case UserActionType.CreateNewUserFailAction:
             return produce(state, draftState => {
@@ -108,7 +115,8 @@ export const reducer = (
         case UserActionType.LoginUserSucessAction:
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Succeeded;
-                draftState.user = action.user
+                draftState.user = action.user;
+                draftState.isOwner = action.isOwner;
             });
         case UserActionType.LoginUserFailAction:
             return produce(state, draftState => {
@@ -165,7 +173,8 @@ export const createNewOwner = (
     return api.createOwner(username, password, email).then(user => {
         dispatch({
             type: UserActionType.CreateNewUserSuccessAction,
-            user: user
+            user: user,
+            isOwner:true,
         })
     }).catch(err => {
         dispatch({
@@ -222,6 +231,7 @@ export const loginOwner = (
         dispatch({
             type: UserActionType.LoginUserSucessAction,
             user: user,
+            isOwner: true,
         });
     }).catch(err => {
         dispatch({

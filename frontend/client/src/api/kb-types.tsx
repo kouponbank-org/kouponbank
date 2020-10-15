@@ -15,7 +15,7 @@ export interface User {
     id?: string;
     username: string;
     password: string | number;
-    email: string | number;
+    email: string | number
 };
 
 /**
@@ -33,6 +33,29 @@ export interface Alert {
     alertHeader: string | JSX.Element;
     alertBody: string | JSX.Element;
 }
+
+/**
+ * Represents the required properties of a Coupon
+ */
+export interface Coupon {
+    id?: string;
+    coupon_title: string;
+    description: string;
+    coupon_code: string;
+    coupon_picture?: string;
+}
+
+/**
+ * Represents the required properties of a CouponBasket
+ */
+export interface CouponBasket {
+    id?: string;
+    business_key: string;
+    business_name: string;
+    coupon_code: string;
+    coupon_title?: string;
+}
+
 
 /**
  * Represents the required properties of a Business

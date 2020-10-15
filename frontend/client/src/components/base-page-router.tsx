@@ -9,6 +9,8 @@ import { OwnerSignUpPageR } from "./login/signup/owner/owner-sign-up-page";
 import { UserSignUpPageR } from "./login/signup/user/user-sign-up-page";
 import { UserLoginPageR } from "./login/user-login-page";
 import { UserProfilePageR } from "./profile/user-profile-page";
+import { OwnerProfilePageR } from "./profile/owner-profile-page";
+import { CreateCouponPageR } from "./coupon/create-coupon-page";
 
 /**
  * Represents the required properties of the BasePageRouter.
@@ -25,8 +27,11 @@ export enum UrlPaths {
     OwnerLogin = "/ologin",
     UserSignUp = "/usu",
     OwnerSignUp = "/osu",
-    UserProfile = "/profile",
+    UserProfile = "/uprofile",
+    OwnerProfile = "/oprofile",
     CreateBusiness = "/newbusiness",
+    ViewBusiness = "/business",
+    CreateCoupon = "/newcoupon",
 }
 
 /**
@@ -65,8 +70,10 @@ const BasePageRouter = (props: Prop) => {
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
             <Switch>
+                <Route path={UrlPaths.CreateCoupon} component={CreateCouponPageR} />
                 <Route path={UrlPaths.CreateBusiness} component={CreateBusinessPageR} />
                 <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
+                <Route path={UrlPaths.OwnerProfile} component={OwnerProfilePageR} />
                 <Route path={UrlPaths.OwnerSignUp} component={OwnerSignUpPageR} />
                 <Route path={UrlPaths.UserSignUp} component={UserSignUpPageR} />
                 <Route path={UrlPaths.OwnerLogin} component={OwnerLoginPageR} />

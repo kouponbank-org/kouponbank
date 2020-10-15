@@ -47,7 +47,7 @@ class UserListAPI(APIView):
                 description="Creates the password of the user",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
         ]
     )
     def post(self, request):
@@ -97,7 +97,7 @@ class UserAPI(APIView):
                 description="Updates the password of the user",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
         ]
     )
     def put(self, request, user_id):

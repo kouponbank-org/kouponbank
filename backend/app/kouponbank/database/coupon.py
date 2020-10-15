@@ -37,5 +37,5 @@ class CouponSerializer(serializers.ModelSerializer):
             "coupon_title",
             "description",
             "coupon_code",
-            "coupon_picture"
+            "coupon_picture",
         )

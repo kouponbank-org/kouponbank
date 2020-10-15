@@ -29,12 +29,12 @@ export const OwnerLoginPage = (props: Prop) => {
     const [showAlert, setShowAlert] = useState(true);
     const history = useHistory();
     const api = useContext<KouponBankApi>(ApiContext);
-    const alert = props.alertState.alert
+    const alert = props.alertState.alert;
     
     const userCredentialsInput = (event): void => {
         setUserCredentials({
             ...userCredentials,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,            
         });
     }
 
@@ -43,7 +43,7 @@ export const OwnerLoginPage = (props: Prop) => {
             api,
             userCredentials.username,
             userCredentials.password,
-            userCredentials.email
+            userCredentials.email,
         )
         .then(() => {
             history.push(UrlPaths.Home)
@@ -54,7 +54,6 @@ export const OwnerLoginPage = (props: Prop) => {
     const toUserLoginClick = (event): void => {
         history.push(UrlPaths.UserLogin)
     }
-
 
     return (
         <div className="background">

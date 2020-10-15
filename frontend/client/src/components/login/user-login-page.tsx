@@ -46,14 +46,13 @@ export const UserLoginPage = (props: Prop) => {
             api,
             userCredentials.username,
             userCredentials.password,
-            userCredentials.email
+            userCredentials.email,
         )
         .then(() => {
             history.push(UrlPaths.Home)
         });
         event.preventDefault();
     }
-
     const toOwnerLoginClick = (event): void => {
         history.push(UrlPaths.OwnerLogin)
     }

@@ -24,23 +24,20 @@ export interface Prop {
 
 
 export const UserProfileForm = (props: Prop) =>  {
-const [open, setOpen] = React.useState(false);
-const handleClickOpen = () => {
-    setOpen(true);
-};
+    const [open, setOpen] = React.useState(false);
+    
+    const modalStatus = () => {
+        open ? setOpen(false) : setOpen(true)
+    }
 
-const handleClose = () => {
-    setOpen(false);
-};
+    const editDetails = (event): void => {
+        props.editDetails(event);
+    };
 
-const editDetails = (event): void => {
-    props.editDetails(event);
-};
-
-const submitChange = (event): void => {
-    props.submitChange(event);
-    handleClose();
-};
+    const submitChange = (event): void => {
+        props.submitChange(event);
+        modalStatus();
+    };
 
     return (
       <div className='layout'>
@@ -119,14 +116,14 @@ const submitChange = (event): void => {
                     variant="contained"
                     color="primary"
                     className="editbutton"
-                    onClick={handleClickOpen}>
+                    onClick={modalStatus}>
                         수정하기
                 </Button>
             </form>
             </Grid>
             <Dialog 
                 open={open} 
-                onClose={handleClose} 
+                onClose={modalStatus} 
                 aria-labelledby="form-dialog"
             >
                 <DialogTitle id="form-dialog">프로필 수정</DialogTitle>
@@ -163,7 +160,7 @@ const submitChange = (event): void => {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={modalStatus} color="primary">
                         Cancel
                     </Button>
                     <Button onClick={submitChange} color="primary">

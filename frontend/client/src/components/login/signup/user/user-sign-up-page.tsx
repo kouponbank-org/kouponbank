@@ -38,7 +38,7 @@ export const UserSignUpPage = (props: Prop) => {
             api,
             userCredentials.username,
             userCredentials.password,
-            userCredentials.email
+            userCredentials.email,
         )
         .then(() => {
             history.push(UrlPaths.Home);
@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             api: KouponBankApi,
             username: string,
             password: string | number,
-            email: string | number
+            email: string | number,
         ) => {
             // API Call이에요 -> UserReducer에 있는 export const createNewUser.
             return createNewUser(api, username, password, email, dispatch)
