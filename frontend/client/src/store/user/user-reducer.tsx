@@ -1,4 +1,3 @@
-import { FastForward } from "@material-ui/icons";
 import { produce } from "immer";
 import { Dispatch } from "redux";
 import storage from 'redux-persist/lib/storage';
@@ -7,7 +6,6 @@ import { Status, User } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
 import { UserActionType } from "./action-type";
-
 
 /**
  * 프로젝트 Global Variable State 트래킹

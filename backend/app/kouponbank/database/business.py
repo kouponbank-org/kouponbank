@@ -17,7 +17,8 @@ class Business(models.Model):
         to="kouponbank.OwnerDetail",
         on_delete=models.CASCADE,
         related_name="business",
-        null=True
+        null=True,
+        blank=True
     )
     business_name = models.CharField(max_length=50, blank=False)
     business_email = models.EmailField(

@@ -13,7 +13,7 @@ class CouponListAPI(APIView):
     @swagger_auto_schema(
         responses={200: CouponSerializer(many=True)}
     )
-    def get(self, request, owner_id, business_id):
+    def get(self, request, business_id):
         business = self.__get_business(business_id)
         coupons = business.business_coupon
         serializer = CouponSerializer(coupons, many=True)
@@ -65,7 +65,7 @@ class CouponListAPI(APIView):
             ),
         ]
     )
-    def post(self, request, owner_id, business_id):
+    def post(self, request, business_id):
         business = self.__get_business(business_id)
         serializer = CouponSerializer(data=request.data)
         if serializer.is_valid():
@@ -77,7 +77,7 @@ class CouponAPI(APIView):
     @swagger_auto_schema(
         responses={200: CouponSerializer(many=True)},
     )
-    def get(self, request, owner_id, business_id, coupon_id):
+    def get(self, request, business_id, coupon_id):
         coupon = self.__get_coupon(coupon_id)
         serializer = CouponSerializer(coupon)
         return Response(serializer.data)
@@ -128,7 +128,7 @@ class CouponAPI(APIView):
             ),
         ]
     )
-    def put(self, request, owner_id, business_id, coupon_id):
+    def put(self, request, business_id, coupon_id):
         coupon = self.__get_coupon(coupon_id)
         serializer = CouponSerializer(coupon, data=request.data)
         if serializer.is_valid():
@@ -139,7 +139,7 @@ class CouponAPI(APIView):
     @swagger_auto_schema(
         responses={200: CouponSerializer(many=True)}
     )
-    def delete(self, request, owner_id, business_id, coupon_id):
+    def delete(self, request, business_id, coupon_id):
         coupon = self.__get_coupon(coupon_id)
         if coupon is None:
             raise Http404("Coupon not found")
