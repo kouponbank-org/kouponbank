@@ -25,6 +25,35 @@ class MenuListAPI(APIView):
         except Business.DoesNotExist:
             raise Http404("Business not found")
 
+class MenuAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: MenuSerializer(many=True)},
+    )
+    def get(self, request, business_id, menu_id):
+        menu = self.__get_menu(menu_id)
+        serializer = MenuSerializer(menu)
+        return Response(serializer.data)
+    def __get_menu(self, menu_id):
+        try:
+            return Menu.objects.get(pk=menu_id)
+        except Menu.DoesNotExist:
+            raise Http404("Menu not found")
+
+class BusinessMenuListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: MenuSerializer(many=True)}
+    )
+    def get(self, request, owner_id, business_id):
+        business = self.__get_business(business_id)
+        menus = business.business_menu
+        serializer = MenuSerializer(menus, many=True)
+        return Response(serializer.data)
+    def __get_business(self, business_id):
+        try:
+            return Business.objects.get(pk=business_id)
+        except Business.DoesNotExist:
+            raise Http404("Business not found")
+
     @swagger_auto_schema(
         responses={200: MenuSerializer(many=True)},
         manual_parameters=
@@ -52,7 +81,7 @@ class MenuListAPI(APIView):
             )
         ]
     )
-    def post(self, request, business_id):
+    def post(self, request, owner_id, business_id):
         business = self.__get_business(business_id)
         serializer = MenuSerializer(data=request.data)
         if serializer.is_valid():
@@ -60,11 +89,11 @@ class MenuListAPI(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class MenuAPI(APIView):
+class BusinessMenuAPI(APIView):
     @swagger_auto_schema(
         responses={200: MenuSerializer(many=True)},
     )
-    def get(self, request, business_id, menu_id):
+    def get(self, request, owner_id, business_id, menu_id):
         menu = self.__get_menu(menu_id)
         serializer = MenuSerializer(menu)
         return Response(serializer.data)
@@ -101,7 +130,7 @@ class MenuAPI(APIView):
             )
         ]
     )
-    def put(self, request, business_id, menu_id):
+    def put(self, request, owner_id, business_id, menu_id):
         menu = self.__get_menu(menu_id)
         serializer = MenuSerializer(menu, data=request.data)
         if serializer.is_valid():
@@ -112,7 +141,7 @@ class MenuAPI(APIView):
     @swagger_auto_schema(
         responses={200: MenuSerializer(many=True)}
     )
-    def delete(self, request, business_id, menu_id):
+    def delete(self, request, owner_id, business_id, menu_id):
         menu = self.__get_menu(menu_id)
         if menu is None:
             raise Http404("Menu not found")
