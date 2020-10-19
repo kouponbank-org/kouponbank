@@ -222,9 +222,9 @@ export class KouponBankApi {
             {
                 "id": businessId,
                 "business_name": businessName,
-                "doromyeong": businessLocation.roadAddress,
-                "jibeon": businessLocation.jibunAddress,
-                "postal_code": businessLocation.zipcode,
+                "roadAddress": businessLocation.roadAddress,
+                "jibun": businessLocation.jibunAddress,
+                "zipcode": businessLocation.zipcode,
                 "x": latlng.x,
                 "y": latlng.y
             }
@@ -245,9 +245,9 @@ export class KouponBankApi {
             {
                 "id": businessId,
                 "business_name": businessName,
-                "doromyeong": businessLocation.roadAddress,
-                "jibeon": businessLocation.jibunAddress,
-                "postal_code": businessLocation.zipcode,
+                "roadAddress": businessLocation.roadAddress,
+                "jibuoAddress": businessLocation.jibunAddress,
+                "zipcode": businessLocation.zipcode,
                 "x": latlng.x,
                 "y": latlng.y
             }

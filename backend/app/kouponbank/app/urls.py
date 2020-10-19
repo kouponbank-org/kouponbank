@@ -61,7 +61,7 @@ urlpatterns = [
    path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/<uuid:coupon_id>/', BusinessCouponAPI.as_view(), name="business-coupon"),
    path('business/', BusinessListAPI.as_view(), name="business-list"),
    path('business/<uuid:business_id>/menu/', MenuListAPI.as_view(), name="menu-list"),
-   path('business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuLAPI.as_view(), name="menu"),
+   path('business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuAPI.as_view(), name="menu"),
    path('business/<uuid:business_id>/coupon/', CouponListAPI.as_view(), name="coupon-list"),
    path('business/<uuid:business_id>/coupon/<uuid:coupon_id>/', CouponAPI.as_view(), name="coupon"),
 
