@@ -27,7 +27,7 @@ export const AddressInput = (props: Prop) => {
             setSearchedAddress(address)
         })
         event.preventDefault()
-    }
+    };
 
     return ( 
         <div className="layout">

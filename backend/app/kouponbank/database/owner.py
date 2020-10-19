@@ -1,9 +1,8 @@
 import uuid
 
 from django.db import models
-from rest_framework import serializers
-
 from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
+from rest_framework import serializers
 
 
 class Owner(models.Model):
@@ -36,3 +35,4 @@ class OwnerSerializer(serializers.ModelSerializer):
         )
 
         return owner
+

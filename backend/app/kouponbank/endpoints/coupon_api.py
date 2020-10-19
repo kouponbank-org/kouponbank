@@ -13,6 +13,36 @@ class CouponListAPI(APIView):
     @swagger_auto_schema(
         responses={200: CouponSerializer(many=True)}
     )
+    def get(self, request, business_id):
+        business = self.__get_business(business_id)
+        coupons = business.business_coupon
+        serializer = CouponSerializer(coupons, many=True)
+        return Response(serializer.data)
+    def __get_business(self, business_id):
+        try:
+            return Business.objects.get(pk=business_id)
+        except Business.DoesNotExist:
+            raise Http404("Business not found")
+
+class CouponAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: CouponSerializer(many=True)},
+    )
+    def get(self, request, business_id, coupon_id):
+        coupon = self.__get_coupon(coupon_id)
+        serializer = CouponSerializer(coupon)
+        return Response(serializer.data)
+    def __get_coupon(self, coupon_id):
+        try:
+            return Coupon.objects.get(pk=coupon_id)
+        except Coupon.DoesNotExist:
+            raise Http404("Coupon not found")
+
+
+class BusinessCouponListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: CouponSerializer(many=True)}
+    )
     def get(self, request, owner_id, business_id):
         business = self.__get_business(business_id)
         coupons = business.business_coupon
@@ -73,7 +103,7 @@ class CouponListAPI(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CouponAPI(APIView):
+class BusinessCouponAPI(APIView):
     @swagger_auto_schema(
         responses={200: CouponSerializer(many=True)},
     )

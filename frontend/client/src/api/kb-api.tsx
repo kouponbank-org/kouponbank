@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AddressDetail, Business, BusinessLocation, Coordinate, NaverMapBound, User, UserDetail, Coupon, CouponBasket } from "./kb-types";
+import { AddressDetail, Business, BusinessLocation, Coordinate, Coupon, NaverMapBound, User, UserDetail } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -287,6 +287,7 @@ export class KouponBankApi {
             return response.data.results.juso
         })
     }
+    
     /*Owner Detail API*/
     async getOwnerDetail(userId: string): Promise<UserDetail> {
         return axios.get(
