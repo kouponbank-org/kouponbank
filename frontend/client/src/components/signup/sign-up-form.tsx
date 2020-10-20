@@ -1,32 +1,37 @@
 import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import { User } from "../../../../api/kb-types";
-import './owner-sign-up-page.scss';
-
+import { User } from "../../api/kb-types";
+import './sign-up-page.scss';
 
 
 export interface Prop {
-    ownerCredentials: User;
-    createNewOwnerClick: (event) => void;
-    ownerCredentialsInput: (event) => void;
+    signUpButtonName: string;
+    userCredentials: User;
+    createNewUserClick: (event) => void;
+    userCredentialsInput: (event) => void;
+    userOrOwnerSignup: (event) => void;
 };
 
-export const OwnerSignUpPageForm = (props: Prop) => {
+export const SignUpForm = (props: Prop) => {
 
-    const createNewOwnerClick = (event): void => {
-        props.createNewOwnerClick(event);
+    const createNewUserClick = (event): void => {
+        props.createNewUserClick(event);
     };
+
+    const userOrOwnerSignup = (event): void => {
+        props.userOrOwnerSignup(event);
+    }
     
-    const ownerCredentialsInput = (event): void => {
-        props.ownerCredentialsInput(event);
+    const userCredentialsInput = (event): void => {
+        props.userCredentialsInput(event);
     };
 
     return (
         <div className="layout">
             <Typography component="h1" variant="h5">
-                Sign up
+                회원가입
             </Typography>
-            <form className="form" onSubmit={createNewOwnerClick} noValidate>
+            <form className="form" onSubmit={createNewUserClick} noValidate>
                 <Grid container>
                     <Grid item xs={12}>
                         <TextField
@@ -37,8 +42,8 @@ export const OwnerSignUpPageForm = (props: Prop) => {
                             label="Email"
                             name="email"
                             autoComplete="on"
-                            onChange={ownerCredentialsInput}
-                            value={props.ownerCredentials.email}
+                            onChange={userCredentialsInput}
+                            value={props.userCredentials.email}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -50,8 +55,8 @@ export const OwnerSignUpPageForm = (props: Prop) => {
                             label="Username"
                             name="username"
                             autoComplete="on"
-                            onChange={ownerCredentialsInput}
-                            value={props.ownerCredentials.username}
+                            onChange={userCredentialsInput}
+                            value={props.userCredentials.username}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -64,8 +69,8 @@ export const OwnerSignUpPageForm = (props: Prop) => {
                             type="password"
                             id="password"
                             autoComplete="on"
-                            onChange={ownerCredentialsInput}
-                            value={props.ownerCredentials.password}
+                            onChange={userCredentialsInput}
+                            value={props.userCredentials.password}
                         />
                     </Grid>
                 </Grid>
@@ -79,6 +84,16 @@ export const OwnerSignUpPageForm = (props: Prop) => {
                     Sign Up
                 </Button>
             </form>
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className="switch-sign-up-button"
+                onClick={userOrOwnerSignup}
+            >
+                {props.signUpButtonName}
+            </Button>
         </div>
     );
 };

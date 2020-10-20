@@ -15,56 +15,23 @@ export class KouponBankApi {
     };
 
     /*LOGIN API*/
-    async loginUser(
-        username: string,
-        password: string | number,
-        email: string | number,
-    ): Promise<User> {
-        return axios.post(
-            `${this.BASE_URL}/login/user/`,
-            {
-                "username": username,
-                "password": password,
-                "email": email,
-            }
-        )
+    async loginUser(user: User): Promise<User> {
+        return axios.post(`${this.BASE_URL}/login/user/`, user)
         .then(response => {
             return response.data
         });
     };
 
-    async loginOwner(
-        username: string,
-        password: string | number,
-        email: string | number
-    ): Promise<User> {
-        return axios.post(
-            `${this.BASE_URL}/login/owner/`,
-            {
-                "username": username,
-                "password": password,
-                "email": email,
-            }
-        )
+    async loginOwner(user: User): Promise<User> {
+        return axios.post(`${this.BASE_URL}/login/owner/`, user)
         .then(response => {
             return response.data
         });
     };
     
     /*USER API*/
-    async createUser(
-        username: string, 
-        password: string | number, 
-        email: string | number
-    ): Promise<User> {
-        return axios.post(
-            `${this.BASE_URL}/users/`,
-            {
-                "username": username,
-                "password": password,
-                "email": email,
-            }
-        )
+    async createUser(user: User): Promise<User> {
+        return axios.post(`${this.BASE_URL}/users/`, user)
         .then(response => {
             return response.data;
         });
@@ -88,19 +55,8 @@ export class KouponBankApi {
         });
     };
 
-    async createOwner(
-        username: string, 
-        password: string | number, 
-        email: string | number
-    ): Promise<User> {
-        return axios.post(
-            `${this.BASE_URL}/owners/`,
-            {
-                "username": username,
-                "password": password,
-                "email": email,
-            }
-        )
+    async createOwner(user: User): Promise<User> {
+        return axios.post(`${this.BASE_URL}/owners/`, user)
         .then(response => {
             return response.data;
         });
