@@ -2,16 +2,44 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from kouponbank.database.business import Business
+from kouponbank.database.menu import Menu, MenuSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from kouponbank.database.business import Business
-from kouponbank.database.menu import Menu, MenuSerializer
-
 
 class MenuListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: MenuSerializer(many=True)}
+    )
+    def get(self, request, business_id):
+        business = self.__get_business(business_id)
+        menus = business.business_menu
+        serializer = MenuSerializer(menus, many=True)
+        return Response(serializer.data)
+    def __get_business(self, business_id):
+        try:
+            return Business.objects.get(pk=business_id)
+        except Business.DoesNotExist:
+            raise Http404("Business not found")
+
+class MenuAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: MenuSerializer(many=True)},
+    )
+    def get(self, request, business_id, menu_id):
+        menu = self.__get_menu(menu_id)
+        serializer = MenuSerializer(menu)
+        return Response(serializer.data)
+    def __get_menu(self, menu_id):
+        try:
+            return Menu.objects.get(pk=menu_id)
+        except Menu.DoesNotExist:
+            raise Http404("Menu not found")
+
+class BusinessMenuListAPI(APIView):
     @swagger_auto_schema(
         responses={200: MenuSerializer(many=True)}
     )
@@ -61,7 +89,7 @@ class MenuListAPI(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class MenuAPI(APIView):
+class BusinessMenuAPI(APIView):
     @swagger_auto_schema(
         responses={200: MenuSerializer(many=True)},
     )

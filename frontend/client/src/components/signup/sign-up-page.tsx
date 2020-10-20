@@ -6,78 +6,80 @@ import { KouponBankApi } from "../../api/kb-api";
 import { User } from "../../api/kb-types";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
-import { loginUser } from "../../store/user/user-reducer";
+import { createNewOwner, createNewUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
 import { Notifications } from "../notifications/notifications";
-import { LoginForm } from "./login-form";
-import './login.scss';
+import { SignUpForm } from "./sign-up-form";
+import './sign-up-page.scss';
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    loginUser: (
+    createNewUser: (
         api: KouponBankApi,
-        username: string,
-        password: string | number,
-        email: string | number,
+        user: User
+    ) => Promise<void>;
+    createNewOwner: (
+        api: KouponBankApi,
+        user: User
     ) => Promise<void>;
     user: User;
     alertState: AlertState;
 };
 
-export const UserLoginPage = (props: Prop) => {
+export const SignUpPage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
-    const alert = props.alertState.alert
     const history = useHistory();
+    const alert = props.alertState.alert
     const [userCredentials, setUserCredentials] = useState(props.user);
     const [showAlert, setShowAlert] = useState(true);
-    
+    const [isUser, setIsUser] = useState(true)
+
+    const createNewUserClick = (event): void => {
+        isUser === true ? (
+            props.createNewUser(
+                api,
+                userCredentials
+            )
+            .then(() => {
+                history.push(UrlPaths.Home);
+            })
+        ) : (
+            props.createNewOwner(
+                api,
+                userCredentials
+            )
+            .then(() => {
+                history.push(UrlPaths.Home)
+            })
+        )
+        event.preventDefault();
+    };
+
     const userCredentialsInput = (event): void => {
         setUserCredentials({
             ...userCredentials,
             [event.target.name]: event.target.value
         });
-    }
-
-    const loginUserClick = (event): void => {
-        props.loginUser(
-            api,
-            userCredentials.username,
-            userCredentials.password,
-            userCredentials.email,
-        )
-        .then(() => {
-            history.push(UrlPaths.Home)
-        });
-        event.preventDefault();
-    }
-    const toOwnerLoginClick = (event): void => {
-        history.push(UrlPaths.OwnerLogin)
-    }
-
-    const ownerSignUpClick = (event): void => {
-        history.push(UrlPaths.OwnerSignUp);
     };
 
-    const userSignUpClick = (event): void => {
-        history.push(UrlPaths.UserSignUp);
-    };
+    const userOrOwnerSignup = (): void => {
+        isUser === true ? setIsUser(false) : setIsUser(true)
+    }
 
     return (
         <div className="background">
-            <NavBarR 
-                title={"Login Page"}
-                buttonName={"사업자 로그인하기"}
-                onClick={toOwnerLoginClick}
+            <NavBarR
+                title={isUser === true ? "소비자 회원가입 페이지" : "사업자 회원가입 페이지"}
             />
-            <LoginForm
-                userSignUpClick={userSignUpClick}
-                ownerSignUpClick={ownerSignUpClick}
+            <SignUpForm 
+                signUpButtonName={isUser === true ? "사업자 회원가입" : "소비자 회원가입"}
                 userCredentials={userCredentials}
+                createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}
-                loginUserClick={loginUserClick}
+                userOrOwnerSignup={userOrOwnerSignup}
             />
             <Notifications
                 onClose={() => {setShowAlert(false)}}
@@ -100,15 +102,22 @@ const mapStateToProps = (state: RootReducer) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        loginUser: (
+        // 저희가 이 파일에서 사용할 Function을 만드는거에요
+        createNewUser: (
             api: KouponBankApi,
-            username: string,
-            password: string | number,
-            email: string | number,
+            user: User
         ) => {
-            return loginUser(api, username, password, email, dispatch);
+            // API Call이에요 -> UserReducer에 있는 export const createNewUser.
+            return createNewUser(api, user, dispatch)
+        },
+        createNewOwner: (
+            api: KouponBankApi,
+            user: User
+        ) => {
+            return createNewOwner(api, user, dispatch);
         }
     };
 };
 
-export const UserLoginPageR = connect(mapStateToProps, mapDispatchToProps)(UserLoginPage);
+export const SignUpPageR = connect(mapStateToProps, mapDispatchToProps)(SignUpPage);
+

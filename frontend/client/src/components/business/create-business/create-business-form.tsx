@@ -1,7 +1,7 @@
 import { Button, Dialog, TextField } from "@material-ui/core";
 import React, { useState } from "react";
-import { Business, BusinessLocation } from "../../api/kb-types";
-import { AddressInput } from "../address/address";
+import { Business, BusinessLocation } from "../../../api/kb-types";
+import { AddressInput } from "../../address/address";
 import './create-business.scss';
 
 /**

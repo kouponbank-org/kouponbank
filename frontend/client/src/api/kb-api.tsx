@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AddressDetail, Business, BusinessLocation, Coordinate, NaverMapBound, User, UserDetail, Coupon, CouponBasket } from "./kb-types";
+import { AddressDetail, Business, BusinessLocation, Coordinate, Coupon, NaverMapBound, User, UserDetail } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -15,56 +15,23 @@ export class KouponBankApi {
     };
 
     /*LOGIN API*/
-    async loginUser(
-        username: string,
-        password: string | number,
-        email: string | number,
-    ): Promise<User> {
-        return axios.post(
-            `${this.BASE_URL}/login/user/`,
-            {
-                "username": username,
-                "password": password,
-                "email": email,
-            }
-        )
+    async loginUser(user: User): Promise<User> {
+        return axios.post(`${this.BASE_URL}/login/user/`, user)
         .then(response => {
             return response.data
         });
     };
 
-    async loginOwner(
-        username: string,
-        password: string | number,
-        email: string | number
-    ): Promise<User> {
-        return axios.post(
-            `${this.BASE_URL}/login/owner/`,
-            {
-                "username": username,
-                "password": password,
-                "email": email,
-            }
-        )
+    async loginOwner(user: User): Promise<User> {
+        return axios.post(`${this.BASE_URL}/login/owner/`, user)
         .then(response => {
             return response.data
         });
     };
     
     /*USER API*/
-    async createUser(
-        username: string, 
-        password: string | number, 
-        email: string | number
-    ): Promise<User> {
-        return axios.post(
-            `${this.BASE_URL}/users/`,
-            {
-                "username": username,
-                "password": password,
-                "email": email,
-            }
-        )
+    async createUser(user: User): Promise<User> {
+        return axios.post(`${this.BASE_URL}/users/`, user)
         .then(response => {
             return response.data;
         });
@@ -88,19 +55,8 @@ export class KouponBankApi {
         });
     };
 
-    async createOwner(
-        username: string, 
-        password: string | number, 
-        email: string | number
-    ): Promise<User> {
-        return axios.post(
-            `${this.BASE_URL}/owners/`,
-            {
-                "username": username,
-                "password": password,
-                "email": email,
-            }
-        )
+    async createOwner(user: User): Promise<User> {
+        return axios.post(`${this.BASE_URL}/owners/`, user)
         .then(response => {
             return response.data;
         });
@@ -222,9 +178,9 @@ export class KouponBankApi {
             {
                 "id": businessId,
                 "business_name": businessName,
-                "doromyeong": businessLocation.roadAddress,
-                "jibeon": businessLocation.jibunAddress,
-                "postal_code": businessLocation.zipcode,
+                "roadAddress": businessLocation.roadAddress,
+                "jibun": businessLocation.jibunAddress,
+                "zipcode": businessLocation.zipcode,
                 "x": latlng.x,
                 "y": latlng.y
             }
@@ -245,9 +201,9 @@ export class KouponBankApi {
             {
                 "id": businessId,
                 "business_name": businessName,
-                "doromyeong": businessLocation.roadAddress,
-                "jibeon": businessLocation.jibunAddress,
-                "postal_code": businessLocation.zipcode,
+                "roadAddress": businessLocation.roadAddress,
+                "jibuoAddress": businessLocation.jibunAddress,
+                "zipcode": businessLocation.zipcode,
                 "x": latlng.x,
                 "y": latlng.y
             }
@@ -287,6 +243,7 @@ export class KouponBankApi {
             return response.data.results.juso
         })
     }
+    
     /*Owner Detail API*/
     async getOwnerDetail(userId: string): Promise<UserDetail> {
         return axios.get(

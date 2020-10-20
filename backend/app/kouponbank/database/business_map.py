@@ -12,9 +12,9 @@ class BusinessMap(models.Model):
         related_name="business_map"
     )
     business_name = models.CharField(max_length=50, blank=False)
-    doromyeong = models.CharField(max_length=64, blank=False)
-    jibeon = models.CharField(max_length=64, blank=False)
-    postal_code = models.CharField(max_length=64, blank=False)
+    roadAddress= models.CharField(max_length=64, blank=False)
+    jibun = models.CharField(max_length=64, blank=False)
+    zipcode = models.CharField(max_length=64, blank=False)
     x = models.CharField(max_length=64, blank=False)
     y = models.CharField(max_length=64, blank=False)
 
@@ -24,9 +24,9 @@ class BusinessMapSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "business_name",
-            "doromyeong",
-            "jibeon",
-            "postal_code",
+            "roadAddress",
+            "jibun",
+            "zipcode",
             "x",
             "y"
         )

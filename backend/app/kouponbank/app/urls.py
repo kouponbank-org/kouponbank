@@ -4,14 +4,20 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from kouponbank.endpoints.business_api import BusinessAPI, BusinessListAPI
+from kouponbank.endpoints.business_api import (BusinessListAPI,
+                                               OwnerBusinessAPI,
+                                               OwnerBusinessListAPI)
 from kouponbank.endpoints.business_map_api import (BusinessMapAPI,
                                                    BusinessMapListAPI)
-from kouponbank.endpoints.coupon_api import CouponAPI, CouponListAPI
+from kouponbank.endpoints.coupon_api import (BusinessCouponAPI,
+                                             BusinessCouponListAPI, CouponAPI,
+                                             CouponListAPI)
 from kouponbank.endpoints.coupon_basket_api import (CouponBasketAPI,
                                                     CouponBasketListAPI)
 from kouponbank.endpoints.login_api import LoginOwnerAPI, LoginUserAPI
-from kouponbank.endpoints.menu_api import MenuAPI, MenuListAPI
+from kouponbank.endpoints.menu_api import (BusinessMenuAPI,
+                                           BusinessMenuListAPI, MenuAPI,
+                                           MenuListAPI)
 from kouponbank.endpoints.owner_api import OwnerAPI, OwnerListAPI
 from kouponbank.endpoints.owner_detail_api import OwnerDetailAPI
 from kouponbank.endpoints.user_api import UserAPI, UserListAPI
@@ -47,12 +53,18 @@ urlpatterns = [
    path('owners/', OwnerListAPI.as_view(), name="owner-list"),
    path('owners/<uuid:owner_id>/', OwnerAPI.as_view(), name="owner"),
    path('owners/<uuid:owner_id>/detail/', OwnerDetailAPI.as_view(), name="owner-detail-list"),
-   path('owners/<uuid:owner_id>/detail/business/', BusinessListAPI.as_view(), name="business-list"),
-   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/', BusinessAPI.as_view(), name="business"),
-   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/menu/', MenuListAPI.as_view(), name="menu-list"),
-   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuAPI.as_view(), name="menu"),
-   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/', CouponListAPI.as_view(), name="coupon-list"),
-   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/<uuid:coupon_id>/', CouponAPI.as_view(), name="coupon"),
+   path('owners/<uuid:owner_id>/detail/business/', OwnerBusinessListAPI.as_view(), name="owner-business-list"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/', OwnerBusinessAPI.as_view(), name="owner-business"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/menu/', BusinessMenuListAPI.as_view(), name="business-menu-list"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/menu/<uuid:menu_id>/', BusinessMenuAPI.as_view(), name="business-menu"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/', BusinessCouponListAPI.as_view(), name="business-coupon-list"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/<uuid:coupon_id>/', BusinessCouponAPI.as_view(), name="business-coupon"),
+   path('business/', BusinessListAPI.as_view(), name="business-list"),
+   path('business/<uuid:business_id>/menu/', MenuListAPI.as_view(), name="menu-list"),
+   path('business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuAPI.as_view(), name="menu"),
+   path('business/<uuid:business_id>/coupon/', CouponListAPI.as_view(), name="coupon-list"),
+   path('business/<uuid:business_id>/coupon/<uuid:coupon_id>/', CouponAPI.as_view(), name="coupon"),
+
 ]
 
 # For Photos

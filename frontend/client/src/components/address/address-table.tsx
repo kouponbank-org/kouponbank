@@ -23,6 +23,7 @@ export const AddressTable = (props: Prop) => {
         props.selectedAddress(addr)
         event.preventDefault()
     }
+    
     return ( 
         <div className="search-address">
             <TableRow className="search-address table">

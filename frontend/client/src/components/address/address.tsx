@@ -16,6 +16,7 @@ export interface Prop {
 export const AddressInput = (props: Prop) => { 
     const api = useContext<KouponBankApi>(ApiContext);
     const [address, setAddress] = useState("");
+    // searchedAddress는 jibunAddress, roadAddress, buildingName, zipcode가 들어가있는 arraylist 입니다. 
     const [searchedAddress, setSearchedAddress] = useState([]);
 
     const setAddressInput = (event) => {
@@ -27,7 +28,7 @@ export const AddressInput = (props: Prop) => {
             setSearchedAddress(address)
         })
         event.preventDefault()
-    }
+    };
 
     return ( 
         <div className="layout">

@@ -14,6 +14,16 @@ class BusinessListAPI(APIView):
     @swagger_auto_schema(
         responses={200: BusinessSerializer(many=True)}
     )
+    def get(self, request):
+        businesses = Business.objects.all()
+        serializer = BusinessSerializer(businesses, many=True)
+        return Response(serializer.data)
+
+
+class OwnerBusinessListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: BusinessSerializer(many=True)}
+    )
     def get(self, request, owner_id):
         owner = self.__get_owner(owner_id)
         businesses = owner.owner_details.business
@@ -80,7 +90,7 @@ class BusinessListAPI(APIView):
         except OwnerDetail.DoesNotExist:
             raise Http404("ownerDetail not found")
         
-class BusinessAPI(APIView):
+class OwnerBusinessAPI(APIView):
     @swagger_auto_schema(
         responses={200: BusinessSerializer(many=True)},
     )
