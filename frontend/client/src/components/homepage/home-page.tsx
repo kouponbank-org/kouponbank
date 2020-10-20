@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { KouponBankApi } from "../../api/kb-api";
 import { Dispatch } from "redux";
-import { User, Coupon, Business, BusinessLocation } from "../../api/kb-types";
+import { KouponBankApi } from "../../api/kb-api";
+import { Business, BusinessLocation, Coupon, User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
 import { HomepageForm } from "./home-page-form";
-import { OwnerHomepageForm } from "./owner-home-page-form"
 import "./homepage.scss";
+import { OwnerHomepageForm } from "./owner-home-page-form";
 
 
 /**
@@ -28,7 +28,7 @@ export const HomePage = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
 
     const directToUserLogin = (event): void => {
-        history.push(UrlPaths.UserLogin);
+        history.push(UrlPaths.Login);
     }
 
     const couponClick = (event): void => {
@@ -67,6 +67,7 @@ export const HomePage = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
+    console.log(state);
     return {
         user: state.userReducer.user,
         isOwner: state.userReducer.isOwner,

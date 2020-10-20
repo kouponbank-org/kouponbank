@@ -2,12 +2,12 @@ import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
-import { KouponBankApi } from "../../api/kb-api";
-import { Business, BusinessLocation, Coordinate, User } from "../../api/kb-types";
-import { createBusiness, createBusinessLocation, initialState } from "../../store/business/business-reducer";
-import { RootReducer } from "../../store/reducer";
-import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBarR } from "../navigation/navigation-bar";
+import { KouponBankApi } from "../../../api/kb-api";
+import { Business, BusinessLocation, Coordinate, User } from "../../../api/kb-types";
+import { createBusiness, createBusinessLocation, initialState } from "../../../store/business/business-reducer";
+import { RootReducer } from "../../../store/reducer";
+import { ApiContext, UrlPaths } from "../../base-page-router";
+import { NavBarR } from "../../navigation/navigation-bar";
 import { CreateBusinessForm } from "./create-business-form";
 
 /**

@@ -10,8 +10,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { User } from "../../api/kb-types";
-import { RootReducer } from "../../store/reducer";
-import { signOut } from "../../store/user/user-reducer";
+import { RootReducer, signOut } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
 import "./navigation-bar.scss";
 
@@ -71,11 +70,14 @@ export const NavBar = (props: Prop): ReactElement => {
                             )
                         }
                     </div>
+                    <div>
+                        {props.title}
+                    </div>
                     {
                         props.user.username !== "" ? (
                             <Fragment>
                                 {
-                                    props.isOwner == true ? (
+                                    props.isOwner === true ? (
                                         <Button className="profile-details" onClick={redirectToOwnerProfile}>
                                             나만의 공간 
                                         </Button>

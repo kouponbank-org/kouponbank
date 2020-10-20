@@ -9,8 +9,7 @@ import './login.scss';
 export interface Prop { 
     userCredentials: User
     userCredentialsInput: (event) => void;
-    ownerSignUpClick?: (event) => void;
-    userSignUpClick?: (event) => void;
+    signUpClick?: (event) => void;
     loginUserClick: (event) => void;
 }
 
@@ -21,17 +20,13 @@ export const LoginForm = (props: Prop) => {
         event.preventDefault();
     }
 
-    const ownerSignUpClick = (event): void => {
-        props.ownerSignUpClick(event);
-    };
-
-    const userSignUpClick = (event): void => {
-        props.userSignUpClick(event);
+    const signUpClick = (event): void => {
+        props.signUpClick(event);
     };
 
     const userCredentialsInput = (event): void => { 
         props.userCredentialsInput(event);
-    }
+    };
 
     return ( 
         <div className="layout">
@@ -90,36 +85,16 @@ export const LoginForm = (props: Prop) => {
                     로그인
                 </Button>
             </form>
-                {
-                    props.ownerSignUpClick && props.userSignUpClick ? (
-                        <div className="form">
-                            <form className="form" onSubmit={ownerSignUpClick} noValidate>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className="signUp"
-                                >
-                                    사업자 회원가입
-                                </Button>
-                            </form>
-                            <form className="form" onSubmit={userSignUpClick} noValidate>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    color="primary"
-                                    className="signUp"
-                                >
-                                    회원가입
-                                </Button>
-                            </form>
-                        </div>
-                    ) : (
-                        ""
-                    )
-                }
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className="sign-up-button"
+                onClick={signUpClick}
+            >
+                회원가입
+            </Button>
         </div>
     )
 }

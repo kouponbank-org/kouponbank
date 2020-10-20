@@ -1,6 +1,5 @@
 import { produce } from "immer";
 import { Dispatch } from "redux";
-import storage from 'redux-persist/lib/storage';
 import { KouponBankApi } from "../../api/kb-api";
 import { Status, User } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
@@ -120,9 +119,6 @@ export const reducer = (
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Failed;
             });
-        case UserActionType.SignOutAction:
-            storage.removeItem('persist:root');    
-            return initialState;
         default:
             return state;
     }
@@ -131,15 +127,13 @@ export const reducer = (
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
 export const createNewUser = (
         api: KouponBankApi,
-        username: string,
-        password: string | number,
-        email: string | number,
+        user: User,
         dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.CreateNewUserAction,
     });
-    return api.createUser(username, password, email).then(user => {
+    return api.createUser(user).then(user => {
         dispatch({
             type: UserActionType.CreateNewUserSuccessAction,
             user: user
@@ -160,15 +154,13 @@ export const createNewUser = (
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
 export const createNewOwner = (
     api: KouponBankApi,
-    username: string,
-    password: string | number,
-    email: string | number,
+    user: User,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.CreateNewUserAction,
     });
-    return api.createOwner(username, password, email).then(user => {
+    return api.createOwner(user).then(user => {
         dispatch({
             type: UserActionType.CreateNewUserSuccessAction,
             user: user,
@@ -189,15 +181,13 @@ export const createNewOwner = (
 
 export const loginUser = (
     api: KouponBankApi,
-    username: string,
-    password: string | number,
-    email: string | number,
+    user: User,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.LoginUserAction,
     });
-    return api.loginUser(username, password, email).then(user => {
+    return api.loginUser(user).then(user => {
         dispatch({
             type: UserActionType.LoginUserSucessAction,
             user: user,
@@ -217,15 +207,13 @@ export const loginUser = (
 
 export const loginOwner = (
     api: KouponBankApi,
-    username: string,
-    password: string | number,
-    email: string | number,
+    user: User,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.LoginUserAction,
     });
-    return api.loginOwner(username, password, email).then(user => {
+    return api.loginOwner(user).then(user => {
         dispatch({
             type: UserActionType.LoginUserSucessAction,
             user: user,
@@ -241,17 +229,5 @@ export const loginOwner = (
             body: "다시 시도해 주세요",
         } as DisplayError);
         throw err;
-    });
-};
-
-export const signOut = (dispatch: Dispatch): void => {
-    dispatch({
-        type: UserActionType.SignOutAction,
-    });
-};
-
-export const setUserState = (dispatch: Dispatch): void => {
-    dispatch({
-        type: UserActionType.SignOutAction,
     });
 };
