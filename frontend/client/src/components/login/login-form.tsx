@@ -7,7 +7,8 @@ import './login.scss';
  * Represents the required properties of the log in form.
  */
 export interface Prop { 
-    userCredentials: User
+    isUser: boolean;
+    userCredentials: User;
     userCredentialsInput: (event) => void;
     signUpClick?: (event) => void;
     loginUserClick: (event) => void;
@@ -85,16 +86,22 @@ export const LoginForm = (props: Prop) => {
                     로그인
                 </Button>
             </form>
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className="sign-up-button"
-                onClick={signUpClick}
-            >
-                회원가입
-            </Button>
+            {
+                props.isUser ? ( 
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="sign-up-button"
+                    onClick={signUpClick}
+                >
+                    회원가입
+                </Button>
+                ) : (
+                    ""
+                )
+            }
         </div>
     )
 }

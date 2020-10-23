@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { User, UserDetail } from "../../api/kb-types";
+import { RootReducer } from "../../store/reducer";
 import { UpdateOwnerDetail } from "../../store/user/user-detail-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { RootReducer } from "../../store/reducer";
-import { Dispatch } from "redux";
-import { UserProfileForm } from "./user-profile-form";
 import { NavBarR } from "../navigation/navigation-bar";
+import { UserProfileForm } from "./user-profile-form";
 import './user-profile-page.scss';
 
 /**
@@ -74,7 +74,7 @@ export const OwnerProfilePage = (props: Prop) =>  {
     );
 };
 
-  const mapStateToProps = (state: RootReducer) => {
+const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
         userDetail: state.userDetailReducer.userDetail,

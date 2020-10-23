@@ -83,6 +83,7 @@ export const LoginPage = (props: Prop) => {
             {
                 isUser === true ? (
                     <LoginForm
+                        isUser={isUser}
                         signUpClick={signUpClick}
                         userCredentials={userCredentials}
                         userCredentialsInput={userCredentialsInput}
@@ -90,6 +91,7 @@ export const LoginPage = (props: Prop) => {
                     />
                 ) : (
                     <LoginForm
+                        isUser={isUser}
                         userCredentials={userCredentials}
                         userCredentialsInput={userCredentialsInput}
                         loginUserClick={loginUserClick}
