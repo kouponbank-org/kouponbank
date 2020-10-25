@@ -12,6 +12,7 @@ import "./homepage.scss";
 import { OwnerHomepageForm } from "./owner-home-page-form";
 
 
+
 /**
  * Represents the required properties of the HomePage.
  */
@@ -25,7 +26,6 @@ export interface Prop {
 
 export const HomePage = (props: Prop) => {
     const history = useHistory();
-    const api = useContext<KouponBankApi>(ApiContext);
 
     const directToUserLogin = (event): void => {
         history.push(UrlPaths.Login);
