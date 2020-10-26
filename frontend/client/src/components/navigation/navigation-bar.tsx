@@ -9,13 +9,14 @@ import React, { Fragment, ReactElement } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
-import { User } from "../../api/kb-types";
+import { User, UserDetail } from "../../api/kb-types";
 import { RootReducer, signOut } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
 import "./navigation-bar.scss";
 
 export interface Prop {
     user: User;
+    userDetail: UserDetail;
     title?: string;
     isOwner: boolean;
     buttonName?: string;
@@ -25,7 +26,7 @@ export interface Prop {
 
 export const NavBar = (props: Prop): ReactElement => {
     const history = useHistory();
-
+    
     const redirectToHomepage = (event): void => {
         history.push(UrlPaths.Home);
         event.preventDefault();

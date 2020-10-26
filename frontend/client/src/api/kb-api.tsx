@@ -93,21 +93,32 @@ export class KouponBankApi {
 
     async updateUserDetail(
         userId: string,
-        name: string, 
-        gender: string, 
-        birthday: string, 
-        location: string | number, 
-        profile_picture: null
+        userDetail: UserDetail,
     ): Promise<UserDetail> {
         return axios.put(
-            `${this.BASE_URL}/users/${userId}/detail/`, 
-            {
-                "name": name,
-                "gender": gender,
-                "birthday": birthday,
-                "location": location,
-                "profile_picture": profile_picture,
-            }
+            `${this.BASE_URL}/users/${userId}/detail/`, userDetail
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    /*Owner Detail API*/
+    async getOwnerDetail(userId: string): Promise<UserDetail> {
+        return axios.get(
+            `${this.BASE_URL}/owners/${userId}/detail/`
+        )
+        .then(response => {
+            return response.data
+        });
+    };
+
+    async updateOwnerDetail(
+        userId: string,
+        userDetail: UserDetail,
+    ): Promise<UserDetail> {
+        return axios.put(
+            `${this.BASE_URL}/owners/${userId}/detail/`, userDetail
         )
         .then(response => {
             return response.data;
@@ -243,39 +254,6 @@ export class KouponBankApi {
             return response.data.results.juso
         })
     }
-    
-    /*Owner Detail API*/
-    async getOwnerDetail(userId: string): Promise<UserDetail> {
-        return axios.get(
-            `${this.BASE_URL}/owners/${userId}/detail/`
-        )
-        .then(response => {
-            return response.data
-        });
-    };
-
-    async updateOwnerDetail(
-        userId: string,
-        name: string, 
-        gender: string, 
-        birthday: string, 
-        location: string | number, 
-        profile_picture: null
-    ): Promise<UserDetail> {
-        return axios.put(
-            `${this.BASE_URL}/owners/${userId}/detail/`, 
-            {
-                "name": name,
-                "gender": gender,
-                "birthday": birthday,
-                "location": location,
-                "profile_picture": profile_picture,
-            }
-        )
-        .then(response => {
-            return response.data;
-        });
-    };
 
     /* Coupon API */
     async getCoupon(
