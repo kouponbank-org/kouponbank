@@ -115,10 +115,10 @@ export const reducer = (
 
 // 유저 (소비자) 디테일을 업데이트 하기 위한 API Call + Reducer State Update
 export const UpdateUserDetail = (
-        api: KouponBankApi,
-        id: string, 
-        userDetail: UserDetail,
-        dispatch
+    api: KouponBankApi,
+    id: string, 
+    userDetail: UserDetail,
+    dispatch
 ): any => {
     dispatch({
         type: UserActionType.UpdateUserDetailAction,
@@ -142,19 +142,19 @@ export const UpdateOwnerDetail = (
     userDetail: UserDetail,
     dispatch
 ): any => {
-dispatch({
-    type: UserActionType.UpdateUserDetailAction,
-});
-return api.updateOwnerDetail(id, userDetail).then(userDetail => {
     dispatch({
-        type: UserActionType.UpdateUserDetailSuccessAction,
-        userDetail: userDetail
-    })
-}).catch(err => {
-    dispatch({
-        type: UserActionType.UpdateUserDetailFailAction
+        type: UserActionType.UpdateUserDetailAction,
     });
-});
+    return api.updateOwnerDetail(id, userDetail).then(userDetail => {
+        dispatch({
+            type: UserActionType.UpdateUserDetailSuccessAction,
+            userDetail: userDetail
+        })
+    }).catch(err => {
+        dispatch({
+            type: UserActionType.UpdateUserDetailFailAction
+        });
+    });
 };
 
 export const getUserDetail = (
@@ -165,18 +165,18 @@ export const getUserDetail = (
     dispatch({
         type: UserActionType.GetUserDetailAction,
     }); {
-    return api.getUserDetail(
-        userId
-    ).then(userDetail => {
-        dispatch({
-            type: UserActionType.GetUserDetailSuccessAction,
-            userDetail: userDetail
-        })
-    }).catch(err => {
-        dispatch({
-            type: UserActionType.GetUserDetailFailAction
+        return api.getUserDetail(
+            userId
+        ).then(userDetail => {
+            dispatch({
+                type: UserActionType.GetUserDetailSuccessAction,
+                userDetail: userDetail
+            })
+        }).catch(err => {
+            dispatch({
+                type: UserActionType.GetUserDetailFailAction
+            });
         });
-    });
     };
 };
 
@@ -188,18 +188,18 @@ export const getOwnerDetail = (
     dispatch({
         type: UserActionType.GetUserDetailAction,
     }); {
-    return api.getOwnerDetail(
-        userId
-    ).then(userDetail => {
-        dispatch({
-            type: UserActionType.GetUserDetailSuccessAction,
-            userDetail: userDetail
-        })
-    }).catch(err => {
-        dispatch({
-            type: UserActionType.GetUserDetailFailAction
+        return api.getOwnerDetail(
+            userId
+        ).then(userDetail => {
+            dispatch({
+                type: UserActionType.GetUserDetailSuccessAction,
+                userDetail: userDetail
+            })
+        }).catch(err => {
+            dispatch({
+                type: UserActionType.GetUserDetailFailAction
+            });
         });
-    });
     };
 };
 

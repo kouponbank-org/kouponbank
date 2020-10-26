@@ -67,7 +67,6 @@ export const HomePage = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state);
     return {
         user: state.userReducer.user,
         isOwner: state.userReducer.isOwner,

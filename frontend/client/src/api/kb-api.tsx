@@ -87,7 +87,6 @@ export class KouponBankApi {
             `${this.BASE_URL}/users/${userId}/detail/`
         )
         .then(response => {
-            console.log(response.data)
             return response.data
         });
     };

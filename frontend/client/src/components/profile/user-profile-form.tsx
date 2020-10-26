@@ -11,13 +11,6 @@ import './user-profile-page.scss';
 export interface Prop {
     editDetails: (event) => void;
     submitChange: (event) => void;
-    // updatedInfo: {
-    //     name: string,
-    //     gender: string,
-    //     birthday: string,
-    //     location: string | number,
-    //     profile_picture: null,
-    // };
     userDetailCredentials: UserDetail; 
     userCredentials: User;
 };
