@@ -3,14 +3,16 @@ import React from "react";
 import { MapR } from "../naver-map/map";
 import { Coupon, Business, BusinessLocation } from "../../api/kb-types";
 import './homepage.scss';
-
+import { BusinessTable } from "../business/business-table";
 
 export interface Prop {
     coupon: Coupon;
+    businesses: Business[];
     business: Business;
     businessLocation: BusinessLocation;
     couponClick: (event) => void;
     businessClick: (event) => void;
+    selectBusiness: (business) => void;
 };
 
 export const OwnerHomepageForm = (props: Prop) => {
@@ -28,65 +30,38 @@ export const OwnerHomepageForm = (props: Prop) => {
             <Typography component="h1" variant="h5">
                 내 사업장
             </Typography>
-            {
-                props.business.id !== "" ? (
-                    <Grid container>
-                        <Paper className="paper" variant="outlined">
-                            <Grid item>
-                                <ButtonBase
-                                    onClick={businessClick} 
-                                    className="image">
-                                <img alt="complex" src= {props.business.business_picture}/>
-                                </ButtonBase>
-                            </Grid>
-                                <Grid item xs={12} sm container>
-                                    <Grid>
-                                    <TextField
-                                        fullWidth
-                                        name="business_name"
-                                        id="business_name"
-                                        label="사업장 이름"
-                                        disabled
-                                        value={props.business.business_name}
-                                    />
-                                    <TextField
-                                        fullWidth
-                                        name="business_email"
-                                        id="business_email"
-                                        label="이메일"
-                                        disabled
-                                        value={props.business.business_email}
-                                    />
-                                    <TextField
-                                        fullWidth
-                                        name="roadAddress"
-                                        id="roadAddress"
-                                        label="도로명 주소"
-                                        disabled
-                                        value={props.businessLocation.roadAddress}
-                                    />
-                                    </Grid>
-                                </Grid>
-                            </Paper>
-                    </Grid>
-                ) : (
-                    <Grid container>
-                        <Paper className="paper" variant="outlined">
-                            <Button
-                                onClick={businessClick}
-                            >
-                                추가하기
-                            </Button>
-                        </Paper>
-                    </Grid>
-                )
-            }
+            <div>
+                { 
+                    props.businesses.map((business, index) => {
+                        return (
+                            <BusinessTable 
+                                key={index}
+                                business_name={business.business_name}
+                                business_email={business.business_email}
+                                description={business.description}
+                                business_picture={business.business_picture}
+                                selectBusiness={props.selectBusiness}
+                            />
+                        )
+                    })
+                }
+            </div>
+            <Grid container>
+                <Paper className="paper" variant="outlined">
+                    <Button
+                        onClick={businessClick}
+                    >
+                        추가하기
+                    </Button>
+                </Paper>
+            </Grid>
+                
             
             <Typography component="h1" variant="h5">
                 나의 오늘의 쿠폰
             </Typography>
             {
-                props.coupon.id !== "" ? (
+                props.coupon.coupon_title !== "" ? (
                     <Grid container>
                         <Paper className="paper" variant="outlined">
                             <Grid item>

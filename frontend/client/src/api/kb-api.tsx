@@ -126,12 +126,36 @@ export class KouponBankApi {
     };
 
     /* Business API */
+    //owner business
     async getBusiness(
         userId: string,
         businessId: string,
     ): Promise<Business> {
         return axios.get(
             `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+    async getMyBusinesses(
+        userId: string,
+    ): Promise<Business[]> {
+        return axios.get(
+            `${this.BASE_URL}/owners/${userId}/detail/business/`
+        )
+        .then(response => {
+            return response.data;
+        });
+    };
+
+
+    //user access to business
+    async getBusinesses(
+    ): Promise<Business[]> {
+        return axios.get(
+            `${this.BASE_URL}/business/`
         )
         .then(response => {
             return response.data;
