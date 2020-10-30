@@ -22,40 +22,41 @@ export interface Prop {
     user: User;
     business: Business;
     coupon: Coupon;
-};
+}
 
-export const CreateCouponPage = (props: Prop) => {
+export const CreateCouponPage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const [coupon, setCoupon] = useState(props.coupon);
 
     // 쿠폰 정보
-    const couponInformationInput = (event): void => {
+    const couponInformationInput = (event: React.FormEvent): void => {
+        const target = event.target as HTMLInputElement;
         setCoupon({
             ...coupon,
-            [event.target.name]: event.target.value
+            [target.name]: target.value,
         });
     };
 
     /**
      * 쿠폰 추가하기 클릭
-     * @param event 
+     * @param event
      */
-    const createCouponClick = (event): void => {
-        props.createCoupon(
-            api,
-            props.user.id,
-            props.business.id,
-            coupon,
-            ).then(() => {
+    const createCouponClick = (event: React.FormEvent<HTMLInputElement>): void => {
+        props
+            .createCoupon(api, props.user.id, props.business.id, coupon)
+            .then(() => {
                 history.push(UrlPaths.Home);
+            })
+            .catch(() => {
+                // Currently does nothing
             });
         event.preventDefault();
     };
 
     return (
         <div className="background">
-            <CreateCouponForm 
+            <CreateCouponForm
                 coupon={coupon}
                 couponInformationInput={couponInformationInput}
                 createCouponClick={createCouponClick}
@@ -74,14 +75,14 @@ const mapStateToProps = (state: RootReducer) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        createCoupon: (
+        createCoupon: async (
             api: KouponBankApi,
             userId: string,
             businessId: string,
             coupon: Coupon,
         ) => {
             return createCoupon(api, userId, businessId, coupon, dispatch);
-        }
+        },
     };
 };
 

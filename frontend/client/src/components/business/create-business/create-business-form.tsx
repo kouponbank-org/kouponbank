@@ -2,12 +2,12 @@ import { Button, Dialog, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { Business, BusinessLocation } from "../../../api/kb-types";
 import { AddressInput } from "../../address/address";
-import './create-business.scss';
+import "./create-business.scss";
 
 /**
  * Represents the required properties of the log in form.
  */
-export interface Prop { 
+export interface Prop {
     business: Business;
     businessLocation: BusinessLocation;
     businessInformationInput: (event) => void;
@@ -15,30 +15,26 @@ export interface Prop {
     createBusinessClick: (event) => void;
 }
 
-export const CreateBusinessForm = (props: Prop) => { 
+export const CreateBusinessForm = (props: Prop): JSX.Element => {
     const [open, setOpen] = useState(false);
 
     const selectedAddress = (address) => {
-        modalStatus()
-        props.businessLocationSet(address)
-    }
-
-    const modalStatus = () => {
-        open ? setOpen(false) : setOpen(true)
-    }
+        props.businessLocationSet(address);
+        setOpen(false);
+    };
 
     // 사업장 정보 (이름, 이메일)
-    const businessInformationInput = (event): void => { 
+    const businessInformationInput = (event): void => {
         props.businessInformationInput(event);
-    }
+    };
 
     // 사업장 가입하기 클립
-    const createBusinessClick = (event): void => { 
+    const createBusinessClick = (event: React.FormEvent<HTMLFormElement>): void => {
         props.createBusinessClick(event);
         event.preventDefault();
-    }
- 
-    return ( 
+    };
+
+    return (
         <div className="layout">
             <div className="grid-container">
                 <div className="business-name">
@@ -84,7 +80,11 @@ export const CreateBusinessForm = (props: Prop) => {
                     />
                 </div>
                 <div className="search-address-modal">
-                    <Button color="inherit" onClick={modalStatus} className="search-address-modal button">
+                    <Button
+                        color="inherit"
+                        onClick={() => setOpen(true)}
+                        className="search-address-modal button"
+                    >
                         주소 찾기
                     </Button>
                 </div>
@@ -118,7 +118,7 @@ export const CreateBusinessForm = (props: Prop) => {
                         value={props.businessLocation.jibunAddress || ""}
                     />
                 </div>
-                <div className="zipcode"> 
+                <div className="zipcode">
                     <TextField
                         disabled
                         variant="outlined"
@@ -147,18 +147,16 @@ export const CreateBusinessForm = (props: Prop) => {
                     </div>
                 </form>
             </div>
-            <Dialog 
+            <Dialog
                 fullWidth={true}
                 maxWidth="xl"
                 scroll="body"
                 open={open}
-                onClose={modalStatus}
+                onClose={() => setOpen(false)}
                 className="search-address-modal modal"
             >
-                <AddressInput 
-                    selectedAddress={selectedAddress}
-                />
+                <AddressInput selectedAddress={selectedAddress} />
             </Dialog>
         </div>
-    )
-}
+    );
+};
