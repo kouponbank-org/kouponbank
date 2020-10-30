@@ -11,6 +11,7 @@ import { UserProfileForm } from "./user-profile-form";
 import { NavBarR } from "../navigation/navigation-bar";
 import './user-profile-page.scss';
 
+
 /**
  * Represents the required properties of the User Profile Page
  */
@@ -20,40 +21,25 @@ export interface Prop {
     UpdateUserDetail: (
         api: KouponBankApi,
         id: string,
-        name: string,
-        gender: string,
-        birthday: string,
-        location: string | number,
-        profile_picture: null,
+        userDetail: UserDetail,
     ) => Promise<void>;
 };
 
 export const UserProfilePage = (props: Prop) =>  {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
-    const [userCredentials, setUserCredentials] = useState(props.user);
-    const [userInfo, setUserInfo] = useState({
-        name: "",
-        gender: "",
-        birthday: "",
-        location: "",
-        profile_picture: null});
-    
+    const [userDetailCredentials, setUserDetailCredentials] = useState(props.userDetail);
     const editDetails = (event): void => {
-        setUserInfo({
-            ...userInfo,
+        setUserDetailCredentials({
+            ...userDetailCredentials,
             [event.target.name]: event.target.value
         });
     };
 
     const submitChange = (event): void => {
         props.UpdateUserDetail(api,
-                               userCredentials.id,
-                               userInfo.name,
-                               userInfo.gender,
-                               userInfo.birthday, 
-                               userInfo.location,
-                               userInfo.profile_picture
+                               props.user.id,
+                               userDetailCredentials
                                ).then(() => {
             history.push(UrlPaths.UserProfile);
         });
@@ -65,10 +51,9 @@ export const UserProfilePage = (props: Prop) =>  {
             <NavBarR/>
             <UserProfileForm 
                 userCredentials={props.user}
-                userDetailCredentials={props.userDetail}
+                userDetailCredentials={userDetailCredentials}
                 editDetails={editDetails}
                 submitChange={submitChange}
-                updatedInfo={userInfo}
             />
         </div>
     );
@@ -86,13 +71,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         UpdateUserDetail: (
             api: KouponBankApi,
             id: string,
-            name: string,
-            gender: string,
-            birthday: string,
-            location: string | number,
-            profile_picture: null,
+            userDetail: UserDetail,
         ) => {
-            return UpdateUserDetail(api, id, name, gender, birthday, location, profile_picture, dispatch)
+            return UpdateUserDetail(api, id, userDetail, dispatch)
         }    
     };
 

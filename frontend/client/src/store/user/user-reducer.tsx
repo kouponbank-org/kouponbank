@@ -183,7 +183,7 @@ export const loginUser = (
     api: KouponBankApi,
     user: User,
     dispatch: Dispatch,
-): Promise<void> => {
+): Promise<User> => {
     dispatch({
         type: UserActionType.LoginUserAction,
     });
@@ -192,6 +192,7 @@ export const loginUser = (
             type: UserActionType.LoginUserSucessAction,
             user: user,
         });
+        return user;
     }).catch(err => {
         dispatch({
             type: UserActionType.LoginUserFailAction
@@ -209,7 +210,7 @@ export const loginOwner = (
     api: KouponBankApi,
     user: User,
     dispatch: Dispatch,
-): Promise<void> => {
+): Promise<User> => {
     dispatch({
         type: UserActionType.LoginUserAction,
     });
@@ -219,6 +220,7 @@ export const loginOwner = (
             user: user,
             isOwner: true,
         });
+        return user;
     }).catch(err => {
         dispatch({
             type: UserActionType.LoginUserFailAction

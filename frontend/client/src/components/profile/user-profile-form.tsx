@@ -11,13 +11,6 @@ import './user-profile-page.scss';
 export interface Prop {
     editDetails: (event) => void;
     submitChange: (event) => void;
-    updatedInfo: {
-        name: string,
-        gender: string,
-        birthday: string,
-        location: string | number,
-        profile_picture: null,
-    };
     userDetailCredentials: UserDetail; 
     userCredentials: User;
 };
@@ -136,7 +129,7 @@ export const UserProfileForm = (props: Prop) =>  {
                         label="Name"
                         fullWidth
                         onChange={editDetails}
-                        value={props.updatedInfo.name}
+                        value={props.userDetailCredentials.name}
                     />
                     <TextField
                         autoFocus
@@ -146,7 +139,7 @@ export const UserProfileForm = (props: Prop) =>  {
                         label="Gender"
                         fullWidth
                         onChange={editDetails}
-                        value={props.updatedInfo.gender}
+                        value={props.userDetailCredentials.gender}
                     />
                     <TextField
                         autoFocus
@@ -156,7 +149,7 @@ export const UserProfileForm = (props: Prop) =>  {
                         label="Birthday"
                         fullWidth
                         onChange={editDetails}
-                        value={props.updatedInfo.birthday}
+                        value={props.userDetailCredentials.birthday}
                     />
                 </DialogContent>
                 <DialogActions>

@@ -10,6 +10,8 @@ import { NavBarR } from "../navigation/navigation-bar";
 import { HomepageForm } from "./home-page-form";
 import "./homepage.scss";
 import { OwnerHomepageForm } from "./owner-home-page-form";
+import { BusinessTable } from "../business/business-table";
+
 
 
 /**
@@ -21,12 +23,13 @@ export interface Prop {
     coupon: Coupon;
     business: Business;
     businessLocation: BusinessLocation;
+    businesses: Business[];
+    selectBusiness: (business) => void;
 };
 
 export const HomePage = (props: Prop) => {
-    const history = useHistory();
     const api = useContext<KouponBankApi>(ApiContext);
-
+    const history = useHistory();
     const directToUserLogin = (event): void => {
         history.push(UrlPaths.Login);
     }
@@ -50,8 +53,10 @@ export const HomePage = (props: Prop) => {
                 props.isOwner==true ? (
                     <OwnerHomepageForm
                         coupon={props.coupon}
+                        businesses = {props.businesses}
                         business={props.business}
                         businessLocation={props.businessLocation}
+                        selectBusiness= {props.selectBusiness}
                         couponClick={couponClick}
                         businessClick={businessClick}
                     />
@@ -59,20 +64,24 @@ export const HomePage = (props: Prop) => {
                     <HomepageForm
                         coupon={props.coupon}
                         couponClick={couponClick}
+                        businesses= {props.businesses}
+                        selectBusiness= {props.selectBusiness}
                     />
                 )
             }
+            <div>
+            </div>
         </div>
     );
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state);
     return {
         user: state.userReducer.user,
         isOwner: state.userReducer.isOwner,
         coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
+        businesses: state.businessReducer.businesses,
         businessLocation: state.businessReducer.businessLocation,
     };
 };

@@ -30,6 +30,18 @@ const initialState: userDetailState = {
 /**
  * 우리 Reducer가 사용하는 액션들을 설정하는 공간
  */
+interface GetUserDetailAction {
+    type: UserActionType.GetUserDetailAction
+};
+
+interface GetUserDetailSuccessAction {
+    userDetail: UserDetail;
+    type: UserActionType.GetUserDetailSuccessAction
+};
+
+interface GetUserDetailFailAction {
+    type: UserActionType.GetUserDetailFailAction
+};
 
 interface UpdateUserDetailAction {
     type: UserActionType.UpdateUserDetailAction
@@ -52,7 +64,10 @@ interface UpdateUserDetailFailAction {
 type Action =   
     | UpdateUserDetailAction 
     | UpdateUserDetailSuccessAction 
-    | UpdateUserDetailFailAction;
+    | UpdateUserDetailFailAction
+    | GetUserDetailAction 
+    | GetUserDetailSuccessAction 
+    | GetUserDetailFailAction;
 
 /**
  * Reducer가 필요한 Parameters "state"하고 "action"
@@ -65,6 +80,20 @@ export const reducer = (
     action: Action
 ): userDetailState => {
     switch(action.type) {
+        case UserActionType.GetUserDetailAction:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Running;
+            })
+        case UserActionType.GetUserDetailSuccessAction: {
+            return produce(state, draftState => {
+                draftState.userDetail = action.userDetail
+            })
+        }
+        case UserActionType.GetUserDetailFailAction: {
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Failed;
+            })
+        }
         case UserActionType.UpdateUserDetailAction:
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Running;
@@ -86,19 +115,15 @@ export const reducer = (
 
 // 유저 (소비자) 디테일을 업데이트 하기 위한 API Call + Reducer State Update
 export const UpdateUserDetail = (
-        api: KouponBankApi,
-        id: string, 
-        name: string,
-        gender: string,
-        birthday: string,
-        location: string | number,
-        profile_picture: null,
-        dispatch
+    api: KouponBankApi,
+    id: string, 
+    userDetail: UserDetail,
+    dispatch
 ): any => {
     dispatch({
         type: UserActionType.UpdateUserDetailAction,
     });
-    return api.updateUserDetail(id, name, gender, birthday, location, profile_picture).then(userDetail => {
+    return api.updateUserDetail(id, userDetail).then(userDetail => {
         dispatch({
             type: UserActionType.UpdateUserDetailSuccessAction,
             userDetail: userDetail
@@ -114,26 +139,67 @@ export const UpdateUserDetail = (
 export const UpdateOwnerDetail = (
     api: KouponBankApi,
     id: string, 
-    name: string,
-    gender: string,
-    birthday: string,
-    location: string | number,
-    profile_picture: null,
+    userDetail: UserDetail,
     dispatch
 ): any => {
-dispatch({
-    type: UserActionType.UpdateUserDetailAction,
-});
-return api.updateOwnerDetail(id, name, gender, birthday, location, profile_picture).then(userDetail => {
     dispatch({
-        type: UserActionType.UpdateUserDetailSuccessAction,
-        userDetail: userDetail
-    })
-}).catch(err => {
-    dispatch({
-        type: UserActionType.UpdateUserDetailFailAction
+        type: UserActionType.UpdateUserDetailAction,
     });
-});
+    return api.updateOwnerDetail(id, userDetail).then(userDetail => {
+        dispatch({
+            type: UserActionType.UpdateUserDetailSuccessAction,
+            userDetail: userDetail
+        })
+    }).catch(err => {
+        dispatch({
+            type: UserActionType.UpdateUserDetailFailAction
+        });
+    });
 };
 
+export const getUserDetail = (
+    api: KouponBankApi,
+    userId: string,
+    dispatch
+): any => {
+    dispatch({
+        type: UserActionType.GetUserDetailAction,
+    }); {
+        return api.getUserDetail(
+            userId
+        ).then(userDetail => {
+            dispatch({
+                type: UserActionType.GetUserDetailSuccessAction,
+                userDetail: userDetail
+            })
+        }).catch(err => {
+            dispatch({
+                type: UserActionType.GetUserDetailFailAction
+            });
+        });
+    };
+};
+
+export const getOwnerDetail = (
+    api: KouponBankApi,
+    userId: string,
+    dispatch
+): any => {
+    dispatch({
+        type: UserActionType.GetUserDetailAction,
+    }); {
+        return api.getOwnerDetail(
+            userId
+        ).then(userDetail => {
+            dispatch({
+                type: UserActionType.GetUserDetailSuccessAction,
+                userDetail: userDetail
+            })
+        }).catch(err => {
+            dispatch({
+                type: UserActionType.GetUserDetailFailAction
+            });
+        });
+    };
+};
 

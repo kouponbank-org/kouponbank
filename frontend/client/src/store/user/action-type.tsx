@@ -11,4 +11,7 @@ export enum UserActionType {
     UpdateUserDetailAction="UPDATE_USER_DETAIL_ACTION",
     UpdateUserDetailSuccessAction="UPDATE_USER_DETAIL_SUCCESS_ACTION",
     UpdateUserDetailFailAction="UPDATE_USER_DETAIL_FAIL_ACTION",
+    GetUserDetailAction="Get_USER_DETAIL_ACTION",
+    GetUserDetailSuccessAction="GET_USER_DETAIL_SUCCESS_ACTION",
+    GetUserDetailFailAction="GET_USER_DETAIL_FAIL_ACTION",
 }

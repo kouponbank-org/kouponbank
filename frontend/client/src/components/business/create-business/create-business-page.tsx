@@ -9,7 +9,7 @@ import { RootReducer } from "../../../store/reducer";
 import { ApiContext, UrlPaths } from "../../base-page-router";
 import { NavBarR } from "../../navigation/navigation-bar";
 import { CreateBusinessForm } from "./create-business-form";
-
+import { getMyBusinesses } from "../../../store/business/business-reducer";
 /**
  * Represents the required properties of the HomePage.
  */
@@ -26,6 +26,10 @@ export interface Prop {
         latlng: Coordinate,
         businessLocation: BusinessLocation,
     ) => Promise<void>;
+    getMyBusinesses: (
+        api: KouponBankApi,
+        userid: string,
+    ) => Promise<Business[]>;
     user: User;
     business: Business;
     businessLocation: BusinessLocation;
@@ -78,6 +82,7 @@ export const CreateBusinessPage = (props: Prop) => {
         )
         setBusiness(initialState.business);
         setBusinessLocation(initialState.businessLocation);
+        props.getMyBusinesses(api, props.user.id)
         event.preventDefault();
     };
 
@@ -148,7 +153,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             businessLocation: BusinessLocation,
         ) => {
             return createBusinessLocation(api, businessId, businessName, latlng, businessLocation, dispatch)
-        }
+        },
+        getMyBusinesses: (
+            api: KouponBankApi,
+            userId: string
+        ) => {
+            return getMyBusinesses(api, userId, dispatch);
+        },
     };
 };
 
