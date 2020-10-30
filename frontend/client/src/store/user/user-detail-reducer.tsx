@@ -161,7 +161,7 @@ export const getUserDetail = (
     api: KouponBankApi,
     userId: string,
     dispatch
-): any => {
+): Promise<void> => {
     dispatch({
         type: UserActionType.GetUserDetailAction,
     }); {
@@ -184,7 +184,7 @@ export const getOwnerDetail = (
     api: KouponBankApi,
     userId: string,
     dispatch
-): any => {
+): Promise<void> => {
     dispatch({
         type: UserActionType.GetUserDetailAction,
     }); {

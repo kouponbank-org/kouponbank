@@ -1,5 +1,5 @@
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import { Button, Grid, TextField, Typography, Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import { User, UserDetail } from "../../api/kb-types";
 import './user-profile-page.scss';
 

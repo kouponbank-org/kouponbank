@@ -403,7 +403,7 @@ export const getMyBusinesses = (
     api: KouponBankApi,
     userId: string,
     dispatch: Dispatch,
-): Promise<Business[]> => {
+): Promise<void> => {
     dispatch({
         type: BusinessActionType.GetBusinessList,
     });
@@ -412,7 +412,6 @@ export const getMyBusinesses = (
             type: BusinessActionType.GetBusinessListSuccess,
             businesses: businesses,
         })
-        return businesses;
     }).catch(err => {
         dispatch({
             type: BusinessActionType.GetBusinessListFail,

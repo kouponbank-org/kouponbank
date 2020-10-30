@@ -2,10 +2,10 @@
  * Represents the required properties of KouponBank State
  */
 export enum Status {
-    NotStarted="NOT_STARTED",
-    Running="RUNNING",
-    Succeeded="SUCCEEDED",
-    Failed="FAILED",
+    NotStarted = "NOT_STARTED",
+    Running = "RUNNING",
+    Succeeded = "SUCCEEDED",
+    Failed = "FAILED",
 }
 
 /**
@@ -15,13 +15,12 @@ export interface User {
     id?: string;
     username: string;
     password: string | number;
-    email: string | number
-};
+    email: string | number;
+}
 
 /**
  * Represents the required properties of an Alert
  */
-
 export enum AlertType {
     SUCCESS = "success",
     FAILURE = "failure",
@@ -56,7 +55,6 @@ export interface CouponBasket {
     coupon_title?: string;
 }
 
-
 /**
  * Represents the required properties of a Business
  */
@@ -78,7 +76,7 @@ export interface BusinessLocation {
     x: string;
     // lat
     y: string;
-};
+}
 
 /**
  * Represents the required properties for the Naver Map Api
@@ -105,7 +103,7 @@ export interface UserDetail {
     birthday: string;
     location: number | string;
     profile_picture?: null;
-};
+}
 
 export interface AddressDetail {
     admCd?: string;
@@ -132,4 +130,4 @@ export interface AddressDetail {
     siNm?: string;
     udrtYn?: string;
     zipNo?: string;
-};
+}

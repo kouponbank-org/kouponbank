@@ -5,7 +5,7 @@ import "./address.scss";
 /**
  * Represents the required properties of the log in form.
  */
-export interface Prop { 
+export interface Prop {
     jibunAddress: string;
     roadAddress: string;
     buildingName: string;
@@ -13,18 +13,17 @@ export interface Prop {
     selectedAddress: (address) => void;
 }
 
-export const AddressTable = (props: Prop) => { 
-    const selectedAddress = (event) => {
+export const AddressTable: React.FC<Prop> = (props: Prop) => {
+    const selectedAddress = () => {
         const addr = {
             jibunAddress: props.jibunAddress,
             roadAddress: props.roadAddress,
-            zipcode: props.zipcode
-        }
-        props.selectedAddress(addr)
-        event.preventDefault()
-    }
-    
-    return ( 
+            zipcode: props.zipcode,
+        };
+        props.selectedAddress(addr);
+    };
+
+    return (
         <div className="search-address">
             <TableRow className="search-address table">
                 <TableCell>{props.zipcode}</TableCell>
@@ -32,7 +31,7 @@ export const AddressTable = (props: Prop) => {
                 <TableCell>{props.roadAddress}</TableCell>
                 <TableCell>{props.buildingName}</TableCell>
                 <TableCell>
-                    <Button 
+                    <Button
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -45,5 +44,5 @@ export const AddressTable = (props: Prop) => {
                 </TableCell>
             </TableRow>
         </div>
-    )
-}
+    );
+};

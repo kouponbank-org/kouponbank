@@ -1,9 +1,4 @@
-import {
-    AppBar,
-    Button,
-    InputBase,
-    Toolbar
-} from "@material-ui/core";
+import { AppBar, Button, InputBase, Toolbar } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import React, { Fragment, ReactElement } from "react";
 import { connect } from "react-redux";
@@ -15,22 +10,22 @@ import { UrlPaths } from "../base-page-router";
 import "./navigation-bar.scss";
 
 export interface Prop {
-    user: User;
-    userDetail: UserDetail;
+    user?: User;
+    userDetail?: UserDetail;
     title?: string;
-    isOwner: boolean;
+    isOwner?: boolean;
     buttonName?: string;
     onClick?: (event) => void;
-    signOut: () => void;
+    signOut?: () => void;
 }
 
 export const NavBar = (props: Prop): ReactElement => {
     const history = useHistory();
-    
-    const redirectToHomepage = (event): void => {
+
+    const redirectToHomepage = (event: React.MouseEvent<HTMLElement>): void => {
         history.push(UrlPaths.Home);
         event.preventDefault();
-    }
+    };
 
     const signOut = () => {
         props.signOut();
@@ -44,7 +39,7 @@ export const NavBar = (props: Prop): ReactElement => {
     const redirectToOwnerProfile = () => {
         history.push(UrlPaths.OwnerProfile);
     };
-    
+
     return (
         <div className="nav-bar">
             <AppBar>
@@ -53,10 +48,8 @@ export const NavBar = (props: Prop): ReactElement => {
                         쿠폰뱅크
                     </Button>
                     <div className="search">
-                        {
-                            props.title === ("쿠폰뱅크") ? (  
-                                <Search 
-                                /> &&
+                        {props.title === "쿠폰뱅크" 
+                            ? <Search /> && (
                                 <InputBase
                                     className="search"
                                     classes={{
@@ -66,38 +59,34 @@ export const NavBar = (props: Prop): ReactElement => {
                                     placeholder="Search…"
                                     aria-label="search"
                                 />
-                            ) : (
-                                ""
                             )
-                        }
+                        : "" }
                     </div>
-                    <div>
-                        {props.title}
-                    </div>
-                    {
-                        props.user.username !== "" ? (
-                            <Fragment>
-                                {
-                                    props.isOwner === true ? (
-                                        <Button className="profile-details" onClick={redirectToOwnerProfile}>
-                                            나만의 공간 
-                                        </Button>
-                                    ) : (
-                                        <Button className="profile-details" onClick={redirectToUserProfile}>
-                                            나만의 공간
-                                        </Button>
-                                    )
-                                }
-                                <Button className="logout" onClick={signOut}>
-                                    로그아웃
+                    <div>{props.title}</div>
+                    {props.user.username !== "" ? (
+                        <Fragment>
+                            {props.isOwner ? (
+                                <Button 
+                                    className="profile-details"
+                                    onClick={redirectToOwnerProfile}
+                                >
+                                    나만의 공간 
                                 </Button>
-                            </Fragment>
-                        ) : (
-                            <Button onClick={props.onClick}>
-                                {props.buttonName}
+                            ) : (
+                                <Button 
+                                    className="profile-details"
+                                    onClick={redirectToUserProfile}
+                                >
+                                    나만의 공간
+                                </Button>
+                            )}
+                            <Button className="logout" onClick={signOut}>
+                                로그아웃
                             </Button>
-                        )
-                    }
+                        </Fragment>
+                    ) : (
+                        <Button onClick={props.onClick}>{props.buttonName}</Button>
+                    )}
                 </Toolbar>
             </AppBar>
         </div>

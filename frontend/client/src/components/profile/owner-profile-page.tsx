@@ -9,7 +9,7 @@ import { UpdateOwnerDetail } from "../../store/user/user-detail-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
 import { UserProfileForm } from "./user-profile-form";
-import './user-profile-page.scss';
+import "./user-profile-page.scss";
 
 /**
  * Represents the required properties of the User Profile Page

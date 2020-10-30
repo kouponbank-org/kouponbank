@@ -1,0 +1,66 @@
+{
+    "env": {
+        "browser": true,
+        "jasmine": true,
+        "jest": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
+    "rules": {
+        "prettier/prettier": 1,
+        "@typescript-eslint/await-thenable": 2,
+        "@typescript-eslint/explicit-module-boundary-types": 2,
+        "@typescript-eslint/member-delimiter-style": 2,
+        "@typescript-eslint/member-ordering": 2,
+        "@typescript-eslint/method-signature-style": 2,
+        "@typescript-eslint/no-confusing-non-null-assertion": 2,
+        "@typescript-eslint/no-empty-interface": 2,
+        "@typescript-eslint/no-explicit-any": 2,
+        "@typescript-eslint/no-extra-non-null-assertion": 2,
+        "@typescript-eslint/no-floating-promises": 2,
+        "@typescript-eslint/no-misused-new": 2,
+        "@typescript-eslint/no-misused-promises": 2,
+        "@typescript-eslint/no-non-null-asserted-optional-chain": 2,
+        "@typescript-eslint/no-unsafe-assignment": 2,
+        "@typescript-eslint/prefer-as-const": 2,
+        "@typescript-eslint/no-unnecessary-boolean-literal-compare": 2,
+        "@typescript-eslint/promise-function-async": 2,
+        "@typescript-eslint/brace-style": 2,
+        "@typescript-eslint/comma-spacing": 2,
+        "@typescript-eslint/dot-notation": 2,
+        "@typescript-eslint/func-call-spacing": 2,
+        "@typescript-eslint/keyword-spacing": 2,
+        "@typescript-eslint/lines-between-class-members": 2,
+        "@typescript-eslint/no-dupe-class-members": 2,
+        "@typescript-eslint/no-empty-function": 2,
+        "@typescript-eslint/no-extra-semi": 2,
+        "@typescript-eslint/no-unused-expressions": 2,
+        "@typescript-eslint/no-unused-vars": 2,
+        "@typescript-eslint/no-use-before-define": 2,
+        "@typescript-eslint/require-await": 2,
+        "@typescript-eslint/quotes": 2,
+        "no-console": 2
+    },
+    "settings": {
+        "react": {
+            "pragma": "React",
+            "version": "detect"
+        }
+    }
+}
