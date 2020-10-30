@@ -1,0 +1,42 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+};
+
+.grid-container-business {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 15% 15% 15%;
+    gap: 18%;
+    grid-template-areas:
+    "business-list";
+
+    justify-items: space-evenly;
+    
+    .business-list {
+        grid-area: business-list;
+    }
+
+}
+
+.business-list {
+    color: black;
+
+    &.table{
+        color: black;
+    }
+
+    &.button {
+        background-color: #000000;
+        color: #ffffff;
+        &:hover {
+            background-color: #444444
+        }
+    }
+}
+
+.gridList {
+    transform: 'translateZ(0)',
+}

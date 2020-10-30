@@ -33,6 +33,32 @@ export const initialState: BusinessState = {
     updateStatus: Status.NotStarted
 };
 
+interface GetBusinessAction {
+    type: BusinessActionType.GetBusiness;
+}
+
+interface GetBusinessSuccessAction {
+    type: BusinessActionType.GetBusinessSuccess;
+    business: Business;
+}
+
+interface GetBusinessFailAction {
+    type: BusinessActionType.GetBusinessFail;
+}
+
+interface GetBusinessListAction {
+    type: BusinessActionType.GetBusinessList;
+}
+
+interface GetBusinessListSuccessAction {
+    type: BusinessActionType.GetBusinessListSuccess;
+    businesses: Business[];
+}
+
+interface GetBusinessListFailAction {
+    type: BusinessActionType.GetBusinessListFail;
+}
+
 interface CreateBusinessAction {
     type: BusinessActionType.CreateBusiness;
 }
@@ -57,6 +83,19 @@ interface UpdateBusinessSuccessAction {
 
 interface UpdateBusinessFailAction {
     type: BusinessActionType.UpdateBusinessFail;
+}
+
+interface GetBusinessLocationAction {
+    type: BusinessActionType.GetBusinessLocation;
+}
+
+interface GetBusinessLocationSuccessAction {
+    type: BusinessActionType.GetBusinessLocationSuccess;
+    businessLocation: BusinessLocation;
+}
+
+interface GetBusinessLocationFailAction {
+    type: BusinessActionType.GetBusinessLocationFail;
 }
 
 interface CreateBusinessLocationAction {
@@ -86,6 +125,15 @@ interface UpdateBusinessLocationFailAction {
 }
 
 type Action =   
+    | GetBusinessAction 
+    | GetBusinessSuccessAction 
+    | GetBusinessFailAction 
+    | GetBusinessListAction 
+    | GetBusinessListSuccessAction 
+    | GetBusinessListFailAction 
+    | GetBusinessLocationAction 
+    | GetBusinessLocationSuccessAction 
+    | GetBusinessLocationFailAction 
     | CreateBusinessAction 
     | CreateBusinessSuccessAction 
     | CreateBusinessFailAction 
@@ -104,6 +152,45 @@ export const reducer = (
     action: Action
 ): BusinessState => {
     switch(action.type) {
+        case BusinessActionType.GetBusiness:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Running;
+            });
+        case BusinessActionType.GetBusinessSuccess:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Succeeded;
+                draftState.business = action.business;
+            });
+        case BusinessActionType.GetBusinessFail:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Failed;
+            });
+        case BusinessActionType.GetBusinessList:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Running;
+            });
+        case BusinessActionType.GetBusinessListSuccess:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Succeeded;
+                draftState.businesses = action.businesses;
+            });
+        case BusinessActionType.GetBusinessListFail:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Failed;
+            });
+        case BusinessActionType.GetBusinessLocation:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Running;
+            });
+        case BusinessActionType.GetBusinessLocationSuccess:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Succeeded;
+                draftState.businessLocation = action.businessLocation;
+            });
+        case BusinessActionType.GetBusinessLocationFail:
+            return produce(state, draftState => {
+                draftState.updateStatus = Status.Failed;
+            });
         case BusinessActionType.CreateBusiness:
             return produce(state, draftState => {
                 draftState.updateStatus = Status.Running;
@@ -285,3 +372,56 @@ export const updateBusinessLocation = (
         throw err;
     });
 };
+
+export const getBusinesses = (
+    api: KouponBankApi,
+    dispatch: Dispatch,
+): Promise<Business[]> => {
+    dispatch({
+        type: BusinessActionType.GetBusinessList,
+    });
+    return api.getBusinesses().then(businesses => {
+        dispatch({
+            type: BusinessActionType.GetBusinessListSuccess,
+            businesses: businesses,
+        })
+        return businesses;
+    }).catch(err => {
+        dispatch({
+            type: BusinessActionType.GetBusinessListFail,
+        });
+        dispatch({
+            type: AlertsActionType.DisplayError,
+            header: "ERROR",
+            body: "다시 시도해 주세요",
+        } as DisplayError);
+        throw err;
+    });
+}
+
+export const getMyBusinesses = (
+    api: KouponBankApi,
+    userId: string,
+    dispatch: Dispatch,
+): Promise<Business[]> => {
+    dispatch({
+        type: BusinessActionType.GetBusinessList,
+    });
+    return api.getMyBusinesses(userId).then(businesses => {
+        dispatch({
+            type: BusinessActionType.GetBusinessListSuccess,
+            businesses: businesses,
+        })
+        return businesses;
+    }).catch(err => {
+        dispatch({
+            type: BusinessActionType.GetBusinessListFail,
+        });
+        dispatch({
+            type: AlertsActionType.DisplayError,
+            header: "ERROR",
+            body: "다시 시도해 주세요",
+        } as DisplayError);
+        throw err;
+    });
+}

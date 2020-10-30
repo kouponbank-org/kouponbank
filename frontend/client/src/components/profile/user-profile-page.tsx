@@ -29,7 +29,6 @@ export const UserProfilePage = (props: Prop) =>  {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const [userDetailCredentials, setUserDetailCredentials] = useState(props.userDetail);
-    
     const editDetails = (event): void => {
         setUserDetailCredentials({
             ...userDetailCredentials,

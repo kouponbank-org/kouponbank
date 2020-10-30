@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { User, UserDetail } from "../../api/kb-types";
+import { User, UserDetail, Business } from "../../api/kb-types";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
 import { loginOwner, loginUser } from "../../store/user/user-reducer";
@@ -12,9 +12,8 @@ import { NavBarR } from "../navigation/navigation-bar";
 import { Notifications } from "../notifications/notifications";
 import { LoginForm } from "./login-form";
 import './login.scss';
-
-
 import { getUserDetail, getOwnerDetail } from "../../store/user/user-detail-reducer";
+import { getBusinesses, getMyBusinesses } from "../../store/business/business-reducer";
 
 /**
  * Represents the required properties of the HomePage.
@@ -31,12 +30,18 @@ export interface Prop {
     getUserDetail: (
         api: KouponBankApi,
         id: string,
-    ) => Promise<void>;
+    ) => Promise<UserDetail>;
     getOwnerDetail: (
         api: KouponBankApi,
         id: string,
-    ) => Promise<void>;
-    
+    ) => Promise<UserDetail>;
+    getBusinesses: (
+        api: KouponBankApi,
+    ) => Promise<Business[]>;
+    getMyBusinesses: (
+        api: KouponBankApi,
+        userid: string,
+    ) => Promise<Business[]>;
     user: User;
     userDetail: UserDetail;
     alertState: AlertState;
@@ -64,7 +69,8 @@ export const LoginPage = (props: Prop) => {
                 userCredentials
             )
             .then((user) => {
-                props.getUserDetail(api, user.id)
+                props.getUserDetail(api, user.id);
+                props.getBusinesses(api)
             .then(() => {
                 history.push(UrlPaths.Home);
             })
@@ -76,6 +82,7 @@ export const LoginPage = (props: Prop) => {
             )
             .then((user) => {
                 props.getOwnerDetail(api, user.id)
+                props.getMyBusinesses(api, user.id)
             .then(() => {
                 history.push(UrlPaths.Home)
             })
@@ -132,6 +139,7 @@ const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
         userDetail: state.userDetailReducer.userDetail,
+        business: state.businessReducer.businesses,
         alertState: state.notificationReducer
     };
 };
@@ -161,6 +169,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             id: string
         ) => {
             return getOwnerDetail(api, id, dispatch);
+        }, 
+        getBusinesses: (
+            api: KouponBankApi,
+        ) => {
+            return getBusinesses(api, dispatch);
+        },
+        getMyBusinesses: (
+            api: KouponBankApi,
+            userId: string
+        ) => {
+            return getMyBusinesses(api, userId, dispatch);
         }, 
     };
 };
