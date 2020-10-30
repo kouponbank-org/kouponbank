@@ -8,7 +8,7 @@ import {
     createBusiness,
     createBusinessLocation,
     getMyBusinesses,
-    initialState
+    initialState,
 } from "../../../store/business/business-reducer";
 import { RootReducer } from "../../../store/reducer";
 import { ApiContext } from "../../base-page-router";

@@ -68,7 +68,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
             props
                 .loginOwner(api, userCredentials)
                 .then((user) => {
-                    props.getOwnerDetail(api, user.id)
+                    props.getOwnerDetail(api, user.id);
                     props
                         .getMyBusinesses(api, user.id)
                         .then(() => {
@@ -152,10 +152,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         loginOwner: async (api: KouponBankApi, user: User) => {
             return loginOwner(api, user, dispatch);
         },
-        getUserDetail: (api: KouponBankApi, id: string) => {
+        getUserDetail: async (api: KouponBankApi, id: string) => {
             return getUserDetail(api, id, dispatch);
         },
-        getOwnerDetail: (api: KouponBankApi, id: string) => {
+        getOwnerDetail: async (api: KouponBankApi, id: string) => {
             return getOwnerDetail(api, id, dispatch);
         },
         getBusinesses: async (api: KouponBankApi) => {

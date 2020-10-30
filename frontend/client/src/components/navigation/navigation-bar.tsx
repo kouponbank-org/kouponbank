@@ -48,35 +48,32 @@ export const NavBar = (props: Prop): ReactElement => {
                         쿠폰뱅크
                     </Button>
                     <div className="search">
-                        {props.title === "쿠폰뱅크" 
+                        {props.title === "쿠폰뱅크"
                             ? <Search /> && (
-                                <InputBase
-                                    className="search"
-                                    classes={{
-                                        root: "search-bar-root",
-                                        input: "search-bar-input",
-                                    }}
-                                    placeholder="Search…"
-                                    aria-label="search"
-                                />
-                            )
-                        : "" }
+                                  <InputBase
+                                      className="search"
+                                      classes={{
+                                          root: "search-bar-root",
+                                          input: "search-bar-input",
+                                      }}
+                                      placeholder="Search…"
+                                      aria-label="search"
+                                  />
+                              )
+                            : ""}
                     </div>
                     <div>{props.title}</div>
                     {props.user.username !== "" ? (
                         <Fragment>
                             {props.isOwner ? (
-                                <Button 
+                                <Button
                                     className="profile-details"
                                     onClick={redirectToOwnerProfile}
                                 >
-                                    나만의 공간 
+                                    나만의 공간
                                 </Button>
                             ) : (
-                                <Button 
-                                    className="profile-details"
-                                    onClick={redirectToUserProfile}
-                                >
+                                <Button className="profile-details" onClick={redirectToUserProfile}>
                                     나만의 공간
                                 </Button>
                             )}

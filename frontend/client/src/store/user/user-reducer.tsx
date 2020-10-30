@@ -9,8 +9,8 @@ import { UserActionType } from "./action-type";
 /**
  * 프로젝트 Global Variable State 트래킹
  * 파일들이 필요한 Props들이 저장된 'KouponBankState' Dictionary
- * Reducer이 정상적으로 돌아갈려면 필요한 아주 중요한 Interface. 
- */ 
+ * Reducer이 정상적으로 돌아갈려면 필요한 아주 중요한 Interface.
+ */
 
 export interface UserState {
     user: User;
@@ -69,54 +69,51 @@ interface SignOutAction {
 /**
  * Reducer가 활성화 될려면 필요한 "Action" 하고 "State" Declaration.
  * "State"은 전에 "KouponBankState"로 설정하였고
- * 이제 우리가 사용할 "Action"들을 설정할시간  
+ * 이제 우리가 사용할 "Action"들을 설정할시간
  */
-type Action =   
-    | CreateNewUserAction 
-    | CreateNewUserSuccessAction 
-    | CreateNewUserFailAction 
-    | LoginUserAction 
-    | LoginUserSuccessAction 
+type Action =
+    | CreateNewUserAction
+    | CreateNewUserSuccessAction
+    | CreateNewUserFailAction
+    | LoginUserAction
+    | LoginUserSuccessAction
     | LoginUserFailAction
     | SignOutAction;
 
 /**
  * Reducer가 필요한 Parameters "state"하고 "action"
- * @param state 
- * @param action 
+ * @param state
+ * @param action
  * Reducer가 우리 Global State을 업데이트 시켜준다
  */
-export const reducer = (
-    state: UserState = initialState,
-    action: Action
-): UserState => {
-    switch(action.type) {
+export const reducer = (state: UserState = initialState, action: Action): UserState => {
+    switch (action.type) {
         case UserActionType.CreateNewUserAction:
-            return produce(state, draftState => {
+            return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Running;
             });
         case UserActionType.CreateNewUserSuccessAction:
-            return produce(state, draftState => {
+            return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
                 draftState.user = action.user;
                 draftState.isOwner = action.isOwner;
             });
         case UserActionType.CreateNewUserFailAction:
-            return produce(state, draftState => {
+            return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
         case UserActionType.LoginUserAction:
-            return produce(state, draftState => {
+            return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Running;
             });
         case UserActionType.LoginUserSucessAction:
-            return produce(state, draftState => {
+            return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
                 draftState.user = action.user;
                 draftState.isOwner = action.isOwner;
             });
         case UserActionType.LoginUserFailAction:
-            return produce(state, draftState => {
+            return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
         default:
@@ -125,34 +122,37 @@ export const reducer = (
 };
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
-export const createNewUser = (
-        api: KouponBankApi,
-        user: User,
-        dispatch: Dispatch,
+export const createNewUser = async (
+    api: KouponBankApi,
+    user: User,
+    dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.CreateNewUserAction,
     });
-    return api.createUser(user).then(user => {
-        dispatch({
-            type: UserActionType.CreateNewUserSuccessAction,
-            user: user
+    return api
+        .createUser(user)
+        .then((user) => {
+            dispatch({
+                type: UserActionType.CreateNewUserSuccessAction,
+                user: user,
+            });
         })
-    }).catch(err => {
-        dispatch({
-            type: UserActionType.CreateNewUserFailAction
+        .catch((err) => {
+            dispatch({
+                type: UserActionType.CreateNewUserFailAction,
+            });
+            dispatch({
+                type: AlertsActionType.DisplayError,
+                header: "ERROR",
+                body: "다시 시도해 주세요",
+            } as DisplayError);
+            throw err;
         });
-        dispatch({
-            type: AlertsActionType.DisplayError,
-            header: "ERROR",
-            body: "다시 시도해 주세요",
-        } as DisplayError);
-        throw err;
-    });
 };
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
-export const createNewOwner = (
+export const createNewOwner = async (
     api: KouponBankApi,
     user: User,
     dispatch: Dispatch,
@@ -160,26 +160,29 @@ export const createNewOwner = (
     dispatch({
         type: UserActionType.CreateNewUserAction,
     });
-    return api.createOwner(user).then(user => {
-        dispatch({
-            type: UserActionType.CreateNewUserSuccessAction,
-            user: user,
-            isOwner:true,
+    return api
+        .createOwner(user)
+        .then((user) => {
+            dispatch({
+                type: UserActionType.CreateNewUserSuccessAction,
+                user: user,
+                isOwner: true,
+            });
         })
-    }).catch(err => {
-        dispatch({
-            type: UserActionType.CreateNewUserFailAction
+        .catch((err) => {
+            dispatch({
+                type: UserActionType.CreateNewUserFailAction,
+            });
+            dispatch({
+                type: AlertsActionType.DisplayError,
+                header: "ERROR",
+                body: "다시 시도해 주세요",
+            } as DisplayError);
+            throw err;
         });
-        dispatch({
-            type: AlertsActionType.DisplayError,
-            header: "ERROR",
-            body: "다시 시도해 주세요",
-        } as DisplayError);
-        throw err;
-    });
 };
 
-export const loginUser = (
+export const loginUser = async (
     api: KouponBankApi,
     user: User,
     dispatch: Dispatch,
@@ -187,26 +190,29 @@ export const loginUser = (
     dispatch({
         type: UserActionType.LoginUserAction,
     });
-    return api.loginUser(user).then(user => {
-        dispatch({
-            type: UserActionType.LoginUserSucessAction,
-            user: user,
+    return api
+        .loginUser(user)
+        .then((user) => {
+            dispatch({
+                type: UserActionType.LoginUserSucessAction,
+                user: user,
+            });
+            return user;
+        })
+        .catch((err) => {
+            dispatch({
+                type: UserActionType.LoginUserFailAction,
+            });
+            dispatch({
+                type: AlertsActionType.DisplayError,
+                header: "ERROR",
+                body: "다시 시도해 주세요",
+            } as DisplayError);
+            throw err;
         });
-        return user;
-    }).catch(err => {
-        dispatch({
-            type: UserActionType.LoginUserFailAction
-        });
-        dispatch({
-            type: AlertsActionType.DisplayError,
-            header: "ERROR",
-            body: "다시 시도해 주세요",
-        } as DisplayError);
-        throw err;
-    });
 };
 
-export const loginOwner = (
+export const loginOwner = async (
     api: KouponBankApi,
     user: User,
     dispatch: Dispatch,
@@ -214,22 +220,25 @@ export const loginOwner = (
     dispatch({
         type: UserActionType.LoginUserAction,
     });
-    return api.loginOwner(user).then(user => {
-        dispatch({
-            type: UserActionType.LoginUserSucessAction,
-            user: user,
-            isOwner: true,
+    return api
+        .loginOwner(user)
+        .then((user) => {
+            dispatch({
+                type: UserActionType.LoginUserSucessAction,
+                user: user,
+                isOwner: true,
+            });
+            return user;
+        })
+        .catch((err) => {
+            dispatch({
+                type: UserActionType.LoginUserFailAction,
+            });
+            dispatch({
+                type: AlertsActionType.DisplayError,
+                header: "ERROR",
+                body: "다시 시도해 주세요",
+            } as DisplayError);
+            throw err;
         });
-        return user;
-    }).catch(err => {
-        dispatch({
-            type: UserActionType.LoginUserFailAction
-        });
-        dispatch({
-            type: AlertsActionType.DisplayError,
-            header: "ERROR",
-            body: "다시 시도해 주세요",
-        } as DisplayError);
-        throw err;
-    });
 };

@@ -1,28 +1,26 @@
 import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { User } from "../../api/kb-types";
-import './sign-up-page.scss';
-
+import "./sign-up-page.scss";
 
 export interface Prop {
     signUpButtonName: string;
     userCredentials: User;
     createNewUserClick: (event) => void;
     userCredentialsInput: (event) => void;
-    userOrOwnerSignup: (event) => void;
-};
+    userOrOwnerSignup: () => void;
+}
 
-export const SignUpForm = (props: Prop) => {
-
-    const createNewUserClick = (event): void => {
+export const SignUpForm = (props: Prop): JSX.Element => {
+    const createNewUserClick = (event: React.FormEvent): void => {
         props.createNewUserClick(event);
     };
 
-    const userOrOwnerSignup = (event): void => {
-        props.userOrOwnerSignup(event);
-    }
-    
-    const userCredentialsInput = (event): void => {
+    const userOrOwnerSignup = (): void => {
+        props.userOrOwnerSignup();
+    };
+
+    const userCredentialsInput = (event: React.FormEvent): void => {
         props.userCredentialsInput(event);
     };
 

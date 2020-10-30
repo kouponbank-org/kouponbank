@@ -11,21 +11,21 @@ export const MapMarker = (props: Prop): JSX.Element => {
         <div>
             {props.businessLocations
                 ? props.businessLocations.map((business, index) => {
-                        return (
-                            <Marker
-                                key={index}
-                                position={{
-                                    lat: business.y,
-                                    lng: business.x
-                                }}
-                                animation={1}
-                                onClick={() => {
-                                    alert(business.roadAddress);
-                                }}
-                            />
-                        );
-                    }) 
-                    : ""}
+                      return (
+                          <Marker
+                              key={index}
+                              position={{
+                                  lat: business.y,
+                                  lng: business.x,
+                              }}
+                              animation={1}
+                              onClick={() => {
+                                  alert(business.roadAddress);
+                              }}
+                          />
+                      );
+                  })
+                : ""}
         </div>
     );
 };

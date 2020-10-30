@@ -6,7 +6,7 @@ import { KouponBankApi } from "../../api/kb-api";
 import { BusinessLocation, NaverMapBound } from "../../api/kb-types";
 import {
     getAllBusinessWithinNaverMapBounds,
-    naverMapBoundChanged
+    naverMapBoundChanged,
 } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";

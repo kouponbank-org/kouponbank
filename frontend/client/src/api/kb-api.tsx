@@ -233,7 +233,6 @@ export class KouponBankApi {
                 `${this.BASE_JUSO_URL}?currrentPage=1&countPerPage=10&keyword=${address}&confmKey=${this.BASE_JUSO_API_KEY}=&resultType=json`,
             )
             .then((response) => {
-                console.log(response.data);
                 return response.data.results.juso;
             });
     }
