@@ -124,7 +124,20 @@ interface UpdateBusinessLocationFailAction {
     type: BusinessActionType.UpdateBusinessLocationFail;
 }
 
-type Action =
+interface SetBusinessAction {
+    type: BusinessActionType.SetBusiness;
+}
+
+interface SetBusinessSuccessAction {
+    type: BusinessActionType.SetBusinessSuccess;
+    business: Business;
+}
+
+interface SetBusinessFailAction {
+    type: BusinessActionType.SetBusinessFail;
+}
+
+export type Action =
     | GetBusinessAction
     | GetBusinessSuccessAction
     | GetBusinessFailAction
@@ -145,7 +158,10 @@ type Action =
     | UpdateBusinessFailAction
     | UpdateBusinessLocationAction
     | UpdateBusinessLocationSuccessAction
-    | UpdateBusinessLocationFailAction;
+    | UpdateBusinessLocationFailAction
+    | SetBusinessAction
+    | SetBusinessSuccessAction
+    | SetBusinessFailAction;
 
 export const reducer = (state: BusinessState = initialState, action: Action): BusinessState => {
     switch (action.type) {
@@ -240,6 +256,20 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
+        case BusinessActionType.SetBusiness:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Running;
+            });
+        case BusinessActionType.SetBusinessSuccess:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Succeeded;
+                draftState.business = action.business;
+                console.log(state);
+            });
+        case BusinessActionType.SetBusinessFail:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Failed;
+            });
         default:
             return state;
     }
@@ -315,7 +345,7 @@ export const createBusinessLocation = async (
     latlng: Coordinate,
     businessLocation: BusinessLocation,
     dispatch: Dispatch,
-): Promise<void> => {
+): Promise<BusinessLocation> => {
     dispatch({
         type: BusinessActionType.CreateBusinessLocation,
     });
@@ -326,6 +356,7 @@ export const createBusinessLocation = async (
                 type: BusinessActionType.CreateBusinessLocationSuccess,
                 businessLocation: businessLocation,
             });
+            return businessLocation;
         })
         .catch((err) => {
             dispatch({

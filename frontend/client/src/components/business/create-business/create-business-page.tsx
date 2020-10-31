@@ -8,7 +8,7 @@ import {
     createBusiness,
     createBusinessLocation,
     getMyBusinesses,
-    initialState,
+    initialState
 } from "../../../store/business/business-reducer";
 import { RootReducer } from "../../../store/reducer";
 import { ApiContext } from "../../base-page-router";
@@ -25,8 +25,8 @@ export interface Prop {
         businessName: string,
         latlng: Coordinate,
         businessLocation: BusinessLocation,
-    ) => Promise<void>;
-    getMyBusinesses: (api: KouponBankApi, userid: string) => Promise<void>;
+    ) => Promise<BusinessLocation>;
+    getMyBusinesses: (api: KouponBankApi, userid: string) => void;
     user: User;
     business: Business;
     businessLocation: BusinessLocation;
@@ -61,6 +61,7 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
             if (status !== window.naver.maps.Service.Status.OK) {
                 return alert("주소를 못 찾았습니다");
             }
+            console.log(response);
             getLatLng(response.result.items[0].point);
         });
     };
@@ -77,8 +78,9 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
                         latlng,
                         businessLocation,
                     )
-                    .then(() => {
-                        history.push(`/business/${props.business.id}`);
+                    .then((businessLocation) => {
+                        props.getMyBusinesses(api, props.user.id);
+                        history.push(`/business/${businessLocation.id}`);
                     })
                     .catch(() => {
                         // Currently does nothing
@@ -101,9 +103,6 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
         });
         setBusiness(initialState.business);
         setBusinessLocation(initialState.businessLocation);
-        props.getMyBusinesses(api, props.user.id).catch(() => {
-            // Currently does nothing
-        });
         event.preventDefault();
     };
 
@@ -128,6 +127,7 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
+    console.log(state);
     return {
         user: state.userReducer.user,
         business: state.businessReducer.business,

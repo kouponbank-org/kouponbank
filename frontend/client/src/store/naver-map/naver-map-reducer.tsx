@@ -49,7 +49,7 @@ interface GetAllBusinessWithinNaverMapBoundsFailAction {
     type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsFail;
 }
 
-type Action =
+export type Action =
     | NaverMapBoundChangeAction
     | NaverMapBoundChangeSucessAction
     | NaverMapBoundChangeFailAction
