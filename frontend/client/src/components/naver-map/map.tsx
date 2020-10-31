@@ -4,24 +4,22 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { BusinessLocation, NaverMapBound } from "../../api/kb-types";
-import { getAllBusinessWithinNaverMapBounds, naverMapBoundChanged } from "../../store/naver-map/naver-map-reducer";
+import {
+    getAllBusinessWithinNaverMapBounds,
+    naverMapBoundChanged,
+} from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
 import { MapMarker } from "./map-marker";
 
 export interface Prop {
-    naverMapBoundChanged: (
-        naverMapBound: NaverMapBound
-    ) => void;
-    getAllBusinessWithinNaverMapBounds: (
-        api: KouponBankApi,
-        naverMapBound: NaverMapBound
-    ) => Promise<void>;
+    naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
+    getAllBusinessWithinNaverMapBounds: (api: KouponBankApi, naverMapBound: NaverMapBound) => void;
     naverMapBound: NaverMapBound;
     businessLocations: BusinessLocation[];
-};
+}
 
-export const Map = (props: Prop) => {
+export const Map: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const [naverMapBound, setNaverMapBound] = useState(props.naverMapBound);
 
@@ -31,16 +29,15 @@ export const Map = (props: Prop) => {
             minLat: bounds.getSW().lat(),
             maxLng: bounds.getNE().lng(),
             minLng: bounds.getSW().lng(),
-        }
-        setNaverMapBound(mapSpan)
-    }
+        };
+        setNaverMapBound(mapSpan);
+    };
 
     const handleChangeBounds = (bounds) => {
-        calculateMapSpan(bounds)
+        calculateMapSpan(bounds);
         props.naverMapBoundChanged(naverMapBound);
         props.getAllBusinessWithinNaverMapBounds(api, naverMapBound);
-    }; 
-
+    };
 
     return (
         <div>
@@ -49,40 +46,36 @@ export const Map = (props: Prop) => {
                 id="react-naver-map"
                 style={{
                     width: 500,
-                    height: 500
+                    height: 500,
                 }}
                 defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
                 defaultZoom={14}
                 onBoundsChanged={handleChangeBounds}
             >
-                <MapMarker 
-                    businessLocations={props.businessLocations}
-                />
+                <MapMarker businessLocations={props.businessLocations} />
             </NaverMap>
         </div>
-    )
-}
+    );
+};
 
 const mapStateToProps = (state: RootReducer) => {
     return {
         naverMapBound: state.naverMapReducer.naverMapBound,
-        businessLocations: state.naverMapReducer.businessLocations
+        businessLocations: state.naverMapReducer.businessLocations,
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        naverMapBoundChanged: (
-            naverMapBound: NaverMapBound
-        ) => {
+        naverMapBoundChanged: (naverMapBound: NaverMapBound) => {
             return naverMapBoundChanged(naverMapBound, dispatch);
         },
-        getAllBusinessWithinNaverMapBounds: (
+        getAllBusinessWithinNaverMapBounds: async (
             api: KouponBankApi,
-            naverMapBound: NaverMapBound
+            naverMapBound: NaverMapBound,
         ) => {
             return getAllBusinessWithinNaverMapBounds(api, naverMapBound, dispatch);
-        }
+        },
     };
 };
 

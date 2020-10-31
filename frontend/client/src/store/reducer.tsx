@@ -1,5 +1,5 @@
-import { combineReducers, Dispatch } from 'redux';
-import storage from 'redux-persist/lib/storage';
+import { combineReducers, Dispatch } from "redux";
+import storage from "redux-persist/lib/storage";
 import { reducer as businessReducer } from "./business/business-reducer";
 import { CommonActionType } from "./common-action-type";
 import { reducer as couponReducer } from "./coupon/coupon-reducer";
@@ -16,13 +16,14 @@ const reducer = combineReducers({
     naverMapReducer: naverMapReducer,
     couponReducer: couponReducer,
 });
-
 export const mainReducer = (state, action) => {
     if (action.type === CommonActionType.SignOutAction) {
-        storage.removeItem('persist:root');  
+        storage.removeItem("persist:root").catch(() => {
+            // does nothing
+        });
         state = undefined;
     }
-  
+
     return reducer(state, action);
 };
 

@@ -11,13 +11,6 @@ import { OwnerProfilePageR } from "./profile/owner-profile-page";
 import { UserProfilePageR } from "./profile/user-profile-page";
 import { SignUpPageR } from "./signup/sign-up-page";
 
-/**
- * Represents the required properties of the BasePageRouter.
- */
-interface Prop {
-    
-};
-
 export const ApiContext = React.createContext(null);
 
 export enum UrlPaths {
@@ -38,7 +31,7 @@ export enum UrlPaths {
  *                 the BasePage. Contains nothing.
  * @returns {JSX.Element} The JSX representing the BasePage.
  */
-const BasePageRouter = (props: Prop) => {
+const BasePageRouter = () => {
     const [api, setApi] = useState(null as KouponBankApi);
     const [showPage, setShowPage] = useState(false);
     /*
@@ -58,8 +51,8 @@ const BasePageRouter = (props: Prop) => {
     }, []);
 
     if (!showPage) {
-        return <div></div>
-    };
+        return <div></div>;
+    }
 
     return (
         // any child can access the api
@@ -85,11 +78,11 @@ const BasePageRouter = (props: Prop) => {
  *
  * @param {Object} state The current state of the BasePageRouter.
  */
-
+/*
 const mapStateToProps = state => {
     return {
 
     };
-};
+};*/
 
-export const BasePageRouterR = connect(mapStateToProps)(BasePageRouter);
+export const BasePageRouterR = connect(null)(BasePageRouter);

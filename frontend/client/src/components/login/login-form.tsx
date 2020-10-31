@@ -1,34 +1,34 @@
 import { Button, Grid, TextField } from "@material-ui/core";
 import React from "react";
 import { User } from "../../api/kb-types";
-import './login.scss';
+import "./login.scss";
 
 /**
  * Represents the required properties of the log in form.
  */
-export interface Prop { 
-    userCredentials: User
+export interface Prop {
+    isUser: boolean;
+    userCredentials: User;
     userCredentialsInput: (event) => void;
     signUpClick?: (event) => void;
     loginUserClick: (event) => void;
 }
 
-export const LoginForm = (props: Prop) => { 
-
-    const loginUserClick = (event): void => { 
+export const LoginForm = (props: Prop): JSX.Element => {
+    const loginUserClick = (event: React.FormEvent): void => {
         props.loginUserClick(event);
         event.preventDefault();
-    }
+    };
 
-    const signUpClick = (event): void => {
+    const signUpClick = (event: React.MouseEvent<HTMLElement>): void => {
         props.signUpClick(event);
     };
 
-    const userCredentialsInput = (event): void => { 
+    const userCredentialsInput = (event: React.FormEvent): void => {
         props.userCredentialsInput(event);
     };
 
-    return ( 
+    return (
         <div className="layout">
             <form className="form" onSubmit={loginUserClick} autoComplete="off">
                 <Grid container>
@@ -85,16 +85,20 @@ export const LoginForm = (props: Prop) => {
                     로그인
                 </Button>
             </form>
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className="sign-up-button"
-                onClick={signUpClick}
-            >
-                회원가입
-            </Button>
+            {props.isUser ? (
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="sign-up-button"
+                    onClick={signUpClick}
+                >
+                    회원가입
+                </Button>
+            ) : (
+                ""
+            )}
         </div>
-    )
-}
+    );
+};

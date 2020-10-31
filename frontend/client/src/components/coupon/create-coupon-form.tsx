@@ -1,30 +1,29 @@
-import { Button, ButtonBase, Grid, TextField } from "@material-ui/core";
+import { Button, Grid, TextField } from "@material-ui/core";
 import React from "react";
-import { Coupon, Business, User } from "../../api/kb-types";
-import './create-coupon.scss';
+import { Coupon } from "../../api/kb-types";
+import "./create-coupon.scss";
 
 /**
  * Represents the required properties of the log in form.
  */
-export interface Prop { 
+export interface Prop {
     coupon: Coupon;
     couponInformationInput: (event) => void;
     createCouponClick: (event) => void;
 }
 
-export const CreateCouponForm = (props: Prop) => { 
+export const CreateCouponForm = (props: Prop): JSX.Element => {
     // 쿠폰 정보
-    const couponInformationInput = (event): void => { 
+    const couponInformationInput = (event): void => {
         props.couponInformationInput(event);
-    }
+    };
 
     // 쿠폰 만들기
-    const createCouponClick = (event): void => { 
+    const createCouponClick = (event): void => {
         props.createCouponClick(event);
-        event.preventDefault();
-    }
- 
-    return ( 
+    };
+
+    return (
         <div className="layout">
             <form className="form" onSubmit={createCouponClick} autoComplete="off">
                 <Grid container>
@@ -82,5 +81,5 @@ export const CreateCouponForm = (props: Prop) => {
                 </Button>
             </form>
         </div>
-    )
-}
+    );
+};

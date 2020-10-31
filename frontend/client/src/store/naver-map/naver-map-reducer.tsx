@@ -20,7 +20,7 @@ const initialState: NaverMapState = {
     },
     businessLocations: [],
     fetchStatus: Status.NotStarted,
-    updateStatus: Status.NotStarted
+    updateStatus: Status.NotStarted,
 };
 
 interface NaverMapBoundChangeAction {
@@ -49,18 +49,15 @@ interface GetAllBusinessWithinNaverMapBoundsFailAction {
     type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsFail;
 }
 
-type Action = 
+type Action =
     | NaverMapBoundChangeAction
-    | NaverMapBoundChangeSucessAction 
+    | NaverMapBoundChangeSucessAction
     | NaverMapBoundChangeFailAction
     | GetAllBusinessWithinNaverMapBoundsAction
-    | GetAllBusinessWithinNaverMapBoundsSuccessAction 
+    | GetAllBusinessWithinNaverMapBoundsSuccessAction
     | GetAllBusinessWithinNaverMapBoundsFailAction;
 
-export const reducer = (
-    state: NaverMapState = initialState,
-    action: Action
-): NaverMapState => {
+export const reducer = (state: NaverMapState = initialState, action: Action): NaverMapState => {
     switch (action.type) {
         case NaverMapActionType.NaverMapBoundChange:
             return produce(state, (draftState) => {
@@ -69,7 +66,7 @@ export const reducer = (
         case NaverMapActionType.NaverMapBoundChangeSuccess:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
-                draftState.naverMapBound = action.naverMapBound
+                draftState.naverMapBound = action.naverMapBound;
             });
         case NaverMapActionType.NaverMapBoundChangeFail:
             return produce(state, (draftState) => {
@@ -93,17 +90,14 @@ export const reducer = (
     }
 };
 
-export const naverMapBoundChanged = (
-    naverMapBound: NaverMapBound,
-    dispatch: Dispatch,
-): void => {
+export const naverMapBoundChanged = (naverMapBound: NaverMapBound, dispatch: Dispatch): void => {
     dispatch({
         type: NaverMapActionType.NaverMapBoundChangeSuccess,
-        naverMapBound: naverMapBound
-    }); 
+        naverMapBound: naverMapBound,
+    });
 };
 
-export const getAllBusinessWithinNaverMapBounds = (
+export const getAllBusinessWithinNaverMapBounds = async (
     api: KouponBankApi,
     naverMapBound: NaverMapBound,
     dispatch: Dispatch,
@@ -111,30 +105,27 @@ export const getAllBusinessWithinNaverMapBounds = (
     dispatch({
         type: NaverMapActionType.GetAllBusinessWithinNaverMapBounds,
     });
-    return api.getAllBusinessWithinNaverMapBounds(
-        naverMapBound
-    )
-    .then(businessLocations => {
-        dispatch({
-            type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess,
-            businessLocations: businessLocations,
+    return api
+        .getAllBusinessWithinNaverMapBounds(naverMapBound)
+        .then((businessLocations) => {
+            dispatch({
+                type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess,
+                businessLocations: businessLocations,
+            });
         })
-    }).catch(err => {
-        dispatch({
-            type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsFail,
+        .catch((err) => {
+            dispatch({
+                type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsFail,
+            });
+            throw err;
         });
-        throw err;
-    });
 };
 
-export const getJusoSearchResult = (
+export const getJusoSearchResult = async (
     api: KouponBankApi,
-    address: string
+    address: string,
 ): Promise<AddressDetail[]> => {
-    return api.findAddress(
-        address
-    )
-    .then(address => {
-        return address
-    })
-}
+    return api.findAddress(address).then((address) => {
+        return address;
+    });
+};
