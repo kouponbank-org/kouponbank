@@ -22,4 +22,7 @@ export enum BusinessActionType {
     UpdateBusinessLocation = "UPDATE_BUSINESS_LOCATION",
     UpdateBusinessLocationSuccess = "UPDATE_BUSINESS_LOCATION_SUCCESS",
     UpdateBusinessLocationFail = "UPDATE_BUSINESS_LOCATION_FAIL",
+    SetBusiness = "SET_BUSINESS",
+    SetBusinessSuccess = "SET_BUSINESS_SUCCESS",
+    SetBusinessFail = "SET_BUSINESS_FAIL",
 }
