@@ -264,7 +264,8 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
                 draftState.business = action.business;
-                console.log(state);
+                // ERASE: LATER
+                //console.log(state);
             });
         case BusinessActionType.SetBusinessFail:
             return produce(state, (draftState) => {

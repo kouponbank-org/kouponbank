@@ -61,7 +61,8 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
             if (status !== window.naver.maps.Service.Status.OK) {
                 return alert("주소를 못 찾았습니다");
             }
-            console.log(response);
+            // ERASE: LATER
+            //console.log(response);
             getLatLng(response.result.items[0].point);
         });
     };
@@ -127,7 +128,8 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state);
+    // ERASE: LATER
+    //console.log(state);
     return {
         user: state.userReducer.user,
         business: state.businessReducer.business,
