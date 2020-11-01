@@ -81,11 +81,6 @@ export interface NaverMapBound {
     minLng: string;
 }
 
-export interface Coordinate {
-    x: string;
-    y: string;
-}
-
 /**
  * Represents the required properties of a UserDetail
  */
