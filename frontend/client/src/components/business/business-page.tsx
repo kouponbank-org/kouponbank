@@ -11,12 +11,8 @@ const BusinessPage: React.FC<Prop> = (props: Prop) => {
     return (
         <div className="business-page">
             Current Business Page:
-            <div>
-                {props.business.id}
-            </div>
-            <div>
-                {props.business.business_name}
-            </div>
+            <div>{props.business.id}</div>
+            <div>{props.business.business_name}</div>
         </div>
     );
 };

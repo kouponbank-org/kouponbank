@@ -1,13 +1,5 @@
 import axios from "axios";
-import {
-    AddressDetail,
-    Business,
-
-    Coupon,
-    NaverMapBound,
-    User,
-    UserDetail
-} from "./kb-types";
+import { AddressDetail, Business, Coupon, NaverMapBound, User, UserDetail } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -172,9 +164,7 @@ export class KouponBankApi {
     }
 
     /* Business API used for Naver Map API */
-    async getAllBusinessWithinNaverMapBounds(
-        naverMapBound: NaverMapBound,
-    ): Promise<Business[]> {
+    async getAllBusinessWithinNaverMapBounds(naverMapBound: NaverMapBound): Promise<Business[]> {
         return axios
             .get<Business[]>(`${this.BASE_URL}/map/`, {
                 params: {
@@ -205,14 +195,20 @@ export class KouponBankApi {
     async findAddressCoordinates(address: AddressDetail): Promise<AddressDetail> {
         return axios
             .get(
-                this.BASE_JUSO_COORD_KR_URL + 
-                "?admCd=" + address.admCd +
-                "&rnMgtSn=" + address.rnMgtSn +
-                "&udrtYn=" + address.udrtYn +
-                "&buldMnnm=" + address.buldMnnm +
-                "&buldSlno=" + address.buldSlno +
-                "&confmKey=" + this.BASE_JUSO_COORD_KR_API_KEY +
-                "=&resultType=json"
+                this.BASE_JUSO_COORD_KR_URL +
+                    "?admCd=" +
+                    address.admCd +
+                    "&rnMgtSn=" +
+                    address.rnMgtSn +
+                    "&udrtYn=" +
+                    address.udrtYn +
+                    "&buldMnnm=" +
+                    address.buldMnnm +
+                    "&buldSlno=" +
+                    address.buldSlno +
+                    "&confmKey=" +
+                    this.BASE_JUSO_COORD_KR_API_KEY +
+                    "=&resultType=json",
             )
             .then((response) => {
                 return response.data.results.juso[0];

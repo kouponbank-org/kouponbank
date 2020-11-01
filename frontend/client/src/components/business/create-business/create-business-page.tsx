@@ -6,7 +6,6 @@ import { KouponBankApi } from "../../../api/kb-api";
 import { AddressDetail, Business, User } from "../../../api/kb-types";
 import {
     createBusiness,
-
     getMyBusinesses,
     initialState as BusinessReducerInitialState
 } from "../../../store/business/business-reducer";
