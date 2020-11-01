@@ -49,6 +49,8 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
     /**
      * Calls the Coordinate API set by www.juso.go.kr
      * Address will contain X and Y coordinates of the location
+     * X, Y is set in UTM-K format
+     * Backend server transforms UTM-K into WGS84 (lat, lng)
      * @param address 
      */
     const findAddressCoord = (address: AddressDetail) => {

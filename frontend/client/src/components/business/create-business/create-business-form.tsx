@@ -10,7 +10,7 @@ import "./create-business.scss";
 export interface Prop {
     business: Business;
     businessInformationInput: (event) => void;
-    businessLocationSet: (address: AddressDetail, addressCoord: AddressDetail) => void;
+    setBusinessAddress: (address: AddressDetail, addressCoord: AddressDetail) => void;
     createBusinessClick: (event) => void;
 }
 
@@ -18,7 +18,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
     const [open, setOpen] = useState(false);
 
     const handleSelectAddressClick = (address: AddressDetail, addressCoord: AddressDetail) => {
-        props.businessLocationSet(address, addressCoord);
+        props.setBusinessAddress(address, addressCoord);
         setOpen(false);
     };
 

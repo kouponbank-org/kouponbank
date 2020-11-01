@@ -39,8 +39,8 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
         });
     };
 
-    // 사업장 주소 (도로명, 지번, 우편번호)
-    const businessLocationSet = (address: AddressDetail, addressCoord: AddressDetail): void => {
+    // 사업장 주소 (도로명, 지번, 우편번호, 좌표)
+    const setBusinessAddress = (address: AddressDetail, addressCoord: AddressDetail): void => {
         setBusiness({
             ...business,
             jibunAddr: address.jibunAddr,
@@ -85,7 +85,7 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
             <CreateBusinessForm
                 business={business}
                 businessInformationInput={businessInformationInput}
-                businessLocationSet={businessLocationSet}
+                setBusinessAddress={setBusinessAddress}
                 createBusinessClick={createBusinessClick}
             />
         </div>
