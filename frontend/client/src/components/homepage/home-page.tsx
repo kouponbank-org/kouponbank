@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Business, BusinessLocation, Coupon, User } from "../../api/kb-types";
+import { Business, Coupon, User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
@@ -17,7 +17,6 @@ export interface Prop {
     isOwner: boolean;
     coupon: Coupon;
     business: Business;
-    businessLocation: BusinessLocation;
     businesses: Business[];
     selectBusiness: (business) => void;
 }
@@ -45,7 +44,6 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
                     coupon={props.coupon}
                     businesses={props.businesses}
                     business={props.business}
-                    businessLocation={props.businessLocation}
                     selectBusiness={props.selectBusiness}
                     couponClick={couponClick}
                     businessClick={businessClick}
@@ -69,7 +67,6 @@ const mapStateToProps = (state: RootReducer) => {
         coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,
-        businessLocation: state.businessReducer.businessLocation,
     };
 };
 /*

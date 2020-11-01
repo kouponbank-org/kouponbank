@@ -1,12 +1,12 @@
 import produce from "immer";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { AddressDetail, BusinessLocation, NaverMapBound, Status } from "../../api/kb-types";
+import { AddressDetail, Business, NaverMapBound, Status } from "../../api/kb-types";
 import { NaverMapActionType } from "./action-type";
 
 export interface NaverMapState {
     naverMapBound: NaverMapBound;
-    businessLocations: BusinessLocation[];
+    businesses: Business[];
     fetchStatus: Status;
     updateStatus: Status;
 }
@@ -18,7 +18,7 @@ const initialState: NaverMapState = {
         maxLng: "",
         minLng: "",
     },
-    businessLocations: [],
+    businesses: [],
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted,
 };
@@ -42,7 +42,7 @@ interface GetAllBusinessWithinNaverMapBoundsAction {
 
 interface GetAllBusinessWithinNaverMapBoundsSuccessAction {
     type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess;
-    businessLocations: BusinessLocation[];
+    businesses: Business[];
 }
 
 interface GetAllBusinessWithinNaverMapBoundsFailAction {
@@ -79,7 +79,7 @@ export const reducer = (state: NaverMapState = initialState, action: Action): Na
         case NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
-                draftState.businessLocations = action.businessLocations;
+                draftState.businesses = action.businesses;
             });
         case NaverMapActionType.GetAllBusinessWithinNaverMapBoundsFail:
             return produce(state, (draftState) => {
@@ -107,10 +107,10 @@ export const getAllBusinessWithinNaverMapBounds = async (
     });
     return api
         .getAllBusinessWithinNaverMapBounds(naverMapBound)
-        .then((businessLocations) => {
+        .then((businesses) => {
             dispatch({
                 type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess,
-                businessLocations: businessLocations,
+                businesses: businesses,
             });
         })
         .catch((err) => {
@@ -121,11 +121,20 @@ export const getAllBusinessWithinNaverMapBounds = async (
         });
 };
 
-export const getJusoSearchResult = async (
+export const getAddressSearchResult = async (
     api: KouponBankApi,
     address: string,
 ): Promise<AddressDetail[]> => {
     return api.findAddress(address).then((address) => {
+        return address;
+    });
+};
+
+export const getAddressCoord = async (
+    api: KouponBankApi,
+    address: AddressDetail,
+): Promise<AddressDetail> => {
+    return api.findAddressCoordinates(address).then((address) => {
         return address;
     });
 };

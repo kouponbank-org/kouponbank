@@ -5,10 +5,9 @@ from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from kouponbank.endpoints.business_api import (BusinessListAPI,
+                                               BusinessMapListAPI,
                                                OwnerBusinessAPI,
                                                OwnerBusinessListAPI)
-from kouponbank.endpoints.business_map_api import (BusinessMapAPI,
-                                                   BusinessMapListAPI)
 from kouponbank.endpoints.coupon_api import (BusinessCouponAPI,
                                              BusinessCouponListAPI, CouponAPI,
                                              CouponListAPI)
@@ -43,8 +42,6 @@ urlpatterns = [
    path('admin/', admin.site.urls),
    path('login/user/', LoginUserAPI.as_view(), name="login-user"),
    path('login/owner/', LoginOwnerAPI.as_view(), name="login-owner"),
-   path('map/', BusinessMapListAPI.as_view(), name="business-map-list"),
-   path('map/<uuid:business_id>/', BusinessMapAPI.as_view(), name="business-map"),
    path('users/', UserListAPI.as_view(), name="user-list"),
    path('users/<uuid:user_id>/', UserAPI.as_view(), name="user"),
    path('users/<uuid:user_id>/detail/', UserDetailAPI.as_view(), name="user-detail-list"),
@@ -59,6 +56,7 @@ urlpatterns = [
    path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/menu/<uuid:menu_id>/', BusinessMenuAPI.as_view(), name="business-menu"),
    path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/', BusinessCouponListAPI.as_view(), name="business-coupon-list"),
    path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/<uuid:coupon_id>/', BusinessCouponAPI.as_view(), name="business-coupon"),
+   path('map/', BusinessMapListAPI.as_view(), name="business-map-list"),
    path('business/', BusinessListAPI.as_view(), name="business-list"),
    path('business/<uuid:business_id>/menu/', MenuListAPI.as_view(), name="menu-list"),
    path('business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuAPI.as_view(), name="menu"),

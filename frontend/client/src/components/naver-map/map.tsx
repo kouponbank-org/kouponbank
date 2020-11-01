@@ -3,10 +3,10 @@ import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { BusinessLocation, NaverMapBound } from "../../api/kb-types";
+import { Business, NaverMapBound } from "../../api/kb-types";
 import {
     getAllBusinessWithinNaverMapBounds,
-    naverMapBoundChanged,
+    naverMapBoundChanged
 } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
@@ -16,7 +16,7 @@ export interface Prop {
     naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
     getAllBusinessWithinNaverMapBounds: (api: KouponBankApi, naverMapBound: NaverMapBound) => void;
     naverMapBound: NaverMapBound;
-    businessLocations: BusinessLocation[];
+    businesses: Business[];
 }
 
 export const Map: React.FC<Prop> = (props: Prop) => {
@@ -52,7 +52,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                 defaultZoom={14}
                 onBoundsChanged={handleChangeBounds}
             >
-                <MapMarker businessLocations={props.businessLocations} />
+                <MapMarker businesses={props.businesses} />
             </NaverMap>
         </div>
     );
@@ -61,7 +61,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         naverMapBound: state.naverMapReducer.naverMapBound,
-        businessLocations: state.naverMapReducer.businessLocations,
+        businesses: state.naverMapReducer.businesses,
     };
 };
 

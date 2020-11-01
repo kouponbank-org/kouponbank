@@ -2,8 +2,7 @@ import axios from "axios";
 import {
     AddressDetail,
     Business,
-    BusinessLocation,
-    Coordinate,
+
     Coupon,
     NaverMapBound,
     User,
@@ -15,15 +14,21 @@ export class KouponBankApi {
 
     BASE_NAVER_MAP_API_KEY: string;
 
-    BASE_JUSO_API_KEY: string;
+    BASE_JUSO_KR_API_KEY: string;
 
-    BASE_JUSO_URL: string;
+    BASE_JUSO_KR_URL: string;
+
+    BASE_JUSO_COORD_KR_API_KEY: string;
+
+    BASE_JUSO_COORD_KR_URL: string;
 
     constructor() {
         this.BASE_URL = process.env.REACT_APP_API_BASE_URL;
-        this.BASE_JUSO_URL = process.env.REACT_APP_JUST_API_BASE_URL;
         this.BASE_NAVER_MAP_API_KEY = process.env.REACT_APP_NAVER_MAP_API_KEY;
-        this.BASE_JUSO_API_KEY = process.env.REACT_APP_JUSO_KR_API_KEY;
+        this.BASE_JUSO_KR_URL = process.env.REACT_APP_JUSO_KR_BASE_URL;
+        this.BASE_JUSO_KR_API_KEY = process.env.REACT_APP_JUSO_KR_API_KEY;
+        this.BASE_JUSO_COORD_KR_URL = process.env.REACT_APP_JUSO_COORD_KR_BASE_URL;
+        this.BASE_JUSO_COORD_KR_API_KEY = process.env.REACT_APP_JUSO_COORD_KR_API_KEY;
     }
 
     /*LOGIN API*/
@@ -166,55 +171,12 @@ export class KouponBankApi {
             });
     }
 
-    //Business Location API
-    async createBusinessLocation(
-        businessId: string,
-        businessName: string,
-        latlng: Coordinate,
-        businessLocation: BusinessLocation,
-    ): Promise<BusinessLocation> {
-        return axios
-            .post<BusinessLocation>(`${this.BASE_URL}/map/`, {
-                id: businessId,
-                business_name: businessName,
-                roadAddress: businessLocation.roadAddress,
-                jibun: businessLocation.jibunAddress,
-                zipcode: businessLocation.zipcode,
-                x: latlng.x,
-                y: latlng.y,
-            })
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    async updateBusinessLocation(
-        businessId: string,
-        businessName: string,
-        latlng: Coordinate,
-        businessLocation: BusinessLocation,
-    ): Promise<BusinessLocation> {
-        return axios
-            .put<BusinessLocation>(`${this.BASE_URL}/map/${businessId}/`, {
-                id: businessId,
-                business_name: businessName,
-                roadAddress: businessLocation.roadAddress,
-                jibuoAddress: businessLocation.jibunAddress,
-                zipcode: businessLocation.zipcode,
-                x: latlng.x,
-                y: latlng.y,
-            })
-            .then((response) => {
-                return response.data;
-            });
-    }
-
     /* Business API used for Naver Map API */
     async getAllBusinessWithinNaverMapBounds(
         naverMapBound: NaverMapBound,
-    ): Promise<BusinessLocation[]> {
+    ): Promise<Business[]> {
         return axios
-            .get<BusinessLocation[]>(`${this.BASE_URL}/map/`, {
+            .get<Business[]>(`${this.BASE_URL}/map/`, {
                 params: {
                     maxLat: naverMapBound.maxLat,
                     minLat: naverMapBound.minLat,
@@ -230,12 +192,30 @@ export class KouponBankApi {
     async findAddress(address: string): Promise<AddressDetail[]> {
         return axios
             .get(
-                `${this.BASE_JUSO_URL}?currrentPage=1&countPerPage=10&keyword=${address}&confmKey=${this.BASE_JUSO_API_KEY}=&resultType=json`,
+                `${this.BASE_JUSO_KR_URL}?currrentPage=1&countPerPage=10&keyword=${address}&confmKey=${this.BASE_JUSO_KR_API_KEY}=&resultType=json`,
             )
             .then((response) => {
+                // ERASE:
                 //console.log(response);
                 //console.log(response.data);
                 return response.data.results.juso;
+            });
+    }
+
+    async findAddressCoordinates(address: AddressDetail): Promise<AddressDetail> {
+        return axios
+            .get(
+                this.BASE_JUSO_COORD_KR_URL + 
+                "?admCd=" + address.admCd +
+                "&rnMgtSn=" + address.rnMgtSn +
+                "&udrtYn=" + address.udrtYn +
+                "&buldMnnm=" + address.buldMnnm +
+                "&buldSlno=" + address.buldSlno +
+                "&confmKey=" + this.BASE_JUSO_COORD_KR_API_KEY +
+                "=&resultType=json"
+            )
+            .then((response) => {
+                return response.data.results.juso[0];
             });
     }
 

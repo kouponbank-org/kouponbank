@@ -1,6 +1,6 @@
 import { Button, Dialog, TextField } from "@material-ui/core";
 import React, { useState } from "react";
-import { Business, BusinessLocation } from "../../../api/kb-types";
+import { AddressDetail, Business } from "../../../api/kb-types";
 import { AddressInput } from "../../address/address";
 import "./create-business.scss";
 
@@ -9,17 +9,16 @@ import "./create-business.scss";
  */
 export interface Prop {
     business: Business;
-    businessLocation: BusinessLocation;
     businessInformationInput: (event) => void;
-    businessLocationSet: (address) => void;
+    businessLocationSet: (address: AddressDetail, addressCoord: AddressDetail) => void;
     createBusinessClick: (event) => void;
 }
 
 export const CreateBusinessForm = (props: Prop): JSX.Element => {
     const [open, setOpen] = useState(false);
 
-    const selectedAddress = (address) => {
-        props.businessLocationSet(address);
+    const handleSelectAddressClick = (address: AddressDetail, addressCoord: AddressDetail) => {
+        props.businessLocationSet(address, addressCoord);
         setOpen(false);
     };
 
@@ -100,7 +99,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         label="도로명 주소"
                         autoComplete="off"
                         type="text"
-                        value={props.businessLocation.roadAddress || ""}
+                        value={props.business.roadAddr || ""}
                     />
                 </div>
                 <div className="jibun-address">
@@ -115,7 +114,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         label="지번 주소"
                         autoComplete="off"
                         type="text"
-                        value={props.businessLocation.jibunAddress || ""}
+                        value={props.business.jibunAddr || ""}
                     />
                 </div>
                 <div className="zipcode">
@@ -130,7 +129,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         label="우편번호"
                         autoComplete="off"
                         type="text"
-                        value={props.businessLocation.zipcode || ""}
+                        value={props.business.zipNo || ""}
                     />
                 </div>
                 <form onSubmit={createBusinessClick} autoComplete="off">
@@ -155,7 +154,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                 onClose={() => setOpen(false)}
                 className="search-address-modal modal"
             >
-                <AddressInput selectedAddress={selectedAddress} />
+                <AddressInput handleSelectAddressClick={handleSelectAddressClick} />
             </Dialog>
         </div>
     );

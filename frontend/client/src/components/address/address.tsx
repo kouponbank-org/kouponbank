@@ -2,7 +2,7 @@ import { Button, TableCell, TableRow, TextField } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { KouponBankApi } from "../../api/kb-api";
 import { AddressDetail } from "../../api/kb-types";
-import { getJusoSearchResult } from "../../store/naver-map/naver-map-reducer";
+import { getAddressCoord, getAddressSearchResult } from "../../store/naver-map/naver-map-reducer";
 import { ApiContext } from "../base-page-router";
 import { AddressTable } from "./address-table";
 import "./address.scss";
@@ -11,21 +11,32 @@ import "./address.scss";
  * Represents the required properties of the log in form.
  */
 export interface Prop {
-    selectedAddress: (address) => void;
+    handleSelectAddressClick: (address: AddressDetail, addressCoord: AddressDetail) => void;
 }
 
 export const AddressInput: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const [address, setAddress] = useState("");
-    // searchedAddress는 jibunAddress, roadAddress, buildingName, zipcode가 들어가있는 arraylist 입니다.
+    /**
+     * 1) 지번주소 (jibunAddr)
+     * 2) 도로명주소 (roadAddr)
+     * 3) 건물명 (bdNm)
+     * 4) 우편번호 (zipNo)
+     */
     const [searchedAddress, setSearchedAddress] = useState<AddressDetail[]>([]);
 
+    /* User Input of the Address */
     const setAddressInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setAddress(event.target.value);
     };
 
+    /**
+     * Returns List of Addresses based on the Address the User has typed in
+     * Calls the Address API set by www.juso.go.kr
+     * @param event
+     */
     const findAddress = (event: React.FormEvent<HTMLFormElement>) => {
-        getJusoSearchResult(api, address)
+        getAddressSearchResult(api, address)
             .then((address) => {
                 setSearchedAddress(address);
             })
@@ -33,6 +44,21 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
                 // Currently does nothing
             });
         event.preventDefault();
+    };
+
+    /**
+     * Calls the Coordinate API set by www.juso.go.kr
+     * Address will contain X and Y coordinates of the location
+     * @param address 
+     */
+    const findAddressCoord = (address: AddressDetail) => {
+        getAddressCoord(api, address)
+            .then((addressCoord) => {
+                props.handleSelectAddressClick(address, addressCoord);
+            })
+            .catch(() => {
+                // Currently does nothing
+            });
     };
 
     return (
@@ -79,11 +105,8 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
                     return (
                         <AddressTable
                             key={index}
-                            jibunAddress={address.jibunAddr}
-                            roadAddress={address.roadAddr}
-                            buildingName={address.bdNm}
-                            zipcode={address.zipNo}
-                            selectedAddress={props.selectedAddress}
+                            address={address}
+                            handleSelectAddressClick={findAddressCoord}
                         />
                     );
                 })}
