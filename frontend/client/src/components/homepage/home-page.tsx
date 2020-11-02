@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { connect } from "react-redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { useHistory } from "react-router-dom";
-import { Business, BusinessLocation, Coupon, User } from "../../api/kb-types";
+import { Business, Coupon, User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
@@ -21,7 +21,6 @@ export interface Prop {
     isUser: Boolean;
     coupon: Coupon;
     business: Business;
-    businessLocation: BusinessLocation;
     businesses: Business[];
     getBusiness: (
         api: KouponBankApi,
@@ -90,7 +89,6 @@ const mapStateToProps = (state: RootReducer) => {
         coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,
-        businessLocation: state.businessReducer.businessLocation,
     };
 };
 

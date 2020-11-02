@@ -1,12 +1,12 @@
-import { AppBar, Button, InputBase, Toolbar } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
-import React, { Fragment, ReactElement } from "react";
+import { AppBar, Button, Dialog, Toolbar } from "@material-ui/core";
+import React, { Fragment, ReactElement, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { User, UserDetail } from "../../api/kb-types";
 import { RootReducer, signOut } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
+import { SearchBusinessR } from "./business/business-search";
 import "./navigation-bar.scss";
 
 export interface Prop {
@@ -20,6 +20,7 @@ export interface Prop {
 }
 
 export const NavBar = (props: Prop): ReactElement => {
+    const [open, setOpen] = useState(false);
     const history = useHistory();
 
     const redirectToHomepage = (event: React.MouseEvent<HTMLElement>): void => {
@@ -48,19 +49,17 @@ export const NavBar = (props: Prop): ReactElement => {
                         쿠폰뱅크
                     </Button>
                     <div className="search">
-                        {props.title === "쿠폰뱅크"
-                            ? <Search /> && (
-                                  <InputBase
-                                      className="search"
-                                      classes={{
-                                          root: "search-bar-root",
-                                          input: "search-bar-input",
-                                      }}
-                                      placeholder="Search…"
-                                      aria-label="search"
-                                  />
-                              )
-                            : ""}
+                        {props.title === "쿠폰뱅크" ? (
+                            <Button
+                                color="inherit"
+                                onClick={() => setOpen(true)}
+                                className="search-address-modal button"
+                            >
+                                Business 찾기
+                            </Button>
+                        ) : (
+                            ""
+                        )}
                     </div>
                     <div>
                         {props.title}
@@ -88,6 +87,16 @@ export const NavBar = (props: Prop): ReactElement => {
                     )}
                 </Toolbar>
             </AppBar>
+            <Dialog
+                fullWidth={true}
+                maxWidth="xl"
+                scroll="body"
+                open={open}
+                onClose={() => setOpen(false)}
+                className="search-address-modal modal"
+            >
+                <SearchBusinessR />
+            </Dialog>
         </div>
     );
 };

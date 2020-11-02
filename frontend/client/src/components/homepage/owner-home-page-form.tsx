@@ -1,17 +1,17 @@
 import { Button, ButtonBase, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import { Business, BusinessLocation, Coupon } from "../../api/kb-types";
+import { Business, Coupon } from "../../api/kb-types";
 import { MapR } from "../naver-map/map";
 import { useHistory } from "react-router-dom";
 import { UrlPaths } from "../base-page-router";
 import './homepage.scss';
-import { BusinessTable } from "./business-table/business-table";
+import { BusinessTableR } from "./business-table/business-table";
+import "./homepage.scss";
 
 export interface Prop {
     coupon: Coupon;
     businesses: Business[];
     business: Business;
-    businessLocation: BusinessLocation;
     couponClick: (event) => void;
     businessClick: (event) => void;
     selectBusiness: (businessId) => void;
@@ -37,7 +37,7 @@ export const OwnerHomepageForm = (props: Prop) => {
                 내 사업장
             </Typography>
             <div>
-                { 
+                {/* { 
                     props.businesses.map((business, index) => {
                         return (
                             <BusinessTable 
@@ -51,7 +51,16 @@ export const OwnerHomepageForm = (props: Prop) => {
                             />
                         )
                     })
-                }
+                } */}
+                {props.businesses.map((business) => {
+                    return (
+                        <BusinessTableR
+                            key={business.id}
+                            business={business}
+                            selectBusiness={props.selectBusiness}
+                        />
+                    );
+                })}
             </div>
             <Grid container>
                 <Paper className="paper" variant="outlined">
