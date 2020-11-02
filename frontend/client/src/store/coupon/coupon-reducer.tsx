@@ -53,7 +53,7 @@ interface UpdateCouponFailAction {
 //     type: UserActionType.SignOutAction;
 // }
 
-type Action =
+export type Action =
     | CreateCouponAction
     | CreateCouponSuccessAction
     | CreateCouponFailAction

@@ -1,35 +1,28 @@
 import { Button, TableCell, TableRow } from "@material-ui/core";
 import React from "react";
+import { AddressDetail } from "../../api/kb-types";
 import "./address.scss";
 
 /**
  * Represents the required properties of the log in form.
  */
 export interface Prop {
-    jibunAddress: string;
-    roadAddress: string;
-    buildingName: string;
-    zipcode: string;
-    selectedAddress: (address) => void;
+    address: AddressDetail;
+    handleSelectAddressClick: (address: AddressDetail) => void;
 }
 
 export const AddressTable: React.FC<Prop> = (props: Prop) => {
-    const selectedAddress = () => {
-        const addr = {
-            jibunAddress: props.jibunAddress,
-            roadAddress: props.roadAddress,
-            zipcode: props.zipcode,
-        };
-        props.selectedAddress(addr);
+    const handleSelectAddressClick = () => {
+        props.handleSelectAddressClick(props.address);
     };
 
     return (
         <div className="search-address">
             <TableRow className="search-address table">
-                <TableCell>{props.zipcode}</TableCell>
-                <TableCell>{props.jibunAddress}</TableCell>
-                <TableCell>{props.roadAddress}</TableCell>
-                <TableCell>{props.buildingName}</TableCell>
+                <TableCell>{props.address.zipNo}</TableCell>
+                <TableCell>{props.address.jibunAddr}</TableCell>
+                <TableCell>{props.address.roadAddr}</TableCell>
+                <TableCell>{props.address.bdNm}</TableCell>
                 <TableCell>
                     <Button
                         type="submit"
@@ -37,7 +30,7 @@ export const AddressTable: React.FC<Prop> = (props: Prop) => {
                         variant="contained"
                         color="primary"
                         className="search-address button"
-                        onClick={selectedAddress}
+                        onClick={handleSelectAddressClick}
                     >
                         주소 선택
                     </Button>

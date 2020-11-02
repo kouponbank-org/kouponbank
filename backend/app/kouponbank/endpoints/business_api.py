@@ -4,20 +4,11 @@ from drf_yasg.utils import swagger_auto_schema
 from kouponbank.database.business import Business, BusinessSerializer
 from kouponbank.database.owner import Owner
 from kouponbank.database.owner_detail import OwnerDetail
+from pyproj import Proj, transform
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-
-class BusinessListAPI(APIView):
-    @swagger_auto_schema(
-        responses={200: BusinessSerializer(many=True)}
-    )
-    def get(self, request):
-        businesses = Business.objects.all()
-        serializer = BusinessSerializer(businesses, many=True)
-        return Response(serializer.data)
 
 
 class OwnerBusinessListAPI(APIView):
@@ -79,9 +70,14 @@ class OwnerBusinessListAPI(APIView):
     def post(self, request, owner_id):
         business_owner = self.__get_owner_detail(owner_id)
         serializer = BusinessSerializer(data=request.data)
+        entX, entY = self.transform_utmk_to_wgs84(request.data["entX"], request.data["entY"])
         if serializer.is_valid():
             # This business_owner=business_owner is important in linking the urls
-            serializer.save(business_owner=business_owner)
+            serializer.save(
+                business_owner=business_owner,
+                entX = entX,
+                entY = entY
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def __get_owner_detail(self, owner_id):
@@ -89,7 +85,12 @@ class OwnerBusinessListAPI(APIView):
             return OwnerDetail.objects.get(pk=owner_id)
         except OwnerDetail.DoesNotExist:
             raise Http404("ownerDetail not found")
-        
+    def transform_utmk_to_wgs84(self, x, y):
+        proj_UTMK = Proj(init='epsg:5178')
+        proj_WGS84 = Proj(init='epsg:4326')
+        entX, entY = transform(proj_UTMK, proj_WGS84, x, y)
+        return entX, entY
+
 class OwnerBusinessAPI(APIView):
     @swagger_auto_schema(
         responses={200: BusinessSerializer(many=True)},
@@ -162,3 +163,29 @@ class OwnerBusinessAPI(APIView):
             raise Http404("Business not found")
         business.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class BusinessListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: BusinessSerializer(many=True)}
+    )
+    def get(self, request):
+        businesses = Business.objects.all()
+        serializer = BusinessSerializer(businesses, many=True)
+        return Response(serializer.data)
+
+class BusinessMapListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: BusinessSerializer(many=True)}
+    )
+    def get(self, request):
+        minLat = request.query_params["minLat"]
+        maxLat = request.query_params["maxLat"]
+        minLng = request.query_params["minLng"]
+        maxLng = request.query_params["maxLng"]
+        business = Business.objects.filter(
+            entX__range=(minLng, maxLng)
+        ).filter(
+            entY__range=(minLat, maxLat)
+        )
+        serializer = BusinessSerializer(business, many=True)
+        return Response(serializer.data)

@@ -71,7 +71,7 @@ interface SignOutAction {
  * "State"은 전에 "KouponBankState"로 설정하였고
  * 이제 우리가 사용할 "Action"들을 설정할시간
  */
-type Action =
+export type Action =
     | CreateNewUserAction
     | CreateNewUserSuccessAction
     | CreateNewUserFailAction

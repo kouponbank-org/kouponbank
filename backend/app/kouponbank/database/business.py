@@ -32,6 +32,11 @@ class Business(models.Model):
         blank=True,
         null=True
     )
+    roadAddr= models.CharField(max_length=64, blank=False)
+    jibunAddr = models.CharField(max_length=64, blank=False)
+    zipNo = models.CharField(max_length=64, blank=False)
+    entX = models.CharField(max_length=64, blank=False)
+    entY = models.CharField(max_length=64, blank=False)
 
 class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,4 +47,9 @@ class BusinessSerializer(serializers.ModelSerializer):
             "business_email",
             "description",
             "business_picture",
+            "roadAddr",
+            "jibunAddr",
+            "zipNo",
+            "entX",
+            "entY"
         )

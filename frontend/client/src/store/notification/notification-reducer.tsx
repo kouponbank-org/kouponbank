@@ -31,7 +31,7 @@ export interface HideAlert {
     type: AlertsActionType.HideAlert;
 }
 
-type Action = DisplaySuccess | DisplayError | HideAlert;
+export type Action = DisplaySuccess | DisplayError | HideAlert;
 
 export const reducer = (state: AlertState = initialState, action: Action): AlertState => {
     switch (action.type) {
