@@ -163,6 +163,31 @@ export class KouponBankApi {
             });
     }
 
+    async getBusinessesFromSearch(char: string): Promise<Business[]> {
+        /*
+        var CancelToken = axios.CancelToken;
+        var cancel;
+
+        if (cancel) {
+            cancel();
+        };*/
+
+        return axios
+            .get<Business[]>(`${this.BASE_URL}/search/`, {
+                /*
+                cancelToken: new CancelToken(function executor(c) {
+                    cancel = c;
+                }),
+                */
+                params: {
+                    char: char,
+                },
+            })
+            .then((response) => {
+                return response.data;
+            });
+    }
+
     /* Business API used for Naver Map API */
     async getAllBusinessWithinNaverMapBounds(naverMapBound: NaverMapBound): Promise<Business[]> {
         return axios

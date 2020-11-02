@@ -3,24 +3,24 @@ import { Marker } from "react-naver-maps";
 import { Business } from "../../api/kb-types";
 
 export interface Prop {
-    businesses: Business[];
+    naverMapBusinesses: Business[];
 }
 
 export const MapMarker = (props: Prop): JSX.Element => {
     return (
         <div>
-            {props.businesses
-                ? props.businesses.map((business, index) => {
+            {props.naverMapBusinesses
+                ? props.naverMapBusinesses.map((naverMapBusiness, index) => {
                       return (
                           <Marker
                               key={index}
                               position={{
-                                  lat: business.entY,
-                                  lng: business.entX,
+                                  lat: naverMapBusiness.entY,
+                                  lng: naverMapBusiness.entX,
                               }}
                               animation={1}
                               onClick={() => {
-                                  alert(business.roadAddr);
+                                  alert(naverMapBusiness.roadAddr);
                               }}
                           />
                       );

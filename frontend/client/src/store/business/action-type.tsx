@@ -16,4 +16,7 @@ export enum BusinessActionType {
     SetBusiness = "SET_BUSINESS",
     SetBusinessSuccess = "SET_BUSINESS_SUCCESS",
     SetBusinessFail = "SET_BUSINESS_FAIL",
+    GetBusinessesFromSearch = "GET_BUSINESS_FROM_SEARCH",
+    GetBusinessesFromSearchSuccess = "GET_BUSINESS_FROM_SEARCH_SUCCESS",
+    GetBusinessesFromSearchFail = "GET_BUSINESS_FROM_SEARCH_FAIL",
 }

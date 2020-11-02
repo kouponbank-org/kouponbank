@@ -16,7 +16,7 @@ export interface Prop {
     naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
     getAllBusinessWithinNaverMapBounds: (api: KouponBankApi, naverMapBound: NaverMapBound) => void;
     naverMapBound: NaverMapBound;
-    businesses: Business[];
+    naverMapBusinesses: Business[];
 }
 
 export const Map: React.FC<Prop> = (props: Prop) => {
@@ -52,7 +52,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                 defaultZoom={14}
                 onBoundsChanged={handleChangeBounds}
             >
-                <MapMarker businesses={props.businesses} />
+                <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
         </div>
     );
@@ -61,7 +61,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         naverMapBound: state.naverMapReducer.naverMapBound,
-        businesses: state.naverMapReducer.businesses,
+        naverMapBusinesses: state.naverMapReducer.naverMapBusinesses,
     };
 };
 

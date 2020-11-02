@@ -9,6 +9,7 @@ import { BusinessActionType } from "./action-type";
 export interface BusinessState {
     business: Business;
     businesses: Business[];
+    searchedBusinesses: Business[];
     fetchStatus: Status;
     updateStatus: Status;
 }
@@ -25,6 +26,7 @@ export const initialState: BusinessState = {
         entY: "",
     },
     businesses: [],
+    searchedBusinesses: [],
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted,
 };
@@ -94,6 +96,19 @@ interface SetBusinessFailAction {
     type: BusinessActionType.SetBusinessFail;
 }
 
+interface GetBusinessFromSearchAction {
+    type: BusinessActionType.GetBusinessesFromSearch;
+}
+
+interface GetBusinessFromSearchActionSuccess {
+    type: BusinessActionType.GetBusinessesFromSearchSuccess;
+    searchedBusinesses: Business[];
+}
+
+interface GetBusinessFromSearchActionFail {
+    type: BusinessActionType.GetBusinessesFromSearchFail;
+}
+
 export type Action =
     | GetBusinessAction
     | GetBusinessSuccessAction
@@ -109,7 +124,10 @@ export type Action =
     | UpdateBusinessFailAction
     | SetBusinessAction
     | SetBusinessSuccessAction
-    | SetBusinessFailAction;
+    | SetBusinessFailAction
+    | GetBusinessFromSearchAction
+    | GetBusinessFromSearchActionSuccess
+    | GetBusinessFromSearchActionFail;
 
 export const reducer = (state: BusinessState = initialState, action: Action): BusinessState => {
     switch (action.type) {
@@ -173,10 +191,21 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
                 draftState.business = action.business;
-                // ERASE: LATER
-                //console.log(state);
             });
         case BusinessActionType.SetBusinessFail:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Failed;
+            });
+        case BusinessActionType.GetBusinessesFromSearch:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Running;
+            });
+        case BusinessActionType.GetBusinessesFromSearchSuccess:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Succeeded;
+                draftState.searchedBusinesses = action.searchedBusinesses;
+            });
+        case BusinessActionType.GetBusinessesFromSearchFail:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
@@ -302,6 +331,31 @@ export const getMyBusinesses = async (
                 header: "ERROR",
                 body: "다시 시도해 주세요",
             } as DisplayError);
+            throw err;
+        });
+};
+
+export const getBusinessesFromSearch = async (
+    api: KouponBankApi,
+    char: string,
+    dispatch: Dispatch,
+): Promise<Business[]> => {
+    dispatch({
+        type: BusinessActionType.GetBusinessesFromSearch,
+    });
+    return api
+        .getBusinessesFromSearch(char)
+        .then((searchedBusinesses) => {
+            dispatch({
+                type: BusinessActionType.GetBusinessesFromSearchSuccess,
+                searchedBusinesses: searchedBusinesses,
+            });
+            return searchedBusinesses;
+        })
+        .catch((err) => {
+            dispatch({
+                type: BusinessActionType.GetBusinessesFromSearchFail,
+            });
             throw err;
         });
 };

@@ -6,7 +6,7 @@ import { NaverMapActionType } from "./action-type";
 
 export interface NaverMapState {
     naverMapBound: NaverMapBound;
-    businesses: Business[];
+    naverMapBusinesses: Business[];
     fetchStatus: Status;
     updateStatus: Status;
 }
@@ -18,7 +18,7 @@ const initialState: NaverMapState = {
         maxLng: "",
         minLng: "",
     },
-    businesses: [],
+    naverMapBusinesses: [],
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted,
 };
@@ -42,7 +42,7 @@ interface GetAllBusinessWithinNaverMapBoundsAction {
 
 interface GetAllBusinessWithinNaverMapBoundsSuccessAction {
     type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess;
-    businesses: Business[];
+    naverMapBusinesses: Business[];
 }
 
 interface GetAllBusinessWithinNaverMapBoundsFailAction {
@@ -79,7 +79,7 @@ export const reducer = (state: NaverMapState = initialState, action: Action): Na
         case NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
-                draftState.businesses = action.businesses;
+                draftState.naverMapBusinesses = action.naverMapBusinesses;
             });
         case NaverMapActionType.GetAllBusinessWithinNaverMapBoundsFail:
             return produce(state, (draftState) => {
@@ -107,10 +107,10 @@ export const getAllBusinessWithinNaverMapBounds = async (
     });
     return api
         .getAllBusinessWithinNaverMapBounds(naverMapBound)
-        .then((businesses) => {
+        .then((naverMapBusinesses) => {
             dispatch({
                 type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess,
-                businesses: businesses,
+                naverMapBusinesses: naverMapBusinesses,
             });
         })
         .catch((err) => {
