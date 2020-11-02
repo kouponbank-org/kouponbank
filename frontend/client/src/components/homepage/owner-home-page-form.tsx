@@ -1,6 +1,6 @@
 import { Button, ButtonBase, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import { Business, BusinessLocation, Coupon } from "../../api/kb-types";
+import { Business, Coupon } from "../../api/kb-types";
 import { MapR } from "../naver-map/map";
 import { BusinessTableR } from "./business-table/business-table";
 import "./homepage.scss";
@@ -9,7 +9,6 @@ export interface Prop {
     coupon: Coupon;
     businesses: Business[];
     business: Business;
-    businessLocation: BusinessLocation;
     couponClick: (event) => void;
     businessClick: (event) => void;
     selectBusiness: (business) => void;

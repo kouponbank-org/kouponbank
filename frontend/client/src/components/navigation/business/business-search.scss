@@ -1,0 +1,56 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+};
+
+.grid-container-address {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 15% 15%;
+    gap: 15%;
+    grid-template-areas:
+    "business-input"
+    "searched-business-list";
+
+    justify-items: space-evenly;
+
+    .address-input { 
+        grid-area: address-input;
+    }
+    
+    .address-search-button {
+        grid-area: address-search-button;
+
+        &.button {
+            width: 100%;
+            background-color: #000000;
+            color: #ffffff;
+            &:hover {
+                background-color: #444444
+            }
+        }
+    }
+    
+    .searched-businesss-list {
+        grid-area: searched-address-list;
+    }
+
+}
+
+.search-business {
+    color: black;
+
+    &.table{
+        color: black;
+    }
+
+    &.button {
+        background-color: #000000;
+        color: #ffffff;
+        &:hover {
+            background-color: #444444
+        }
+    }
+}

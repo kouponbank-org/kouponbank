@@ -64,18 +64,11 @@ export interface Business {
     business_email: string;
     description: string;
     business_picture?: string;
-}
-
-export interface BusinessLocation {
-    id?: string;
-    business_name: string;
-    jibunAddress: string;
-    roadAddress: string;
-    zipcode: string;
-    // lng
-    x: string;
-    // lat
-    y: string;
+    jibunAddr: string;
+    roadAddr: string;
+    zipNo: string;
+    entX: string; // longitude
+    entY: string; // latitude
 }
 
 /**
@@ -86,11 +79,6 @@ export interface NaverMapBound {
     minLat: string;
     maxLng: string;
     minLng: string;
-}
-
-export interface Coordinate {
-    x: string;
-    y: string;
 }
 
 /**
@@ -130,4 +118,6 @@ export interface AddressDetail {
     siNm?: string;
     udrtYn?: string;
     zipNo?: string;
+    entX?: string;
+    entY?: string;
 }
