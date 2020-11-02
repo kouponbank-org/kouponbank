@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
+import { Business } from "../api/kb-types";
 import { BusinessPageR } from "./business/business-page";
 import { CreateBusinessPageR } from "./business/create-business/create-business-page";
 import { CreateCouponPageR } from "./coupon/create-coupon-page";
@@ -20,7 +21,7 @@ export enum UrlPaths {
     UserProfile = "/uprofile",
     OwnerProfile = "/oprofile",
     CreateBusiness = "/newbusiness",
-    BusinessPage = "/business/:businessId",
+    BusinessPage = "/business/",
     CreateCoupon = "/newcoupon",
 }
 
@@ -39,7 +40,6 @@ const BasePageRouter = () => {
         localStorage.clear();
     }
     */
-
     useLayoutEffect(() => {
         const kouponBankApi = new KouponBankApi();
 

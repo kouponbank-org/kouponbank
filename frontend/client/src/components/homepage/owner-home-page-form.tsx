@@ -2,8 +2,10 @@ import { Button, ButtonBase, Grid, Paper, TextField, Typography } from "@materia
 import React from "react";
 import { Business, BusinessLocation, Coupon } from "../../api/kb-types";
 import { MapR } from "../naver-map/map";
+import { useHistory } from "react-router-dom";
+import { UrlPaths } from "../base-page-router";
+import './homepage.scss';
 import { BusinessTable } from "./business-table/business-table";
-import "./homepage.scss";
 
 export interface Prop {
     coupon: Coupon;
@@ -12,10 +14,11 @@ export interface Prop {
     businessLocation: BusinessLocation;
     couponClick: (event) => void;
     businessClick: (event) => void;
-    selectBusiness: (business) => void;
-}
+    selectBusiness: (businessId) => void;
+};
 
-export const OwnerHomepageForm = (props: Prop): JSX.Element => {
+export const OwnerHomepageForm = (props: Prop) => {
+    const history = useHistory();
     const couponClick = (event): void => {
         props.couponClick(event);
     };
@@ -24,21 +27,31 @@ export const OwnerHomepageForm = (props: Prop): JSX.Element => {
         props.businessClick(event);
     };
 
+    // const selectBusiness = (businessId): void => {
+    //     history.push(UrlPaths.BusinessPage + businessId);
+    // };
+
     return (
         <div className="layout">
             <Typography component="h1" variant="h5">
                 내 사업장
             </Typography>
             <div>
-                {props.businesses.map((business) => {
-                    return (
-                        <BusinessTable
-                            key={business.id}
-                            business={business}
-                            selectBusiness={props.selectBusiness}
-                        />
-                    );
-                })}
+                { 
+                    props.businesses.map((business, index) => {
+                        return (
+                            <BusinessTable 
+                                key={index}
+                                businessId={business.id}
+                                business_name={business.business_name}
+                                business_email={business.business_email}
+                                description={business.description}
+                                business_picture={business.business_picture}
+                                selectBusiness={props.selectBusiness}
+                            />
+                        )
+                    })
+                }
             </div>
             <Grid container>
                 <Paper className="paper" variant="outlined">

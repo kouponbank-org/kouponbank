@@ -46,10 +46,11 @@ export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR />
-            <UserProfileForm
+            <NavBarR/>
+            <UserProfileForm 
+                temp={userDetailCredentials}
                 userCredentials={props.user}
-                userDetailCredentials={userDetailCredentials}
+                userDetailCredentials={props.userDetail}
                 editDetails={editDetails}
                 submitChange={submitChange}
             />

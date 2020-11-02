@@ -1,29 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
+import { KouponBankApi } from "../../api/kb-api";
 import { useHistory } from "react-router-dom";
 import { Business, BusinessLocation, Coupon, User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
-import { UrlPaths } from "../base-page-router";
+import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
+import { Dispatch } from "redux";
 import { HomepageForm } from "./home-page-form";
 import "./homepage.scss";
 import { OwnerHomepageForm } from "./owner-home-page-form";
+import { getBusiness } from "../../store/business/business-reducer";
+
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
     user: User;
-    isOwner: boolean;
+    isUser: Boolean;
     coupon: Coupon;
     business: Business;
     businessLocation: BusinessLocation;
     businesses: Business[];
-    selectBusiness: (business) => void;
-}
+    getBusiness: (
+        api: KouponBankApi,
+        userId: string,
+        businessId: string,
+    ) => Promise<Business>;
+};
 
 export const HomePage: React.FC<Prop> = (props: Prop) => {
-    //const api = useContext<KouponBankApi>(ApiContext);
+    const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const directToUserLogin = (): void => {
         history.push(UrlPaths.Login);
@@ -37,27 +45,40 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
         history.push(UrlPaths.CreateBusiness);
     };
 
+    const selectBusiness = (businessId) => {
+        props.getBusiness(api, props.user.id, businessId);
+        history.push(UrlPaths.BusinessPage + businessId);
+    }
+    console.log(props.isUser)
     return (
         <div>
-            <NavBarR title={"쿠폰뱅크"} buttonName={"로그인"} onClick={directToUserLogin} />
-            {props.isOwner ? (
-                <OwnerHomepageForm
-                    coupon={props.coupon}
-                    businesses={props.businesses}
-                    business={props.business}
-                    businessLocation={props.businessLocation}
-                    selectBusiness={props.selectBusiness}
-                    couponClick={couponClick}
-                    businessClick={businessClick}
-                />
-            ) : (
-                <HomepageForm
-                    coupon={props.coupon}
-                    couponClick={couponClick}
-                    businesses={props.businesses}
-                    selectBusiness={props.selectBusiness}
-                />
-            )}
+            <NavBarR
+                title={"쿠폰뱅크"}
+                buttonName={"로그인"}
+                onClick={directToUserLogin}
+            />
+            {
+                props.isUser===false ? (
+                    <OwnerHomepageForm
+                        coupon={props.coupon}
+                        businesses = {props.businesses}
+                        business={props.business}
+                        businessLocation={props.businessLocation}
+                        couponClick={couponClick}
+                        businessClick={businessClick}
+                        selectBusiness= {selectBusiness}
+                    />
+                ) : (
+                    <HomepageForm
+                        coupon={props.coupon}
+                        couponClick={couponClick}
+                        businesses= {props.businesses}
+                        selectBusiness= {selectBusiness}
+                    />
+                )
+            }
+            <div>
+            </div>
         </div>
     );
 };
@@ -65,18 +86,24 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        isOwner: state.userReducer.isOwner,
+        isUser: state.userReducer.isUser,
         coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,
         businessLocation: state.businessReducer.businessLocation,
     };
 };
-/*
+
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-
+        getBusiness: (
+            api: KouponBankApi,
+            userId: string,
+            businessId: string,
+        ) => {
+            return getBusiness(api, userId, businessId, dispatch);
+        },
     }
-}*/
+}
 
-export const HomePageR = connect(mapStateToProps)(HomePage);
+export const HomePageR = connect(mapStateToProps, mapDispatchToProps)(HomePage);

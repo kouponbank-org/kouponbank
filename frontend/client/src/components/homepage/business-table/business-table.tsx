@@ -1,44 +1,75 @@
 import { Button, TableCell, TableRow } from "@material-ui/core";
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Business } from "../../../api/kb-types";
+import React, { useContext, useState } from "react";
+import { ApiContext, UrlPaths } from "../../base-page-router";
 import "./business-table.scss";
-
+import { RootReducer } from "../../../store/reducer";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { getBusiness } from "../../../store/business/business-reducer";
+import { KouponBankApi } from "../../../api/kb-api";
+import { User, Business } from "../../../api/kb-types";
 /**
  * Represents the required properties of the log in form.
  */
-export interface Prop {
-    business: Business;
-    selectBusiness: (business) => void;
+export interface Prop { 
+    // user: User;
+    businessId: string;
+    business_name: string;
+    business_email: string;
+    description: string;
+    business_picture: string;
+    selectBusiness: (businessId) => void;
+//     getBusiness: (
+//         api: KouponBankApi,
+//         userId: string,
+//         businessId: string,
+//     ) => Promise<Business>;
 }
 
-export const BusinessTable = (props: Prop): JSX.Element => {
-    const history = useHistory();
-
-    const goToBusinessPage = () => {
-        history.push(`/business/${props.business.id}`);
-    };
-
-    return (
+export const BusinessTable = (props: Prop) => { 
+    const api = useContext<KouponBankApi>(ApiContext);
+    const selectBusiness = (event) => {
+        props.selectBusiness(props.businessId);
+        // console.log(props.user.id)
+        // console.log(props.businessId)
+        // props.getBusiness(api, props.user.id, props.businessId);
+        event.preventDefault();
+    }
+    
+    return ( 
         <div className="business-list">
             <TableRow className="business-list table">
-                <TableCell>{props.business.business_name}</TableCell>
-                <TableCell>{props.business.business_email}</TableCell>
-                <TableCell>{props.business.description}</TableCell>
-                <TableCell>{props.business.business_picture}</TableCell>
+                <TableCell>{props.business_name}</TableCell>
+                <TableCell>{props.business_email}</TableCell>
+                <TableCell>{props.description}</TableCell>
+                <TableCell>{props.business_picture}</TableCell>
                 <TableCell>
-                    <Button
+                    <Button 
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className="business-list button"
-                        onClick={goToBusinessPage}
+                        onClick={selectBusiness}
                     >
                         사업장 선택
                     </Button>
                 </TableCell>
             </TableRow>
         </div>
-    );
+    )
+}
+
+const mapStateToProps = (state: RootReducer) => {
+    console.log(state)
+    return {
+        user: state.userReducer.user,
+        business: state.businessReducer.business,
+    };
 };
+
+// const mapDispatchToProps = (dispatch: Dispatch) => {
+//     return {
+//     };
+// };
+export const BusinessTableR = connect(mapStateToProps)(BusinessTable);

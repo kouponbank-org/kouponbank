@@ -16,15 +16,21 @@ export const HomepageForm = (props: Prop): JSX.Element => {
     return (
         <div className="layout">
             <div>
-                {props.businesses.map((business) => {
-                    return (
-                        <BusinessTable
-                            key={business.id}
-                            business={business}
-                            selectBusiness={props.selectBusiness}
-                        />
-                    );
-                })}
+            { 
+                    props.businesses.map((business, index) => {
+                        return (
+                            <BusinessTable 
+                                key={index}
+                                businessId={business.id}
+                                business_name={business.business_name}
+                                business_email={business.business_email}
+                                description={business.description}
+                                business_picture={business.business_picture}
+                                selectBusiness={props.selectBusiness}
+                            />
+                        )
+                    })
+                }
             </div>
             <Typography component="h1" variant="h5">
                 내 주변 쿠폰

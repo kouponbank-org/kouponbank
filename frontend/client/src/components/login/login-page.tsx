@@ -26,6 +26,7 @@ export interface Prop {
     getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
     getMyBusinesses: (api: KouponBankApi, userid: string) => Promise<void>;
     user: User;
+    isUser: boolean;
     userDetail: UserDetail;
     alertState: AlertState;
 }
@@ -138,6 +139,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
+        isUser: state.userReducer.isUser,
         userDetail: state.userDetailReducer.userDetail,
         business: state.businessReducer.businesses,
         alertState: state.notificationReducer,
