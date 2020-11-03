@@ -6,6 +6,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from kouponbank.endpoints.business_api import (BusinessListAPI,
                                                BusinessMapListAPI,
+                                               BusinessSearchListAPI,
                                                OwnerBusinessAPI,
                                                OwnerBusinessListAPI)
 from kouponbank.endpoints.coupon_api import (BusinessCouponAPI,
@@ -57,6 +58,7 @@ urlpatterns = [
    path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/', BusinessCouponListAPI.as_view(), name="business-coupon-list"),
    path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/coupon/<uuid:coupon_id>/', BusinessCouponAPI.as_view(), name="business-coupon"),
    path('map/', BusinessMapListAPI.as_view(), name="business-map-list"),
+   path('search/', BusinessSearchListAPI.as_view(), name="business-search-list"),
    path('business/', BusinessListAPI.as_view(), name="business-list"),
    path('business/<uuid:business_id>/menu/', MenuListAPI.as_view(), name="menu-list"),
    path('business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuAPI.as_view(), name="menu"),

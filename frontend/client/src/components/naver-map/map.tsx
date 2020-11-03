@@ -49,7 +49,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                     height: 500,
                 }}
                 defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
-                defaultZoom={14}
+                defaultZoom={17}
                 onBoundsChanged={handleChangeBounds}
             >
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />

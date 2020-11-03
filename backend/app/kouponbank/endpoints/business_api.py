@@ -189,3 +189,13 @@ class BusinessMapListAPI(APIView):
         )
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)
+
+class BusinessSearchListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: BusinessSerializer(many=True)}
+    )
+    def get(self, request):
+        char = request.query_params["char"]
+        business = Business.objects.filter(business_name__startswith=char)[:10]
+        serializer = BusinessSerializer(business, many=True)
+        return Response(serializer.data)

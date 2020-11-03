@@ -4,26 +4,28 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../../api/kb-api";
 import { Business } from "../../../api/kb-types";
-import { getBusinessesFromSearch } from "../../../store/business/business-reducer";
+import { getBusinessesFromSearch, initialState } from "../../../store/business/business-reducer";
 import { RootReducer } from "../../../store/reducer";
 import { ApiContext } from "../../base-page-router";
 import { SearchedBusinessList } from "./business-search-list";
 import "./business-search.scss";
 
 export interface Prop {
+    open: boolean;
     getBusinessesFromSearch: (api: KouponBankApi, char: string) => Promise<Business[]>;
 }
 
 export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const [businessName, setBusinessName] = useState("");
-    const [businessList, setBusinessList] = useState<Business[]>([]);
+    const [businessList, setBusinessList] = useState<Business[]>(initialState.searchedBusinesses);
 
     const searchBusinessInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBusinessName(event.target.value);
     };
 
     useEffect(() => {
+        console.log('');
         props
             .getBusinessesFromSearch(api, businessName)
             .then((searchedBusinesses) => {
@@ -69,6 +71,7 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
+    console.log(state);
     return {
         searchedBusiness: state.businessReducer.searchedBusinesses,
     };
