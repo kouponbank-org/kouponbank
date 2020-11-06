@@ -60,6 +60,9 @@ export interface CouponBasket {
  */
 export interface Business {
     id?: string;
+    verified_business?: boolean;
+    verified_owner?: boolean;
+    verified_email?: boolean;
     business_name: string;
     business_email: string;
     description: string;
