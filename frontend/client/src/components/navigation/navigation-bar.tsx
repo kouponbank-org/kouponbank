@@ -95,7 +95,7 @@ export const NavBar = (props: Prop): ReactElement => {
                 onClose={() => setOpen(false)}
                 className="search-address-modal modal"
             >
-                <SearchBusinessR />
+                <SearchBusinessR open={open} />
             </Dialog>
         </div>
     );
