@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from kouponbank.endpoints.business_api import (BusinessListAPI,
+from kouponbank.endpoints.business_api import (BusinessAPI, BusinessListAPI,
                                                BusinessMapListAPI,
                                                BusinessSearchListAPI,
                                                OwnerBusinessAPI,
@@ -60,6 +60,7 @@ urlpatterns = [
    path('map/', BusinessMapListAPI.as_view(), name="business-map-list"),
    path('search/', BusinessSearchListAPI.as_view(), name="business-search-list"),
    path('business/', BusinessListAPI.as_view(), name="business-list"),
+   path('business/<uuid:business_id>/', BusinessAPI.as_view(), name="business"),
    path('business/<uuid:business_id>/menu/', MenuListAPI.as_view(), name="menu-list"),
    path('business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuAPI.as_view(), name="menu"),
    path('business/<uuid:business_id>/coupon/', CouponListAPI.as_view(), name="coupon-list"),
