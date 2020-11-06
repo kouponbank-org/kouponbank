@@ -18,7 +18,6 @@ export const MapMarker = (props: Prop): JSX.Element => {
                                   lat: naverMapBusiness.entY,
                                   lng: naverMapBusiness.entX,
                               }}
-                              animation={1}
                               onClick={() => {
                                   alert(naverMapBusiness.roadAddr);
                               }}

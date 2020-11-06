@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
@@ -36,14 +37,15 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     const handleChangeBounds = (bounds) => {
         calculateMapSpan(bounds);
         props.naverMapBoundChanged(naverMapBound);
-        props.getAllBusinessWithinNaverMapBounds(api, naverMapBound);
     };
 
+    const handleGetBusinessesClick = () => {
+        props.getAllBusinessWithinNaverMapBounds(api, naverMapBound);
+    }
+
     return (
-        <div>
+        <div className="naver-map">
             <NaverMap
-                className="naver-map"
-                id="react-naver-map"
                 style={{
                     width: 500,
                     height: 500,
@@ -54,6 +56,9 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             >
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
+            <Button type="submit" onClick={handleGetBusinessesClick}>
+                지도 확인
+            </Button>
         </div>
     );
 };
