@@ -25,7 +25,6 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
     };
 
     useEffect(() => {
-        console.log('');
         props
             .getBusinessesFromSearch(api, businessName)
             .then((searchedBusinesses) => {
@@ -71,7 +70,6 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state);
     return {
         searchedBusiness: state.businessReducer.searchedBusinesses,
     };

@@ -41,7 +41,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 
     const handleGetBusinessesClick = () => {
         props.getAllBusinessWithinNaverMapBounds(api, naverMapBound);
-    }
+    };
 
     return (
         <div className="naver-map">
@@ -64,7 +64,6 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state);
     return {
         naverMapBound: state.naverMapReducer.naverMapBound,
         naverMapBusinesses: state.naverMapReducer.naverMapBusinesses,
