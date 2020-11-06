@@ -62,7 +62,6 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
                         coupon={props.coupon}
                         businesses = {props.businesses}
                         business={props.business}
-                        businessLocation={props.businessLocation}
                         couponClick={couponClick}
                         businessClick={businessClick}
                         selectBusiness= {selectBusiness}

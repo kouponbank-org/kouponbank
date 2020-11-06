@@ -5,7 +5,7 @@ import { KouponBankApi } from "../../api/kb-api";
 import { updateBusiness } from "../../store/business/business-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { Dispatch } from "redux";
-import { User, Business, BusinessLocation } from "../../api/kb-types";
+import { User, Business } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { NavBarR } from "../navigation/navigation-bar";
 import { BusinesspageForm } from "./business-page-form";
@@ -79,6 +79,3 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 };
 
 export const BusinessPageR = connect(mapStateToProps, mapDispatchToProps)(BusinessPage);
-
-
-  

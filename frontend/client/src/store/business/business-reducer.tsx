@@ -312,19 +312,19 @@ export const getMyBusinesses = async (
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
-        type: BusinessActionType.UpdateBusinessLocation,
+        type: BusinessActionType.GetBusinessList,
     });
     return api
-        .updateBusinessLocation(businessId, businessName, latlng, businessLocation)
-        .then((businessLocation) => {
+        .getMyBusinesses(userId)
+        .then((businesses) => {
             dispatch({
-                type: BusinessActionType.UpdateBusinessLocationSuccess,
-                businessLocation: businessLocation,
+                type: BusinessActionType.GetBusinessListSuccess,
+                businesses: businesses,
             });
         })
         .catch((err) => {
             dispatch({
-                type: BusinessActionType.UpdateBusinessLocationFail,
+                type: BusinessActionType.GetBusinessListFail,
             });
             dispatch({
                 type: AlertsActionType.DisplayError,
@@ -363,33 +363,33 @@ export const getBusiness = async (
     });
 }
 
-export const getBusinesses = (
-    api: KouponBankApi,
-    dispatch: Dispatch,
-): Promise<Business[]> => {
-    dispatch({
-        type: BusinessActionType.GetBusinessList,
-    });
-    return api
-        .getMyBusinesses(userId)
-        .then((businesses) => {
-            dispatch({
-                type: BusinessActionType.GetBusinessListSuccess,
-                businesses: businesses,
-            });
-        })
-        .catch((err) => {
-            dispatch({
-                type: BusinessActionType.GetBusinessListFail,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
+// export const getBusinesses = (
+//     api: KouponBankApi,
+//     userId: string,
+//     businessId: string,
+//     dispatch: Dispatch,
+// ): Promise<Business> => {
+//     dispatch({
+//         type: BusinessActionType.GetBusinessList,
+//     });
+//     return api.getBusiness(userId, businessId).then(business => {
+//         dispatch({
+//             type: BusinessActionType.GetBusinessSuccess,
+//             business: business,
+//         })
+//         return business;
+//     }).catch(err => {
+//         dispatch({
+//             type: BusinessActionType.GetBusinessFail,
+//         });
+//         dispatch({
+//             type: AlertsActionType.DisplayError,
+//             header: "ERROR",
+//             body: "다시 시도해 주세요",
+//         } as DisplayError);
+//         throw err;
+//     });
+// }
 
 export const getBusinessesFromSearch = async (
     api: KouponBankApi,

@@ -1,8 +1,4 @@
 import { Button, TableCell, TableRow } from "@material-ui/core";
-<<<<<<< HEAD
-import React, { useContext, useState } from "react";
-import { ApiContext, UrlPaths } from "../../base-page-router";
-=======
 import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -10,14 +6,10 @@ import { Dispatch } from "redux";
 import { Business } from "../../../api/kb-types";
 import { BusinessActionType } from "../../../store/business/action-type";
 import { Action as BusinessAction } from "../../../store/business/business-reducer";
->>>>>>> b91b78c8461e946626ea2808476b7351570ae1af
 import "./business-table.scss";
 import { RootReducer } from "../../../store/reducer";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { getBusiness } from "../../../store/business/business-reducer";
 import { KouponBankApi } from "../../../api/kb-api";
-import { User, Business } from "../../../api/kb-types";
 /**
  * Represents the required properties of the log in form.
  */
@@ -65,10 +57,10 @@ export const BusinessTable = (props: Prop): JSX.Element => {
     return (
         <div className="business-list">
             <TableRow className="business-list table">
-                <TableCell>{props.business_name}</TableCell>
-                <TableCell>{props.business_email}</TableCell>
-                <TableCell>{props.description}</TableCell>
-                <TableCell>{props.business_picture}</TableCell>
+                <TableCell>{props.business.business_name}</TableCell>
+                <TableCell>{props.business.business_email}</TableCell>
+                <TableCell>{props.business.description}</TableCell>
+                <TableCell>{props.business.business_picture}</TableCell>
                 <TableCell>
                     <Button 
                         type="submit"
@@ -76,7 +68,7 @@ export const BusinessTable = (props: Prop): JSX.Element => {
                         variant="contained"
                         color="primary"
                         className="business-list button"
-                        onClick={selectBusiness}
+                        onClick={props.selectBusiness}
                     >
                         사업장 선택
                     </Button>
@@ -94,13 +86,6 @@ const mapStateToProps = (state: RootReducer) => {
     };
 };
 
-<<<<<<< HEAD
-// const mapDispatchToProps = (dispatch: Dispatch) => {
-//     return {
-//     };
-// };
-export const BusinessTableR = connect(mapStateToProps)(BusinessTable);
-=======
 const mapDispatchToProps = (dispatch: Dispatch<BusinessAction>) => {
     return {
         setBusinessPage: (business: Business) =>
@@ -109,4 +94,3 @@ const mapDispatchToProps = (dispatch: Dispatch<BusinessAction>) => {
 };
 
 export const BusinessTableR = connect(null, mapDispatchToProps)(BusinessTable);
->>>>>>> b91b78c8461e946626ea2808476b7351570ae1af
