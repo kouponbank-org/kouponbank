@@ -82,7 +82,7 @@ export const LoginForm = (props: Prop): JSX.Element => {
                     color="primary"
                     className="loginbutton"
                 >
-                    로그인
+                    Login
                 </Button>
             </form>
             {props.isUser ? (
@@ -94,7 +94,7 @@ export const LoginForm = (props: Prop): JSX.Element => {
                     className="sign-up-button"
                     onClick={signUpClick}
                 >
-                    회원가입
+                    Sign up
                 </Button>
             ) : (
                 ""

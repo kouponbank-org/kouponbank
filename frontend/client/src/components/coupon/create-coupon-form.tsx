@@ -77,7 +77,7 @@ export const CreateCouponForm = (props: Prop): JSX.Element => {
                     color="primary"
                     className="createbutton"
                 >
-                    쿠폰 추가
+                    Add Coupon
                 </Button>
             </form>
         </div>

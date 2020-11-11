@@ -27,7 +27,7 @@ export const HomepageForm = (props: Prop): JSX.Element => {
                 })}
             </div>
             <Typography component="h1" variant="h5">
-                내 주변 쿠폰
+                Coupon Near Me
             </Typography>
             <Grid container>
                 <Paper className="paper" variant="outlined">
@@ -56,7 +56,7 @@ export const HomepageForm = (props: Prop): JSX.Element => {
                             />
                         </Grid>
                     </Grid>
-                    <Button className="button">자세히 보기</Button>
+                    <Button className="button">View More</Button>
                 </Paper>
             </Grid>
 

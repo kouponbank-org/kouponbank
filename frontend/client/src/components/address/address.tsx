@@ -89,16 +89,16 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
                             color="primary"
                             className="address-search-button button"
                         >
-                            주소 검색
+                            Search Address
                         </Button>
                     </form>
                 </div>
                 <div className="searched-address-list">
                     <TableRow>
-                        <TableCell>우편번호</TableCell>
-                        <TableCell align="right">지번주소</TableCell>
-                        <TableCell align="right">도로명주소</TableCell>
-                        <TableCell align="right">건물명</TableCell>
+                        <TableCell>ZipCode</TableCell>
+                        <TableCell align="right">Jibun Address</TableCell>
+                        <TableCell align="right">Road Address</TableCell>
+                        <TableCell align="right">Building Name</TableCell>
                     </TableRow>
                 </div>
             </div>
