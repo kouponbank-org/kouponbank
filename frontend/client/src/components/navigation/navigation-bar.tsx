@@ -46,10 +46,10 @@ export const NavBar = (props: Prop): ReactElement => {
             <AppBar>
                 <Toolbar>
                     <Button className="homepage button" onClick={redirectToHomepage}>
-                        KouponBank
+                        Koupon Bank
                     </Button>
                     <div className="search">
-                        {props.title === "쿠폰뱅크" ? (
+                        {props.title === "Koupon Bank" ? (
                             <Button
                                 color="inherit"
                                 onClick={() => setOpen(true)}
