@@ -25,7 +25,7 @@ export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
     const history = useHistory();
     const [userDetailCredentials, setUserDetailCredentials] = useState(props.userDetail);
 
-    const editDetails = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const editDetails = (event: React.ChangeEvent<HTMLInputElement>): void => {        
         setUserDetailCredentials({
             ...userDetailCredentials,
             [event.target.name]: event.target.value,
@@ -33,6 +33,7 @@ export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
     };
 
     const submitChange = (event: React.MouseEvent<HTMLElement>): void => {
+        console.log(userDetailCredentials);
         props
             .updateOwnerDetail(api, props.user.id, userDetailCredentials)
             .then(() => {

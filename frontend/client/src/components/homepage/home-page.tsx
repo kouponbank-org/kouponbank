@@ -38,7 +38,7 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div>
-            <NavBarR title={"쿠폰뱅크"} buttonName={"로그인"} onClick={directToUserLogin} />
+            <NavBarR title={"Koupon Bank"} buttonName={"Login"} onClick={directToUserLogin} />
             {props.isOwner ? (
                 <OwnerHomepageForm
                     coupon={props.coupon}
@@ -69,6 +69,7 @@ const mapStateToProps = (state: RootReducer) => {
         businesses: state.businessReducer.businesses,
     };
 };
+
 /*
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {

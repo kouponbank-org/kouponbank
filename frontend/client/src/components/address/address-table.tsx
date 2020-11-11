@@ -32,7 +32,7 @@ export const AddressTable: React.FC<Prop> = (props: Prop) => {
                         className="search-address button"
                         onClick={handleSelectAddressClick}
                     >
-                        주소 선택
+                        Search Address
                     </Button>
                 </TableCell>
             </TableRow>
