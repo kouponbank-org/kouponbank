@@ -6,7 +6,7 @@ import {
     DialogTitle,
     Grid,
     TextField,
-    Typography,
+    Typography
 } from "@material-ui/core";
 import React from "react";
 import { User, UserDetail } from "../../api/kb-types";

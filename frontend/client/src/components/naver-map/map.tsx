@@ -105,7 +105,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
             <Button type="submit" onClick={handleGetBusinessesClick}>
-                지도 확인
+                Find Businesses
             </Button>
         </div>
     );

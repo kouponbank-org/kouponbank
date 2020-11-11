@@ -80,7 +80,7 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
      */
     return (
         <div className="background">
-            <NavBarR title={"비즈니스"} />
+            <NavBarR title={"Business"} />
             <CreateBusinessForm
                 business={business}
                 businessInformationInput={businessInformationInput}

@@ -52,8 +52,8 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
     return (
         <div>
             <NavBarR
-                title={"쿠폰뱅크"}
-                buttonName={"로그인"}
+                title={"Koupon Bank"} 
+                buttonName={"Login"} 
                 onClick={directToUserLogin}
             />
             {
@@ -73,8 +73,6 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
                     />
                 )
             }
-            <div>
-            </div>
         </div>
     );
 };

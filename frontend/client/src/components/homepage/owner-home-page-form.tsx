@@ -31,24 +31,9 @@ export const OwnerHomepageForm = (props: Prop) => {
     return (
         <div className="layout">
             <Typography component="h1" variant="h5">
-                내 사업장
+                My Business
             </Typography>
             <div>
-                {/* { 
-                    props.businesses.map((business, index) => {
-                        return (
-                            <BusinessTable 
-                                key={index}
-                                businessId={business.id}
-                                business_name={business.business_name}
-                                business_email={business.business_email}
-                                description={business.description}
-                                business_picture={business.business_picture}
-                                selectBusiness={props.selectBusiness}
-                            />
-                        )
-                    })
-                } */}
                 {props.businesses.map((business) => {
                     return (
                         <BusinessTableR
@@ -61,11 +46,11 @@ export const OwnerHomepageForm = (props: Prop) => {
             </div>
             <Grid container>
                 <Paper className="paper" variant="outlined">
-                    <Button onClick={businessClick}>추가하기</Button>
+                    <Button onClick={businessClick}>Add Business</Button>
                 </Paper>
             </Grid>
             <Typography component="h1" variant="h5">
-                나의 오늘의 쿠폰
+                My Coupon
             </Typography>
             {props.coupon.coupon_title !== "" ? (
                 <Grid container>
@@ -100,7 +85,7 @@ export const OwnerHomepageForm = (props: Prop) => {
             ) : (
                 <Grid container>
                     <Paper className="paper" variant="outlined">
-                        <Button onClick={couponClick}>추가하기</Button>
+                        <Button onClick={couponClick}>Add Coupon</Button>
                     </Paper>
                 </Grid>
             )}

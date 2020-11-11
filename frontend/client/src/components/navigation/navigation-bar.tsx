@@ -46,7 +46,7 @@ export const NavBar = (props: Prop): ReactElement => {
             <AppBar>
                 <Toolbar>
                     <Button className="homepage button" onClick={redirectToHomepage}>
-                        쿠폰뱅크
+                        KouponBank
                     </Button>
                     <div className="search">
                         {props.title === "쿠폰뱅크" ? (
@@ -55,7 +55,7 @@ export const NavBar = (props: Prop): ReactElement => {
                                 onClick={() => setOpen(true)}
                                 className="search-address-modal button"
                             >
-                                Business 찾기
+                                Search Business
                             </Button>
                         ) : (
                             ""
@@ -70,16 +70,16 @@ export const NavBar = (props: Prop): ReactElement => {
                                 {
                                     props.isUser === false ? (
                                         <Button className="profile-details" onClick={redirectToOwnerProfile}>
-                                            나만의 공간 
+                                            My Profile 
                                         </Button>
                                     ) : (
                                         <Button className="profile-details" onClick={redirectToUserProfile}>
-                                            나만의 공간
+                                            My Profile
                                         </Button>
                                     )
                                 }
                                 <Button className="logout" onClick={signOut}>
-                                    로그아웃
+                                    Sign Out
                                 </Button>
                         </Fragment>
                     ) : (
@@ -102,6 +102,7 @@ export const NavBar = (props: Prop): ReactElement => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
+    console.log(state)
     return {
         user: state.userReducer.user,
         isUser: state.userReducer.isUser,
