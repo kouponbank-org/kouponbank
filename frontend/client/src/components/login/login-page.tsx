@@ -101,7 +101,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
         <div className="background">
             <NavBarR
                 title={"Login Page"}
-                buttonName={isUser ? "사업자 로그인하기" : "소비자 로그인하기"}
+                buttonName={isUser ? "Owner Login" : "User Login"}
                 onClick={toUserOrOwnerLoginClick}
             />
             {isUser ? (

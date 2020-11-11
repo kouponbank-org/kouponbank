@@ -42,7 +42,7 @@ export const BusinessTable = (props: Prop): JSX.Element => {
                         className="business-list button"
                         onClick={goToBusinessPage}
                     >
-                        사업장 선택
+                        Select Business
                     </Button>
                 </TableCell>
             </TableRow>

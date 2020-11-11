@@ -16,6 +16,7 @@ const reducer = combineReducers({
     naverMapReducer: naverMapReducer,
     couponReducer: couponReducer,
 });
+
 export const mainReducer = (state, action) => {
     if (action.type === CommonActionType.SignOutAction) {
         storage.removeItem("persist:root").catch(() => {
