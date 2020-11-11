@@ -10,7 +10,7 @@ import { Dispatch } from "redux";
 import { HomepageForm } from "./home-page-form";
 import "./homepage.scss";
 import { OwnerHomepageForm } from "./owner-home-page-form";
-import { getBusiness } from "../../store/business/business-reducer";
+import { getOwnerBusiness } from "../../store/business/business-reducer";
 
 
 /**
@@ -22,7 +22,7 @@ export interface Prop {
     coupon: Coupon;
     business: Business;
     businesses: Business[];
-    getBusiness: (
+    getOwnerBusiness: (
         api: KouponBankApi,
         userId: string,
         businessId: string,
@@ -45,10 +45,10 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
     };
 
     const selectBusiness = (businessId) => {
-        props.getBusiness(api, props.user.id, businessId);
-        history.push(UrlPaths.BusinessPage + businessId);
+        props.getOwnerBusiness(api, props.user.id, businessId);
+        history.push(`/business/${businessId}`);
     }
-    console.log(props.isUser)
+    
     return (
         <div>
             <NavBarR
@@ -68,8 +68,6 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
                     />
                 ) : (
                     <HomepageForm
-                        coupon={props.coupon}
-                        couponClick={couponClick}
                         businesses= {props.businesses}
                         selectBusiness= {selectBusiness}
                     />
@@ -93,12 +91,12 @@ const mapStateToProps = (state: RootReducer) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        getBusiness: (
+        getOwnerBusiness: (
             api: KouponBankApi,
             userId: string,
             businessId: string,
         ) => {
-            return getBusiness(api, userId, businessId, dispatch);
+            return getOwnerBusiness(api, userId, businessId, dispatch);
         },
     }
 }

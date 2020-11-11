@@ -101,7 +101,7 @@ export const getAllBusinessWithinNaverMapBounds = async (
     api: KouponBankApi,
     naverMapBound: NaverMapBound,
     dispatch: Dispatch,
-): Promise<void> => {
+): Promise<Business[]> => {
     dispatch({
         type: NaverMapActionType.GetAllBusinessWithinNaverMapBounds,
     });
@@ -112,6 +112,7 @@ export const getAllBusinessWithinNaverMapBounds = async (
                 type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess,
                 naverMapBusinesses: naverMapBusinesses,
             });
+            return naverMapBusinesses
         })
         .catch((err) => {
             dispatch({

@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
-import { Business } from "../api/kb-types";
 import { BusinessPageR } from "./business/business-page";
 import { CreateBusinessPageR } from "./business/create-business/create-business-page";
 import { CreateCouponPageR } from "./coupon/create-coupon-page";

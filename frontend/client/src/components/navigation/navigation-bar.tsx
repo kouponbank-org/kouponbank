@@ -102,7 +102,6 @@ export const NavBar = (props: Prop): ReactElement => {
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state)
     return {
         user: state.userReducer.user,
         isUser: state.userReducer.isUser,

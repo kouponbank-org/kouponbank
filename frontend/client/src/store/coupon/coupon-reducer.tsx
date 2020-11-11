@@ -8,6 +8,7 @@ import { CouponActionType } from "./action-type";
 
 export interface CouponState {
     coupon: Coupon;
+    coupons: Coupon[];
     fetchStatus: Status;
     updateStatus: Status;
 }
@@ -19,9 +20,23 @@ const initialState: CouponState = {
         description: "",
         coupon_picture: "",
     },
+    coupons: [],
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted,
 };
+
+interface GetCouponListAction {
+    type: CouponActionType.GetCouponList;
+}
+
+interface GetCouponListSuccessAction {
+    type: CouponActionType.GetCouponListSuccess;
+    coupons: Coupon[];
+}
+
+interface GetCouponListFailAction {
+    type: CouponActionType.GetCouponListFail;
+}
 
 interface CreateCouponAction {
     type: CouponActionType.CreateCoupon;
@@ -49,26 +64,32 @@ interface UpdateCouponFailAction {
     type: CouponActionType.UpdateCouponFail;
 }
 
-// interface SignOutAction {
-//     type: UserActionType.SignOutAction;
-// }
-
 export type Action =
+    | GetCouponListAction
+    | GetCouponListSuccessAction
+    | GetCouponListFailAction
     | CreateCouponAction
     | CreateCouponSuccessAction
     | CreateCouponFailAction
     | UpdateCouponAction
     | UpdateCouponSuccessAction
-    | UpdateCouponFailAction;
+    | UpdateCouponFailAction
 
-/**
- * Reducer가 필요한 Parameters "state"하고 "action"
- * @param state
- * @param action
- * Reducer가 우리 Global State을 업데이트 시켜준다
- */
 export const reducer = (state: CouponState = initialState, action: Action): CouponState => {
     switch (action.type) {
+        case CouponActionType.GetCouponList:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Running;
+            });
+        case CouponActionType.GetCouponListSuccess:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Succeeded;
+                draftState.coupons = action.coupons;
+            });
+        case CouponActionType.GetCouponListFail:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Failed;
+            });
         case CouponActionType.CreateCoupon:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Running;
@@ -79,6 +100,19 @@ export const reducer = (state: CouponState = initialState, action: Action): Coup
                 draftState.coupon = action.coupon;
             });
         case CouponActionType.CreateCouponFail:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Failed;
+            });
+        case CouponActionType.UpdateCoupon:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Running;
+            });
+        case CouponActionType.UpdateCouponSuccess:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Succeeded;
+                draftState.coupon = action.coupon;
+            });
+        case CouponActionType.UpdateCouponFail:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
@@ -93,7 +127,7 @@ export const createCoupon = async (
     businessId: string,
     coupon: Coupon,
     dispatch: Dispatch,
-): Promise<void> => {
+): Promise<Coupon> => {
     dispatch({
         type: CouponActionType.CreateCoupon,
     });
@@ -104,6 +138,7 @@ export const createCoupon = async (
                 type: CouponActionType.CreateCouponSuccess,
                 coupon: coupon,
             });
+            return coupon;
         })
         .catch((err) => {
             dispatch({
@@ -141,6 +176,36 @@ export const updateCoupon = async (
         .catch((err) => {
             dispatch({
                 type: CouponActionType.UpdateCouponFail,
+            });
+            dispatch({
+                type: AlertsActionType.DisplayError,
+                header: "ERROR",
+                body: "다시 시도해 주세요",
+            } as DisplayError);
+            throw err;
+        });
+};
+
+export const getOwnercoupons = async (
+    api: KouponBankApi,
+    businessId: string,
+    dispatch: Dispatch,
+): Promise<Coupon[]> => {
+    dispatch({
+        type: CouponActionType.GetCouponList,
+    });
+    return api
+        .getCoupons(businessId)
+        .then((coupons) => {
+            dispatch({
+                type: CouponActionType.GetCouponListSuccess,
+                coupons: coupons,
+            });
+            return coupons;
+        })
+        .catch((err) => {
+            dispatch({
+                type: CouponActionType.GetCouponListFail,
             });
             dispatch({
                 type: AlertsActionType.DisplayError,

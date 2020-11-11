@@ -6,7 +6,7 @@ import { KouponBankApi } from "../../../api/kb-api";
 import { AddressDetail, Business, User } from "../../../api/kb-types";
 import {
     createBusiness,
-    getMyBusinesses,
+    getOwnerBusinesses,
     initialState as BusinessReducerInitialState
 } from "../../../store/business/business-reducer";
 import { RootReducer } from "../../../store/reducer";
@@ -19,7 +19,7 @@ import { CreateBusinessForm } from "./create-business-form";
  */
 export interface Prop {
     createBusiness: (api: KouponBankApi, userId: string, business: Business) => Promise<Business>;
-    getMyBusinesses: (api: KouponBankApi, userid: string) => void;
+    getOwnerBusinesses: (api: KouponBankApi, userid: string) => void;
     user: User;
     business: Business;
 }
@@ -54,7 +54,7 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
         props
             .createBusiness(api, props.user.id, business)
             .then((business) => {
-                props.getMyBusinesses(api, props.user.id);
+                props.getOwnerBusinesses(api, props.user.id);
                 history.push(`/business/${business.id}`);
             })
             .catch(() => {
@@ -103,8 +103,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         createBusiness: async (api: KouponBankApi, userId: string, business: Business) => {
             return createBusiness(api, userId, business, dispatch);
         },
-        getMyBusinesses: async (api: KouponBankApi, userId: string) => {
-            return getMyBusinesses(api, userId, dispatch);
+        getOwnerBusinesses: async (api: KouponBankApi, userId: string) => {
+            return getOwnerBusinesses(api, userId, dispatch);
         },
     };
 };

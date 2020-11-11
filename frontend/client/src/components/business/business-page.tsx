@@ -1,11 +1,10 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { KouponBankApi } from "../../api/kb-api";
 import { updateBusiness } from "../../store/business/business-reducer";
-import { ApiContext, UrlPaths } from "../base-page-router";
+import { ApiContext } from "../base-page-router";
 import { Dispatch } from "redux";
-import { User, Business } from "../../api/kb-types";
+import { User, Business, Coupon } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { NavBarR } from "../navigation/navigation-bar";
 import { BusinesspageForm } from "./business-page-form";
@@ -15,6 +14,8 @@ import "./business-page.scss";
 interface Prop {
     business: Business;
     user: User;
+    isUser: Boolean;
+    coupon: Coupon;
     updateBusiness: (
         api: KouponBankApi,
         userId: string,
@@ -43,25 +44,38 @@ export const BusinessPage = (props: Prop) =>  {
         event.preventDefault();
     };
 
-    console.log(props.business)
     return (
         <div className="business-page">
             <NavBarR/>
-            <BusinesspageForm
-                temp={businessInfo}
-                business={props.business}
-                editDetails={editDetails}
-                submitChange={submitChange}
-            />
+            {
+                 props.isUser===false ? (
+                    <BusinesspageForm
+                        isUser={props.isUser}
+                        businessInput={businessInfo}
+                        business={props.business}
+                        editDetails={editDetails}
+                        submitChange={submitChange}
+                        coupon={props.coupon}
+                    />
+                ) : (
+                    <BusinesspageForm
+                        isUser={props.isUser}
+                        business={props.business}
+                        coupon={props.coupon}
+                    />
+                )
+            }
+            
         </div>
     );
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state)
     return {
         user: state.userReducer.user,
+        isUser: state.userReducer.isUser,
         business: state.businessReducer.business,
+        coupon: state.couponReducer.coupon,
     };
 };
 
