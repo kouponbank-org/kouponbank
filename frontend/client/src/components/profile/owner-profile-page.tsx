@@ -33,7 +33,6 @@ export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
     };
 
     const submitChange = (event: React.MouseEvent<HTMLElement>): void => {
-        console.log(userDetailCredentials);
         props
             .updateOwnerDetail(api, props.user.id, userDetailCredentials)
             .then(() => {

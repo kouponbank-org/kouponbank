@@ -71,7 +71,6 @@ export const BusinessPage = (props: Prop) =>  {
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state)
     return {
         user: state.userReducer.user,
         isUser: state.userReducer.isUser,

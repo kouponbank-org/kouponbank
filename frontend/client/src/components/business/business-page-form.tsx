@@ -56,7 +56,7 @@ export const BusinesspageForm = (props: Prop) => {
                                 color="primary"
                                 className="editbutton"
                                 onClick={modalStatus}>
-                                    수정
+                                    Update
                             </Button>
                         </form>
                         </Grid>
@@ -100,10 +100,10 @@ export const BusinesspageForm = (props: Prop) => {
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={modalStatus} color="primary">
-                                    취소
+                                    Cancel
                                 </Button>
                                 <Button onClick={submitChange} color="primary">
-                                    수정
+                                    Update
                                 </Button>
                             </DialogActions>
                         </Dialog>
@@ -123,13 +123,13 @@ export const BusinesspageForm = (props: Prop) => {
                             variant="contained"
                             color="primary"
                             className="editbutton">
-                                쿠폰 추가하기
+                                Add Coupon
                         </Button>
                     </div>
                 ):(
                     <Grid>
                         <Typography component="h1" variant="h5">
-                            쿠폰
+                            Coupon
                         </Typography>
                         {props.coupon.coupon_title}
                         {props.coupon.coupon_code}

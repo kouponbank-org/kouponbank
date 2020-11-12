@@ -22,7 +22,7 @@ export enum UrlPaths {
     UserProfile = "/uprofile",
     OwnerProfile = "/oprofile",
     CreateBusiness = "/newbusiness",
-    BusinessPage = "/business/",
+    BusinessPage = "/business/:businessId",
     CreateCoupon = "/newcoupon",
     InfoPage = "/info",
 }
