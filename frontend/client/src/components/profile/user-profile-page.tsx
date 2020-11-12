@@ -33,7 +33,6 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
     };
 
     const submitChange = (event: React.MouseEvent<HTMLElement>): void => {
-        console.log(userDetailCredentials);
         props
             .updateUserDetail(api, props.user.id, userDetailCredentials)
             .then(() => {
@@ -47,10 +46,11 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR />
-            <UserProfileForm
+            <NavBarR/>
+            <UserProfileForm 
+                temp={userDetailCredentials}
                 userCredentials={props.user}
-                userDetailCredentials={userDetailCredentials}
+                userDetailCredentials={props.userDetail}
                 editDetails={editDetails}
                 submitChange={submitChange}
             />

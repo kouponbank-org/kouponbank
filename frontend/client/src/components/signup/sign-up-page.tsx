@@ -3,10 +3,11 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { User } from "../../api/kb-types";
+import { User, Business } from "../../api/kb-types";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
 import { createNewOwner, createNewUser } from "../../store/user/user-reducer";
+import { getBusinesses } from "../../store/business/business-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
 import { Notifications } from "../notifications/notifications";
@@ -19,6 +20,7 @@ import "./sign-up-page.scss";
 export interface Prop {
     createNewUser: (api: KouponBankApi, user: User) => Promise<void>;
     createNewOwner: (api: KouponBankApi, user: User) => Promise<void>;
+    getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
     user: User;
     alertState: AlertState;
 }
@@ -36,7 +38,11 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
             props
                 .createNewUser(api, userCredentials)
                 .then(() => {
-                    history.push(UrlPaths.Home);
+                    props
+                    .getBusinesses(api)
+                    .then(() => {
+                        history.push(UrlPaths.Home);
+                    })
                 })
                 .catch(() => {
                     //currently does nothing
@@ -97,6 +103,7 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
+        business: state.businessReducer.businesses,
         alertState: state.notificationReducer,
     };
 };
@@ -108,6 +115,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         },
         createNewOwner: async (api: KouponBankApi, user: User) => {
             return createNewOwner(api, user, dispatch);
+        },
+        getBusinesses: async (api: KouponBankApi) => {
+            return getBusinesses(api, dispatch);
         },
     };
 };

@@ -13,7 +13,7 @@ export interface Prop {
     user?: User;
     userDetail?: UserDetail;
     title?: string;
-    isOwner?: boolean;
+    isUser: boolean;
     buttonName?: string;
     onClick?: (event) => void;
     signOut?: () => void;
@@ -46,39 +46,41 @@ export const NavBar = (props: Prop): ReactElement => {
             <AppBar>
                 <Toolbar>
                     <Button className="homepage button" onClick={redirectToHomepage}>
-                        쿠폰뱅크
+                        Koupon Bank
                     </Button>
                     <div className="search">
-                        {props.title === "쿠폰뱅크" ? (
+                        {props.title === "Koupon Bank" ? (
                             <Button
                                 color="inherit"
                                 onClick={() => setOpen(true)}
                                 className="search-address-modal button"
                             >
-                                Business 찾기
+                                Search Business
                             </Button>
                         ) : (
                             ""
                         )}
                     </div>
-                    <div>{props.title}</div>
-                    {props.user.username !== "" ? (
-                        <Fragment>
-                            {props.isOwner ? (
-                                <Button
-                                    className="profile-details"
-                                    onClick={redirectToOwnerProfile}
-                                >
-                                    나만의 공간
+                    <div>
+                        {props.title}
+                    </div>
+                    {
+                        props.user.username !== "" ? (
+                            <Fragment>
+                                {
+                                    props.isUser === false ? (
+                                        <Button className="profile-details" onClick={redirectToOwnerProfile}>
+                                            My Profile 
+                                        </Button>
+                                    ) : (
+                                        <Button className="profile-details" onClick={redirectToUserProfile}>
+                                            My Profile
+                                        </Button>
+                                    )
+                                }
+                                <Button className="logout" onClick={signOut}>
+                                    Sign Out
                                 </Button>
-                            ) : (
-                                <Button className="profile-details" onClick={redirectToUserProfile}>
-                                    나만의 공간
-                                </Button>
-                            )}
-                            <Button className="logout" onClick={signOut}>
-                                로그아웃
-                            </Button>
                         </Fragment>
                     ) : (
                         <Button onClick={props.onClick}>{props.buttonName}</Button>
@@ -102,7 +104,7 @@ export const NavBar = (props: Prop): ReactElement => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        isOwner: state.userReducer.isOwner,
+        isUser: state.userReducer.isUser,
     };
 };
 

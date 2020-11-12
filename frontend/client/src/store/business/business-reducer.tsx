@@ -306,7 +306,7 @@ export const getBusinesses = async (
         });
 };
 
-export const getMyBusinesses = async (
+export const getOwnerBusinesses = async (
     api: KouponBankApi,
     userId: string,
     dispatch: Dispatch,
@@ -315,7 +315,7 @@ export const getMyBusinesses = async (
         type: BusinessActionType.GetBusinessList,
     });
     return api
-        .getMyBusinesses(userId)
+        .getOwnerBusinesses(userId)
         .then((businesses) => {
             dispatch({
                 type: BusinessActionType.GetBusinessListSuccess,
@@ -334,6 +334,34 @@ export const getMyBusinesses = async (
             throw err;
         });
 };
+
+export const getOwnerBusiness = async (
+    api: KouponBankApi,
+    userId: string,
+    businessId: string,
+    dispatch: Dispatch,
+): Promise<Business> => {
+    dispatch({
+        type: BusinessActionType.GetBusinessList,
+    });
+    return api.getBusiness(userId, businessId).then(business => {
+        dispatch({
+            type: BusinessActionType.GetBusinessSuccess,
+            business: business,
+        })
+        return business;
+    }).catch(err => {
+        dispatch({
+            type: BusinessActionType.GetBusinessFail,
+        });
+        dispatch({
+            type: AlertsActionType.DisplayError,
+            header: "ERROR",
+            body: "다시 시도해 주세요",
+        } as DisplayError);
+        throw err;
+    });
+}
 
 export const getBusinessesFromSearch = async (
     api: KouponBankApi,

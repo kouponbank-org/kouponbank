@@ -14,7 +14,7 @@ import { UserActionType } from "./action-type";
 
 export interface UserState {
     user: User;
-    isOwner: boolean;
+    isUser: boolean;
     fetchStatus: Status;
     updateStatus: Status;
 }
@@ -25,7 +25,7 @@ const initialState: UserState = {
         password: "",
         email: "",
     },
-    isOwner: false,
+    isUser: true,
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted,
 };
@@ -41,7 +41,7 @@ interface CreateNewUserAction {
 interface CreateNewUserSuccessAction {
     user: User;
     type: UserActionType.CreateNewUserSuccessAction;
-    isOwner: boolean;
+    isUser: boolean;
 }
 
 interface CreateNewUserFailAction {
@@ -55,7 +55,7 @@ interface LoginUserAction {
 interface LoginUserSuccessAction {
     user: User;
     type: UserActionType.LoginUserSucessAction;
-    isOwner: boolean;
+    isUser: boolean;
 }
 
 interface LoginUserFailAction {
@@ -96,7 +96,7 @@ export const reducer = (state: UserState = initialState, action: Action): UserSt
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
                 draftState.user = action.user;
-                draftState.isOwner = action.isOwner;
+                draftState.isUser = action.isUser;
             });
         case UserActionType.CreateNewUserFailAction:
             return produce(state, (draftState) => {
@@ -110,7 +110,7 @@ export const reducer = (state: UserState = initialState, action: Action): UserSt
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
                 draftState.user = action.user;
-                draftState.isOwner = action.isOwner;
+                draftState.isUser = action.isUser;
             });
         case UserActionType.LoginUserFailAction:
             return produce(state, (draftState) => {
@@ -166,7 +166,7 @@ export const createNewOwner = async (
             dispatch({
                 type: UserActionType.CreateNewUserSuccessAction,
                 user: user,
-                isOwner: true,
+                isUser: false,
             });
         })
         .catch((err) => {
@@ -226,7 +226,7 @@ export const loginOwner = async (
             dispatch({
                 type: UserActionType.LoginUserSucessAction,
                 user: user,
-                isOwner: true,
+                isUser: false,
             });
             return user;
         })
