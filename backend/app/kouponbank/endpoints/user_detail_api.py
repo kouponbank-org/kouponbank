@@ -2,13 +2,12 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from kouponbank.database.user import User
+from kouponbank.database.user_detail import UserDetail, UserDetailSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from kouponbank.database.user import User
-from kouponbank.database.user_detail import UserDetail, UserDetailSerializer
 
 
 class UserDetailAPI(APIView):
@@ -112,6 +111,9 @@ class UserDetailAPI(APIView):
         ]
     )
     def put(self, request, user_id):
+        if request.data["profile_picture"]:
+            print("pic has arrived")
+            print(request.data["profile_picture"])
         user_detail = self.__get_user_detail(user_id)
         serializer = UserDetailSerializer(user_detail, data=request.data)
         if serializer.is_valid():

@@ -34,7 +34,7 @@ export const CreateCouponForm = (props: Prop): JSX.Element => {
                             required
                             name="coupon_title"
                             id="coupon_title"
-                            label="쿠폰 이름"
+                            label="Coupon Name"
                             autoComplete="off"
                             type="text"
                             onChange={couponInformationInput}
@@ -48,7 +48,7 @@ export const CreateCouponForm = (props: Prop): JSX.Element => {
                             required
                             name="coupon_code"
                             id="coupon_code"
-                            label="쿠폰 코드"
+                            label="Coupon Code"
                             autoComplete="off"
                             type="text"
                             onChange={couponInformationInput}
@@ -62,7 +62,7 @@ export const CreateCouponForm = (props: Prop): JSX.Element => {
                             required
                             name="description"
                             id="description"
-                            label="쿠폰 정보"
+                            label="Coupon Description"
                             autoComplete="off"
                             type="text"
                             onChange={couponInformationInput}

@@ -57,7 +57,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                     fullWidth
                     label="유저네임"
                     id="username"
-                    value={props.userCredentials.username} 
+                    value={props.userCredentials.username}
                 />
                 <TextField
                     disabled
@@ -107,9 +107,9 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                 </Button>
             </form>
             </Grid>
-            <Dialog 
-                open={open} 
-                onClose={modalStatus} 
+            <Dialog
+                open={open}
+                onClose={modalStatus}
                 aria-labelledby="form-dialog"
             >
                 <DialogTitle id="form-dialog">프로필 수정</DialogTitle>
@@ -147,10 +147,10 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={modalStatus} color="primary">
-                        취소
+                        Cancel
                     </Button>
                     <Button onClick={submitChange} color="primary">
-                        수정
+                        Edit
                     </Button>
                     </DialogActions>
                 </Dialog>

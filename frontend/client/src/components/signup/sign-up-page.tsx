@@ -78,9 +78,9 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR title={isUser ? "소비자 회원가입 페이지" : "사업자 회원가입 페이지"} />
+            <NavBarR title={isUser ? "User Signup Page" : "Owner Signup Page"} />
             <SignUpForm
-                signUpButtonName={isUser ? "사업자 회원가입" : "소비자 회원가입"}
+                signUpButtonName={isUser ? "Owner Signup" : "User Signup"}
                 userCredentials={userCredentials}
                 createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}

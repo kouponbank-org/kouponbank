@@ -68,9 +68,9 @@ export const NavBar = (props: Prop): ReactElement => {
                         props.user.username !== "" ? (
                             <Fragment>
                                 {
-                                    props.isUser === false ? (
+                                    !props.isUser ? (
                                         <Button className="profile-details" onClick={redirectToOwnerProfile}>
-                                            My Profile 
+                                            My Profile
                                         </Button>
                                     ) : (
                                         <Button className="profile-details" onClick={redirectToUserProfile}>
