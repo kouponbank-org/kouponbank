@@ -13,7 +13,7 @@ export interface Prop {
     user?: User;
     userDetail?: UserDetail;
     title?: string;
-    isOwner?: boolean;
+    isUser: boolean;
     buttonName?: string;
     onClick?: (event) => void;
     signOut?: () => void;
@@ -55,30 +55,32 @@ export const NavBar = (props: Prop): ReactElement => {
                                 onClick={() => setOpen(true)}
                                 className="search-address-modal button"
                             >
-                                Search Businesses
+                                Search Business
                             </Button>
                         ) : (
                             ""
                         )}
                     </div>
-                    <div>{props.title}</div>
-                    {props.user.username !== "" ? (
-                        <Fragment>
-                            {props.isOwner ? (
-                                <Button
-                                    className="profile-details"
-                                    onClick={redirectToOwnerProfile}
-                                >
-                                    My Profile
+                    <div>
+                        {props.title}
+                    </div>
+                    {
+                        props.user.username !== "" ? (
+                            <Fragment>
+                                {
+                                    !props.isUser ? (
+                                        <Button className="profile-details" onClick={redirectToOwnerProfile}>
+                                            My Profile
+                                        </Button>
+                                    ) : (
+                                        <Button className="profile-details" onClick={redirectToUserProfile}>
+                                            My Profile
+                                        </Button>
+                                    )
+                                }
+                                <Button className="logout" onClick={signOut}>
+                                    Sign Out
                                 </Button>
-                            ) : (
-                                <Button className="profile-details" onClick={redirectToUserProfile}>
-                                    My Profile
-                                </Button>
-                            )}
-                            <Button className="logout" onClick={signOut}>
-                                Logout
-                            </Button>
                         </Fragment>
                     ) : (
                         <Button onClick={props.onClick}>{props.buttonName}</Button>
@@ -102,7 +104,7 @@ export const NavBar = (props: Prop): ReactElement => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        isOwner: state.userReducer.isOwner,
+        isUser: state.userReducer.isUser,
     };
 };
 

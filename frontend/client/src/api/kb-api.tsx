@@ -109,7 +109,7 @@ export class KouponBankApi {
 
     /* Business API */
     //owner business
-    async getBusiness(userId: string, businessId: string): Promise<Business> {
+    async getOwnerBusiness(userId: string, businessId: string): Promise<Business> {
         return axios
             .get<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`)
             .then((response) => {
@@ -117,7 +117,7 @@ export class KouponBankApi {
             });
     }
 
-    async getMyBusinesses(userId: string): Promise<Business[]> {
+    async getOwnerBusinesses(userId: string): Promise<Business[]> {
         return axios
             .get<Business[]>(`${this.BASE_URL}/owners/${userId}/detail/business/`)
             .then((response) => {
@@ -126,6 +126,12 @@ export class KouponBankApi {
     }
 
     //user access to business
+    async getBusiness(userId: string, businessId: string): Promise<Business> {
+        return axios.get<Business>(`${this.BASE_URL}/business/${businessId}`).then((response) => {
+            return response.data;
+        });
+    }
+
     async getBusinesses(): Promise<Business[]> {
         return axios.get<Business[]>(`${this.BASE_URL}/business/`).then((response) => {
             return response.data;
@@ -288,5 +294,12 @@ export class KouponBankApi {
             .then((response) => {
                 return response.data;
             });
+    }
+    async getCoupons(
+        businessId: string,
+        ): Promise<Coupon[]> {
+        return axios.get<Coupon[]>(`${this.BASE_URL}/business/${businessId}/coupon/`).then((response) => {
+            return response.data;
+        });
     }
 }

@@ -18,7 +18,7 @@ export interface Prop {
         userId: string,
         businessId: string,
         coupon: Coupon,
-    ) => Promise<void>;
+    ) => Promise<Coupon>;
     user: User;
     business: Business;
     coupon: Coupon;
@@ -37,7 +37,6 @@ export const CreateCouponPage: React.FC<Prop> = (props: Prop) => {
             [target.name]: target.value,
         });
     };
-
     /**
      * 쿠폰 추가하기 클릭
      * @param event

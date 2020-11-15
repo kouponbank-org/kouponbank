@@ -2,6 +2,7 @@ import { Button, ButtonBase, Grid, Paper, TextField, Typography } from "@materia
 import React from "react";
 import { Business, Coupon } from "../../api/kb-types";
 import { MapR } from "../naver-map/map";
+import './homepage.scss';
 import { BusinessTableR } from "./business-table/business-table";
 import "./homepage.scss";
 
@@ -11,10 +12,10 @@ export interface Prop {
     business: Business;
     couponClick: (event) => void;
     businessClick: (event) => void;
-    selectBusiness: (business) => void;
-}
+    selectBusiness: (businessId) => void;
+};
 
-export const OwnerHomepageForm = (props: Prop): JSX.Element => {
+export const OwnerHomepageForm = (props: Prop) => {
     const couponClick = (event): void => {
         props.couponClick(event);
     };
@@ -22,6 +23,10 @@ export const OwnerHomepageForm = (props: Prop): JSX.Element => {
     const businessClick = (event): void => {
         props.businessClick(event);
     };
+
+    // const selectBusiness = (businessId): void => {
+    //     history.push(UrlPaths.BusinessPage + businessId);
+    // };
 
     return (
         <div className="layout">

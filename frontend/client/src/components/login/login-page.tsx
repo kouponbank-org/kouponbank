@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, User, UserDetail } from "../../api/kb-types";
-import { getBusinesses, getMyBusinesses } from "../../store/business/business-reducer";
+import { getBusinesses, getOwnerBusinesses } from "../../store/business/business-reducer";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
 import { getOwnerDetail, getUserDetail } from "../../store/user/user-detail-reducer";
@@ -24,8 +24,9 @@ export interface Prop {
     getUserDetail: (api: KouponBankApi, id: string) => void;
     getOwnerDetail: (api: KouponBankApi, id: string) => void;
     getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
-    getMyBusinesses: (api: KouponBankApi, userid: string) => Promise<void>;
+    getOwnerBusinesses: (api: KouponBankApi, userid: string) => Promise<void>;
     user: User;
+    isUser: boolean;
     userDetail: UserDetail;
     alertState: AlertState;
 }
@@ -70,7 +71,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
                 .then((user) => {
                     props.getOwnerDetail(api, user.id);
                     props
-                        .getMyBusinesses(api, user.id)
+                        .getOwnerBusinesses(api, user.id)
                         .then(() => {
                             history.push(UrlPaths.Home);
                         })
@@ -138,6 +139,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
+        isUser: state.userReducer.isUser,
         userDetail: state.userDetailReducer.userDetail,
         business: state.businessReducer.businesses,
         alertState: state.notificationReducer,
@@ -161,8 +163,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         getBusinesses: async (api: KouponBankApi) => {
             return getBusinesses(api, dispatch);
         },
-        getMyBusinesses: async (api: KouponBankApi, userId: string) => {
-            return getMyBusinesses(api, userId, dispatch);
+        getOwnerBusinesses: async (api: KouponBankApi, userId: string) => {
+            return getOwnerBusinesses(api, userId, dispatch);
         },
     };
 };

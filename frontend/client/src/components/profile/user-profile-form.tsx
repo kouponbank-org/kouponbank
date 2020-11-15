@@ -16,6 +16,7 @@ import "./user-profile-page.scss";
  * Represents the required properties of the user profile page.
  */
 export interface Prop {
+    temp: UserDetail;
     editDetails: (event) => void;
     submitChange: (event) => void;
     userDetailCredentials: UserDetail;
@@ -43,110 +44,114 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
     };
 
     return (
-        <div className="layout">
-            <Typography component="h1" variant="h5">
-                User Profile
-            </Typography>
+      <div className='layout'>
+        <Typography component="h1" variant="h5">
+            내 프로필
+        </Typography>
+        <form className="form">
+        <Grid container>
+            <Grid item xs={12}>
+                <TextField
+                    disabled
+                    variant="outlined"
+                    fullWidth
+                    label="유저네임"
+                    id="username"
+                    value={props.userCredentials.username}
+                />
+                <TextField
+                    disabled
+                    variant="outlined"
+                    label="이메일"
+                    fullWidth
+                    id="email"
+                    defaultValue={props.userCredentials.email}
+                />
+            </Grid>
+            <Grid item xs={12}>
+                <TextField
+                    variant ="outlined"
+                    name="name"
+                    fullWidth
+                    id="name"
+                    label="이름"
+                    disabled
+                    value={props.userDetailCredentials.name}
+                />
+                <TextField
+                    variant ="outlined"
+                    name="gender"
+                    fullWidth
+                    id="gender"
+                    label="성별"
+                    disabled
+                    value={props.userDetailCredentials.gender}
+                />
+                <TextField
+                    variant ="outlined"
+                    name="birthday"
+                    fullWidth
+                    id="birthday"
+                    label="생일"
+                    disabled
+                    value={props.userDetailCredentials.birthday}
+                />
+            </Grid>
             <form className="form">
-                <Grid container>
-                    <Grid item xs={12}>
-                        <TextField
-                            disabled
-                            variant="outlined"
-                            fullWidth
-                            label="유저네임"
-                            id="username"
-                            value={props.userCredentials.username}
-                        />
-                        <TextField
-                            disabled
-                            variant="outlined"
-                            label="이메일"
-                            fullWidth
-                            id="email"
-                            defaultValue={props.userCredentials.email}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            name="name"
-                            fullWidth
-                            id="name"
-                            label="이름"
-                            disabled
-                            value={props.userDetailCredentials.name}
-                        />
-                        <TextField
-                            variant="outlined"
-                            name="gender"
-                            fullWidth
-                            id="gender"
-                            label="성별"
-                            disabled
-                            value={props.userDetailCredentials.gender}
-                        />
-                        <TextField
-                            variant="outlined"
-                            name="birthday"
-                            fullWidth
-                            id="birthday"
-                            label="생일"
-                            disabled
-                            value={props.userDetailCredentials.birthday}
-                        />
-                    </Grid>
-                    <Button
+                <Button fullWidth
+                    variant="contained"
+                    color="primary"
+                    className="editbutton"
+                    onClick={modalStatus}>
+                        수정
+                </Button>
+            </form>
+            </Grid>
+            <Dialog
+                open={open}
+                onClose={modalStatus}
+                aria-labelledby="form-dialog"
+            >
+                <DialogTitle id="form-dialog">프로필 수정</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="name"
+                        id="name-update"
+                        label="Name"
                         fullWidth
-                        variant="contained"
-                        color="primary"
-                        className="editbutton"
-                        onClick={modalStatus}
-                    >
+                        onChange={editDetails}
+                        value={props.temp.name}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="gender"
+                        id="gender-update"
+                        label="Gender"
+                        fullWidth
+                        onChange={editDetails}
+                        value={props.temp.gender}
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        name="birthday"
+                        id="birthday-update"
+                        label="Birthday"
+                        fullWidth
+                        onChange={editDetails}
+                        value={props.temp.birthday}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={modalStatus} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={submitChange} color="primary">
                         Edit
                     </Button>
-                </Grid>
-                <Dialog open={open} onClose={modalStatus} aria-labelledby="form-dialog">
-                    <DialogTitle id="form-dialog">Edit Profile</DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="name"
-                            id="name-update"
-                            label="Name"
-                            fullWidth
-                            onChange={editDetails}
-                            value={props.userDetailCredentials.name}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="gender"
-                            id="gender-update"
-                            label="Gender"
-                            fullWidth
-                            onChange={editDetails}
-                            value={props.userDetailCredentials.gender}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="birthday"
-                            id="birthday-update"
-                            label="Birthday"
-                            fullWidth
-                            onChange={editDetails}
-                            value={props.userDetailCredentials.birthday}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={modalStatus} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={submitChange} color="primary">
-                            Update
-                        </Button>
                     </DialogActions>
                 </Dialog>
             </form>
