@@ -54,9 +54,9 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
                 </div>
                 <div className="searched-business-list">
                     <TableRow>
-                        <TableCell>사업장 사진</TableCell>
-                        <TableCell align="right">사업장 이름</TableCell>
-                        <TableCell align="right">사업장 주소</TableCell>
+                        <TableCell>Business Picture</TableCell>
+                        <TableCell align="right">Business Name</TableCell>
+                        <TableCell align="right">Business Address</TableCell>
                     </TableRow>
                 </div>
             </div>

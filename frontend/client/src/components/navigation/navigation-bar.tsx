@@ -46,16 +46,16 @@ export const NavBar = (props: Prop): ReactElement => {
             <AppBar>
                 <Toolbar>
                     <Button className="homepage button" onClick={redirectToHomepage}>
-                        쿠폰뱅크
+                        Koupon Bank
                     </Button>
                     <div className="search">
-                        {props.title === "쿠폰뱅크" ? (
+                        {props.title === "Koupon Bank" ? (
                             <Button
                                 color="inherit"
                                 onClick={() => setOpen(true)}
                                 className="search-address-modal button"
                             >
-                                Business 찾기
+                                Search Businesses
                             </Button>
                         ) : (
                             ""
@@ -69,15 +69,15 @@ export const NavBar = (props: Prop): ReactElement => {
                                     className="profile-details"
                                     onClick={redirectToOwnerProfile}
                                 >
-                                    나만의 공간
+                                    My Profile
                                 </Button>
                             ) : (
                                 <Button className="profile-details" onClick={redirectToUserProfile}>
-                                    나만의 공간
+                                    My Profile
                                 </Button>
                             )}
                             <Button className="logout" onClick={signOut}>
-                                로그아웃
+                                Logout
                             </Button>
                         </Fragment>
                     ) : (

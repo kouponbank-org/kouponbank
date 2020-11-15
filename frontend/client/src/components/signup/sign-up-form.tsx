@@ -27,7 +27,7 @@ export const SignUpForm = (props: Prop): JSX.Element => {
     return (
         <div className="layout">
             <Typography component="h1" variant="h5">
-                회원가입
+                Sign Up
             </Typography>
             <form className="form" onSubmit={createNewUserClick} noValidate>
                 <Grid container>

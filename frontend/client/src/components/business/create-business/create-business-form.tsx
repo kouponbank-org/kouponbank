@@ -43,7 +43,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         required
                         name="business_name"
                         id="business_name"
-                        label="사업장 이름"
+                        label="Business Name"
                         autoComplete="off"
                         type="text"
                         onChange={businessInformationInput}
@@ -57,7 +57,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         required
                         name="business_email"
                         id="business_email"
-                        label="이메일"
+                        label="Business Email"
                         autoComplete="off"
                         type="text"
                         onChange={businessInformationInput}
@@ -71,7 +71,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         required
                         name="description"
                         id="description"
-                        label="사업장 소개"
+                        label="Business Description"
                         autoComplete="off"
                         type="text"
                         onChange={businessInformationInput}
@@ -84,7 +84,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         onClick={() => setOpen(true)}
                         className="search-address-modal button"
                     >
-                        주소 찾기
+                        Find Address
                     </Button>
                 </div>
                 <div className="road-address">
@@ -96,7 +96,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         name="roadAddress"
                         id="roadAddress"
                         defaultValue="도로명 주소"
-                        label="도로명 주소"
+                        label="Road Address"
                         autoComplete="off"
                         type="text"
                         value={props.business.roadAddr || ""}
@@ -111,7 +111,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         name="jibunAddress"
                         id="jibunAddress"
                         defaultValue="지번 주소"
-                        label="지번 주소"
+                        label="Jibun Address"
                         autoComplete="off"
                         type="text"
                         value={props.business.jibunAddr || ""}
@@ -126,7 +126,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         name="zipcode"
                         id="zipcode"
                         defaultValue="우편번호"
-                        label="우편번호"
+                        label="Zipcode"
                         autoComplete="off"
                         type="text"
                         value={props.business.zipNo || ""}
@@ -141,7 +141,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                             color="primary"
                             className="search-address-button"
                         >
-                            사업장 가입
+                            Create Business
                         </Button>
                     </div>
                 </form>

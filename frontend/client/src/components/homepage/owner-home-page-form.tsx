@@ -61,7 +61,7 @@ export const OwnerHomepageForm = (props: Prop): JSX.Element => {
                                     fullWidth
                                     name="coupon_title"
                                     id="coupon_title"
-                                    label="쿠폰 이름"
+                                    label="Coupon Name"
                                     disabled
                                     value={props.coupon.coupon_title}
                                 />
@@ -69,7 +69,7 @@ export const OwnerHomepageForm = (props: Prop): JSX.Element => {
                                     fullWidth
                                     name="coupon_code"
                                     id="coupon_code"
-                                    label="쿠폰 코드"
+                                    label="Coupon Code"
                                     disabled
                                     value={props.coupon.coupon_code}
                                 />

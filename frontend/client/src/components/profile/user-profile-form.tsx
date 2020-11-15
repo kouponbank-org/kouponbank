@@ -103,11 +103,11 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                         className="editbutton"
                         onClick={modalStatus}
                     >
-                        수정하기
+                        Edit
                     </Button>
                 </Grid>
                 <Dialog open={open} onClose={modalStatus} aria-labelledby="form-dialog">
-                    <DialogTitle id="form-dialog">프로필 수정</DialogTitle>
+                    <DialogTitle id="form-dialog">Edit Profile</DialogTitle>
                     <DialogContent>
                         <TextField
                             autoFocus
