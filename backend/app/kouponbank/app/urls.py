@@ -65,7 +65,6 @@ urlpatterns = [
    path('business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuAPI.as_view(), name="menu"),
    path('business/<uuid:business_id>/coupon/', CouponListAPI.as_view(), name="coupon-list"),
    path('business/<uuid:business_id>/coupon/<uuid:coupon_id>/', CouponAPI.as_view(), name="coupon"),
-
 ]
 
 # For Photos
