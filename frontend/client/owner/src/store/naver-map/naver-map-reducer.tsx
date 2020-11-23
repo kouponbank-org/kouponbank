@@ -112,7 +112,7 @@ export const getAllBusinessWithinNaverMapBounds = async (
                 type: NaverMapActionType.GetAllBusinessWithinNaverMapBoundsSuccess,
                 naverMapBusinesses: naverMapBusinesses,
             });
-            return naverMapBusinesses
+            return naverMapBusinesses;
         })
         .catch((err) => {
             dispatch({

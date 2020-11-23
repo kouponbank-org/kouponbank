@@ -6,22 +6,17 @@ import { NavBarR } from "../navigation/navigation-bar";
 import { BusinesspageForm } from "./business-page-form";
 import "./business-page.scss";
 
-
 interface Prop {
     business: Business;
     user: User;
     coupon: Coupon;
 }
 
-
-export const BusinessPage = (props: Prop) =>  {
+export const BusinessPage: React.FC<Prop> = (props: Prop) => {
     return (
         <div className="business-page">
-            <NavBarR/>
-            <BusinesspageForm
-                business={props.business}
-                coupon={props.coupon}
-            />
+            <NavBarR />
+            <BusinesspageForm business={props.business} coupon={props.coupon} />
         </div>
     );
 };
@@ -33,12 +28,11 @@ const mapStateToProps = (state: RootReducer) => {
         coupon: state.couponReducer.coupon,
     };
 };
+
 /*
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {};
 };
 */
+
 export const BusinessPageR = connect(mapStateToProps, null)(BusinessPage);
-
-
-  

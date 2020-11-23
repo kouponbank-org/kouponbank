@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
 import { BusinessPageR } from "./business/business-page";
 import { HomePageR } from "./homepage/homepage";
-import { InfoPageR } from "./info/information-page";
+import { InfoPage } from "./info/information-page";
 import { LoginPageR } from "./login/login-page";
 import { UserProfilePageR } from "./profile/profile-page";
 import { SignUpPageR } from "./signup/sign-up-page";
@@ -55,7 +55,7 @@ const BasePageRouter = () => {
         // value = setting the thing people can access
         <ApiContext.Provider value={api}>
             <Switch>
-                <Route path={UrlPaths.InfoPage} component={InfoPageR} />
+                <Route path={UrlPaths.InfoPage} component={InfoPage} />
                 <Route path={UrlPaths.BusinessPage} component={BusinessPageR} />
                 <Route path={UrlPaths.ProfilePage} component={UserProfilePageR} />
                 <Route path={UrlPaths.SignUpPage} component={SignUpPageR} />

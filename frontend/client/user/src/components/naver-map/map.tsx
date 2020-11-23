@@ -1,4 +1,4 @@
-import { Button, Drawer, List, Toolbar } from "@material-ui/core";
+import { Button, Drawer, List } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
@@ -13,21 +13,20 @@ import {
 } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
-import { MapDrawerListR } from "./map-drawer-list";
+import { MapDrawerList } from "./map-drawer-list";
 import { MapMarker } from "./map-marker";
 import "./map.scss";
 
 export interface Prop {
     user?: User;
     naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
-    getAllBusinessWithinNaverMapBounds: (api: KouponBankApi, naverMapBound: NaverMapBound) => Promise<Business[]>;
+    getAllBusinessWithinNaverMapBounds: (
+        api: KouponBankApi,
+        naverMapBound: NaverMapBound,
+    ) => Promise<Business[]>;
     naverMapBound: NaverMapBound;
     naverMapBusinesses: Business[];
-    getBusiness?: (
-        api: KouponBankApi,
-        userId: string,
-        businessId: string,
-    ) => Promise<Business>;
+    getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
 }
 
 export const Map: React.FC<Prop> = (props: Prop) => {
@@ -52,13 +51,14 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 
     //when the button is clicked, it gets the business list in the map bound
     const handleGetBusinessesClick = () => {
-        props.getAllBusinessWithinNaverMapBounds(api, naverMapBound)
-        .then((businesses) => {
-            setBusinesses(businesses);
-        })
-        .catch(() => {
-            // Currently does nothing
-        });
+        props
+            .getAllBusinessWithinNaverMapBounds(api, naverMapBound)
+            .then((businesses) => {
+                setBusinesses(businesses);
+            })
+            .catch(() => {
+                // Currently does nothing
+            });
     };
 
     //현재 위치 정보 받기
@@ -68,30 +68,30 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     // });
 
     const selectBusiness = (businessId) => {
-        props.getBusiness(api, props.user.id, businessId);
-        history.push(`/business/${businessId}`);
-    }
+        props
+            .getBusiness(api, businessId)
+            .then((business) => {
+                history.push(`/business/${business.id}`);
+            })
+            .catch(() => {
+                // Currently does nothing
+            });
+    };
 
     return (
         <div className="naver-map">
-            <Toolbar>
-            </Toolbar>
-            <Drawer
-                className="drawer"
-                variant="permanent"
-                anchor="left"
-                >
-            <List>
-            {Businesses.map((business) => {
-                    return (
-                        <MapDrawerListR
-                            key={business.id}
-                            business={business}
-                            selectBusiness={selectBusiness}
-                        />
-                    );
-                })}
-            </List>
+            <Drawer className="drawer" variant="permanent" anchor="left">
+                <List>
+                    {Businesses.map((business) => {
+                        return (
+                            <MapDrawerList
+                                key={business.id}
+                                business={business}
+                                selectBusiness={selectBusiness}
+                            />
+                        );
+                    })}
+                </List>
             </Drawer>
             <NaverMap
                 style={{
@@ -131,12 +131,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         ) => {
             return getAllBusinessWithinNaverMapBounds(api, naverMapBound, dispatch);
         },
-        getBusiness: (
-            api: KouponBankApi,
-            userId: string,
-            businessId: string,
-        ) => {
-            return getBusiness(api, userId, businessId, dispatch);
+        getBusiness: async (api: KouponBankApi, businessId: string) => {
+            return getBusiness(api, businessId, dispatch);
         },
     };
 };

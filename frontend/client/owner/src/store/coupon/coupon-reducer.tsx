@@ -57,7 +57,7 @@ export type Action =
     | CreateCouponFailAction
     | UpdateCouponAction
     | UpdateCouponSuccessAction
-    | UpdateCouponFailAction
+    | UpdateCouponFailAction;
 
 export const reducer = (state: CouponState = initialState, action: Action): CouponState => {
     switch (action.type) {

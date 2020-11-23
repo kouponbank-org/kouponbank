@@ -80,21 +80,8 @@ export class KouponBankApi {
     }
 
     async getBusinessesFromSearch(char: string): Promise<Business[]> {
-        /*
-        var CancelToken = axios.CancelToken;
-        var cancel;
-
-        if (cancel) {
-            cancel();
-        };*/
-
         return axios
             .get<Business[]>(`${this.BASE_URL}/search/`, {
-                /*
-                cancelToken: new CancelToken(function executor(c) {
-                    cancel = c;
-                }),
-                */
                 params: {
                     char: char,
                 },
@@ -154,11 +141,11 @@ export class KouponBankApi {
     }
 
     /* Coupon API */
-    async getCoupons(
-        businessId: string,
-        ): Promise<Coupon[]> {
-        return axios.get<Coupon[]>(`${this.BASE_URL}/business/${businessId}/coupon/`).then((response) => {
-            return response.data;
-        });
+    async getCoupons(businessId: string): Promise<Coupon[]> {
+        return axios
+            .get<Coupon[]>(`${this.BASE_URL}/business/${businessId}/coupon/`)
+            .then((response) => {
+                return response.data;
+            });
     }
 }

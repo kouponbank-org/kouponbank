@@ -282,7 +282,7 @@ export const updateBusiness = async (
     businessId: string,
     business: Business,
     dispatch: Dispatch,
-): Promise<Business> => {
+): Promise<void> => {
     dispatch({
         type: BusinessActionType.UpdateBusiness,
     });
@@ -293,7 +293,6 @@ export const updateBusiness = async (
                 type: BusinessActionType.UpdateBusinessSuccess,
                 business: business,
             });
-            return business;
         })
         .catch((err) => {
             dispatch({
@@ -345,24 +344,27 @@ export const getBusiness = async (
     dispatch({
         type: BusinessActionType.GetBusinessList,
     });
-    return api.getBusiness(businessId).then(business => {
-        dispatch({
-            type: BusinessActionType.GetBusinessSuccess,
-            business: business,
+    return api
+        .getBusiness(businessId)
+        .then((business) => {
+            dispatch({
+                type: BusinessActionType.GetBusinessSuccess,
+                business: business,
+            });
+            return business;
         })
-        return business;
-    }).catch(err => {
-        dispatch({
-            type: BusinessActionType.GetBusinessFail,
+        .catch((err) => {
+            dispatch({
+                type: BusinessActionType.GetBusinessFail,
+            });
+            dispatch({
+                type: AlertsActionType.DisplayError,
+                header: "ERROR",
+                body: "다시 시도해 주세요",
+            } as DisplayError);
+            throw err;
         });
-        dispatch({
-            type: AlertsActionType.DisplayError,
-            header: "ERROR",
-            body: "다시 시도해 주세요",
-        } as DisplayError);
-        throw err;
-    });
-}
+};
 
 export const getBusinessesFromSearch = async (
     api: KouponBankApi,

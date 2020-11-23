@@ -51,7 +51,6 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         });
     };
 
-
     return (
         <div className="background">
             <NavBarR title={"Signup Page"} />

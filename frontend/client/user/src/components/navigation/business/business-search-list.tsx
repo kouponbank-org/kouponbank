@@ -1,4 +1,4 @@
-import { TableCell, TableRow, Button } from "@material-ui/core";
+import { Button, TableCell, TableRow } from "@material-ui/core";
 import React from "react";
 import { Business } from "../../../api/kb-types";
 import "./business-search.scss";
@@ -12,9 +12,8 @@ export interface Prop {
 }
 
 export const SearchedBusinessList: React.FC<Prop> = (props: Prop) => {
-    const selectBusiness = (business) => {
+    const selectBusiness = () => {
         props.selectBusiness(props.business.id);
-        //history.push(`/business/${props.business.id}`);
     };
 
     return (
@@ -24,7 +23,7 @@ export const SearchedBusinessList: React.FC<Prop> = (props: Prop) => {
                 <TableCell>{props.business.business_name}</TableCell>
                 <TableCell>{props.business.roadAddr}</TableCell>
                 <TableCell>
-                    <Button 
+                    <Button
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -32,7 +31,7 @@ export const SearchedBusinessList: React.FC<Prop> = (props: Prop) => {
                         className="business-list button"
                         onClick={selectBusiness}
                     >
-                        사업장 선택
+                        Select Business
                     </Button>
                 </TableCell>
             </TableRow>

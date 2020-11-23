@@ -1,5 +1,5 @@
 import { AppBar, Button, Toolbar } from "@material-ui/core";
-import React, { Fragment, ReactElement, useState } from "react";
+import React, { Fragment, ReactElement } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
@@ -18,7 +18,6 @@ export interface Prop {
 }
 
 export const NavBar = (props: Prop): ReactElement => {
-    const [open, setOpen] = useState(false);
     const history = useHistory();
 
     const redirectToHomepage = (event: React.MouseEvent<HTMLElement>): void => {
@@ -42,31 +41,15 @@ export const NavBar = (props: Prop): ReactElement => {
                     <Button className="homepage button" onClick={redirectToHomepage}>
                         Koupon Bank
                     </Button>
-                    <div className="search">
-                        {props.title === "Koupon Bank" ? (
-                            <Button
-                                color="inherit"
-                                onClick={() => setOpen(true)}
-                                className="search-address-modal button"
-                            >
-                                Search Business
+                    {props.title}
+                    {props.owner.username !== "" ? (
+                        <Fragment>
+                            <Button className="profile-details" onClick={redirectToProfilePage}>
+                                My Profile
                             </Button>
-                        ) : (
-                            ""
-                        )}
-                    </div>
-                    <div>
-                        {props.title}
-                    </div>
-                    {
-                        props.owner.username !== "" ? (
-                            <Fragment>
-                                <Button className="profile-details" onClick={redirectToProfilePage}>
-                                    My Profile
-                                </Button>
-                                <Button className="logout" onClick={signOut}>
-                                    Sign Out
-                                </Button>
+                            <Button className="logout" onClick={signOut}>
+                                Sign Out
+                            </Button>
                         </Fragment>
                     ) : (
                         <Button onClick={props.onClick}>{props.buttonName}</Button>

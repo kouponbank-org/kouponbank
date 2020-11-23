@@ -24,8 +24,8 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const [userDetailCredentials, setUserDetailCredentials] = useState(props.userDetail);
-    const editDetails = (event: React.ChangeEvent<HTMLInputElement>): void => {
 
+    const editDetails = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setUserDetailCredentials({
             ...userDetailCredentials,
             [event.target.name]: event.target.value,
@@ -46,8 +46,8 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR/>
-            <UserProfileForm 
+            <NavBarR />
+            <UserProfileForm
                 temp={userDetailCredentials}
                 userCredentials={props.user}
                 userDetailCredentials={props.userDetail}

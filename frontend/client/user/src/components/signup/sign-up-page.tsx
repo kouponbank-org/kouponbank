@@ -35,11 +35,7 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         props
             .createNewUser(api, userCredentials)
             .then(() => {
-                props
-                .getBusinesses(api)
-                .then(() => {
-                    history.push(UrlPaths.HomePage);
-                })
+                history.push(UrlPaths.HomePage);
             })
             .catch(() => {
                 //currently does nothing

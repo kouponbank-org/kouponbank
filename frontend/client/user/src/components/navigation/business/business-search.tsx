@@ -5,7 +5,11 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../../api/kb-api";
 import { Business, User } from "../../../api/kb-types";
-import { getBusiness, getBusinessesFromSearch, initialState } from "../../../store/business/business-reducer";
+import {
+    getBusiness,
+    getBusinessesFromSearch,
+    initialState
+} from "../../../store/business/business-reducer";
 import { RootReducer } from "../../../store/reducer";
 import { ApiContext } from "../../base-page-router";
 import { SearchedBusinessList } from "./business-search-list";
@@ -15,10 +19,7 @@ export interface Prop {
     open: boolean;
     user?: User;
     getBusinessesFromSearch: (api: KouponBankApi, char: string) => Promise<Business[]>;
-    getBusiness: (
-        api: KouponBankApi,
-        businessId: string,
-    ) => Promise<Business>;
+    getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
 }
 
 export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
@@ -43,9 +44,15 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
     }, [businessName]);
 
     const selectBusiness = (businessId) => {
-        props.getBusiness(api, businessId);
-        history.push(`/business/${businessId}`);
-    }
+        props
+            .getBusiness(api, businessId)
+            .then((business) => {
+                history.push(`/business/${business.id}`);
+            })
+            .catch(() => {
+                // Currently does nothing
+            });
+    };
 
     return (
         <div className="layout">
@@ -73,11 +80,13 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
             </div>
             <div>
                 {businessList.map((business) => {
-                    return <SearchedBusinessList 
-                        key={business.id} 
-                        business={business}
-                        selectBusiness={selectBusiness}
-                          />;
+                    return (
+                        <SearchedBusinessList
+                            key={business.id}
+                            business={business}
+                            selectBusiness={selectBusiness}
+                        />
+                    );
                 })}
             </div>
         </div>
@@ -87,7 +96,7 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        searchedBusiness: state.businessReducer.searchedBusinesses,
+        business: state.businessReducer.business,
     };
 };
 
@@ -96,10 +105,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         getBusinessesFromSearch: async (api: KouponBankApi, char: string) => {
             return getBusinessesFromSearch(api, char, dispatch);
         },
-        getBusiness: (
-            api: KouponBankApi,
-            businessId: string,
-        ) => {
+        getBusiness: async (api: KouponBankApi, businessId: string) => {
             return getBusiness(api, businessId, dispatch);
         },
     };

@@ -38,10 +38,7 @@ interface GetCouponListFailAction {
     type: CouponActionType.GetCouponListFail;
 }
 
-export type Action =
-    | GetCouponListAction
-    | GetCouponListSuccessAction
-    | GetCouponListFailAction;
+export type Action = GetCouponListAction | GetCouponListSuccessAction | GetCouponListFailAction;
 
 export const reducer = (state: CouponState = initialState, action: Action): CouponState => {
     switch (action.type) {

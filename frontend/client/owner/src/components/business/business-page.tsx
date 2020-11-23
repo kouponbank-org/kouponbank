@@ -10,8 +10,7 @@ import { NavBarR } from "../navigation/navigation-bar";
 import { BusinesspageForm } from "./business-page-form";
 import "./business-page.scss";
 
-
-interface Prop {
+export interface Prop {
     business: Business;
     owner: Owner;
     coupon: Coupon;
@@ -20,32 +19,28 @@ interface Prop {
         userId: string,
         businessId: string,
         business: Business,
-    ) => Promise<Business>;
+    ) => void;
 }
 
-
-export const BusinessPage = (props: Prop) =>  {
+export const BusinessPage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const [businessInfo, setBusinessInfo] = useState(props.business);
+
     const editDetails = (event): void => {
         setBusinessInfo({
             ...businessInfo,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
         });
     };
 
-    const submitChange = (event): void => {
-        props.updateBusiness(api,
-                               props.owner.id,
-                               props.business.id,
-                               businessInfo
-                               )
+    const submitChange = (event: React.MouseEvent<HTMLElement>): void => {
+        props.updateBusiness(api, props.owner.id, props.business.id, businessInfo);
         event.preventDefault();
     };
 
     return (
         <div className="business-page">
-            <NavBarR/>
+            <NavBarR />
             <BusinesspageForm
                 businessInput={businessInfo}
                 business={props.business}
@@ -67,18 +62,15 @@ const mapStateToProps = (state: RootReducer) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        updateBusiness: (
+        updateBusiness: async (
             api: KouponBankApi,
             userId: string,
             businessId: string,
             business: Business,
         ) => {
-            return updateBusiness(api, userId, businessId, business, dispatch)
-        }    
+            return updateBusiness(api, userId, businessId, business, dispatch);
+        },
     };
 };
 
 export const BusinessPageR = connect(mapStateToProps, mapDispatchToProps)(BusinessPage);
-
-
-  

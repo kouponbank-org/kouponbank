@@ -11,7 +11,6 @@ import { NavBarR } from "../navigation/navigation-bar";
 import { HomepageForm } from "./homepage-form";
 import "./homepage.scss";
 
-
 /**
  * Represents the required properties of the HomePage.
  */
@@ -20,11 +19,8 @@ export interface Prop {
     coupon: Coupon;
     business: Business;
     businesses: Business[];
-    getBusiness: (
-        api: KouponBankApi,
-        businessId: string,
-    ) => Promise<Business>;
-};
+    getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
+}
 
 export const HomePage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
@@ -43,17 +39,19 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
     };
 
     const selectBusiness = (businessId) => {
-        props.getBusiness(api, businessId);
-        history.push(`/business/${businessId}`);
-    }
-    
+        props
+            .getBusiness(api, businessId)
+            .then((business) => {
+                history.push(`/business/${business.id}`);
+            })
+            .catch(() => {
+                // Currently does nothing
+            });
+    };
+
     return (
         <div>
-            <NavBarR
-                title={"Koupon Bank"} 
-                buttonName={"Login"} 
-                onClick={directToUserLogin}
-            />
+            <NavBarR title={"Koupon Bank"} buttonName={"Login"} onClick={directToUserLogin} />
             <HomepageForm
                 coupon={props.coupon}
                 businesses={props.businesses}
@@ -77,13 +75,10 @@ const mapStateToProps = (state: RootReducer) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        getBusiness: (
-            api: KouponBankApi,
-            businessId: string,
-        ) => {
+        getBusiness: async (api: KouponBankApi, businessId: string) => {
             return getBusiness(api, businessId, dispatch);
         },
-    }
-}
+    };
+};
 
 export const HomePageR = connect(mapStateToProps, mapDispatchToProps)(HomePage);

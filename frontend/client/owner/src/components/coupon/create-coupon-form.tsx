@@ -13,7 +13,6 @@ export interface Prop {
 }
 
 export const CreateCouponForm = (props: Prop): JSX.Element => {
-    
     // 쿠폰 정보
     const couponInformationInput = (event): void => {
         props.couponInformationInput(event);

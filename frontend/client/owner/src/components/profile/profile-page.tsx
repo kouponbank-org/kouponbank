@@ -25,7 +25,7 @@ export const ProfilePage: React.FC<Prop> = (props: Prop) => {
     const history = useHistory();
     const [userDetailCredentials, setUserDetailCredentials] = useState(props.ownerDetail);
 
-    const editDetails = (event: React.ChangeEvent<HTMLInputElement>): void => {        
+    const editDetails = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setUserDetailCredentials({
             ...userDetailCredentials,
             [event.target.name]: event.target.value,
@@ -46,8 +46,8 @@ export const ProfilePage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR/>
-            <ProfileForm 
+            <NavBarR />
+            <ProfileForm
                 temp={userDetailCredentials}
                 userCredentials={props.owner}
                 userDetailCredentials={props.ownerDetail}

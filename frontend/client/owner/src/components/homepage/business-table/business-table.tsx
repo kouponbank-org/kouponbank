@@ -1,27 +1,18 @@
 import { Button, TableCell, TableRow } from "@material-ui/core";
 import React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { Business } from "../../../api/kb-types";
-import { BusinessActionType } from "../../../store/business/action-type";
-import { Action as BusinessAction } from "../../../store/business/business-reducer";
-import { RootReducer } from "../../../store/reducer";
 import "./business-table.scss";
 
 export interface Prop {
     business: Business;
     selectBusiness: (businessId) => void;
-    setBusinessPage: (business: Business) => void;
 }
 
 export const BusinessTable = (props: Prop): JSX.Element => {
     const selectBusiness = () => {
         props.selectBusiness(props.business.id);
     };
-    // TODO: SET CORRECT BUSINESS LOCATION.
-    // const setBusinessPage = (business) => {
-    // }
-    
+
     return (
         <div className="business-list">
             <TableRow className="business-list table">
@@ -30,7 +21,7 @@ export const BusinessTable = (props: Prop): JSX.Element => {
                 <TableCell>{props.business.description}</TableCell>
                 <TableCell>{props.business.business_picture}</TableCell>
                 <TableCell>
-                    <Button 
+                    <Button
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -43,21 +34,5 @@ export const BusinessTable = (props: Prop): JSX.Element => {
                 </TableCell>
             </TableRow>
         </div>
-    )
-}
-
-const mapStateToProps = (state: RootReducer) => {
-    return {
-        owner: state.ownerReducer.owner,
-        business: state.businessReducer.business,
-    };
+    );
 };
-
-const mapDispatchToProps = (dispatch: Dispatch<BusinessAction>) => {
-    return {
-        setBusinessPage: (business: Business) =>
-            dispatch({ type: BusinessActionType.SetBusinessSuccess, business: business }),
-    };
-};
-
-export const BusinessTableR = connect(null, mapDispatchToProps)(BusinessTable);

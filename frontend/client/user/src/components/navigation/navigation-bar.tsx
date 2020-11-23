@@ -56,18 +56,15 @@ export const NavBar = (props: Prop): ReactElement => {
                             ""
                         )}
                     </div>
-                    <div>
-                        {props.title}
-                    </div>
-                    {
-                        props.user.username !== "" ? (
-                            <Fragment>
-                                <Button className="profile-details" onClick={redirectToProfilePage}>
-                                    My Profile
-                                </Button>
-                                <Button className="logout" onClick={signOut}>
-                                    Sign Out
-                                </Button>
+                    {props.title}
+                    {props.user.username !== "" ? (
+                        <Fragment>
+                            <Button className="profile-details" onClick={redirectToProfilePage}>
+                                My Profile
+                            </Button>
+                            <Button className="logout" onClick={signOut}>
+                                Sign Out
+                            </Button>
                         </Fragment>
                     ) : (
                         <Button onClick={props.onClick}>{props.buttonName}</Button>
@@ -75,7 +72,7 @@ export const NavBar = (props: Prop): ReactElement => {
                 </Toolbar>
             </AppBar>
             <Dialog
-                fullWidth={true}
+                fullWidth
                 maxWidth="xl"
                 scroll="body"
                 open={open}

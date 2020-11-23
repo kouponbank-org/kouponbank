@@ -6,7 +6,8 @@ import "./sign-up-page.scss";
 export interface Prop {
     userCredentials: User;
     createNewUserClick: (event) => void;
-    userCredentialsInput: (event) => void;}
+    userCredentialsInput: (event) => void;
+}
 
 export const SignUpForm = (props: Prop): JSX.Element => {
     const createNewUserClick = (event: React.FormEvent): void => {

@@ -37,7 +37,7 @@ export const CreateCouponPage: React.FC<Prop> = (props: Prop) => {
             [target.name]: target.value,
         });
     };
-    
+
     /**
      * 쿠폰 추가하기 클릭
      * @param event
