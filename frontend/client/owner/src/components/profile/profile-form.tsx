@@ -9,21 +9,21 @@ import {
     Typography
 } from "@material-ui/core";
 import React from "react";
-import { User, UserDetail } from "../../api/kb-types";
-import "./user-profile-page.scss";
+import { Owner, OwnerDetail } from "../../api/kb-types";
+import "./profile-page.scss";
 
 /**
- * Represents the required properties of the user profile page.
+ * Represents the required properties of the owner profile page.
  */
 export interface Prop {
-    temp: UserDetail;
+    temp: OwnerDetail;
     editDetails: (event) => void;
     submitChange: (event) => void;
-    userDetailCredentials: UserDetail;
-    userCredentials: User;
+    userDetailCredentials: OwnerDetail;
+    userCredentials: Owner;
 }
 
-export const UserProfileForm = (props: Prop): JSX.Element => {
+export const ProfileForm = (props: Prop): JSX.Element => {
     const [open, setOpen] = React.useState(false);
 
     const modalStatus = () => {
@@ -55,14 +55,14 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                     disabled
                     variant="outlined"
                     fullWidth
-                    label="유저네임"
+                    label="Username"
                     id="username"
                     value={props.userCredentials.username}
                 />
                 <TextField
                     disabled
                     variant="outlined"
-                    label="이메일"
+                    label="Email"
                     fullWidth
                     id="email"
                     defaultValue={props.userCredentials.email}
@@ -74,7 +74,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                     name="name"
                     fullWidth
                     id="name"
-                    label="이름"
+                    label="Name"
                     disabled
                     value={props.userDetailCredentials.name}
                 />
@@ -83,7 +83,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                     name="gender"
                     fullWidth
                     id="gender"
-                    label="성별"
+                    label="Gender"
                     disabled
                     value={props.userDetailCredentials.gender}
                 />
@@ -92,7 +92,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                     name="birthday"
                     fullWidth
                     id="birthday"
-                    label="생일"
+                    label="Birthday"
                     disabled
                     value={props.userDetailCredentials.birthday}
                 />

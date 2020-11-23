@@ -9,9 +9,9 @@ export enum Status {
 }
 
 /**
- * Represents the required properties of a User
+ * Represents the required properties of a Owner
  */
-export interface User {
+export interface Owner {
     id?: string;
     username: string;
     password: string | number;
@@ -85,9 +85,9 @@ export interface NaverMapBound {
 }
 
 /**
- * Represents the required properties of a UserDetail
+ * Represents the required properties of a OwnerDetail
  */
-export interface UserDetail {
+export interface OwnerDetail {
     id?: string;
     name: string;
     gender: string;

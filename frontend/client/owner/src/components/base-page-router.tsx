@@ -2,28 +2,25 @@ import React, { useLayoutEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
-import { Business } from "../api/kb-types";
 import { BusinessPageR } from "./business/business-page";
 import { CreateBusinessPageR } from "./business/create-business/create-business-page";
 import { CreateCouponPageR } from "./coupon/create-coupon-page";
 import { HomePageR } from "./homepage/home-page";
 import { InfoPageR } from "./info/information-page";
 import { LoginPageR } from "./login/login-page";
-import { OwnerProfilePageR } from "./profile/owner-profile-page";
-import { UserProfilePageR } from "./profile/user-profile-page";
+import { OwnerProfilePageR } from "./profile/profile-page";
 import { SignUpPageR } from "./signup/sign-up-page";
 
 export const ApiContext = React.createContext(null);
 
 export enum UrlPaths {
-    Home = "/",
-    Login = "/kblogin",
+    HomePage = "/",
+    LoginPage = "/kblogin",
     SignUpPage = "/kbsignup",
-    UserProfile = "/uprofile",
-    OwnerProfile = "/oprofile",
-    CreateBusiness = "/newbusiness",
+    ProfilePage = "/kbprofile",
+    CreateBusinessPage = "/kbnewbusiness",
     BusinessPage = "/business/:businessId",
-    CreateCoupon = "/newcoupon",
+    CreateCouponPage = "/newcoupon",
     InfoPage = "/info",
 }
 
@@ -63,14 +60,13 @@ const BasePageRouter = () => {
         <ApiContext.Provider value={api}>
             <Switch>
                 <Route path={UrlPaths.InfoPage} component={InfoPageR} />
-                <Route path={UrlPaths.CreateCoupon} component={CreateCouponPageR} />
+                <Route path={UrlPaths.CreateCouponPage} component={CreateCouponPageR} />
                 <Route path={UrlPaths.BusinessPage} component={BusinessPageR} />
-                <Route path={UrlPaths.CreateBusiness} component={CreateBusinessPageR} />
-                <Route path={UrlPaths.UserProfile} component={UserProfilePageR} />
-                <Route path={UrlPaths.OwnerProfile} component={OwnerProfilePageR} />
+                <Route path={UrlPaths.CreateBusinessPage} component={CreateBusinessPageR} />
+                <Route path={UrlPaths.ProfilePage} component={OwnerProfilePageR} />
                 <Route path={UrlPaths.SignUpPage} component={SignUpPageR} />
-                <Route path={UrlPaths.Login} component={LoginPageR} />
-                <Route exact path={UrlPaths.Home} component={HomePageR} />
+                <Route path={UrlPaths.LoginPage} component={LoginPageR} />
+                <Route exact path={UrlPaths.HomePage} component={HomePageR} />
             </Switch>
         </ApiContext.Provider>
     );

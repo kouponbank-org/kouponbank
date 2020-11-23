@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../../api/kb-api";
-import { AddressDetail, Business, User } from "../../../api/kb-types";
+import { AddressDetail, Business, Owner } from "../../../api/kb-types";
 import {
     createBusiness,
     getOwnerBusinesses,
@@ -20,7 +20,7 @@ import { CreateBusinessForm } from "./create-business-form";
 export interface Prop {
     createBusiness: (api: KouponBankApi, userId: string, business: Business) => Promise<Business>;
     getOwnerBusinesses: (api: KouponBankApi, userid: string) => void;
-    user: User;
+    owner: Owner;
     business: Business;
 }
 
@@ -52,9 +52,9 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
 
     const createBusiness = (): void => {
         props
-            .createBusiness(api, props.user.id, business)
+            .createBusiness(api, props.owner.id, business)
             .then((business) => {
-                props.getOwnerBusinesses(api, props.user.id);
+                props.getOwnerBusinesses(api, props.owner.id);
                 history.push(`/business/${business.id}`);
             })
             .catch(() => {
@@ -93,7 +93,7 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
+        owner: state.ownerReducer.owner,
         business: state.businessReducer.business,
     };
 };

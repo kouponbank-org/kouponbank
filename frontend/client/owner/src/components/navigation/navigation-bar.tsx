@@ -3,17 +3,16 @@ import React, { Fragment, ReactElement, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
-import { User, UserDetail } from "../../api/kb-types";
+import { Owner, OwnerDetail } from "../../api/kb-types";
 import { RootReducer, signOut } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
 import { SearchBusinessR } from "./business/business-search";
 import "./navigation-bar.scss";
 
 export interface Prop {
-    user?: User;
-    userDetail?: UserDetail;
+    owner?: Owner;
+    ownerDetail?: OwnerDetail;
     title?: string;
-    isUser: boolean;
     buttonName?: string;
     onClick?: (event) => void;
     signOut?: () => void;
@@ -24,21 +23,17 @@ export const NavBar = (props: Prop): ReactElement => {
     const history = useHistory();
 
     const redirectToHomepage = (event: React.MouseEvent<HTMLElement>): void => {
-        history.push(UrlPaths.Home);
+        history.push(UrlPaths.HomePage);
         event.preventDefault();
     };
 
     const signOut = () => {
         props.signOut();
-        history.push(UrlPaths.Home);
+        history.push(UrlPaths.HomePage);
     };
 
-    const redirectToUserProfile = () => {
-        history.push(UrlPaths.UserProfile);
-    };
-
-    const redirectToOwnerProfile = () => {
-        history.push(UrlPaths.OwnerProfile);
+    const redirectToProfilePage = () => {
+        history.push(UrlPaths.ProfilePage);
     };
 
     return (
@@ -65,19 +60,11 @@ export const NavBar = (props: Prop): ReactElement => {
                         {props.title}
                     </div>
                     {
-                        props.user.username !== "" ? (
+                        props.owner.username !== "" ? (
                             <Fragment>
-                                {
-                                    !props.isUser ? (
-                                        <Button className="profile-details" onClick={redirectToOwnerProfile}>
-                                            My Profile
-                                        </Button>
-                                    ) : (
-                                        <Button className="profile-details" onClick={redirectToUserProfile}>
-                                            My Profile
-                                        </Button>
-                                    )
-                                }
+                                <Button className="profile-details" onClick={redirectToProfilePage}>
+                                    My Profile
+                                </Button>
                                 <Button className="logout" onClick={signOut}>
                                     Sign Out
                                 </Button>
@@ -103,8 +90,7 @@ export const NavBar = (props: Prop): ReactElement => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
-        isUser: state.userReducer.isUser,
+        owner: state.ownerReducer.owner,
     };
 };
 

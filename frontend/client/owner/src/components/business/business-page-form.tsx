@@ -1,13 +1,12 @@
-import { Button, Grid, TextField, Typography, Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import { Coupon, Business } from "../../api/kb-types";
+import { Business, Coupon } from "../../api/kb-types";
 import './business-page.scss';
 
 /**
  * Represents the required properties of the log in form.
  */
 export interface Prop { 
-    isUser: Boolean;
     businessInput?: Business;
     business: Business;
     coupon: Coupon;
@@ -38,86 +37,77 @@ export const BusinesspageForm = (props: Prop) => {
         </Typography>
         <Grid container>
             <div>
-            <Grid item xs={12}>
-                {props.business.business_name}
-                {props.business.business_email}
-                {props.business.business_picture}
-                {props.business.description}
-            </Grid>
+                <Grid item xs={12}>
+                    {props.business.business_name}
+                    {props.business.business_email}
+                    {props.business.business_picture}
+                    {props.business.description}
+                </Grid>
             </div>
-            
-            {
-                props.isUser===false ? (
-                    <div>
-                    <Grid item xs={12}>
-                        <form className="form">
-                            <Button fullWidth
-                                variant="contained"
-                                color="primary"
-                                className="editbutton"
-                                onClick={modalStatus}>
-                                    Update
-                            </Button>
-                        </form>
-                        </Grid>
-                        <Dialog 
-                            open={open} 
-                            onClose={modalStatus} 
-                            aria-labelledby="form-dialog"
-                        >
-                            <DialogTitle id="form-dialog">사업장 정보 수정</DialogTitle>
-                            <DialogContent>
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    name="business_name"
-                                    id="business_name-update"
-                                    label="사업장명"
-                                    fullWidth
-                                    onChange={editDetails}
-                                    value={props.businessInput.business_name}
-                                />
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    name="business_email"
-                                    id="business_email-update"
-                                    label="사업장 이메일"
-                                    fullWidth
-                                    onChange={editDetails}
-                                    value={props.businessInput.business_email}
-                                />
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    name="description"
-                                    id="description-update"
-                                    label="사업장 소개"
-                                    fullWidth
-                                    onChange={editDetails}
-                                    value={props.businessInput.description}
-                                />
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={modalStatus} color="primary">
-                                    Cancel
-                                </Button>
-                                <Button onClick={submitChange} color="primary">
-                                    Update
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-                        </div>
-                ) : (
-                    ""
-                )
-            }
+            <Grid item xs={12}>
+                <form className="form">
+                    <Button fullWidth
+                        variant="contained"
+                        color="primary"
+                        className="editbutton"
+                        onClick={modalStatus}>
+                            Update
+                    </Button>
+                </form>
+                </Grid>
+                <Dialog 
+                    open={open} 
+                    onClose={modalStatus} 
+                    aria-labelledby="form-dialog"
+                >
+                    <DialogTitle id="form-dialog">Edit Business Details</DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="business_name"
+                            id="business_name-update"
+                            label="Business Name"
+                            fullWidth
+                            onChange={editDetails}
+                            value={props.businessInput.business_name}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="business_email"
+                            id="business_email-update"
+                            label="Business Email"
+                            fullWidth
+                            onChange={editDetails}
+                            value={props.businessInput.business_email}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="description"
+                            id="description-update"
+                            label="Business Description"
+                            fullWidth
+                            onChange={editDetails}
+                            value={props.businessInput.description}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={modalStatus} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={submitChange} color="primary">
+                            Update
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Grid>
 
             {/* Need to redirect to create coupon page or add it on spot like a dialog? */}
             
             {
-                props.coupon.coupon_title === "" && props.isUser===false ? (
+                props.coupon.coupon_title === "" ? (
                     <div>
                         <Button fullWidth
                             variant="contained"

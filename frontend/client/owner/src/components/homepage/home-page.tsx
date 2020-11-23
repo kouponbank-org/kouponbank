@@ -1,24 +1,22 @@
 import React, { useContext } from "react";
 import { connect } from "react-redux";
-import { KouponBankApi } from "../../api/kb-api";
 import { useHistory } from "react-router-dom";
-import { Business, Coupon, User } from "../../api/kb-types";
+import { Dispatch } from "redux";
+import { KouponBankApi } from "../../api/kb-api";
+import { Business, Coupon, Owner } from "../../api/kb-types";
+import { getOwnerBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
-import { Dispatch } from "redux";
-import { HomepageForm } from "./home-page-form";
+import { HomepageForm } from "./homepage-form";
 import "./homepage.scss";
-import { OwnerHomepageForm } from "./owner-home-page-form";
-import { getOwnerBusiness } from "../../store/business/business-reducer";
 
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    user: User;
-    isUser: Boolean;
+    owner: Owner;
     coupon: Coupon;
     business: Business;
     businesses: Business[];
@@ -32,20 +30,21 @@ export interface Prop {
 export const HomePage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
+
     const directToUserLogin = (): void => {
-        history.push(UrlPaths.Login);
+        history.push(UrlPaths.LoginPage);
     };
 
     const couponClick = (): void => {
-        history.push(UrlPaths.CreateCoupon);
+        history.push(UrlPaths.CreateCouponPage);
     };
 
     const businessClick = (): void => {
-        history.push(UrlPaths.CreateBusiness);
+        history.push(UrlPaths.CreateBusinessPage);
     };
 
     const selectBusiness = (businessId) => {
-        props.getOwnerBusiness(api, props.user.id, businessId);
+        props.getOwnerBusiness(api, props.owner.id, businessId);
         history.push(`/business/${businessId}`);
     }
     
@@ -56,31 +55,21 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
                 buttonName={"Login"} 
                 onClick={directToUserLogin}
             />
-            {
-                props.isUser===false ? (
-                    <OwnerHomepageForm
-                        coupon={props.coupon}
-                        businesses = {props.businesses}
-                        business={props.business}
-                        couponClick={couponClick}
-                        businessClick={businessClick}
-                        selectBusiness= {selectBusiness}
-                    />
-                ) : (
-                    <HomepageForm
-                        businesses= {props.businesses}
-                        selectBusiness= {selectBusiness}
-                    />
-                )
-            }
+            <HomepageForm
+                coupon={props.coupon}
+                businesses={props.businesses}
+                business={props.business}
+                couponClick={couponClick}
+                businessClick={businessClick}
+                selectBusiness={selectBusiness}
+            />
         </div>
     );
 };
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
-        isUser: state.userReducer.isUser,
+        owner: state.ownerReducer.owner,
         coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,

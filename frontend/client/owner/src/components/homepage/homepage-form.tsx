@@ -2,9 +2,8 @@ import { Button, ButtonBase, Grid, Paper, TextField, Typography } from "@materia
 import React from "react";
 import { Business, Coupon } from "../../api/kb-types";
 import { MapR } from "../naver-map/map";
-import './homepage.scss';
 import { BusinessTableR } from "./business-table/business-table";
-import "./homepage.scss";
+import './homepage.scss';
 
 export interface Prop {
     coupon: Coupon;
@@ -15,7 +14,7 @@ export interface Prop {
     selectBusiness: (businessId) => void;
 };
 
-export const OwnerHomepageForm = (props: Prop) => {
+export const HomepageForm = (props: Prop) => {
     const couponClick = (event): void => {
         props.couponClick(event);
     };

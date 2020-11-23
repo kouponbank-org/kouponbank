@@ -1,24 +1,24 @@
-import { Button, Toolbar, Drawer, List} from "@material-ui/core";
+import { Button, Drawer, List, Toolbar } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, NaverMapBound, User } from "../../api/kb-types";
+import { Business, NaverMapBound, Owner } from "../../api/kb-types";
+import { getOwnerBusiness } from "../../store/business/business-reducer";
 import {
     getAllBusinessWithinNaverMapBounds,
     naverMapBoundChanged
 } from "../../store/naver-map/naver-map-reducer";
-import { getOwnerBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
-import { MapMarker } from "./map-marker";
 import { MapDrawerListR } from "./map-drawer-list";
+import { MapMarker } from "./map-marker";
 import "./map.scss";
 
 export interface Prop {
-    user?: User;
+    owner?: Owner;
     naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
     getAllBusinessWithinNaverMapBounds: (api: KouponBankApi, naverMapBound: NaverMapBound) => Promise<Business[]>;
     naverMapBound: NaverMapBound;
@@ -68,7 +68,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     // });
 
     const selectBusiness = (businessId) => {
-        props.getOwnerBusiness(api, props.user.id, businessId);
+        props.getOwnerBusiness(api, props.owner.id, businessId);
         history.push(`/business/${businessId}`);
     }
 
@@ -113,7 +113,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
+        owner: state.ownerReducer.owner,
         businesses: state.businessReducer.businesses,
         naverMapBound: state.naverMapReducer.naverMapBound,
         naverMapBusinesses: state.naverMapReducer.naverMapBusinesses,

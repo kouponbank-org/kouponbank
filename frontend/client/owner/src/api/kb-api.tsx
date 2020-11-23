@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AddressDetail, Business, Coupon, NaverMapBound, User, UserDetail } from "./kb-types";
+import { AddressDetail, Business, Coupon, NaverMapBound, Owner, OwnerDetail } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -24,45 +24,21 @@ export class KouponBankApi {
     }
 
     /*LOGIN API*/
-    async loginUser(user: User): Promise<User> {
-        return axios.post<User>(`${this.BASE_URL}/login/user/`, user).then((response) => {
+    async loginOwner(owner: Owner): Promise<Owner> {
+        return axios.post<Owner>(`${this.BASE_URL}/login/owner/`, owner).then((response) => {
             return response.data;
         });
     }
 
-    async loginOwner(user: User): Promise<User> {
-        return axios.post<User>(`${this.BASE_URL}/login/owner/`, user).then((response) => {
+    /*OWNER API*/
+    async createOwner(owner: Owner): Promise<Owner> {
+        return axios.post<Owner>(`${this.BASE_URL}/owners/`, owner).then((response) => {
             return response.data;
         });
     }
 
-    /*USER API*/
-    async createUser(user: User): Promise<User> {
-        return axios.post<User>(`${this.BASE_URL}/users/`, user).then((response) => {
-            return response.data;
-        });
-    }
-
-    async getUser(userId: string): Promise<User> {
-        return axios.get<User>(`${this.BASE_URL}/users/${userId}`).then((response) => {
-            return response.data;
-        });
-    }
-
-    async removeUser(userId: string): Promise<void> {
-        return axios.delete<void>(`${this.BASE_URL}/users/${userId}`).then((response) => {
-            return response.data;
-        });
-    }
-
-    async createOwner(user: User): Promise<User> {
-        return axios.post<User>(`${this.BASE_URL}/owners/`, user).then((response) => {
-            return response.data;
-        });
-    }
-
-    async getOwner(userId: string): Promise<User> {
-        return axios.get<User>(`${this.BASE_URL}/owners/${userId}`).then((response) => {
+    async getOwner(userId: string): Promise<Owner> {
+        return axios.get<Owner>(`${this.BASE_URL}/owners/${userId}`).then((response) => {
             return response.data;
         });
     }
@@ -73,35 +49,18 @@ export class KouponBankApi {
         });
     }
 
-    /*User Detail API*/
-    async getUserDetail(userId: string): Promise<UserDetail> {
-        return axios
-            .get<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`)
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    async updateUserDetail(userId: string, userDetail: UserDetail): Promise<UserDetail> {
-        return axios
-            .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, userDetail)
-            .then((response) => {
-                return response.data;
-            });
-    }
-
     /*Owner Detail API*/
-    async getOwnerDetail(userId: string): Promise<UserDetail> {
+    async getOwnerDetail(userId: string): Promise<OwnerDetail> {
         return axios
-            .get<UserDetail>(`${this.BASE_URL}/owners/${userId}/detail/`)
+            .get<OwnerDetail>(`${this.BASE_URL}/owners/${userId}/detail/`)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async updateOwnerDetail(userId: string, userDetail: UserDetail): Promise<UserDetail> {
+    async updateOwnerDetail(userId: string, ownerDetail: OwnerDetail): Promise<OwnerDetail> {
         return axios
-            .put<UserDetail>(`${this.BASE_URL}/owners/${userId}/detail/`, userDetail)
+            .put<OwnerDetail>(`${this.BASE_URL}/owners/${userId}/detail/`, ownerDetail)
             .then((response) => {
                 return response.data;
             });
@@ -125,7 +84,7 @@ export class KouponBankApi {
             });
     }
 
-    //user access to business
+    //owner access to business
     async getBusiness(userId: string, businessId: string): Promise<Business> {
         return axios.get<Business>(`${this.BASE_URL}/business/${businessId}`).then((response) => {
             return response.data;

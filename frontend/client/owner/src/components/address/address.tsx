@@ -25,13 +25,13 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
      */
     const [searchedAddress, setSearchedAddress] = useState<AddressDetail[]>([]);
 
-    /* User Input of the Address */
+    /* Owner Input of the Address */
     const setAddressInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setAddress(event.target.value);
     };
 
     /**
-     * Returns List of Addresses based on the Address the User has typed in
+     * Returns List of Addresses based on the Address the Owner has typed in
      * Calls the Address API set by www.juso.go.kr
      * @param event
      */

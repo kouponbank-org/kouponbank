@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { Status, User } from "../../api/kb-types";
+import { Owner, Status } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
 import { UserActionType } from "./action-type";
@@ -13,19 +13,17 @@ import { UserActionType } from "./action-type";
  */
 
 export interface UserState {
-    user: User;
-    isUser: boolean;
+    owner: Owner;
     fetchStatus: Status;
     updateStatus: Status;
 }
 
 const initialState: UserState = {
-    user: {
+    owner: {
         username: "",
         password: "",
         email: "",
     },
-    isUser: true,
     fetchStatus: Status.NotStarted,
     updateStatus: Status.NotStarted,
 };
@@ -39,9 +37,8 @@ interface CreateNewUserAction {
 }
 
 interface CreateNewUserSuccessAction {
-    user: User;
+    owner: Owner;
     type: UserActionType.CreateNewUserSuccessAction;
-    isUser: boolean;
 }
 
 interface CreateNewUserFailAction {
@@ -53,9 +50,8 @@ interface LoginUserAction {
 }
 
 interface LoginUserSuccessAction {
-    user: User;
+    owner: Owner;
     type: UserActionType.LoginUserSucessAction;
-    isUser: boolean;
 }
 
 interface LoginUserFailAction {
@@ -95,8 +91,7 @@ export const reducer = (state: UserState = initialState, action: Action): UserSt
         case UserActionType.CreateNewUserSuccessAction:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
-                draftState.user = action.user;
-                draftState.isUser = action.isUser;
+                draftState.owner = action.owner;
             });
         case UserActionType.CreateNewUserFailAction:
             return produce(state, (draftState) => {
@@ -109,8 +104,7 @@ export const reducer = (state: UserState = initialState, action: Action): UserSt
         case UserActionType.LoginUserSucessAction:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
-                draftState.user = action.user;
-                draftState.isUser = action.isUser;
+                draftState.owner = action.owner;
             });
         case UserActionType.LoginUserFailAction:
             return produce(state, (draftState) => {
@@ -122,86 +116,26 @@ export const reducer = (state: UserState = initialState, action: Action): UserSt
 };
 
 // 새로운 유저를 생성하기 위한 API Call + Reducer State Update
-export const createNewUser = async (
-    api: KouponBankApi,
-    user: User,
-    dispatch: Dispatch,
-): Promise<void> => {
-    dispatch({
-        type: UserActionType.CreateNewUserAction,
-    });
-    return api
-        .createUser(user)
-        .then((user) => {
-            dispatch({
-                type: UserActionType.CreateNewUserSuccessAction,
-                user: user,
-            });
-        })
-        .catch((err) => {
-            dispatch({
-                type: UserActionType.CreateNewUserFailAction,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
-// 새로운 유저를 생성하기 위한 API Call + Reducer State Update
 export const createNewOwner = async (
     api: KouponBankApi,
-    user: User,
+    owner: Owner,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.CreateNewUserAction,
     });
     return api
-        .createOwner(user)
-        .then((user) => {
+        .createOwner(owner)
+        .then((owner) => {
             dispatch({
                 type: UserActionType.CreateNewUserSuccessAction,
-                user: user,
+                owner: owner,
                 isUser: false,
             });
         })
         .catch((err) => {
             dispatch({
                 type: UserActionType.CreateNewUserFailAction,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
-export const loginUser = async (
-    api: KouponBankApi,
-    user: User,
-    dispatch: Dispatch,
-): Promise<User> => {
-    dispatch({
-        type: UserActionType.LoginUserAction,
-    });
-    return api
-        .loginUser(user)
-        .then((user) => {
-            dispatch({
-                type: UserActionType.LoginUserSucessAction,
-                user: user,
-            });
-            return user;
-        })
-        .catch((err) => {
-            dispatch({
-                type: UserActionType.LoginUserFailAction,
             });
             dispatch({
                 type: AlertsActionType.DisplayError,
@@ -214,21 +148,21 @@ export const loginUser = async (
 
 export const loginOwner = async (
     api: KouponBankApi,
-    user: User,
+    owner: Owner,
     dispatch: Dispatch,
-): Promise<User> => {
+): Promise<Owner> => {
     dispatch({
         type: UserActionType.LoginUserAction,
     });
     return api
-        .loginOwner(user)
-        .then((user) => {
+        .loginOwner(owner)
+        .then((owner) => {
             dispatch({
                 type: UserActionType.LoginUserSucessAction,
-                user: user,
+                owner: owner,
                 isUser: false,
             });
-            return user;
+            return owner;
         })
         .catch((err) => {
             dispatch({

@@ -3,27 +3,27 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { User, UserDetail } from "../../api/kb-types";
+import { Owner, OwnerDetail } from "../../api/kb-types";
+import { updateOwnerDetail } from "../../store/owner/owner-detail-reducer";
 import { RootReducer } from "../../store/reducer";
-import { updateOwnerDetail } from "../../store/user/user-detail-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
-import { UserProfileForm } from "./user-profile-form";
-import "./user-profile-page.scss";
+import { ProfileForm } from "./profile-form";
+import "./profile-page.scss";
 
 /**
- * Represents the required properties of the User Profile Page
+ * Represents the required properties of the Owner Profile Page
  */
 export interface Prop {
-    userDetail: UserDetail;
-    user: User;
-    updateOwnerDetail: (api: KouponBankApi, id: string, userDetail: UserDetail) => Promise<void>;
+    ownerDetail: OwnerDetail;
+    owner: Owner;
+    updateOwnerDetail: (api: KouponBankApi, id: string, ownerDetail: OwnerDetail) => Promise<void>;
 }
 
 export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
-    const [userDetailCredentials, setUserDetailCredentials] = useState(props.userDetail);
+    const [userDetailCredentials, setUserDetailCredentials] = useState(props.ownerDetail);
 
     const editDetails = (event: React.ChangeEvent<HTMLInputElement>): void => {        
         setUserDetailCredentials({
@@ -34,9 +34,9 @@ export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
 
     const submitChange = (event: React.MouseEvent<HTMLElement>): void => {
         props
-            .updateOwnerDetail(api, props.user.id, userDetailCredentials)
+            .updateOwnerDetail(api, props.owner.id, userDetailCredentials)
             .then(() => {
-                history.push(UrlPaths.UserProfile);
+                history.push(UrlPaths.ProfilePage);
             })
             .catch(() => {
                 // currently does nothing;
@@ -47,10 +47,10 @@ export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
     return (
         <div className="background">
             <NavBarR/>
-            <UserProfileForm 
+            <ProfileForm 
                 temp={userDetailCredentials}
-                userCredentials={props.user}
-                userDetailCredentials={props.userDetail}
+                userCredentials={props.owner}
+                userDetailCredentials={props.ownerDetail}
                 editDetails={editDetails}
                 submitChange={submitChange}
             />
@@ -60,15 +60,15 @@ export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
-        userDetail: state.userDetailReducer.userDetail,
+        owner: state.ownerReducer.owner,
+        ownerDetail: state.ownerDetailReducer.ownerDetail,
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        updateOwnerDetail: async (api: KouponBankApi, id: string, userDetail: UserDetail) => {
-            return updateOwnerDetail(api, id, userDetail, dispatch);
+        updateOwnerDetail: async (api: KouponBankApi, id: string, ownerDetail: OwnerDetail) => {
+            return updateOwnerDetail(api, id, ownerDetail, dispatch);
         },
     };
 };

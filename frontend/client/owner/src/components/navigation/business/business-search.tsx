@@ -1,19 +1,19 @@
 import { TableCell, TableRow, TextField } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../../api/kb-api";
-import { User, Business } from "../../../api/kb-types";
-import { getOwnerBusiness, getBusinessesFromSearch, initialState } from "../../../store/business/business-reducer";
+import { Business, Owner } from "../../../api/kb-types";
+import { getBusinessesFromSearch, getOwnerBusiness, initialState } from "../../../store/business/business-reducer";
 import { RootReducer } from "../../../store/reducer";
 import { ApiContext } from "../../base-page-router";
 import { SearchedBusinessList } from "./business-search-list";
-import { useHistory } from "react-router-dom";
 import "./business-search.scss";
 
 export interface Prop {
     open: boolean;
-    user?: User;
+    owner?: Owner;
     getBusinessesFromSearch: (api: KouponBankApi, char: string) => Promise<Business[]>;
     getOwnerBusiness: (
         api: KouponBankApi,
@@ -44,7 +44,7 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
     }, [businessName]);
 
     const selectBusiness = (businessId) => {
-        props.getOwnerBusiness(api, props.user.id, businessId);
+        props.getOwnerBusiness(api, props.owner.id, businessId);
         history.push(`/business/${businessId}`);
     }
 
@@ -57,8 +57,7 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
                         fullWidth
                         required
                         name="사업장 검색"
-                        id="사업장 검색"
-                        label="사업장 검색"
+                        label="Search Business"
                         autoComplete="off"
                         type="text"
                         onChange={searchBusinessInput}
@@ -88,7 +87,7 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
+        owner: state.ownerReducer.owner,
         searchedBusiness: state.businessReducer.searchedBusinesses,
     };
 };

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, Coupon, User } from "../../api/kb-types";
+import { Business, Coupon, Owner } from "../../api/kb-types";
 import { createCoupon } from "../../store/coupon/coupon-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
@@ -19,7 +19,7 @@ export interface Prop {
         businessId: string,
         coupon: Coupon,
     ) => Promise<Coupon>;
-    user: User;
+    owner: Owner;
     business: Business;
     coupon: Coupon;
 }
@@ -37,15 +37,16 @@ export const CreateCouponPage: React.FC<Prop> = (props: Prop) => {
             [target.name]: target.value,
         });
     };
+    
     /**
      * 쿠폰 추가하기 클릭
      * @param event
      */
     const createCouponClick = (event: React.FormEvent<HTMLInputElement>): void => {
         props
-            .createCoupon(api, props.user.id, props.business.id, coupon)
+            .createCoupon(api, props.owner.id, props.business.id, coupon)
             .then(() => {
-                history.push(UrlPaths.Home);
+                history.push(UrlPaths.HomePage);
             })
             .catch(() => {
                 // Currently does nothing
@@ -66,7 +67,7 @@ export const CreateCouponPage: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
+        owner: state.ownerReducer.owner,
         business: state.businessReducer.business,
         coupon: state.couponReducer.coupon,
     };

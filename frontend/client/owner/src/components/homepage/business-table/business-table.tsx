@@ -5,8 +5,8 @@ import { Dispatch } from "redux";
 import { Business } from "../../../api/kb-types";
 import { BusinessActionType } from "../../../store/business/action-type";
 import { Action as BusinessAction } from "../../../store/business/business-reducer";
-import "./business-table.scss";
 import { RootReducer } from "../../../store/reducer";
+import "./business-table.scss";
 
 export interface Prop {
     business: Business;
@@ -48,7 +48,7 @@ export const BusinessTable = (props: Prop): JSX.Element => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
+        owner: state.ownerReducer.owner,
         business: state.businessReducer.business,
     };
 };

@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { Status, UserDetail } from "../../api/kb-types";
+import { OwnerDetail, Status } from "../../api/kb-types";
 import { UserActionType } from "./action-type";
 /**
  * 프로젝트 Global Variable State 트래킹
@@ -10,14 +10,14 @@ import { UserActionType } from "./action-type";
  */
 
 export interface userDetailState {
-    userDetail: UserDetail;
+    ownerDetail: OwnerDetail;
     fetchStatus: Status;
     updateStatus: Status;
 }
 
 //Frontend initial state --> not needed.
 const initialState: userDetailState = {
-    userDetail: {
+    ownerDetail: {
         name: "",
         gender: "",
         birthday: "",
@@ -36,7 +36,7 @@ interface GetUserDetailAction {
 }
 
 interface GetUserDetailSuccessAction {
-    userDetail: UserDetail;
+    ownerDetail: OwnerDetail;
     type: UserActionType.GetUserDetailSuccessAction;
 }
 
@@ -49,7 +49,7 @@ interface UpdateUserDetailAction {
 }
 
 interface UpdateUserDetailSuccessAction {
-    userDetail: UserDetail;
+    ownerDetail: OwnerDetail;
     type: UserActionType.UpdateUserDetailSuccessAction;
 }
 
@@ -84,7 +84,7 @@ export const reducer = (state: userDetailState = initialState, action: Action): 
             });
         case UserActionType.GetUserDetailSuccessAction:
             return produce(state, (draftState) => {
-                draftState.userDetail = action.userDetail;
+                draftState.ownerDetail = action.ownerDetail;
             });
         case UserActionType.GetUserDetailFailAction:
             return produce(state, (draftState) => {
@@ -96,7 +96,7 @@ export const reducer = (state: userDetailState = initialState, action: Action): 
             });
         case UserActionType.UpdateUserDetailSuccessAction:
             return produce(state, (draftState) => {
-                draftState.userDetail = action.userDetail;
+                draftState.ownerDetail = action.ownerDetail;
             });
         case UserActionType.UpdateUserDetailFailAction:
             return produce(state, (draftState) => {
@@ -107,75 +107,27 @@ export const reducer = (state: userDetailState = initialState, action: Action): 
     }
 };
 
-// 유저 (소비자) 디테일을 업데이트 하기 위한 API Call + Reducer State Update
-export const updateUserDetail = async (
-    api: KouponBankApi,
-    id: string,
-    userDetail: UserDetail,
-    dispatch: Dispatch,
-): Promise<void> => {
-    dispatch({
-        type: UserActionType.UpdateUserDetailAction,
-    });
-    return api
-        .updateUserDetail(id, userDetail)
-        .then((userDetail) => {
-            dispatch({
-                type: UserActionType.UpdateUserDetailSuccessAction,
-                userDetail: userDetail,
-            });
-        })
-        .catch(() => {
-            dispatch({
-                type: UserActionType.UpdateUserDetailFailAction,
-            });
-        });
-};
-
 // 유저 (사업자) 디테일을 업데이트 하기 위한 API Call + Reducer State Update
 export const updateOwnerDetail = async (
     api: KouponBankApi,
     id: string,
-    userDetail: UserDetail,
+    ownerDetail: OwnerDetail,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: UserActionType.UpdateUserDetailAction,
     });
     return api
-        .updateOwnerDetail(id, userDetail)
-        .then((userDetail) => {
+        .updateOwnerDetail(id, ownerDetail)
+        .then((ownerDetail) => {
             dispatch({
                 type: UserActionType.UpdateUserDetailSuccessAction,
-                userDetail: userDetail,
+                ownerDetail: ownerDetail,
             });
         })
         .catch(() => {
             dispatch({
                 type: UserActionType.UpdateUserDetailFailAction,
-            });
-        });
-};
-
-export const getUserDetail = async (
-    api: KouponBankApi,
-    userId: string,
-    dispatch: Dispatch,
-): Promise<void> => {
-    dispatch({
-        type: UserActionType.GetUserDetailAction,
-    });
-    return api
-        .getUserDetail(userId)
-        .then((userDetail) => {
-            dispatch({
-                type: UserActionType.GetUserDetailSuccessAction,
-                userDetail: userDetail,
-            });
-        })
-        .catch(() => {
-            dispatch({
-                type: UserActionType.GetUserDetailFailAction,
             });
         });
 };
@@ -190,10 +142,10 @@ export const getOwnerDetail = async (
     });
     return api
         .getOwnerDetail(userId)
-        .then((userDetail) => {
+        .then((ownerDetail) => {
             dispatch({
                 type: UserActionType.GetUserDetailSuccessAction,
-                userDetail: userDetail,
+                ownerDetail: ownerDetail,
             });
         })
         .catch(() => {

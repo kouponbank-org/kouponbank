@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
-import { KouponBankApi } from "../../api/kb-api";
-import { updateBusiness } from "../../store/business/business-reducer";
-import { ApiContext } from "../base-page-router";
 import { Dispatch } from "redux";
-import { User, Business, Coupon } from "../../api/kb-types";
+import { KouponBankApi } from "../../api/kb-api";
+import { Business, Coupon, Owner } from "../../api/kb-types";
+import { updateBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
+import { ApiContext } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
 import { BusinesspageForm } from "./business-page-form";
 import "./business-page.scss";
@@ -13,8 +13,7 @@ import "./business-page.scss";
 
 interface Prop {
     business: Business;
-    user: User;
-    isUser: Boolean;
+    owner: Owner;
     coupon: Coupon;
     updateBusiness: (
         api: KouponBankApi,
@@ -37,7 +36,7 @@ export const BusinessPage = (props: Prop) =>  {
 
     const submitChange = (event): void => {
         props.updateBusiness(api,
-                               props.user.id,
+                               props.owner.id,
                                props.business.id,
                                businessInfo
                                )
@@ -47,33 +46,20 @@ export const BusinessPage = (props: Prop) =>  {
     return (
         <div className="business-page">
             <NavBarR/>
-            {
-                 props.isUser===false ? (
-                    <BusinesspageForm
-                        isUser={props.isUser}
-                        businessInput={businessInfo}
-                        business={props.business}
-                        editDetails={editDetails}
-                        submitChange={submitChange}
-                        coupon={props.coupon}
-                    />
-                ) : (
-                    <BusinesspageForm
-                        isUser={props.isUser}
-                        business={props.business}
-                        coupon={props.coupon}
-                    />
-                )
-            }
-            
+            <BusinesspageForm
+                businessInput={businessInfo}
+                business={props.business}
+                editDetails={editDetails}
+                submitChange={submitChange}
+                coupon={props.coupon}
+            />
         </div>
     );
 };
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
-        isUser: state.userReducer.isUser,
+        owner: state.ownerReducer.owner,
         business: state.businessReducer.business,
         coupon: state.couponReducer.coupon,
     };

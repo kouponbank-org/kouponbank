@@ -1,14 +1,13 @@
 import { Button, Grid, TextField } from "@material-ui/core";
 import React from "react";
-import { User } from "../../api/kb-types";
+import { Owner } from "../../api/kb-types";
 import "./login.scss";
 
 /**
  * Represents the required properties of the log in form.
  */
 export interface Prop {
-    isUser: boolean;
-    userCredentials: User;
+    userCredentials: Owner;
     userCredentialsInput: (event) => void;
     signUpClick?: (event) => void;
     loginUserClick: (event) => void;
@@ -85,20 +84,16 @@ export const LoginForm = (props: Prop): JSX.Element => {
                     Login
                 </Button>
             </form>
-            {props.isUser ? (
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="sign-up-button"
-                    onClick={signUpClick}
-                >
-                    Sign up
-                </Button>
-            ) : (
-                ""
-            )}
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className="sign-up-button"
+                onClick={signUpClick}
+            >
+                Sign up
+            </Button>
         </div>
     );
 };
