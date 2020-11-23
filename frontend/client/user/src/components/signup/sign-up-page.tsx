@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { User, Business } from "../../api/kb-types";
+import { Business, User } from "../../api/kb-types";
+import { getBusinesses } from "../../store/business/business-reducer";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
-import { createNewOwner, createNewUser } from "../../store/user/user-reducer";
-import { getBusinesses } from "../../store/business/business-reducer";
+import { createNewUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
 import { Notifications } from "../notifications/notifications";
@@ -19,7 +19,6 @@ import "./sign-up-page.scss";
  */
 export interface Prop {
     createNewUser: (api: KouponBankApi, user: User) => Promise<void>;
-    createNewOwner: (api: KouponBankApi, user: User) => Promise<void>;
     getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
     user: User;
     alertState: AlertState;
@@ -31,32 +30,20 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
     const alert = props.alertState.alert;
     const [userCredentials, setUserCredentials] = useState(props.user);
     const [showAlert, setShowAlert] = useState(true);
-    const [isUser, setIsUser] = useState(true);
 
     const createNewUserClick = (event: React.FormEvent): void => {
-        if (isUser) {
-            props
-                .createNewUser(api, userCredentials)
+        props
+            .createNewUser(api, userCredentials)
+            .then(() => {
+                props
+                .getBusinesses(api)
                 .then(() => {
-                    props
-                    .getBusinesses(api)
-                    .then(() => {
-                        history.push(UrlPaths.Home);
-                    })
+                    history.push(UrlPaths.HomePage);
                 })
-                .catch(() => {
-                    //currently does nothing
-                });
-        } else {
-            props
-                .createNewOwner(api, userCredentials)
-                .then(() => {
-                    history.push(UrlPaths.Home);
-                })
-                .catch(() => {
-                    //currently does nothing
-                });
-        }
+            })
+            .catch(() => {
+                //currently does nothing
+            });
         event.preventDefault();
     };
 
@@ -68,23 +55,13 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         });
     };
 
-    const userOrOwnerSignup = (): void => {
-        if (isUser) {
-            setIsUser(false);
-        } else {
-            setIsUser(true);
-        }
-    };
-
     return (
         <div className="background">
-            <NavBarR title={isUser ? "User Signup Page" : "Owner Signup Page"} />
+            <NavBarR title="Signup Page" />
             <SignUpForm
-                signUpButtonName={isUser ? "Owner Signup" : "User Signup"}
                 userCredentials={userCredentials}
                 createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}
-                userOrOwnerSignup={userOrOwnerSignup}
             />
             <Notifications
                 onClose={() => {
@@ -112,9 +89,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         createNewUser: async (api: KouponBankApi, user: User) => {
             return createNewUser(api, user, dispatch);
-        },
-        createNewOwner: async (api: KouponBankApi, user: User) => {
-            return createNewOwner(api, user, dispatch);
         },
         getBusinesses: async (api: KouponBankApi) => {
             return getBusinesses(api, dispatch);

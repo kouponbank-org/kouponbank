@@ -25,19 +25,6 @@ const initialState: CouponState = {
     updateStatus: Status.NotStarted,
 };
 
-interface GetCouponListAction {
-    type: CouponActionType.GetCouponList;
-}
-
-interface GetCouponListSuccessAction {
-    type: CouponActionType.GetCouponListSuccess;
-    coupons: Coupon[];
-}
-
-interface GetCouponListFailAction {
-    type: CouponActionType.GetCouponListFail;
-}
-
 interface CreateCouponAction {
     type: CouponActionType.CreateCoupon;
 }
@@ -65,9 +52,6 @@ interface UpdateCouponFailAction {
 }
 
 export type Action =
-    | GetCouponListAction
-    | GetCouponListSuccessAction
-    | GetCouponListFailAction
     | CreateCouponAction
     | CreateCouponSuccessAction
     | CreateCouponFailAction
@@ -77,19 +61,6 @@ export type Action =
 
 export const reducer = (state: CouponState = initialState, action: Action): CouponState => {
     switch (action.type) {
-        case CouponActionType.GetCouponList:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Running;
-            });
-        case CouponActionType.GetCouponListSuccess:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Succeeded;
-                draftState.coupons = action.coupons;
-            });
-        case CouponActionType.GetCouponListFail:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Failed;
-            });
         case CouponActionType.CreateCoupon:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Running;
@@ -176,36 +147,6 @@ export const updateCoupon = async (
         .catch((err) => {
             dispatch({
                 type: CouponActionType.UpdateCouponFail,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
-export const getOwnercoupons = async (
-    api: KouponBankApi,
-    businessId: string,
-    dispatch: Dispatch,
-): Promise<Coupon[]> => {
-    dispatch({
-        type: CouponActionType.GetCouponList,
-    });
-    return api
-        .getCoupons(businessId)
-        .then((coupons) => {
-            dispatch({
-                type: CouponActionType.GetCouponListSuccess,
-                coupons: coupons,
-            });
-            return coupons;
-        })
-        .catch((err) => {
-            dispatch({
-                type: CouponActionType.GetCouponListFail,
             });
             dispatch({
                 type: AlertsActionType.DisplayError,

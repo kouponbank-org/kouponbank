@@ -7,7 +7,6 @@ import "./login.scss";
  * Represents the required properties of the log in form.
  */
 export interface Prop {
-    isUser: boolean;
     userCredentials: User;
     userCredentialsInput: (event) => void;
     signUpClick?: (event) => void;
@@ -85,20 +84,16 @@ export const LoginForm = (props: Prop): JSX.Element => {
                     Login
                 </Button>
             </form>
-            {props.isUser ? (
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="sign-up-button"
-                    onClick={signUpClick}
-                >
-                    Sign up
-                </Button>
-            ) : (
-                ""
-            )}
+            <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className="sign-up-button"
+                onClick={signUpClick}
+            >
+                Sign up
+            </Button>
         </div>
     );
 };

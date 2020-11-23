@@ -132,31 +132,6 @@ export const updateUserDetail = async (
         });
 };
 
-// 유저 (사업자) 디테일을 업데이트 하기 위한 API Call + Reducer State Update
-export const updateOwnerDetail = async (
-    api: KouponBankApi,
-    id: string,
-    userDetail: UserDetail,
-    dispatch: Dispatch,
-): Promise<void> => {
-    dispatch({
-        type: UserActionType.UpdateUserDetailAction,
-    });
-    return api
-        .updateOwnerDetail(id, userDetail)
-        .then((userDetail) => {
-            dispatch({
-                type: UserActionType.UpdateUserDetailSuccessAction,
-                userDetail: userDetail,
-            });
-        })
-        .catch(() => {
-            dispatch({
-                type: UserActionType.UpdateUserDetailFailAction,
-            });
-        });
-};
-
 export const getUserDetail = async (
     api: KouponBankApi,
     userId: string,
@@ -167,29 +142,6 @@ export const getUserDetail = async (
     });
     return api
         .getUserDetail(userId)
-        .then((userDetail) => {
-            dispatch({
-                type: UserActionType.GetUserDetailSuccessAction,
-                userDetail: userDetail,
-            });
-        })
-        .catch(() => {
-            dispatch({
-                type: UserActionType.GetUserDetailFailAction,
-            });
-        });
-};
-
-export const getOwnerDetail = async (
-    api: KouponBankApi,
-    userId: string,
-    dispatch: Dispatch,
-): Promise<void> => {
-    dispatch({
-        type: UserActionType.GetUserDetailAction,
-    });
-    return api
-        .getOwnerDetail(userId)
         .then((userDetail) => {
             dispatch({
                 type: UserActionType.GetUserDetailSuccessAction,

@@ -57,32 +57,6 @@ interface GetBusinessListFailAction {
     type: BusinessActionType.GetBusinessListFail;
 }
 
-interface CreateBusinessAction {
-    type: BusinessActionType.CreateBusiness;
-}
-
-interface CreateBusinessSuccessAction {
-    type: BusinessActionType.CreateBusinessSuccess;
-    business: Business;
-}
-
-interface CreateBusinessFailAction {
-    type: BusinessActionType.CreateBusinessFail;
-}
-
-interface UpdateBusinessAction {
-    type: BusinessActionType.UpdateBusiness;
-}
-
-interface UpdateBusinessSuccessAction {
-    type: BusinessActionType.UpdateBusinessSuccess;
-    business: Business;
-}
-
-interface UpdateBusinessFailAction {
-    type: BusinessActionType.UpdateBusinessFail;
-}
-
 interface SetBusinessAction {
     type: BusinessActionType.SetBusiness;
 }
@@ -116,12 +90,6 @@ export type Action =
     | GetBusinessListAction
     | GetBusinessListSuccessAction
     | GetBusinessListFailAction
-    | CreateBusinessAction
-    | CreateBusinessSuccessAction
-    | CreateBusinessFailAction
-    | UpdateBusinessAction
-    | UpdateBusinessSuccessAction
-    | UpdateBusinessFailAction
     | SetBusinessAction
     | SetBusinessSuccessAction
     | SetBusinessFailAction
@@ -157,32 +125,6 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
-        case BusinessActionType.CreateBusiness:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Running;
-            });
-        case BusinessActionType.CreateBusinessSuccess:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Succeeded;
-                draftState.business = action.business;
-            });
-        case BusinessActionType.CreateBusinessFail:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Failed;
-            });
-        case BusinessActionType.UpdateBusiness:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Running;
-            });
-        case BusinessActionType.UpdateBusinessSuccess:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Succeeded;
-                draftState.business = action.business;
-            });
-        case BusinessActionType.UpdateBusinessFail:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Failed;
-            });
         case BusinessActionType.SetBusiness:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Running;
@@ -214,69 +156,6 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
     }
 };
 
-export const createBusiness = async (
-    api: KouponBankApi,
-    userId: string,
-    business: Business,
-    dispatch: Dispatch,
-): Promise<Business> => {
-    dispatch({
-        type: BusinessActionType.CreateBusiness,
-    });
-    return api
-        .createBusiness(userId, business)
-        .then((business) => {
-            dispatch({
-                type: BusinessActionType.CreateBusinessSuccess,
-                business: business,
-            });
-            return business;
-        })
-        .catch((err) => {
-            dispatch({
-                type: BusinessActionType.CreateBusinessFail,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
-export const updateBusiness = async (
-    api: KouponBankApi,
-    userId: string,
-    businessId: string,
-    business: Business,
-    dispatch: Dispatch,
-): Promise<Business> => {
-    dispatch({
-        type: BusinessActionType.UpdateBusiness,
-    });
-    return api
-        .updateBusiness(userId, businessId, business)
-        .then((business) => {
-            dispatch({
-                type: BusinessActionType.UpdateBusinessSuccess,
-                business: business,
-            });
-            return business;
-        })
-        .catch((err) => {
-            dispatch({
-                type: BusinessActionType.UpdateBusinessFail,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
 export const getBusinesses = async (
     api: KouponBankApi,
     dispatch: Dispatch,
@@ -306,45 +185,15 @@ export const getBusinesses = async (
         });
 };
 
-export const getOwnerBusinesses = async (
+export const getBusiness = async (
     api: KouponBankApi,
-    userId: string,
-    dispatch: Dispatch,
-): Promise<void> => {
-    dispatch({
-        type: BusinessActionType.GetBusinessList,
-    });
-    return api
-        .getOwnerBusinesses(userId)
-        .then((businesses) => {
-            dispatch({
-                type: BusinessActionType.GetBusinessListSuccess,
-                businesses: businesses,
-            });
-        })
-        .catch((err) => {
-            dispatch({
-                type: BusinessActionType.GetBusinessListFail,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
-export const getOwnerBusiness = async (
-    api: KouponBankApi,
-    userId: string,
     businessId: string,
     dispatch: Dispatch,
 ): Promise<Business> => {
     dispatch({
-        type: BusinessActionType.GetBusinessList,
+        type: BusinessActionType.GetBusiness,
     });
-    return api.getBusiness(userId, businessId).then(business => {
+    return api.getBusiness(businessId).then(business => {
         dispatch({
             type: BusinessActionType.GetBusinessSuccess,
             business: business,

@@ -1,4 +1,4 @@
-import { AppBar, Button, Dialog, Toolbar } from "@material-ui/core";
+import { AppBar, Button, Toolbar } from "@material-ui/core";
 import React, { Fragment, ReactElement, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -6,7 +6,6 @@ import { Dispatch } from "redux";
 import { Owner, OwnerDetail } from "../../api/kb-types";
 import { RootReducer, signOut } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
-import { SearchBusinessR } from "./business/business-search";
 import "./navigation-bar.scss";
 
 export interface Prop {
@@ -74,16 +73,6 @@ export const NavBar = (props: Prop): ReactElement => {
                     )}
                 </Toolbar>
             </AppBar>
-            <Dialog
-                fullWidth={true}
-                maxWidth="xl"
-                scroll="body"
-                open={open}
-                onClose={() => setOpen(false)}
-                className="search-address-modal modal"
-            >
-                <SearchBusinessR open={open} />
-            </Dialog>
         </div>
     );
 };

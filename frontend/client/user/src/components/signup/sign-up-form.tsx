@@ -4,20 +4,13 @@ import { User } from "../../api/kb-types";
 import "./sign-up-page.scss";
 
 export interface Prop {
-    signUpButtonName: string;
     userCredentials: User;
     createNewUserClick: (event) => void;
-    userCredentialsInput: (event) => void;
-    userOrOwnerSignup: () => void;
-}
+    userCredentialsInput: (event) => void;}
 
 export const SignUpForm = (props: Prop): JSX.Element => {
     const createNewUserClick = (event: React.FormEvent): void => {
         props.createNewUserClick(event);
-    };
-
-    const userOrOwnerSignup = (): void => {
-        props.userOrOwnerSignup();
     };
 
     const userCredentialsInput = (event: React.FormEvent): void => {
@@ -82,16 +75,6 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                     Sign Up
                 </Button>
             </form>
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className="switch-sign-up-button"
-                onClick={userOrOwnerSignup}
-            >
-                {props.signUpButtonName}
-            </Button>
         </div>
     );
 };

@@ -214,6 +214,37 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
     }
 };
 
+/* Owner Related Business API Calls */
+
+export const getOwnerBusinesses = async (
+    api: KouponBankApi,
+    userId: string,
+    dispatch: Dispatch,
+): Promise<void> => {
+    dispatch({
+        type: BusinessActionType.GetBusinessList,
+    });
+    return api
+        .getOwnerBusinesses(userId)
+        .then((businesses) => {
+            dispatch({
+                type: BusinessActionType.GetBusinessListSuccess,
+                businesses: businesses,
+            });
+        })
+        .catch((err) => {
+            dispatch({
+                type: BusinessActionType.GetBusinessListFail,
+            });
+            dispatch({
+                type: AlertsActionType.DisplayError,
+                header: "ERROR",
+                body: "다시 시도해 주세요",
+            } as DisplayError);
+            throw err;
+        });
+};
+
 export const createBusiness = async (
     api: KouponBankApi,
     userId: string,
@@ -306,45 +337,15 @@ export const getBusinesses = async (
         });
 };
 
-export const getOwnerBusinesses = async (
+export const getBusiness = async (
     api: KouponBankApi,
-    userId: string,
-    dispatch: Dispatch,
-): Promise<void> => {
-    dispatch({
-        type: BusinessActionType.GetBusinessList,
-    });
-    return api
-        .getOwnerBusinesses(userId)
-        .then((businesses) => {
-            dispatch({
-                type: BusinessActionType.GetBusinessListSuccess,
-                businesses: businesses,
-            });
-        })
-        .catch((err) => {
-            dispatch({
-                type: BusinessActionType.GetBusinessListFail,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
-export const getOwnerBusiness = async (
-    api: KouponBankApi,
-    userId: string,
     businessId: string,
     dispatch: Dispatch,
 ): Promise<Business> => {
     dispatch({
         type: BusinessActionType.GetBusinessList,
     });
-    return api.getBusiness(userId, businessId).then(business => {
+    return api.getBusiness(businessId).then(business => {
         dispatch({
             type: BusinessActionType.GetBusinessSuccess,
             business: business,

@@ -5,10 +5,10 @@ import { KouponBankApi } from "../api/kb-api";
 import { BusinessPageR } from "./business/business-page";
 import { CreateBusinessPageR } from "./business/create-business/create-business-page";
 import { CreateCouponPageR } from "./coupon/create-coupon-page";
-import { HomePageR } from "./homepage/home-page";
+import { HomePageR } from "./homepage/homepage";
 import { InfoPageR } from "./info/information-page";
 import { LoginPageR } from "./login/login-page";
-import { OwnerProfilePageR } from "./profile/profile-page";
+import { ProfilePageR } from "./profile/profile-page";
 import { SignUpPageR } from "./signup/sign-up-page";
 
 export const ApiContext = React.createContext(null);
@@ -63,7 +63,7 @@ const BasePageRouter = () => {
                 <Route path={UrlPaths.CreateCouponPage} component={CreateCouponPageR} />
                 <Route path={UrlPaths.BusinessPage} component={BusinessPageR} />
                 <Route path={UrlPaths.CreateBusinessPage} component={CreateBusinessPageR} />
-                <Route path={UrlPaths.ProfilePage} component={OwnerProfilePageR} />
+                <Route path={UrlPaths.ProfilePage} component={ProfilePageR} />
                 <Route path={UrlPaths.SignUpPage} component={SignUpPageR} />
                 <Route path={UrlPaths.LoginPage} component={LoginPageR} />
                 <Route exact path={UrlPaths.HomePage} component={HomePageR} />

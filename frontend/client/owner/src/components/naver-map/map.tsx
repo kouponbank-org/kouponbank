@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, NaverMapBound, Owner } from "../../api/kb-types";
-import { getOwnerBusiness } from "../../store/business/business-reducer";
+import { getBusiness } from "../../store/business/business-reducer";
 import {
     getAllBusinessWithinNaverMapBounds,
     naverMapBoundChanged
@@ -23,9 +23,8 @@ export interface Prop {
     getAllBusinessWithinNaverMapBounds: (api: KouponBankApi, naverMapBound: NaverMapBound) => Promise<Business[]>;
     naverMapBound: NaverMapBound;
     naverMapBusinesses: Business[];
-    getOwnerBusiness?: (
+    getBusiness: (
         api: KouponBankApi,
-        userId: string,
         businessId: string,
     ) => Promise<Business>;
 }
@@ -68,7 +67,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     // });
 
     const selectBusiness = (businessId) => {
-        props.getOwnerBusiness(api, props.owner.id, businessId);
+        props.getBusiness(api, businessId);
         history.push(`/business/${businessId}`);
     }
 
@@ -131,12 +130,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         ) => {
             return getAllBusinessWithinNaverMapBounds(api, naverMapBound, dispatch);
         },
-        getOwnerBusiness: (
+        getBusiness: (
             api: KouponBankApi,
-            userId: string,
             businessId: string,
         ) => {
-            return getOwnerBusiness(api, userId, businessId, dispatch);
+            return getBusiness(api, businessId, dispatch);
         },
     };
 };

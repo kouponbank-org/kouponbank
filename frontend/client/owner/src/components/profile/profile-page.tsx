@@ -20,7 +20,7 @@ export interface Prop {
     updateOwnerDetail: (api: KouponBankApi, id: string, ownerDetail: OwnerDetail) => Promise<void>;
 }
 
-export const OwnerProfilePage: React.FC<Prop> = (props: Prop) => {
+export const ProfilePage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const [userDetailCredentials, setUserDetailCredentials] = useState(props.ownerDetail);
@@ -73,4 +73,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     };
 };
 
-export const OwnerProfilePageR = connect(mapStateToProps, mapDispatchToProps)(OwnerProfilePage);
+export const ProfilePageR = connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

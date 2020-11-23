@@ -38,42 +38,10 @@ interface GetCouponListFailAction {
     type: CouponActionType.GetCouponListFail;
 }
 
-interface CreateCouponAction {
-    type: CouponActionType.CreateCoupon;
-}
-
-interface CreateCouponSuccessAction {
-    type: CouponActionType.CreateCouponSuccess;
-    coupon: Coupon;
-}
-
-interface CreateCouponFailAction {
-    type: CouponActionType.CreateCouponFail;
-}
-
-interface UpdateCouponAction {
-    type: CouponActionType.UpdateCoupon;
-}
-
-interface UpdateCouponSuccessAction {
-    type: CouponActionType.UpdateCouponSuccess;
-    coupon: Coupon;
-}
-
-interface UpdateCouponFailAction {
-    type: CouponActionType.UpdateCouponFail;
-}
-
 export type Action =
     | GetCouponListAction
     | GetCouponListSuccessAction
-    | GetCouponListFailAction
-    | CreateCouponAction
-    | CreateCouponSuccessAction
-    | CreateCouponFailAction
-    | UpdateCouponAction
-    | UpdateCouponSuccessAction
-    | UpdateCouponFailAction
+    | GetCouponListFailAction;
 
 export const reducer = (state: CouponState = initialState, action: Action): CouponState => {
     switch (action.type) {
@@ -90,103 +58,12 @@ export const reducer = (state: CouponState = initialState, action: Action): Coup
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
-        case CouponActionType.CreateCoupon:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Running;
-            });
-        case CouponActionType.CreateCouponSuccess:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Succeeded;
-                draftState.coupon = action.coupon;
-            });
-        case CouponActionType.CreateCouponFail:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Failed;
-            });
-        case CouponActionType.UpdateCoupon:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Running;
-            });
-        case CouponActionType.UpdateCouponSuccess:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Succeeded;
-                draftState.coupon = action.coupon;
-            });
-        case CouponActionType.UpdateCouponFail:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Failed;
-            });
         default:
             return state;
     }
 };
 
-export const createCoupon = async (
-    api: KouponBankApi,
-    userId: string,
-    businessId: string,
-    coupon: Coupon,
-    dispatch: Dispatch,
-): Promise<Coupon> => {
-    dispatch({
-        type: CouponActionType.CreateCoupon,
-    });
-    return api
-        .createCoupon(userId, businessId, coupon)
-        .then((coupon) => {
-            dispatch({
-                type: CouponActionType.CreateCouponSuccess,
-                coupon: coupon,
-            });
-            return coupon;
-        })
-        .catch((err) => {
-            dispatch({
-                type: CouponActionType.CreateCouponFail,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
-export const updateCoupon = async (
-    api: KouponBankApi,
-    userId: string,
-    businessId: string,
-    couponId: string,
-    coupon: Coupon,
-    dispatch: Dispatch,
-): Promise<Coupon> => {
-    dispatch({
-        type: CouponActionType.UpdateCoupon,
-    });
-    return api
-        .updateCoupon(userId, businessId, couponId, coupon)
-        .then((coupon) => {
-            dispatch({
-                type: CouponActionType.UpdateCouponSuccess,
-                coupon: coupon,
-            });
-            return coupon;
-        })
-        .catch((err) => {
-            dispatch({
-                type: CouponActionType.UpdateCouponFail,
-            });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
-        });
-};
-
-export const getOwnercoupons = async (
+export const getCoupons = async (
     api: KouponBankApi,
     businessId: string,
     dispatch: Dispatch,

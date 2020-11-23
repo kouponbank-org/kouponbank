@@ -6,7 +6,6 @@ import { Business } from "../../../api/kb-types";
 import { BusinessActionType } from "../../../store/business/action-type";
 import { Action as BusinessAction } from "../../../store/business/business-reducer";
 import "./business-table.scss";
-import { RootReducer } from "../../../store/reducer";
 
 export interface Prop {
     business: Business;
@@ -46,12 +45,11 @@ export const BusinessTable = (props: Prop): JSX.Element => {
     )
 }
 
+/*
 const mapStateToProps = (state: RootReducer) => {
-    return {
-        user: state.userReducer.user,
-        business: state.businessReducer.business,
-    };
+    return {};
 };
+*/
 
 const mapDispatchToProps = (dispatch: Dispatch<BusinessAction>) => {
     return {

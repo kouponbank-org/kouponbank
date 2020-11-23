@@ -66,8 +66,15 @@ export class KouponBankApi {
             });
     }
 
-    /* Business API */
-    //owner business
+    /* Business API - OWNER */
+    async createBusiness(userId: string, business: Business): Promise<Business> {
+        return axios
+            .post<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/`, business)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
     async getOwnerBusiness(userId: string, businessId: string): Promise<Business> {
         return axios
             .get<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`)
@@ -84,30 +91,9 @@ export class KouponBankApi {
             });
     }
 
-    //owner access to business
-    async getBusiness(userId: string, businessId: string): Promise<Business> {
-        return axios.get<Business>(`${this.BASE_URL}/business/${businessId}`).then((response) => {
-            return response.data;
-        });
-    }
-
-    async getBusinesses(): Promise<Business[]> {
-        return axios.get<Business[]>(`${this.BASE_URL}/business/`).then((response) => {
-            return response.data;
-        });
-    }
-
     async removeBusiness(userId: string, businessId: string): Promise<void> {
         return axios
             .delete<void>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`)
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    async createBusiness(userId: string, business: Business): Promise<Business> {
-        return axios
-            .post<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/`, business)
             .then((response) => {
                 return response.data;
             });
@@ -126,6 +112,19 @@ export class KouponBankApi {
             .then((response) => {
                 return response.data;
             });
+    }
+
+    /* Business API - Everyone */
+    async getBusiness(businessId: string): Promise<Business> {
+        return axios.get<Business>(`${this.BASE_URL}/business/${businessId}`).then((response) => {
+            return response.data;
+        });
+    }
+
+    async getBusinesses(): Promise<Business[]> {
+        return axios.get<Business[]>(`${this.BASE_URL}/business/`).then((response) => {
+            return response.data;
+        });
     }
 
     async getBusinessesFromSearch(char: string): Promise<Business[]> {
@@ -253,12 +252,5 @@ export class KouponBankApi {
             .then((response) => {
                 return response.data;
             });
-    }
-    async getCoupons(
-        businessId: string,
-        ): Promise<Coupon[]> {
-        return axios.get<Coupon[]>(`${this.BASE_URL}/business/${businessId}/coupon/`).then((response) => {
-            return response.data;
-        });
     }
 }

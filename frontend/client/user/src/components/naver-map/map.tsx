@@ -1,4 +1,4 @@
-import { Button, Toolbar, Drawer, List} from "@material-ui/core";
+import { Button, Drawer, List, Toolbar } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
@@ -6,15 +6,15 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, NaverMapBound, User } from "../../api/kb-types";
+import { getBusiness } from "../../store/business/business-reducer";
 import {
     getAllBusinessWithinNaverMapBounds,
     naverMapBoundChanged
 } from "../../store/naver-map/naver-map-reducer";
-import { getOwnerBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
-import { MapMarker } from "./map-marker";
 import { MapDrawerListR } from "./map-drawer-list";
+import { MapMarker } from "./map-marker";
 import "./map.scss";
 
 export interface Prop {
@@ -23,7 +23,7 @@ export interface Prop {
     getAllBusinessWithinNaverMapBounds: (api: KouponBankApi, naverMapBound: NaverMapBound) => Promise<Business[]>;
     naverMapBound: NaverMapBound;
     naverMapBusinesses: Business[];
-    getOwnerBusiness?: (
+    getBusiness?: (
         api: KouponBankApi,
         userId: string,
         businessId: string,
@@ -68,7 +68,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     // });
 
     const selectBusiness = (businessId) => {
-        props.getOwnerBusiness(api, props.user.id, businessId);
+        props.getBusiness(api, props.user.id, businessId);
         history.push(`/business/${businessId}`);
     }
 
@@ -131,12 +131,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         ) => {
             return getAllBusinessWithinNaverMapBounds(api, naverMapBound, dispatch);
         },
-        getOwnerBusiness: (
+        getBusiness: (
             api: KouponBankApi,
             userId: string,
             businessId: string,
         ) => {
-            return getOwnerBusiness(api, userId, businessId, dispatch);
+            return getBusiness(api, userId, businessId, dispatch);
         },
     };
 };

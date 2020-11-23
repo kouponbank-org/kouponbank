@@ -7,7 +7,4 @@ export enum CouponActionType {
     UpdateCoupon = "UPDATE_COUPON",
     UpdateCouponSuccess = "UPDATE_COUPON_SUCCESS",
     UpdateCouponFail = "UPDATE_COUPON_FAIL",
-    GetCouponList = "GET_COUPON_LIST",
-    GetCouponListSuccess = "GET_COUPON_LIST_SUCCESS",
-    GetCouponListFail = "GET_COUPON_LIST_FAIL",
 }

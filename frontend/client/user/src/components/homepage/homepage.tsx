@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, Coupon, Owner } from "../../api/kb-types";
-import { getOwnerBusiness } from "../../store/business/business-reducer";
+import { Business, Coupon, User } from "../../api/kb-types";
+import { getBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
@@ -16,13 +16,13 @@ import "./homepage.scss";
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    owner: Owner;
+    user: User;
+    isUser: Boolean;
     coupon: Coupon;
     business: Business;
     businesses: Business[];
-    getOwnerBusiness: (
+    getBusiness: (
         api: KouponBankApi,
-        userId: string,
         businessId: string,
     ) => Promise<Business>;
 };
@@ -30,21 +30,13 @@ export interface Prop {
 export const HomePage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
-
-    const directToUserLogin = (): void => {
+    
+    const toUserLoginPage = (): void => {
         history.push(UrlPaths.LoginPage);
     };
 
-    const couponClick = (): void => {
-        history.push(UrlPaths.CreateCouponPage);
-    };
-
-    const businessClick = (): void => {
-        history.push(UrlPaths.CreateBusinessPage);
-    };
-
     const selectBusiness = (businessId) => {
-        props.getOwnerBusiness(api, props.owner.id, businessId);
+        props.getBusiness(api, businessId);
         history.push(`/business/${businessId}`);
     }
     
@@ -53,15 +45,11 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
             <NavBarR
                 title={"Koupon Bank"} 
                 buttonName={"Login"} 
-                onClick={directToUserLogin}
+                onClick={toUserLoginPage}
             />
             <HomepageForm
-                coupon={props.coupon}
-                businesses={props.businesses}
-                business={props.business}
-                couponClick={couponClick}
-                businessClick={businessClick}
-                selectBusiness={selectBusiness}
+                businesses= {props.businesses}
+                selectBusiness= {selectBusiness}
             />
         </div>
     );
@@ -69,7 +57,7 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        owner: state.ownerReducer.owner,
+        user: state.userReducer.user,
         coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,
@@ -78,12 +66,11 @@ const mapStateToProps = (state: RootReducer) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        getOwnerBusiness: (
+        getBusiness: (
             api: KouponBankApi,
-            userId: string,
             businessId: string,
         ) => {
-            return getOwnerBusiness(api, userId, businessId, dispatch);
+            return getBusiness(api, businessId, dispatch);
         },
     }
 }
