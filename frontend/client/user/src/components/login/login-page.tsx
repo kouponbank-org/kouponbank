@@ -68,7 +68,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR title={"Login Page"} />
+            <NavBarR title={"Customer Login Page"} />
             <LoginForm
                 signUpClick={signUpClick}
                 userCredentials={userCredentials}

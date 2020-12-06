@@ -68,6 +68,7 @@ export class KouponBankApi {
 
     /* Business API - OWNER */
     async createBusiness(userId: string, business: Business): Promise<Business> {
+        console.log("hello");
         return axios
             .post<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/`, business)
             .then((response) => {

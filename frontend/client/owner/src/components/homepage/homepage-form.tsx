@@ -2,7 +2,7 @@ import { Button, ButtonBase, Grid, Paper, TextField, Typography } from "@materia
 import React from "react";
 import { Business, Coupon } from "../../api/kb-types";
 import { MapR } from "../naver-map/map";
-import { BusinessTable } from "./business-table/business-table";
+import { BusinessTable } from "../business-list/business-table/business-table";
 import "./homepage.scss";
 
 export interface Prop {
@@ -19,31 +19,8 @@ export const HomepageForm = (props: Prop): JSX.Element => {
         props.couponClick(event);
     };
 
-    const businessClick = (event): void => {
-        props.businessClick(event);
-    };
-
     return (
         <div className="layout">
-            <Typography component="h1" variant="h5">
-                My Business
-            </Typography>
-            <div>
-                {props.businesses.map((business) => {
-                    return (
-                        <BusinessTable
-                            key={business.id}
-                            business={business}
-                            selectBusiness={props.selectBusiness}
-                        />
-                    );
-                })}
-            </div>
-            <Grid container>
-                <Paper className="paper" variant="outlined">
-                    <Button onClick={businessClick}>Add Business</Button>
-                </Paper>
-            </Grid>
             <Typography component="h1" variant="h5">
                 My Coupon
             </Typography>

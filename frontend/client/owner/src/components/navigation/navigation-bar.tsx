@@ -30,6 +30,10 @@ export const NavBar = (props: Prop): ReactElement => {
         history.push(UrlPaths.HomePage);
     };
 
+    const redirectToBusinesses = () => {
+        history.push(UrlPaths.BusinessListPage)
+    }
+
     const redirectToProfilePage = () => {
         history.push(UrlPaths.ProfilePage);
     };
@@ -49,6 +53,9 @@ export const NavBar = (props: Prop): ReactElement => {
                             </Button>
                             <Button className="logout" onClick={signOut}>
                                 Sign Out
+                            </Button>
+                            <Button className="business-button" onClick={redirectToBusinesses}>
+                                My Businesses
                             </Button>
                         </Fragment>
                     ) : (

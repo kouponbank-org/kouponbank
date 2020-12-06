@@ -11,3 +11,4 @@ pylint
 pylint-django
 isort
 Pillow
+pyproj
