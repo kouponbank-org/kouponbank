@@ -261,7 +261,6 @@ export const createBusiness = async (
                 type: BusinessActionType.CreateBusinessSuccess,
                 business: business,
             });
-            console.log(business);
             return business;
         })
         .catch((err) => {
