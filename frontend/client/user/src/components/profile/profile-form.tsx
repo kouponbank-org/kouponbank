@@ -18,6 +18,7 @@ import "./profile-page.scss";
 export interface Prop {
     temp: UserDetail;
     editDetails: (event) => void;
+    uploadImage: (event) => void;
     submitChange: (event) => void;
     userDetailCredentials: UserDetail;
     userCredentials: User;
@@ -108,6 +109,9 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             Edit
                         </Button>
                     </form>
+                    <img
+                        src={`${process.env.REACT_APP_API_BASE_URL}${props.userDetailCredentials.profile_picture}`}
+                    />
                 </Grid>
                 <Dialog open={open} onClose={modalStatus} aria-labelledby="form-dialog">
                     <DialogTitle id="form-dialog">Edit Profile</DialogTitle>
@@ -142,13 +146,14 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             onChange={editDetails}
                             value={props.temp.birthday}
                         />
+                        <input type="file" name="profile_picture" onChange={props.uploadImage} />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={modalStatus} color="primary">
                             Cancel
                         </Button>
                         <Button onClick={submitChange} color="primary">
-                            Edit
+                            Submit Change
                         </Button>
                     </DialogActions>
                 </Dialog>

@@ -89,11 +89,11 @@ export interface NaverMapBound {
  */
 export interface UserDetail {
     id?: string;
-    name: string;
-    gender: string;
-    birthday: string;
-    location: number | string;
-    profile_picture?: string;
+    name?: string;
+    gender?: string;
+    birthday?: string;
+    location?: string;
+    profile_picture?: File | undefined;
 }
 
 export interface AddressDetail {
