@@ -9,7 +9,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
 class UserDetailAPI(APIView):
     @swagger_auto_schema(
         responses={200: UserDetailSerializer(many=True)},
@@ -111,9 +110,6 @@ class UserDetailAPI(APIView):
         ]
     )
     def put(self, request, user_id):
-        if request.data["profile_picture"]:
-            print("pic has arrived")
-            print(request.data["profile_picture"])
         user_detail = self.__get_user_detail(user_id)
         serializer = UserDetailSerializer(user_detail, data=request.data)
         if serializer.is_valid():

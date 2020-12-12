@@ -44,6 +44,21 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
         event.preventDefault();
     };
 
+    // TODO:
+    // 1) Find a way to combine this method with editDetails method.
+    // 2) Remove the target file value from upload bar if size is too big.
+    const uploadImage = (event) => {
+        const target = event.target;
+        if (target.files[0].size > 2097152) {
+            alert("File is too big!");
+        } else {
+            setUserDetailCredentials({
+                ...userDetailCredentials,
+                [target.name]: target.files[0],
+            });
+        }
+    };
+
     return (
         <div className="background">
             <NavBarR />
@@ -52,6 +67,7 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
                 userCredentials={props.user}
                 userDetailCredentials={props.userDetail}
                 editDetails={editDetails}
+                uploadImage={uploadImage}
                 submitChange={submitChange}
             />
         </div>
