@@ -9,6 +9,7 @@ import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { NavBarR } from "../navigation/navigation-bar";
 import { HomepageForm } from "./homepage-form";
+import { BusinessListPage } from "../business-list/business-list-page"
 import "./homepage.scss";
 
 /**
@@ -37,6 +38,10 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
     const businessClick = (): void => {
         history.push(UrlPaths.CreateBusinessPage);
     };
+
+    const businessesClick = (): void => {
+        history.push(UrlPaths.BusinessListPage);
+    }
 
     const selectBusiness = (businessId) => {
         props
