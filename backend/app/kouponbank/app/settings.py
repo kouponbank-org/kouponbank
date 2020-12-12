@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'kouponbank',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
