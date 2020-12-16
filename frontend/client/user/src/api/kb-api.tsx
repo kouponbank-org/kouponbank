@@ -59,8 +59,17 @@ export class KouponBankApi {
     }
 
     async updateUserDetail(userId: string, userDetail: UserDetail): Promise<UserDetail> {
+        const form_data = new FormData();
+        for (const key in userDetail) {
+            const value = userDetail[key];
+            form_data.append(key, value);
+        }
         return axios
-            .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, userDetail)
+            .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, form_data, {
+                headers: {
+                    "content-type": "multipart/form-data",
+                },
+            })
             .then((response) => {
                 return response.data;
             });
@@ -148,4 +157,22 @@ export class KouponBankApi {
                 return response.data;
             });
     }
+
+    /* Upload Image */
+    /*
+    async uploadImage(userId: string, image: any): Promise<void> {
+        const picture = new FormData();
+        picture.append('image', image)
+        console.log(picture);
+        return axios
+            .put(`${this.BASE_URL}/users/${userId}/detail/`, picture, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            })
+            .then((response) => {
+                return response.data;
+            });
+    }
+    */
 }

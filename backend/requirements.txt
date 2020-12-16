@@ -11,3 +11,5 @@ pylint
 pylint-django
 isort
 Pillow
+pyproj
+django-cleanup
