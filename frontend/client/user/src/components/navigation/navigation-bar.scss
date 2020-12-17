@@ -1,33 +1,40 @@
 .nav-bar {
+    top: 0;
+    width: 100%;
+    height: 5.2%;
+    position:fixed;
+    padding-left: 19.2%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
 
     .title {
-        color: inherit;
+        width: 30.4%;
+        height: 42.9%;
     }
 
-    .search {
-        position: relative;
-        width: 100%;
-
-        .search-icon {
-            height: 100%;
-            position: absolute;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .search-bar-root {
-            color: inherit;
-        }
-
-        .search-bar-input {
-            width: 100%;
-            padding-left: 2em;
-        }
+    .back-button {
+        width: 2.1%;
+        float: left;
+        height: 71.4%;
+        background-color: #dee2e6;
+        border-width: 0;
+        margin-right: 4.2%;
     }
+}
 
-    .button {
-        color: inherit;
+.nav-tab {
+    bottom: 0;
+    position:fixed;
+    box-shadow: 4px 0 8px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
+    width: 100%;
+    height: 9.6%;
+    padding-left: 20.8%;
+    padding-right: 20.8%;
+
+    .nav-tab-content {
+        width: 2.9%;
+        height: 53.3%;
+        margin-right:10.8%;
     }
 }

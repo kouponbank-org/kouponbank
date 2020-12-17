@@ -93,7 +93,7 @@ export interface UserDetail {
     gender?: string;
     birthday?: string;
     location?: string;
-    profile_picture?: File | undefined;
+    profile_picture?: File | null | undefined | string;
 }
 
 export interface AddressDetail {

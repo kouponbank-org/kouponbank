@@ -9,7 +9,7 @@ import { Business, NaverMapBound, User } from "../../api/kb-types";
 import { getBusiness } from "../../store/business/business-reducer";
 import {
     getAllBusinessWithinNaverMapBounds,
-    naverMapBoundChanged
+    naverMapBoundChanged,
 } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";

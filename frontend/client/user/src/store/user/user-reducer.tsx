@@ -120,7 +120,7 @@ export const createNewUser = async (
     api: KouponBankApi,
     user: User,
     dispatch: Dispatch,
-): Promise<void> => {
+): Promise<User> => {
     dispatch({
         type: UserActionType.CreateNewUserAction,
     });
@@ -131,6 +131,7 @@ export const createNewUser = async (
                 type: UserActionType.CreateNewUserSuccessAction,
                 user: user,
             });
+            return user;
         })
         .catch((err) => {
             dispatch({
