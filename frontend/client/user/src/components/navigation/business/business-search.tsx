@@ -8,7 +8,7 @@ import { Business, User } from "../../../api/kb-types";
 import {
     getBusiness,
     getBusinessesFromSearch,
-    initialState
+    initialState,
 } from "../../../store/business/business-reducer";
 import { RootReducer } from "../../../store/reducer";
 import { ApiContext } from "../../base-page-router";

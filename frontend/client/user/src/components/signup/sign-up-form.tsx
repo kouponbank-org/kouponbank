@@ -1,12 +1,20 @@
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
+//import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import { User } from "../../api/kb-types";
 import "./sign-up-page.scss";
 
+const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+    children,
+    ...props
+}) => <button {...props}>{children}</button>;
+
+const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => (
+    <input {...props} />
+);
+
 export interface Prop {
-    userCredentials: User;
     createNewUserClick: (event) => void;
     userCredentialsInput: (event) => void;
+    userDetailCredentialsInput: (event) => void;
 }
 
 export const SignUpForm = (props: Prop): JSX.Element => {
@@ -18,64 +26,83 @@ export const SignUpForm = (props: Prop): JSX.Element => {
         props.userCredentialsInput(event);
     };
 
+    const userDetailCredentialsInput = (event: React.FormEvent): void => {
+        props.userDetailCredentialsInput(event);
+    };
+
+    //TODO:
+    //Password Confirmation
+    //Margin error fix
+    //Media Query
+
     return (
-        <div className="layout">
-            <Typography component="h1" variant="h5">
-                Sign Up
-            </Typography>
-            <form className="form" onSubmit={createNewUserClick} noValidate>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email"
-                            name="email"
-                            autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.email}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.username}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.password}
-                        />
-                    </Grid>
-                </Grid>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="signupbutton"
-                >
+        <div className="background-sign-up">
+            <section className="textfield-container">
+                <label className="textfield-label">Email</label>
+                <Input
+                    type="email"
+                    className="textfield"
+                    name="email"
+                    onChange={userCredentialsInput}
+                    placeholder="Email"
+                ></Input>
+                <label className="textfield-label">Password</label>
+                <Input
+                    type="password"
+                    className="textfield"
+                    name="password"
+                    onChange={userCredentialsInput}
+                    placeholder="Password"
+                ></Input>
+                <label className="textfield-label">Confirm Password</label>
+                <Input
+                    type="password"
+                    className="textfield"
+                    name="password-confirmation"
+                    placeholder="Password Confrimation"
+                ></Input>
+                <label className="textfield-label">Username</label>
+                <Input
+                    type="text"
+                    className="textfield"
+                    name="username"
+                    onChange={userCredentialsInput}
+                    placeholder="Username"
+                ></Input>
+                <section className="birthday-gender-container">
+                    <label className="textfield-label">Birthday</label>
+                    <label className="textfield-label">Gender</label>
+                    <Input
+                        type="date"
+                        className="birthday-textfield"
+                        name="birthday"
+                        onChange={userDetailCredentialsInput}
+                    ></Input>
+                    <Input
+                        type="radio"
+                        id="male"
+                        className="gender-textfield"
+                        name="gender"
+                        value="male"
+                        onChange={userDetailCredentialsInput}
+                    ></Input>
+                    <label htmlFor="male">Male</label>
+                    <Input
+                        type="radio"
+                        id="female"
+                        className="gender-textfield"
+                        name="gender"
+                        value="female"
+                        onChange={userDetailCredentialsInput}
+                    ></Input>
+                    <label htmlFor="female">Female</label>
+                </section>
+            </section>
+            <section className="button-container">
+                <Button className="button" onClick={createNewUserClick}>
                     Sign Up
                 </Button>
-            </form>
+            </section>
         </div>
     );
 };

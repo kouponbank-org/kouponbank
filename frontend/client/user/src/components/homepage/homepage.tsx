@@ -27,8 +27,8 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div>
-            <NavBarR title={"Koupon Bank"} buttonName={"Login"} onClick={toUserLoginPage} />
             <HomepageForm />
+            <NavBarR title={"Koupon Bank"} buttonName={"Login"} onClick={toUserLoginPage} />
         </div>
     );
 };
