@@ -58,6 +58,7 @@ export class KouponBankApi {
             });
     }
 
+    //having if else condition for cases when the picture is or is not uploaded
     async updateUserDetail(userId: string, userDetail: UserDetail): Promise<UserDetail> {
         const form_data = new FormData();
         for (const key in userDetail) {
@@ -65,15 +66,23 @@ export class KouponBankApi {
             console.log(key + value)
             form_data.append(key, value);
         }
-        return axios
-            .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, form_data, {
-                headers: {
-                    "content-type": "multipart/form-data",
-                },
-            })
-            .then((response) => {
-                return response.data;
-            });
+        if (userDetail.profile_picture === null) {
+            return axios
+                .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, userDetail)
+                .then((response) => {
+                    return response.data;
+                });
+        } else {
+            return axios
+                .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, form_data, {
+                    headers: {
+                        "content-type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    return response.data;
+                });
+        }
     }
 
     /*Business API*/

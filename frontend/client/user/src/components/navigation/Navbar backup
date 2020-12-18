@@ -1,0 +1,43 @@
+<AppBar>
+                <Toolbar>
+                    <Button className="homepage button" onClick={redirectToHomepage}>
+                        Koupon Bank
+                    </Button>
+                    <div className="search">
+                        {props.title === "Koupon Bank" ? (
+                            <Button
+                                color="inherit"
+                                onClick={() => setOpen(true)}
+                                className="search-address-modal button"
+                            >
+                                Search Business
+                            </Button>
+                        ) : (
+                            ""
+                        )}
+                    </div>
+                    {props.title}
+                    {props.user.username !== "" ? (
+                        <Fragment>
+                            <Button className="profile-details" onClick={redirectToProfilePage}>
+                                My Profile
+                            </Button>
+                            <Button className="logout" onClick={signOut}>
+                                Sign Out
+                            </Button>
+                        </Fragment>
+                    ) : (
+                        <Button onClick={props.onClick}>{props.buttonName}</Button>
+                    )}
+                </Toolbar>
+            </AppBar>
+            <Dialog
+                fullWidth
+                maxWidth="xl"
+                scroll="body"
+                open={open}
+                onClose={() => setOpen(false)}
+                className="search-address-modal modal"
+            >
+                <SearchBusinessR open={open} />
+            </Dialog>
