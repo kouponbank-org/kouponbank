@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { KouponBankApi } from "../api/kb-api";
 import { BusinessPageR } from "./business/business-page";
+import { DiscoverPageR } from "./Discover/discover-page";
 import { HomePageR } from "./homepage/homepage";
 import { InfoPage } from "./info/information-page";
 import { LoginPageR } from "./login/login-page";
@@ -17,6 +18,7 @@ export enum UrlPaths {
     SignUpPage = "/kbsignup",
     ProfilePage = "/kbprofile",
     BusinessPage = "/business/:businessId",
+    DiscoverPage = "/discover",
     InfoPage = "/info",
 }
 
@@ -56,6 +58,7 @@ const BasePageRouter = () => {
         <ApiContext.Provider value={api}>
             <Switch>
                 <Route path={UrlPaths.InfoPage} component={InfoPage} />
+                <Route path={UrlPaths.DiscoverPage} component={DiscoverPageR} />
                 <Route path={UrlPaths.BusinessPage} component={BusinessPageR} />
                 <Route path={UrlPaths.ProfilePage} component={UserProfilePageR} />
                 <Route path={UrlPaths.SignUpPage} component={SignUpPageR} />

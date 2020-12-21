@@ -10,7 +10,7 @@ import { RootReducer } from "../../store/reducer";
 import { createNewUser } from "../../store/user/user-reducer";
 import { updateUserDetail } from "../../store/user/user-detail-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { Notifications } from "../notifications/notifications";
 import { SignUpForm } from "./sign-up-form";
 import "./sign-up-page.scss";
@@ -73,7 +73,7 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
                 createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}
             />
-            <NavBarR title="Sign Up" />
+            <TopNavBarR title="Sign Up" />
             <Notifications
                 onClose={() => {
                     setShowAlert(false);

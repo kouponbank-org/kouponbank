@@ -81,4 +81,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     };
 };
 
-export const NavBarR = connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export const TopNavBarR = connect(mapStateToProps, mapDispatchToProps)(NavBar);

@@ -1,4 +1,3 @@
-import { Button, Drawer, List } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
@@ -13,7 +12,6 @@ import {
 } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
-import { MapDrawerList } from "./map-drawer-list";
 import { MapMarker } from "./map-marker";
 import "./map.scss";
 
@@ -27,6 +25,7 @@ export interface Prop {
     naverMapBound: NaverMapBound;
     naverMapBusinesses: Business[];
     getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
+    mapBoundaries: {width: string, height: string};
 }
 
 export const Map: React.FC<Prop> = (props: Prop) => {
@@ -80,33 +79,23 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="naver-map">
-            <Drawer className="drawer" variant="permanent" anchor="left">
-                <List>
-                    {Businesses.map((business) => {
-                        return (
-                            <MapDrawerList
-                                key={business.id}
-                                business={business}
-                                selectBusiness={selectBusiness}
-                            />
-                        );
-                    })}
-                </List>
-            </Drawer>
             <NaverMap
+                className="naver-map map"
                 style={{
-                    width: 500,
-                    height: 500,
+                    width: props.mapBoundaries.width,
+                    height: props.mapBoundaries.height,
                 }}
                 defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
                 defaultZoom={17}
+                minZoom={16}
+                maxZoom={19}
                 onBoundsChanged={handleChangeBounds}
             >
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
-            <Button type="submit" onClick={handleGetBusinessesClick}>
+            <button className="naver-map button" type="submit" onClick={handleGetBusinessesClick}>
                 Find Businesses
-            </Button>
+            </button>
         </div>
     );
 };

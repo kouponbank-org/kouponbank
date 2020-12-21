@@ -1,0 +1,20 @@
+export const DiscoverDrawer: = () => {
+    const [drawerVisilibity, setDrawerVisilibity] = useState("discover-drawer-hidden");
+    const [mapBoundaries, setMapBoundaries] = useState({width: "100%", height: "920px"})
+
+    const showOrHideDrawer= (event: React.MouseEvent<HTMLElement>): void => {
+        setDrawerVisilibity("discover-drawer-shown")
+        setMapBoundaries({
+            ...mapBoundaries,
+            width: "70%",
+        });
+        event.preventDefault();
+    };
+
+    return (
+        <div className="discover-page">
+            <DiscoverDrawer drawerVisibility={drawerVisilibity} />
+            <button className="buttons" onClick={showOrHideDrawer}>button</button>
+        </div>
+    );
+};

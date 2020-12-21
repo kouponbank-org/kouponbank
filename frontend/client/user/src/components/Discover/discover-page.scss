@@ -1,0 +1,43 @@
+.discover-page {
+    // width & height is 100% of the root (parent div)
+    width: 100%;
+    height: 100%;
+
+    .map {
+        margin: 0 auto;
+        width: 61.7%;
+        height: 84.4%;
+    }
+}
+
+// TODO: combine these two and only have width changed for 'hidden' / 'shown'
+// closed drawer
+.discover-drawer-hidden {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+// opened drawer
+.discover-drawer-shown {
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+.buttons {
+    bottom:0;
+}
