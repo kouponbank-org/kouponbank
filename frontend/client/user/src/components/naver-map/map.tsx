@@ -11,21 +11,21 @@ import {
     naverMapBoundChanged,
 } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
-import { ApiContext } from "../base-page-router";
+import { ApiContext, UrlPaths } from "../base-page-router";
 import { MapMarker } from "./map-marker";
 import "./map.scss";
 
 export interface Prop {
     user?: User;
+    naverMapBound: NaverMapBound;
+    naverMapBusinesses: Business[];
+    mapBoundaries: {width: string, height: string};
     naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
     getAllBusinessWithinNaverMapBounds: (
         api: KouponBankApi,
         naverMapBound: NaverMapBound,
     ) => Promise<Business[]>;
-    naverMapBound: NaverMapBound;
-    naverMapBusinesses: Business[];
     getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
-    mapBoundaries: {width: string, height: string};
 }
 
 export const Map: React.FC<Prop> = (props: Prop) => {
@@ -33,6 +33,9 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     const history = useHistory();
     const [naverMapBound, setNaverMapBound] = useState(props.naverMapBound);
     const [Businesses, setBusinesses] = useState<Business[]>([]);
+
+    // FOR: handleChangeBounds method
+    // Calculates the map boundary at each map movement
     const calculateMapSpan = (bounds) => {
         const mapSpan: NaverMapBound = {
             maxLat: bounds.getNE().lat(),
@@ -43,12 +46,15 @@ export const Map: React.FC<Prop> = (props: Prop) => {
         setNaverMapBound(mapSpan);
     };
 
+    // FOR: NaverMap
+    // Updates the map boundary at each map movement
     const handleChangeBounds = (bounds) => {
         calculateMapSpan(bounds);
         props.naverMapBoundChanged(naverMapBound);
     };
 
-    //when the button is clicked, it gets the business list in the map bound
+    // FOR: Discover Near Me button.
+    // When the button is clicked, it gets the business list in the map bound
     const handleGetBusinessesClick = () => {
         props
             .getAllBusinessWithinNaverMapBounds(api, naverMapBound)
@@ -60,22 +66,17 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             });
     };
 
+    // FOR: Search button
+    // Takes the User to the Discover List Page
+    const handleSearchClick = () => {
+        history.push(UrlPaths.DiscoverListPage);
+    };
+
     //현재 위치 정보 받기
     // navigator.geolocation.getCurrentPosition(function(position) {
     //     console.log("Latitude is :", position.coords.latitude);
     //     console.log("Longitude is :", position.coords.longitude);
     // });
-
-    const selectBusiness = (businessId) => {
-        props
-            .getBusiness(api, businessId)
-            .then((business) => {
-                history.push(`/business/${business.id}`);
-            })
-            .catch(() => {
-                // Currently does nothing
-            });
-    };
 
     return (
         <div className="naver-map">
@@ -85,16 +86,19 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                     width: props.mapBoundaries.width,
                     height: props.mapBoundaries.height,
                 }}
-                defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
+                defaultCenter={{lat: 37.3093, lng: 127.0858}}
                 defaultZoom={17}
-                minZoom={16}
+                minZoom={15}
                 maxZoom={19}
                 onBoundsChanged={handleChangeBounds}
             >
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
-            <button className="naver-map button" type="submit" onClick={handleGetBusinessesClick}>
-                Find Businesses
+            <button className="naver-map discover-list-button" onClick={handleSearchClick}>
+                Search
+            </button>
+            <button className="naver-map discover-button" type="submit" onClick={handleGetBusinessesClick}>
+                Discover Near Me
             </button>
         </div>
     );

@@ -10,6 +10,53 @@
     }
 }
 
+.discover-list-page {
+    // width & height is 100% of the root (parent div)
+    width: 100%;
+    height: 100%;
+    
+    .business-list {
+        width: 61.7%;
+        height: 84.4%;
+        // make the list into a grid
+        display: grid;
+        // repeat(number of columns/rows, the column width we want);
+        // fr = fraction 2, 1fr = 1/2 = 50%
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 25%;
+        grid-gap: 10px;
+        margin: 0 auto;
+    }
+}
+
+.business {
+    width: 100%;
+    height: 100%;
+
+    .title {
+        width: 88.6%;
+        height: 4.8%;
+        font-family: NanumSquareEB;
+        font-size: 24px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        text-align: left;
+        color: #000000;
+    }
+
+    .description {
+        
+    }
+
+    .picture {
+        width: 88.6%;
+        height: 46%;
+    }
+}
+
 // TODO: combine these two and only have width changed for 'hidden' / 'shown'
 // closed drawer
 .discover-drawer-hidden {
@@ -37,7 +84,4 @@
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-}
-.buttons {
-    bottom:0;
 }

@@ -5,7 +5,6 @@ import { RootReducer } from "../../store/reducer";
 import { MapR } from "../naver-map/map";
 import { BottomNavBar } from "../navigation/navigation-bottom-bar";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
-import { DiscoverDrawer } from "./discover-drawer";
 import "./discover-page.scss";
 
 /**
@@ -20,6 +19,7 @@ export interface Prop {
 
 export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
     const [mapBoundaries, setMapBoundaries] = useState({width: "100%", height: `${window.innerHeight * .844}px`})
+    // TODO: change map height as the window changes
     
     return (
         <div className="discover-page">
