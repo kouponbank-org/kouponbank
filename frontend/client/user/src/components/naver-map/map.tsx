@@ -30,7 +30,6 @@ export interface Prop {
 
 export const Map: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
-    const history = useHistory();
     const [naverMapBound, setNaverMapBound] = useState(props.naverMapBound);
     const [Businesses, setBusinesses] = useState<Business[]>([]);
 
@@ -66,12 +65,6 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             });
     };
 
-    // FOR: Search button
-    // Takes the User to the Discover List Page
-    const handleSearchClick = () => {
-        history.push(UrlPaths.DiscoverListPage);
-    };
-
     //현재 위치 정보 받기
     // navigator.geolocation.getCurrentPosition(function(position) {
     //     console.log("Latitude is :", position.coords.latitude);
@@ -94,9 +87,6 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             >
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
-            <button className="naver-map discover-list-button" onClick={handleSearchClick}>
-                Search
-            </button>
             <button className="naver-map discover-button" type="submit" onClick={handleGetBusinessesClick}>
                 Discover Near Me
             </button>

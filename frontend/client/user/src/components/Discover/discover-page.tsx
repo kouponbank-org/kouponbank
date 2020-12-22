@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Business, Coupon, User } from "../../api/kb-types";
+import { Dispatch } from "redux";
+import { KouponBankApi } from "../../api/kb-api";
+import { Business, Coupon, NaverMapBound, User } from "../../api/kb-types";
+import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
+import { ApiContext } from "../base-page-router";
 import { MapR } from "../naver-map/map";
 import { BottomNavBar } from "../navigation/navigation-bottom-bar";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
+import { DiscoverBusinessList } from "./discover-list-business";
 import "./discover-page.scss";
 
 /**
@@ -15,21 +20,51 @@ export interface Prop {
     coupon: Coupon;
     business: Business;
     businesses: Business[];
+    naverMapBound: NaverMapBound;
+    getAllBusinessWithinNaverMapBounds: (
+        api: KouponBankApi,
+        naverMapBound: NaverMapBound,
+    ) => Promise<Business[]>;
 }
 
 export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
-    const [mapBoundaries, setMapBoundaries] = useState({width: "100%", height: `${window.innerHeight * .844}px`})
+    const [mapBoundaries, setMapBoundaries] = useState({width: "30%", height: `${window.innerHeight * .948}px`})
     // TODO: change map height as the window changes
+    const api = useContext<KouponBankApi>(ApiContext);
+    const [businesses, setBusinesses] = useState<Business[]>([]);
     
+    // FOR: Discover Near Me button.
+    // When you go into the DiscoverListPage from the map
+    // it will use the map bounds to get the list of business within the bounds
+    // from the database.
+    useEffect(() => {
+        console.log("useEffect called")
+        props
+            .getAllBusinessWithinNaverMapBounds(api, props.naverMapBound)
+            .then((businesses) => {
+                setBusinesses(businesses);
+                console.log(businesses)
+            })
+            .catch(() => {
+                // Currently does nothing
+            });
+    }, [props.naverMapBound]);
+
     return (
-        <div className="discover-page">
+        <div className="kb-discover-page">
             <TopNavBarR title={"Discover"} />
-            <div className="discover-page map">
+            <div className="discover-page-main-container">
+                <div className="business-list-container">
+                    {businesses.map((business, index) => {
+                        return (
+                            <DiscoverBusinessList key={business.id} business={business} />
+                        )
+                    })}
+                </div>
                 <MapR
                     mapBoundaries={mapBoundaries}
                 />
             </div>
-            <BottomNavBar />
         </div>
     );
 };
@@ -40,13 +75,20 @@ const mapStateToProps = (state: RootReducer) => {
         coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,
+        naverMapBound: state.naverMapReducer.naverMapBound,
     };
 };
 
-/*
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {};
-};
-*/
 
-export const DiscoverPageR = connect(mapStateToProps, null)(DiscoverPage);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        getAllBusinessWithinNaverMapBounds: async (
+            api: KouponBankApi,
+            naverMapBound: NaverMapBound,
+        ) => {
+            return getAllBusinessWithinNaverMapBounds(api, naverMapBound, dispatch);
+        },
+    };
+};
+
+export const DiscoverPageR = connect(mapStateToProps, mapDispatchToProps)(DiscoverPage);
