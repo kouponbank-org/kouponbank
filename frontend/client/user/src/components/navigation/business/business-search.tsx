@@ -96,7 +96,6 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        business: state.businessReducer.business,
     };
 };
 

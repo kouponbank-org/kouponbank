@@ -93,7 +93,6 @@ const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
         userDetail: state.userDetailReducer.userDetail,
-        business: state.businessReducer.businesses,
         alertState: state.notificationReducer,
     };
 };

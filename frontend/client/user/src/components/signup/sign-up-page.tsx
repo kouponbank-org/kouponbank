@@ -39,10 +39,14 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         props
             .createNewUser(api, userCredentials)
             .then((user) => {
-                props.updateUserDetail(api, user.id, userDetailCredentials);
-            })
-            .then(() => {
-                history.push(UrlPaths.HomePage);
+                props
+                    .updateUserDetail(api, user.id, userDetailCredentials)
+                    .then(() => {
+                        history.push(UrlPaths.HomePage);
+                    })
+                    .catch(() => {
+                        //currently does nothing
+                    });
             })
             .catch(() => {
                 //currently does nothing

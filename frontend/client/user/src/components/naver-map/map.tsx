@@ -99,7 +99,6 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        businesses: state.businessReducer.businesses,
         naverMapBound: state.naverMapReducer.naverMapBound,
         naverMapBusinesses: state.naverMapReducer.naverMapBusinesses,
     };

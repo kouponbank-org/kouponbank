@@ -2,16 +2,14 @@ import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
-import { User, UserDetail } from "../../api/kb-types";
+import { User } from "../../api/kb-types";
 import { RootReducer, signOut } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
 import "./navigation-bar.scss";
 
 export interface Prop {
     user?: User;
-    userDetail?: UserDetail;
     title?: string;
-    buttonName?: string;
     signOut?: () => void;
 }
 
