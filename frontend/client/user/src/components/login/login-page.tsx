@@ -10,7 +10,7 @@ import { RootReducer } from "../../store/reducer";
 import { getUserDetail } from "../../store/user/user-detail-reducer";
 import { loginUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { Notifications } from "../notifications/notifications";
 import { LoginForm } from "./login-form";
 import "./login.scss";
@@ -68,7 +68,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR title={"Customer Login Page"} />
+            <TopNavBarR title={"Customer Login Page"} />
             <LoginForm
                 signUpClick={signUpClick}
                 userCredentials={userCredentials}

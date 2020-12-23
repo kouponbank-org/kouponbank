@@ -7,7 +7,7 @@ import { Owner, OwnerDetail } from "../../api/kb-types";
 import { updateOwnerDetail } from "../../store/owner/owner-detail-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-bar";
 import { ProfileForm } from "./profile-form";
 import "./profile-page.scss";
 
@@ -46,7 +46,7 @@ export const ProfilePage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR />
+            <TopNavBarR />
             <ProfileForm
                 temp={userDetailCredentials}
                 userCredentials={props.owner}

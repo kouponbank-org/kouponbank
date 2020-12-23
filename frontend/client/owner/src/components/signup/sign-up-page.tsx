@@ -9,7 +9,7 @@ import { AlertState } from "../../store/notification/notification-reducer";
 import { createNewOwner } from "../../store/owner/owner-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-bar";
 import { Notifications } from "../notifications/notifications";
 import { SignUpForm } from "./sign-up-form";
 import "./sign-up-page.scss";
@@ -53,7 +53,7 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR title={"Signup Page"} />
+            <TopNavBarR title={"Signup Page"} />
             <SignUpForm
                 userCredentials={userCredentials}
                 createNewUserClick={createNewUserClick}

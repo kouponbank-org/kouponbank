@@ -7,7 +7,7 @@ import { Business, Coupon, Owner } from "../../api/kb-types";
 import { getBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-bar";
 import { HomepageForm } from "./homepage-form";
 import { BusinessListPage } from "../business-list/business-list-page"
 import "./homepage.scss";
@@ -56,7 +56,7 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div>
-            <NavBarR title={"Koupon Bank"} buttonName={"Login"} onClick={directToUserLogin} />
+            <TopNavBarR title={"Koupon Bank"} buttonName={"Login"} onClick={directToUserLogin} />
             <HomepageForm
                 coupon={props.coupon}
                 businesses={props.businesses}
