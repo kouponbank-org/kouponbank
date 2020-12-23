@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, NaverMapBound, User } from "../../api/kb-types";
@@ -11,7 +10,7 @@ import {
     naverMapBoundChanged,
 } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
-import { ApiContext, UrlPaths } from "../base-page-router";
+import { ApiContext } from "../base-page-router";
 import { MapMarker } from "./map-marker";
 import "./map.scss";
 
@@ -19,7 +18,7 @@ export interface Prop {
     user?: User;
     naverMapBound: NaverMapBound;
     naverMapBusinesses: Business[];
-    mapBoundaries: {width: string, height: string};
+    mapBoundaries: { width: string; height: string };
     naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
     getAllBusinessWithinNaverMapBounds: (
         api: KouponBankApi,
@@ -31,7 +30,6 @@ export interface Prop {
 export const Map: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const [naverMapBound, setNaverMapBound] = useState(props.naverMapBound);
-    const [Businesses, setBusinesses] = useState<Business[]>([]);
 
     // FOR: handleChangeBounds method
     // Calculates the map boundary at each map movement
@@ -57,11 +55,11 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     const handleGetBusinessesClick = () => {
         props
             .getAllBusinessWithinNaverMapBounds(api, naverMapBound)
-            .then((businesses) => {
-                setBusinesses(businesses);
+            .then(() => {
+                //
             })
             .catch(() => {
-                // Currently does nothing
+                //
             });
     };
 
@@ -79,7 +77,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                     width: props.mapBoundaries.width,
                     height: props.mapBoundaries.height,
                 }}
-                defaultCenter={{lat: 37.3093, lng: 127.0858}}
+                defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
                 defaultZoom={17}
                 minZoom={15}
                 maxZoom={19}
@@ -87,7 +85,11 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             >
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
-            <button className="naver-map discover-button" type="submit" onClick={handleGetBusinessesClick}>
+            <button
+                className="naver-map discover-button"
+                type="submit"
+                onClick={handleGetBusinessesClick}
+            >
                 Discover Near Me
             </button>
         </div>

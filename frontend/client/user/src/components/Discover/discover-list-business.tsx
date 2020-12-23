@@ -29,15 +29,15 @@ export const DiscoverBusinessList = (props: Prop): JSX.Element => {
             </div>
             <div className="business-description">
                 {
-                    /*props.business.description*/ 
+                    /*props.business.description*/
                     `Space Inform here - 
-                    "Lorem ipsum dolor sit amet,
+                    Lorem ipsum dolor sit amet,
                     consectetur adipiscing elit,
                     sed do eiusmod tempor incididunt ut
                     labore et dolore magna aliqua.`
                 }
             </div>
-            <img 
+            <img
                 className="business-picture"
                 src={`${process.env.REACT_APP_API_BASE_URL}/media/testing/cafe-2.jpg`}
                 onClick={directToBusinessPage}

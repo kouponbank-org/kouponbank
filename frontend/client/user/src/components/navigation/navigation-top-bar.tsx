@@ -1,12 +1,10 @@
-import React, { Fragment, ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { User, UserDetail } from "../../api/kb-types";
 import { RootReducer, signOut } from "../../store/reducer";
 import { UrlPaths } from "../base-page-router";
-import { NavTab } from "react-router-tabs";
-//import { SearchBusinessR } from "./business/business-search";
 import "./navigation-bar.scss";
 
 export interface Prop {
@@ -32,13 +30,9 @@ export const TopNavBar = (props: Prop): ReactElement => {
 
     return (
         <div className="nav-bar">
-            <img
-                className="homepage-button"
-                src="/kouponbank.jpg"
-                onClick={redirectToHomepage}
-            />
+            <img className="homepage-button" src="/kouponbank.jpg" onClick={redirectToHomepage} />
             <div className="title">{props.title}</div>
-            { // logout should only show when the user is logged in
+            {// logout should only show when the user is logged in
                 props.user.id ? 
                 <button className="logout" onClick={signOut}>
                     Sign Out

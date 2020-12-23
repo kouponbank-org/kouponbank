@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, Coupon, NaverMapBound, User } from "../../api/kb-types";
 import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
-import { ApiContext, UrlPaths } from "../base-page-router";
+import { ApiContext } from "../base-page-router";
 import { BottomNavBar } from "../navigation/navigation-bottom-bar";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { DiscoverBusinessList } from "./discover-list-business";
@@ -30,18 +29,16 @@ export interface Prop {
 export const DiscoverListPage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const [businesses, setBusinesses] = useState<Business[]>([]);
-    
+
     // FOR: Discover Near Me button.
     // When you go into the DiscoverListPage from the map
     // it will use the map bounds to get the list of business within the bounds
     // from the database.
     useEffect(() => {
-        console.log("useEffect called")
         props
             .getAllBusinessWithinNaverMapBounds(api, props.naverMapBound)
             .then((businesses) => {
                 setBusinesses(businesses);
-                console.log(businesses)
             })
             .catch(() => {
                 // Currently does nothing
@@ -52,13 +49,8 @@ export const DiscoverListPage: React.FC<Prop> = (props: Prop) => {
         <div className="discover-list-page">
             <TopNavBarR title={"Discover Cafe"} />
             <div className="discover-list-page business-list">
-                {businesses.map((business, index) => {
-                    return (
-                        <DiscoverBusinessList
-                            key={business.id}
-                            business={business}
-                        />
-                    )
+                {businesses.map((business) => {
+                    return <DiscoverBusinessList key={business.id} business={business} />
                 })}
             </div>
             <BottomNavBar />
@@ -76,7 +68,6 @@ const mapStateToProps = (state: RootReducer) => {
     };
 };
 
-
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         getAllBusinessWithinNaverMapBounds: async (
@@ -87,6 +78,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         },
     };
 };
-
 
 export const DiscoverListPageR = connect(mapStateToProps, mapDispatchToProps)(DiscoverListPage);
