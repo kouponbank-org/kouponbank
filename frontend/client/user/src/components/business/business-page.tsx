@@ -1,10 +1,12 @@
+import "./business-page.scss";
+
 import React from "react";
 import { connect } from "react-redux";
+
 import { Business } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { BusinessPageForm } from "./business-page-form";
-import "./business-page.scss";
 
 interface Prop {
     business: Business;

@@ -1,6 +1,8 @@
-import React from "react";
-import { Business } from "../../api/kb-types";
 import "./discover-page.scss";
+
+import React from "react";
+
+import { Business } from "../../api/kb-types";
 
 /**
  * Represents the required properties of the log in form.

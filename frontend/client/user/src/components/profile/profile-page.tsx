@@ -1,7 +1,10 @@
+import "./profile-page.scss";
+
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { User, UserDetail } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
@@ -9,7 +12,6 @@ import { updateUserDetail } from "../../store/user/user-detail-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { UserProfileForm } from "./profile-form";
-import "./profile-page.scss";
 
 /**
  * Represents the required properties of the User Profile Page

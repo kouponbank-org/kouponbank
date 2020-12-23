@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { AddressDetail, Business, Coupon, NaverMapBound, User, UserDetail } from "./kb-types";
 
 export class KouponBankApi {

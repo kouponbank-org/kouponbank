@@ -1,7 +1,10 @@
+import "./login.scss";
+
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, User, UserDetail } from "../../api/kb-types";
 import { getBusinesses } from "../../store/business/business-reducer";
@@ -13,7 +16,6 @@ import { ApiContext, UrlPaths } from "../base-page-router";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { Notifications } from "../notifications/notifications";
 import { LoginForm } from "./login-form";
-import "./login.scss";
 
 /**
  * Represents the required properties of the HomePage.

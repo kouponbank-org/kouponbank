@@ -1,7 +1,10 @@
+import "./discover-page.scss";
+
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, NaverMapBound } from "../../api/kb-types";
 import { getBusiness } from "../../store/business/business-reducer";
@@ -11,7 +14,6 @@ import { ApiContext } from "../base-page-router";
 import { BottomNavBar } from "../navigation/navigation-bottom-bar";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { DiscoverBusinessList } from "./discover-list-business";
-import "./discover-page.scss";
 
 /**
  * Represents the required properties of the HomePage.

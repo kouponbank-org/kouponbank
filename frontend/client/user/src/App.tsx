@@ -3,6 +3,7 @@ import { RenderAfterNavermapsLoaded } from "react-naver-maps";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
+
 import { BasePageRouterR } from "./components/base-page-router";
 import { persistor, store } from "./store";
 

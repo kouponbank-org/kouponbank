@@ -1,3 +1,7 @@
+import "./profile-page.scss";
+
+import React from "react";
+
 import {
     Button,
     Dialog,
@@ -8,9 +12,8 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-import React from "react";
+
 import { User, UserDetail } from "../../api/kb-types";
-import "./profile-page.scss";
 
 /**
  * Represents the required properties of the user profile page.
