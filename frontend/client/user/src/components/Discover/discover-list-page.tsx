@@ -1,22 +1,24 @@
+import "./discover-page.scss";
+
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, Coupon, NaverMapBound, User } from "../../api/kb-types";
+import { Business, NaverMapBound } from "../../api/kb-types";
+import { getBusiness } from "../../store/business/business-reducer";
 import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
 import { BottomNavBar } from "../navigation/navigation-bottom-bar";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { DiscoverBusinessList } from "./discover-list-business";
-import "./discover-page.scss";
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    user: User;
-    coupon: Coupon;
     business: Business;
     businesses: Business[];
     naverMapBound: NaverMapBound;
@@ -24,10 +26,12 @@ export interface Prop {
         api: KouponBankApi,
         naverMapBound: NaverMapBound,
     ) => Promise<Business[]>;
+    getBusiness: (api: KouponBankApi, business_id: string) => Promise<Business>;
 }
 
 export const DiscoverListPage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
+    const history = useHistory();
     const [businesses, setBusinesses] = useState<Business[]>([]);
 
     // FOR: Discover Near Me button.
@@ -45,12 +49,31 @@ export const DiscoverListPage: React.FC<Prop> = (props: Prop) => {
             });
     }, []);
 
+    // FOR: DiscoverBusinessList
+    // If the user clicks on the business image, it will direct them to the business page
+    const directToBusinessPage = (business_id) => {
+        props
+            .getBusiness(api, business_id)
+            .then((business) => {
+                history.push(`/business/${business.id}`);
+            })
+            .catch(() => {
+                // Currently does nothing
+            });
+    };
+
     return (
         <div className="discover-list-page">
             <TopNavBarR title={"Discover Cafe"} />
             <div className="discover-list-page business-list">
                 {businesses.map((business) => {
-                    return <DiscoverBusinessList key={business.id} business={business} />
+                    return (
+                        <DiscoverBusinessList
+                            directToBusinessPage={directToBusinessPage}
+                            key={business.id}
+                            business={business}
+                        />
+                    );
                 })}
             </div>
             <BottomNavBar />
@@ -60,8 +83,6 @@ export const DiscoverListPage: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
-        coupon: state.couponReducer.coupon,
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,
         naverMapBound: state.naverMapReducer.naverMapBound,
@@ -75,6 +96,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
             naverMapBound: NaverMapBound,
         ) => {
             return getAllBusinessWithinNaverMapBounds(api, naverMapBound, dispatch);
+        },
+        getBusiness: async (api: KouponBankApi, business_id: string) => {
+            return getBusiness(api, business_id, dispatch);
         },
     };
 };

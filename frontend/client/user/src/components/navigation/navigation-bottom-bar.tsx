@@ -1,7 +1,9 @@
-import React, { ReactElement } from "react";
-import { UrlPaths } from "../base-page-router";
-import { NavTab } from "react-router-tabs";
 import "./navigation-bar.scss";
+
+import React, { ReactElement } from "react";
+import { NavTab } from "react-router-tabs";
+
+import { UrlPaths } from "../base-page-router";
 
 export const BottomNavBar = (): ReactElement => {
     //TODO:
