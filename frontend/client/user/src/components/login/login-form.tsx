@@ -1,7 +1,10 @@
-import { Button, Grid, TextField } from "@material-ui/core";
-import React from "react";
-import { User } from "../../api/kb-types";
 import "./login.scss";
+
+import React from "react";
+
+import { Button, Grid, TextField } from "@material-ui/core";
+
+import { User } from "../../api/kb-types";
 
 /**
  * Represents the required properties of the log in form.

@@ -1,11 +1,13 @@
+import "./homepage.scss";
+
 import React from "react";
 import { connect } from "react-redux";
+
 import { Business, Coupon, User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { BottomNavBar } from "../navigation/navigation-bottom-bar";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { HomepageForm } from "./homepage-form";
-import "./homepage.scss";
 
 /**
  * Represents the required properties of the HomePage.

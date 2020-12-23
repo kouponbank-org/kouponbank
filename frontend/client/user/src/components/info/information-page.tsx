@@ -1,7 +1,10 @@
-import { Drawer, List, ListItem, ListItemText } from "@material-ui/core";
-import React from "react";
-import { TopNavBarR } from "../navigation/navigation-top-bar";
 import "./information.scss";
+
+import React from "react";
+
+import { Drawer, List, ListItem, ListItemText } from "@material-ui/core";
+
+import { TopNavBarR } from "../navigation/navigation-top-bar";
 
 /**
  * Represents the required properties of the HomePage.

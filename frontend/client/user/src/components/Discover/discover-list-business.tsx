@@ -1,21 +1,22 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { Business } from "../../api/kb-types";
 import "./discover-page.scss";
+
+import React from "react";
+
+import { Business } from "../../api/kb-types";
 
 /**
  * Represents the required properties of the log in form.
  */
 export interface Prop {
     business: Business;
+    directToBusinessPage: (business_id: string) => void;
 }
 
 export const DiscoverBusinessList = (props: Prop): JSX.Element => {
-    const history = useHistory();
     // FOR: DiscoverBusinessList
     // If the user clicks on the business image, it will direct them to the business page
     const directToBusinessPage = (event: React.MouseEvent<HTMLElement>) => {
-        history.push(`/business/${props.business.id}`);
+        props.directToBusinessPage(props.business.id);
         event.preventDefault();
     };
 

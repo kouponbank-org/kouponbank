@@ -1,40 +1,35 @@
-import { Grid, Typography } from "@material-ui/core";
-import React from "react";
-import { Business, Coupon } from "../../api/kb-types";
 import "./business-page.scss";
+
+import React from "react";
+
+import { Business } from "../../api/kb-types";
 
 /**
  * Represents the required properties of the log in form.
  */
 export interface Prop {
-    businessInput?: Business;
     business: Business;
-    coupon: Coupon;
-    editDetails?: (event) => void;
-    submitChange?: (event) => void;
 }
 
-export const BusinesspageForm = (props: Prop): JSX.Element => {
+export const BusinessPageForm = (props: Prop): JSX.Element => {
     return (
-        <div className="layout">
-            <Typography component="h1" variant="h5">
-                {props.business.business_name}
-            </Typography>
-            <Grid container>
-                <Grid item xs={12}>
-                    {props.business.business_name}
-                    {props.business.business_email}
-                    {props.business.business_picture}
-                    {props.business.description}
-                </Grid>
-            </Grid>
-            <Grid>
-                <Typography component="h1" variant="h5">
-                    Coupon
-                </Typography>
-                {props.coupon.coupon_title}
-                {props.coupon.coupon_code}
-            </Grid>
+        <div className="business-form-container">
+            <div className="business-title">
+                {`Space Title ${props.business.business_name}`}
+            </div>
+            <div className="business-description">
+                {
+                    /*props.business.description*/
+                    `Lorem ipsum dolor sit amet,
+                    consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua.`
+                }
+            </div>
+            <img
+                className="business-picture"
+                src={`${process.env.REACT_APP_API_BASE_URL}/media/testing/cafe-2.jpg`}
+            />
         </div>
     );
 };
