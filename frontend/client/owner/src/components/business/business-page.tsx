@@ -6,7 +6,7 @@ import { Business, Coupon, Owner } from "../../api/kb-types";
 import { updateBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-bar";
 import { BusinesspageForm } from "./business-page-form";
 import "./business-page.scss";
 
@@ -40,7 +40,7 @@ export const BusinessPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="business-page">
-            <NavBarR />
+            <TopNavBarR />
             <BusinesspageForm
                 businessInput={businessInfo}
                 business={props.business}

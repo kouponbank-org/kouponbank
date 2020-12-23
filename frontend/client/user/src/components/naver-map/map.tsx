@@ -1,8 +1,6 @@
-import { Button, Drawer, List } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, NaverMapBound, User } from "../../api/kb-types";
@@ -13,27 +11,28 @@ import {
 } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
-import { MapDrawerList } from "./map-drawer-list";
 import { MapMarker } from "./map-marker";
 import "./map.scss";
 
 export interface Prop {
     user?: User;
+    naverMapBound: NaverMapBound;
+    naverMapBusinesses: Business[];
+    mapBoundaries: { width: string; height: string };
     naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
     getAllBusinessWithinNaverMapBounds: (
         api: KouponBankApi,
         naverMapBound: NaverMapBound,
     ) => Promise<Business[]>;
-    naverMapBound: NaverMapBound;
-    naverMapBusinesses: Business[];
     getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
 }
 
 export const Map: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
-    const history = useHistory();
     const [naverMapBound, setNaverMapBound] = useState(props.naverMapBound);
-    const [Businesses, setBusinesses] = useState<Business[]>([]);
+
+    // FOR: handleChangeBounds method
+    // Calculates the map boundary at each map movement
     const calculateMapSpan = (bounds) => {
         const mapSpan: NaverMapBound = {
             maxLat: bounds.getNE().lat(),
@@ -44,20 +43,23 @@ export const Map: React.FC<Prop> = (props: Prop) => {
         setNaverMapBound(mapSpan);
     };
 
+    // FOR: NaverMap
+    // Updates the map boundary at each map movement
     const handleChangeBounds = (bounds) => {
         calculateMapSpan(bounds);
         props.naverMapBoundChanged(naverMapBound);
     };
 
-    //when the button is clicked, it gets the business list in the map bound
+    // FOR: Discover Near Me button.
+    // When the button is clicked, it gets the business list in the map bound
     const handleGetBusinessesClick = () => {
         props
             .getAllBusinessWithinNaverMapBounds(api, naverMapBound)
-            .then((businesses) => {
-                setBusinesses(businesses);
+            .then(() => {
+                //
             })
             .catch(() => {
-                // Currently does nothing
+                //
             });
     };
 
@@ -67,46 +69,29 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     //     console.log("Longitude is :", position.coords.longitude);
     // });
 
-    const selectBusiness = (businessId) => {
-        props
-            .getBusiness(api, businessId)
-            .then((business) => {
-                history.push(`/business/${business.id}`);
-            })
-            .catch(() => {
-                // Currently does nothing
-            });
-    };
-
     return (
         <div className="naver-map">
-            <Drawer className="drawer" variant="permanent" anchor="left">
-                <List>
-                    {Businesses.map((business) => {
-                        return (
-                            <MapDrawerList
-                                key={business.id}
-                                business={business}
-                                selectBusiness={selectBusiness}
-                            />
-                        );
-                    })}
-                </List>
-            </Drawer>
             <NaverMap
+                className="naver-map map"
                 style={{
-                    width: 500,
-                    height: 500,
+                    width: props.mapBoundaries.width,
+                    height: props.mapBoundaries.height,
                 }}
                 defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
                 defaultZoom={17}
+                minZoom={15}
+                maxZoom={19}
                 onBoundsChanged={handleChangeBounds}
             >
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
-            <Button type="submit" onClick={handleGetBusinessesClick}>
-                Find Businesses
-            </Button>
+            <button
+                className="naver-map discover-button"
+                type="submit"
+                onClick={handleGetBusinessesClick}
+            >
+                Discover Near Me
+            </button>
         </div>
     );
 };

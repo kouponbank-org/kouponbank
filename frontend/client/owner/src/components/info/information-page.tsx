@@ -1,6 +1,6 @@
 import { Drawer, List, ListItem, ListItemText } from "@material-ui/core";
 import React from "react";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-bar";
 import "./information.scss";
 
 /**
@@ -10,7 +10,7 @@ import "./information.scss";
 export const InfoPage = (): JSX.Element => {
     return (
         <div className="info-page">
-            <NavBarR />
+            <TopNavBarR />
             <Drawer className="info-page drawer" variant="permanent" anchor="left">
                 <List>
                     {["사업장 등록", "FAQ", "쿠폰뱅크 사용법"].map((text) => (

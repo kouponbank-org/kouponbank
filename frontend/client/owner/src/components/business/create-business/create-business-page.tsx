@@ -11,7 +11,7 @@ import {
 } from "../../../store/business/business-reducer";
 import { RootReducer } from "../../../store/reducer";
 import { ApiContext } from "../../base-page-router";
-import { NavBarR } from "../../navigation/navigation-bar";
+import { TopNavBarR } from "../../navigation/navigation-bar";
 import { CreateBusinessForm } from "./create-business-form";
 
 /**
@@ -80,7 +80,7 @@ export const CreateBusinessPage: React.FC<Prop> = (props: Prop) => {
      */
     return (
         <div className="background">
-            <NavBarR title={"Business"} />
+            <TopNavBarR title={"Business"} />
             <CreateBusinessForm
                 business={business}
                 businessInformationInput={businessInformationInput}
