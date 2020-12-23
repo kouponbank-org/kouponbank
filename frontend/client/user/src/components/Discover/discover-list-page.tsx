@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, Coupon, NaverMapBound, User } from "../../api/kb-types";
 import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
-import { ApiContext } from "../base-page-router";
+import { ApiContext, UrlPaths } from "../base-page-router";
 import { BottomNavBar } from "../navigation/navigation-bottom-bar";
 import { TopNavBarR } from "../navigation/navigation-top-bar";
 import { DiscoverBusinessList } from "./discover-list-business";
@@ -53,7 +54,10 @@ export const DiscoverListPage: React.FC<Prop> = (props: Prop) => {
             <div className="discover-list-page business-list">
                 {businesses.map((business, index) => {
                     return (
-                        <DiscoverBusinessList key={business.id} business={business} />
+                        <DiscoverBusinessList
+                            key={business.id}
+                            business={business}
+                        />
                     )
                 })}
             </div>

@@ -10,6 +10,14 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
     background-color: #ffffff;
 
+    // temporary homepage button on navbar
+    .homepage-button {
+        position: absolute;
+        left: 15%;
+        width: 3.5%;
+        height: 100%;
+    }
+
     .title {
         // sets the position of the div
         position: absolute;

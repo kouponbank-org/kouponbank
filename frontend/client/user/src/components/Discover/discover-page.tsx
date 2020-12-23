@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, Coupon, NaverMapBound, User } from "../../api/kb-types";
@@ -28,10 +29,10 @@ export interface Prop {
 }
 
 export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
-    const [mapBoundaries, setMapBoundaries] = useState({width: "30%", height: `${window.innerHeight * .948}px`})
-    // TODO: change map height as the window changes
     const api = useContext<KouponBankApi>(ApiContext);
     const [businesses, setBusinesses] = useState<Business[]>([]);
+    const [mapBoundaries, setMapBoundaries] = useState({width: "30%", height: `${window.innerHeight * .948}px`})
+    // TODO: change map height as the window changes
     
     // FOR: Discover Near Me button.
     // When you go into the DiscoverListPage from the map
@@ -57,7 +58,10 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
                 <div className="business-list-container">
                     {businesses.map((business, index) => {
                         return (
-                            <DiscoverBusinessList key={business.id} business={business} />
+                            <DiscoverBusinessList
+                                key={business.id}
+                                business={business}
+                            />
                         )
                     })}
                 </div>

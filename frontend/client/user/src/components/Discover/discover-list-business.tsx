@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Business } from "../../api/kb-types";
 import "./discover-page.scss";
 
@@ -9,7 +10,15 @@ export interface Prop {
     business: Business;
 }
 
-export const DiscoverBusinessList: React.FC<Prop> = (props: Prop) => {
+export const DiscoverBusinessList = (props: Prop): JSX.Element => {
+    const history = useHistory();
+    // FOR: DiscoverBusinessList
+    // If the user clicks on the business image, it will direct them to the business page
+    const directToBusinessPage = (event: React.MouseEvent<HTMLElement>) => {
+        history.push(`/business/${props.business.id}`);
+        event.preventDefault();
+    };
+
     return (
         <div className="business-container">
             <div className="business-title">
@@ -31,6 +40,7 @@ export const DiscoverBusinessList: React.FC<Prop> = (props: Prop) => {
             <img 
                 className="business-picture"
                 src={`${process.env.REACT_APP_API_BASE_URL}/media/testing/cafe-2.jpg`}
+                onClick={directToBusinessPage}
             />
         </div>
     );

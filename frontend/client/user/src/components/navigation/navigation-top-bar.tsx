@@ -29,14 +29,14 @@ export const TopNavBar = (props: Prop): ReactElement => {
         props.signOut();
         history.push(UrlPaths.HomePage);
     };
-    
-    //TODO:
-    // 1) nav-tab button, show Image,
-    // 2) media queries
-    // 3) reorganize the top nav and bottom nav margins
 
     return (
         <div className="nav-bar">
+            <img
+                className="homepage-button"
+                src="/kouponbank.jpg"
+                onClick={redirectToHomepage}
+            />
             <div className="title">{props.title}</div>
             { // logout should only show when the user is logged in
                 props.user.id ? 
