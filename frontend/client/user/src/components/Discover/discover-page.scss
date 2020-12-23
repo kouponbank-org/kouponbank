@@ -8,6 +8,7 @@
     width: 100%;
     height: 94.8%;
     // creates a flex-box layout
+    // that will align the business list container div and the map div
     display: flex;
 }
 
@@ -15,8 +16,13 @@
     width: 61.7%;
     height: 94.8%;
     padding-top: 1%;
-    // make the list into a grid
+    // creates a flex-box layout
+    // that will align the businesses from the loaded business mapping
     display: flex;
+    // the elements within the container will be in rows
+    // and the elements will wrap around automatically if it exceeds div boundary
+    // check discord ch for the flex-wrap or go to
+    // https://css-tricks.com/snippets/css/a-guide-to-flexbox/
     flex-flow: row wrap;
     justify-content: space-evenly;
 }
@@ -29,6 +35,7 @@
     flex: initial;
     width: 45%;
     height: 50%;
+    // border radius and box to make the square looking business div
     border-radius: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
 

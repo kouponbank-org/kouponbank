@@ -11,6 +11,7 @@
     background-color: #ffffff;
 
     // temporary homepage button on navbar
+    // just brute forced on there atm with position absolute and left.
     .homepage-button {
         position: absolute;
         left: 15%;
@@ -47,6 +48,7 @@
     position: fixed;
     // flexbox is to align elements within the div
     // so in this case, it will space the contents inside the div evenly
+    // https://css-tricks.com/snippets/css/a-guide-to-flexbox/
     display: flex;
     justify-content: space-evenly;
     // align items with flexbox centers contents vertically
