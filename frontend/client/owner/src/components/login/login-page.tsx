@@ -10,7 +10,7 @@ import { getOwnerDetail } from "../../store/owner/owner-detail-reducer";
 import { loginOwner } from "../../store/owner/owner-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-bar";
 import { Notifications } from "../notifications/notifications";
 import { LoginForm } from "./login-form";
 import "./login.scss";
@@ -69,7 +69,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <NavBarR title={"Business Owner Login Page"} />
+            <TopNavBarR title={"Business Owner Login Page"} />
             <LoginForm
                 signUpClick={signUpClick}
                 userCredentials={userCredentials}

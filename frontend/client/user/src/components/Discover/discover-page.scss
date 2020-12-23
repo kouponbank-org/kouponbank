@@ -1,0 +1,129 @@
+.kb-discover-page {
+    // width & height is 100% of the root (parent div)
+    width: 100%;
+    height: 100%;
+}
+
+.discover-page-main-container {
+    width: 100%;
+    height: 94.8%;
+    // creates a flex-box layout
+    // that will align the business list container div and the map div
+    display: flex;
+}
+
+.business-list-container {
+    width: 61.7%;
+    height: 94.8%;
+    padding-top: 1%;
+    // creates a flex-box layout
+    // that will align the businesses from the loaded business mapping
+    display: flex;
+    // the elements within the container will be in rows
+    // and the elements will wrap around automatically if it exceeds div boundary
+    // check discord ch for the flex-wrap or go to
+    // https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.business-container {
+    // Flex: initial means that
+    // Flex item is sized based on any declared width/height properties, 
+    // though is allowed to shrink (up to its minimum content size)
+    // if there's insufficient space.
+    flex: initial;
+    width: 45%;
+    height: 50%;
+    // border radius and box to make the square looking business div
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
+
+    .business-title {
+        width: 88.6%;
+        height: 4.8%;
+        // top, left&right, bottom
+        margin: 6.3% 5.7% 1.6%;
+        font-family: NanumSquareEB;
+        font-size: 24px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        text-align: left;
+        color: #000000;
+    }
+    
+    .business-description {
+        width: 88.6%;
+        height: 12.7%;
+        // top, left&right, bottom
+        margin: 0px 5.7% 1.6%;
+        font-family: NanumSquareR;
+        font-size: 16px;
+        font-weight: normal;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.25;
+        letter-spacing: normal;
+        text-align: left;
+        color: #2d3748;
+    }
+    
+    .business-picture {
+        width: 88.6%;
+        height: 46%;
+        margin: 0px 5.7% 1.6%;
+    }
+}
+
+// SAVED CSS TEMPLATES
+.discover-list-page {
+    // width & height is 100% of the root (parent div)
+    width: 100%;
+    height: 100%;
+    
+    .business-list {
+        width: 61.7%;
+        height: 94.8%;
+        // make the list into a grid
+        display: grid;
+        flex: initial;
+        // repeat(number of columns/rows, the column width we want);
+        // fr = fraction 2, 1fr = 1/2 = 50%
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 25%;
+        grid-gap: 10px;
+        margin: 0 auto;
+    }
+}
+
+// TODO: combine these two and only have width changed for 'hidden' / 'shown'
+// closed drawer
+.discover-drawer-hidden {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+// opened drawer
+.discover-drawer-shown {
+    height: 100%;
+    width: 30%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}

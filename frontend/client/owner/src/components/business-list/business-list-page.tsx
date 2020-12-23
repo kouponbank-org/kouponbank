@@ -9,7 +9,7 @@ import { getBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { connect } from "react-redux";
 import React from "react";
-import { NavBarR } from "../navigation/navigation-bar";
+import { TopNavBarR } from "../navigation/navigation-bar";
 import { Button, ButtonBase, Grid, Paper, TableBody, TextField, Typography } from "@material-ui/core";
 
 export interface Prop {
@@ -40,7 +40,7 @@ export const BusinessListPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="businesses-list-page layout">
-            <NavBarR />
+            <TopNavBarR />
             <Typography component="h1" variant="h5">
                 My Businesses
             </Typography>

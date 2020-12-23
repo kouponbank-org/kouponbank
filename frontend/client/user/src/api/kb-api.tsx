@@ -66,6 +66,7 @@ export class KouponBankApi {
             console.log(key + value)
             form_data.append(key, value);
         }
+
         if (userDetail.profile_picture === null) {
             return axios
                 .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, userDetail)
