@@ -66,7 +66,7 @@ export interface Business {
     business_name: string;
     business_email: string;
     description: string;
-    business_picture?: string;
+    business_picture?: File | null | undefined | string;
     jibunAddr: string;
     roadAddr: string;
     zipNo: string;
@@ -93,7 +93,7 @@ export interface OwnerDetail {
     gender: string;
     birthday: string;
     location: number | string;
-    profile_picture?: string;
+    profile_picture?: File | null | undefined | string;
 }
 
 export interface AddressDetail {

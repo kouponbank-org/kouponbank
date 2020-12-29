@@ -124,3 +124,10 @@ export interface AddressDetail {
     entX?: string;
     entY?: string;
 }
+
+export interface SearchQueries {
+    location?: string;
+    starting_time?: number;
+    period?: number;
+    people?: number;
+}

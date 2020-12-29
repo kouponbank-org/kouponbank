@@ -21,6 +21,7 @@ export interface Prop {
     coupon: Coupon;
     editDetails?: (event) => void;
     submitChange?: (event) => void;
+    uploadImage: (event) => void;
 }
 
 export const BusinesspageForm = (props: Prop): JSX.Element => {
@@ -42,7 +43,7 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
         props.submitChange(event);
         modalStatus();
     };
-
+    
     return (
         <div className="layout">
             <Typography component="h1" variant="h5">
@@ -53,7 +54,6 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
                     <Grid item xs={12}>
                         {props.business.business_name}
                         {props.business.business_email}
-                        {props.business.business_picture}
                         {props.business.description}
                     </Grid>
                 </div>
@@ -103,6 +103,7 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
                             onChange={editDetails}
                             value={props.businessInput.description}
                         />
+                        <input type="file" name="business_picture" onChange={props.uploadImage} />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={modalStatus} color="primary">
@@ -113,6 +114,7 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
                         </Button>
                     </DialogActions>
                 </Dialog>
+                
             </Grid>
 
             {/* Need to redirect to create coupon page or add it on spot like a dialog? */}
@@ -129,6 +131,9 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
                     {props.coupon.coupon_code}
                 </Grid>
             )}
+            <img
+                src={`${process.env.REACT_APP_API_BASE_URL}${props.business.business_picture}`}
+            />
         </div>
     );
 };

@@ -250,3 +250,11 @@ class BusinessSearchListAPI(APIView):
         )[:10]
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)
+
+ 
+# 1. Add field in business models
+#     1-1. dates/time and period (time field) for a starting time
+#         1-1-1. set boolean condition if it is available
+#     1-2. seats (number)
+#     1-3. tags?
+# 2. filter the search with the input queries

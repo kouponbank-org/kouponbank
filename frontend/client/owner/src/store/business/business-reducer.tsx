@@ -24,6 +24,7 @@ export const initialState: BusinessState = {
         zipNo: "",
         entX: "",
         entY: "",
+        business_picture: null,
     },
     businesses: [],
     searchedBusinesses: [],
