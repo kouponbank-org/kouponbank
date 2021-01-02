@@ -10,12 +10,12 @@
 }
 
 #kb-discover-page-margin-control-container {
-    margin-left: var(--side-nav-bar-width, 179px);
+    //margin-left: var(--side-nav-bar-width, 179px);
+    background-color: #fff;
 }
 
 #discover-page-main-container {
     display: flex;
-    flex-direction: row;
 }
 
 #business-list-margin-control-container {
@@ -39,12 +39,12 @@
     // creates a flex-box layout
     // that will align the businesses from the loaded business mapping
     display: flex;
+    justify-content: space-evenly;
     // the elements within the container will be in rows
     // and the elements will wrap around automatically if it exceeds div boundary
     // check discord ch for the flex-wrap or go to
     // https://css-tricks.com/snippets/css/a-guide-to-flexbox/
     flex-flow: row wrap;
-    justify-content: space-evenly;
 }
 
 #page-list-container {
@@ -107,4 +107,5 @@
 #business-picture {
     width: 344px;
     height: 168px;
+    cursor: pointer;
 }

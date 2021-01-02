@@ -7,19 +7,19 @@ import React from "react";
  */
 export interface Prop {
     pageIndex: number;
-    businessListPaginationClick: (pageIndex: number) => void;
+    paginationClick: (pageIndex: number) => void;
 }
 
 export const Pagination = (props: Prop): JSX.Element => {
 
-    const businessListPaginationClick = (event: React.MouseEvent<HTMLElement>) => {
-        props.businessListPaginationClick(props.pageIndex);
+    const paginationClick = (event: React.MouseEvent<HTMLElement>) => {
+        props.paginationClick(props.pageIndex);
         event.preventDefault();
     };
 
     return (
         <div id="page-button-container">
-            <div id="page-button" onClick={businessListPaginationClick}>
+            <div id="page-button" onClick={paginationClick}>
                 {props.pageIndex}
             </div>
         </div>

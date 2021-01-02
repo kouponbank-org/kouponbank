@@ -36,67 +36,69 @@ export const KouponBankSideTabBar = (props: Prop): ReactElement => {
 
     return (
         <div id="nav-side-tab-container">
-            <div id="homepage-button-container">
-                <div id="homepage-padding-control-container">
-                    <img id="homepage-button" src="/kouponbank.jpg" onClick={redirectToHomepage} />
-                </div>
-            </div>
-            <div id="navigation-container">
-                <div className="navigation-margin-control-container">
-                    <div className="navigation-button-container">
-                        <img
-                            className="navigation-button"
-                            src="/side-nav-menu.png"
-                            alt="kblogin"
-                            onClick={redirectToPage}
-                        />
+            <div id="nav-side-tab-sticky-control-container">
+                <div id="homepage-button-container">
+                    <div id="homepage-padding-control-container">
+                        <img id="homepage-button" src="/kouponbank.jpg" onClick={redirectToHomepage} />
                     </div>
                 </div>
-                <div className="navigation-margin-control-container">
-                    <div className="navigation-button-container">
-                        <img
-                            className="navigation-button"
-                            src="/side-nav-search.png"
-                            alt="kbsignup"
-                            onClick={redirectToPage}
-                        />
+                <div id="navigation-container">
+                    <div className="navigation-margin-control-container">
+                        <div className="navigation-button-container">
+                            <img
+                                className="navigation-button"
+                                src="/side-nav-menu.png"
+                                alt="kblogin"
+                                onClick={redirectToPage}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="navigation-margin-control-container">
-                    <div className="navigation-button-container">
-                        <img
-                            className="navigation-button"
-                            src="/side-nav-favorite.png"
-                            alt="discover"
-                            onClick={redirectToPage}
-                        />
+                    <div className="navigation-margin-control-container">
+                        <div className="navigation-button-container">
+                            <img
+                                className="navigation-button"
+                                src="/side-nav-search.png"
+                                alt="kbsignup"
+                                onClick={redirectToPage}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="navigation-margin-control-container">
-                    <div className="navigation-button-container">
-                        <img
-                            className="navigation-button"
-                            src="/side-nav-calendar.png"
-                            alt="kbprofile"
-                            onClick={redirectToPage}
-                        />
+                    <div className="navigation-margin-control-container">
+                        <div className="navigation-button-container">
+                            <img
+                                className="navigation-button"
+                                src="/side-nav-favorite.png"
+                                alt="discover"
+                                onClick={redirectToPage}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="navigation-margin-control-container">
-                    <div className="navigation-button-container">
-                        <img
-                            className="navigation-button"
-                            src="/side-nav-profile.png"
-                            alt="info"
-                            onClick={redirectToPage}
-                        />
+                    <div className="navigation-margin-control-container">
+                        <div className="navigation-button-container">
+                            <img
+                                className="navigation-button"
+                                src="/side-nav-calendar.png"
+                                alt="kbprofile"
+                                onClick={redirectToPage}
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className="navigation-margin-control-container">
-                    <div className="navigation-button-container">
-                        <button className="logout" onClick={signOut}>
-                            Sign Out
-                        </button>
+                    <div className="navigation-margin-control-container">
+                        <div className="navigation-button-container">
+                            <img
+                                className="navigation-button"
+                                src="/side-nav-profile.png"
+                                alt="info"
+                                onClick={redirectToPage}
+                            />
+                        </div>
+                    </div>
+                    <div className="navigation-margin-control-container">
+                        <div className="navigation-button-container">
+                            <button className="logout" onClick={signOut}>
+                                Sign Out
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

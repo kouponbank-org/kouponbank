@@ -35,20 +35,20 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const [businesses, setBusinesses] = useState<Business[]>([]);
-    const [pageNumbers, setPageNumbers] = useState([]);
+    const [pageNumbers, setPageNumbers] = useState<number[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [currentPageBusinesses, setCurrentPageBusinesses] = useState<Business[]>([]);
     const [mapBoundaries, setMapBoundaries] = useState({
         width: "841px",
         height: `${window.innerHeight * 0.948}px`,
     });
-    const businessesPerPage = 4;
+    const businessesPerPage = 10;
 
     useEffect(() => {
         const lastIndex = currentPage * businessesPerPage;
         const firstIndex = lastIndex - businessesPerPage;
         setCurrentPageBusinesses(businesses.slice(firstIndex, lastIndex));
-    }, [currentPage]);
+    }, [currentPage, pageNumbers]);
 
     // FOR: Discover Near Me button.
     // When you go into the DiscoverListPage from the map
@@ -58,9 +58,11 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
         setBusinesses(businesses);
 
         const page = [];
+
         for (let i = 1; i <= Math.ceil(businesses.length / businessesPerPage); i++) {
             page.push(i);
         };
+
         setPageNumbers(page);
     };
 
@@ -109,7 +111,7 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
                                                     <Pagination
                                                         key={pageIndex}
                                                         pageIndex={pageIndex}
-                                                        businessListPaginationClick={businessListPaginationClick}
+                                                        paginationClick={businessListPaginationClick}
                                                     />
                                                 );
                                             })}
