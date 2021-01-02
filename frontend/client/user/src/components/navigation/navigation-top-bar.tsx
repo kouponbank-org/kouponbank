@@ -1,59 +1,17 @@
-import React, { ReactElement } from "react";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { Dispatch } from "redux";
-import { User, UserDetail } from "../../api/kb-types";
-import { RootReducer, signOut } from "../../store/reducer";
-import { UrlPaths } from "../base-page-router";
 import "./navigation-bar.scss";
 
-export interface Prop {
-    user?: User;
-    userDetail?: UserDetail;
-    title?: string;
-    buttonName?: string;
-    signOut?: () => void;
-}
+import React, { ReactElement } from "react";
 
-export const TopNavBar = (props: Prop): ReactElement => {
-    const history = useHistory();
 
-    const redirectToHomepage = (event: React.MouseEvent<HTMLElement>): void => {
-        history.push(UrlPaths.HomePage);
-        event.preventDefault();
-    };
 
-    const signOut = () => {
-        props.signOut();
-        history.push(UrlPaths.HomePage);
-    };
-
+export const TopNavBar = (): ReactElement => {
     return (
-        <div className="nav-bar">
-            <img className="homepage-button" src="/kouponbank.jpg" onClick={redirectToHomepage} />
-            <div className="title">{props.title}</div>
-            {// logout should only show when the user is logged in
-                props.user.id ? 
-                <button className="logout" onClick={signOut}>
-                    Sign Out
-                </button>
-            : "" }
+        <div id="nav-top-bar-container">
+            <div id="nav-top-bar-padding-control-container">
+                <div>
+                    Koupon Bank Filler For Now
+                </div>
+            </div>
         </div>
     );
 };
-
-const mapStateToProps = (state: RootReducer) => {
-    return {
-        user: state.userReducer.user,
-    };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        signOut: () => {
-            return signOut(dispatch);
-        },
-    };
-};
-
-export const TopNavBarR = connect(mapStateToProps, mapDispatchToProps)(TopNavBar);

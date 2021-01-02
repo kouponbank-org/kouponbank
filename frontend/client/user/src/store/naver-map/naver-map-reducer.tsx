@@ -1,5 +1,6 @@
 import produce from "immer";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { AddressDetail, Business, NaverMapBound, Status } from "../../api/kb-types";
 import { NaverMapActionType } from "./action-type";

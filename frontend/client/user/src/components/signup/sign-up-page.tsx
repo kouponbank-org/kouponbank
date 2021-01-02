@@ -1,19 +1,21 @@
+import "./sign-up-page.scss";
+
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, User, UserDetail } from "../../api/kb-types";
 import { getBusinesses } from "../../store/business/business-reducer";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
-import { createNewUser } from "../../store/user/user-reducer";
 import { updateUserDetail } from "../../store/user/user-detail-reducer";
+import { createNewUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { TopNavBarR } from "../navigation/navigation-top-bar";
+import { TopNavBar } from "../navigation/navigation-top-bar";
 import { Notifications } from "../notifications/notifications";
 import { SignUpForm } from "./sign-up-form";
-import "./sign-up-page.scss";
 
 /**
  * Represents the required properties of the HomePage.
@@ -39,10 +41,14 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         props
             .createNewUser(api, userCredentials)
             .then((user) => {
-                props.updateUserDetail(api, user.id, userDetailCredentials);
-            })
-            .then(() => {
-                history.push(UrlPaths.HomePage);
+                props
+                    .updateUserDetail(api, user.id, userDetailCredentials)
+                    .then(() => {
+                        history.push(UrlPaths.HomePage);
+                    })
+                    .catch(() => {
+                        //currently does nothing
+                    });
             })
             .catch(() => {
                 //currently does nothing
@@ -73,7 +79,7 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
                 createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}
             />
-            <TopNavBarR title="Sign Up" />
+            <TopNavBar />
             <Notifications
                 onClose={() => {
                     setShowAlert(false);

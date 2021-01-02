@@ -12,6 +12,8 @@ code {
     monospace;
 }
 
-#root {
-  height: 100vh;
+:root {
+  --top-nav-bar-height: 120px;
+  --side-nav-bar-width: 179px;
+  --discover-map-width: 841px;
 }

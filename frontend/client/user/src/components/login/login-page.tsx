@@ -1,7 +1,10 @@
+import "./login.scss";
+
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, User, UserDetail } from "../../api/kb-types";
 import { getBusinesses } from "../../store/business/business-reducer";
@@ -10,10 +13,9 @@ import { RootReducer } from "../../store/reducer";
 import { getUserDetail } from "../../store/user/user-detail-reducer";
 import { loginUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { TopNavBarR } from "../navigation/navigation-top-bar";
+import { TopNavBar } from "../navigation/navigation-top-bar";
 import { Notifications } from "../notifications/notifications";
 import { LoginForm } from "./login-form";
-import "./login.scss";
 
 /**
  * Represents the required properties of the HomePage.
@@ -68,7 +70,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div className="background">
-            <TopNavBarR title={"Customer Login Page"} />
+            <TopNavBar />
             <LoginForm
                 signUpClick={signUpClick}
                 userCredentials={userCredentials}
@@ -93,7 +95,6 @@ const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
         userDetail: state.userDetailReducer.userDetail,
-        business: state.businessReducer.businesses,
         alertState: state.notificationReducer,
     };
 };

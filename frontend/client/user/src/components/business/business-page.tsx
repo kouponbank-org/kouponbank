@@ -1,31 +1,29 @@
+import "./business-page.scss";
+
 import React from "react";
 import { connect } from "react-redux";
-import { Business, Coupon, User } from "../../api/kb-types";
+
+import { Business } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
-import { TopNavBarR } from "../navigation/navigation-top-bar";
-import { BusinesspageForm } from "./business-page-form";
-import "./business-page.scss";
+import { TopNavBar } from "../navigation/navigation-top-bar";
+import { BusinessPageForm } from "./business-page-form";
 
 interface Prop {
     business: Business;
-    user: User;
-    coupon: Coupon;
 }
 
 export const BusinessPage: React.FC<Prop> = (props: Prop) => {
     return (
-        <div className="business-page">
-            <TopNavBarR />
-            <BusinesspageForm business={props.business} coupon={props.coupon} />
+        <div className="kb-business-page">
+            <TopNavBar />
+            <BusinessPageForm business={props.business} />
         </div>
     );
 };
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
         business: state.businessReducer.business,
-        coupon: state.couponReducer.coupon,
     };
 };
 

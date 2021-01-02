@@ -1,6 +1,7 @@
+import "./sign-up-page.scss";
+
 //import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
-import "./sign-up-page.scss";
 
 const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
     children,
