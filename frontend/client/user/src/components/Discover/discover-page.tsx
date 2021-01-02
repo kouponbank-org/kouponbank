@@ -12,7 +12,8 @@ import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
 import { MapR } from "../naver-map/map";
-import { TopNavBarR } from "../navigation/navigation-top-bar";
+import { KouponBankSideTabBarR } from "../navigation/navigation-side-tab-bar";
+import { TopNavBar } from "../navigation/navigation-top-bar";
 import { DiscoverBusinessList } from "./discover-list-business";
 
 /**
@@ -34,7 +35,7 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
     const history = useHistory();
     const [businesses, setBusinesses] = useState<Business[]>([]);
     const [mapBoundaries, setMapBoundaries] = useState({
-        width: "30%",
+        width: "841px",
         height: `${window.innerHeight * 0.948}px`,
     });
     // TODO: change map height as the window changes
@@ -68,21 +69,30 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
     };
 
     return (
-        <div className="kb-discover-page">
-            <TopNavBarR title={"Discover"} />
-            <div className="discover-page-main-container">
-                <div className="business-list-container">
-                    {businesses.map((business) => {
-                        return (
-                            <DiscoverBusinessList
-                                directToBusinessPage={directToBusinessPage}
-                                key={business.id}
-                                business={business}
-                            />
-                        );
-                    })}
+        <div id="kb-discover-page">
+            <KouponBankSideTabBarR />
+            <div id="kb-discover-page-container">
+                <TopNavBar />
+                <div id="discover-page-main-container">
+                    <div id="business-list-margin-control-container" >
+                        <div id="business-list-main-container">
+                            <div id="business-list-padding-control-container">
+                                <div id="business-list-container">
+                                    {businesses.map((business) => {
+                                        return (
+                                            <DiscoverBusinessList
+                                                directToBusinessPage={directToBusinessPage}
+                                                key={business.id}
+                                                business={business}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <MapR mapBoundaries={mapBoundaries} />
                 </div>
-                <MapR mapBoundaries={mapBoundaries} />
             </div>
         </div>
     );
