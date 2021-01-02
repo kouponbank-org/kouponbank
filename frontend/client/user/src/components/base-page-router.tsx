@@ -4,7 +4,6 @@ import { Route, Switch } from "react-router-dom";
 
 import { KouponBankApi } from "../api/kb-api";
 import { BusinessPageR } from "./business/business-page";
-import { DiscoverListPageR } from "./Discover/discover-list-page";
 import { DiscoverPageR } from "./Discover/discover-page";
 import { HomePageR } from "./homepage/homepage";
 import { InfoPage } from "./info/information-page";
@@ -21,7 +20,6 @@ export enum UrlPaths {
     ProfilePage = "/kbprofile",
     BusinessPage = "/business/:businessId",
     DiscoverPage = "/discover",
-    DiscoverListPage = "/list",
     InfoPage = "/info",
 }
 
@@ -62,7 +60,6 @@ const BasePageRouter = () => {
             <Switch>
                 <Route path={UrlPaths.InfoPage} component={InfoPage} />
                 <Route path={UrlPaths.DiscoverPage} component={DiscoverPageR} />
-                <Route path={UrlPaths.DiscoverListPage} component={DiscoverListPageR} />
                 <Route path={UrlPaths.BusinessPage} component={BusinessPageR} />
                 <Route path={UrlPaths.ProfilePage} component={UserProfilePageR} />
                 <Route path={UrlPaths.SignUpPage} component={SignUpPageR} />

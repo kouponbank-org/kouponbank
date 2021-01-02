@@ -21,28 +21,33 @@ export const DiscoverBusinessList = (props: Prop): JSX.Element => {
     };
 
     return (
-        <div className="business-container">
-            <div className="business-title">
-                {
-                    /*props.business.business_name*/
-                    `Space Title`
-                }
+        <div id="business-main-margin-control-container">
+            <div id="business-main-container">
+                <div id="business-container">
+                    <div id="business-padding-control-container">
+                        <div id="business-content-container">
+                            <img
+                                id="business-picture"
+                                src={`${process.env.REACT_APP_API_BASE_URL}/media/testing/cafe-2.jpg`}
+                                onClick={directToBusinessPage}
+                            />
+                            <div id="business-title">
+                                {
+                                    /*props.business.business_name*/
+                                    `Space Title`
+                                }
+                            </div>
+                            <div id="business-description">
+                                {
+                                    /*props.business.description*/
+                                    `Space Inform here - 
+                                    Lorem ipsum dolor sit amet.`
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="business-description">
-                {
-                    /*props.business.description*/
-                    `Space Inform here - 
-                    Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua.`
-                }
-            </div>
-            <img
-                className="business-picture"
-                src={`${process.env.REACT_APP_API_BASE_URL}/media/testing/cafe-2.jpg`}
-                onClick={directToBusinessPage}
-            />
         </div>
     );
 };
