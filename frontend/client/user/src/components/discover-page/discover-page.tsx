@@ -85,48 +85,34 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div id="kb-discover-page">
+            <TopNavBar />
             <KouponBankSideTabBarR />
-            <div id="kb-discover-page-margin-control-container">
-                <div id="kb-discover-page-container">
-                    <TopNavBar />
-                    <div id="discover-page-main-container">
-                        <div id="business-list-margin-control-container" >
-                            <div id="business-list-main-container">
-                                <div id="business-list-padding-control-container">
-                                    <div id="business-list-container">
-                                        <div id="business-list-business-container">
-                                            {currentPageBusinesses.map((business) => {
-                                                return (
-                                                    <DiscoverBusinessList
-                                                        key={business.id}
-                                                        business={business}
-                                                        directToBusinessPage={directToBusinessPage}
-                                                    />
-                                                );
-                                            })}
-                                        </div>
-                                        <div id="page-list-container">
-                                            {pageNumbers.map((pageIndex) => {
-                                                return (
-                                                    <Pagination
-                                                        key={pageIndex}
-                                                        pageIndex={pageIndex}
-                                                        paginationClick={businessListPaginationClick}
-                                                    />
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <MapR
-                            mapBoundaries={mapBoundaries}
-                            discoverNearMeClick={discoverNearMeClick}
+            <div id="business-list-business-container">
+                {currentPageBusinesses.map((business) => {
+                    return (
+                        <DiscoverBusinessList
+                            key={business.id}
+                            business={business}
+                            directToBusinessPage={directToBusinessPage}
                         />
-                    </div>
-                </div>
+                    );
+                })}
             </div>
+            <div id="page-list-container">
+                {pageNumbers.map((pageIndex) => {
+                    return (
+                        <Pagination
+                            key={pageIndex}
+                            pageIndex={pageIndex}
+                            paginationClick={businessListPaginationClick}
+                        />
+                    );
+                })}
+            </div>
+            <MapR
+                mapBoundaries={mapBoundaries}
+                discoverNearMeClick={discoverNearMeClick}
+            />
         </div>
     );
 };
