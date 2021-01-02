@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 
-import { User } from "../../api/kb-types";
-import { RootReducer, signOut } from "../../store/reducer";
-import { UrlPaths } from "../base-page-router";
+import { User } from "../../../api/kb-types";
+import { RootReducer, signOut } from "../../../store/reducer";
+import { UrlPaths } from "../../base-page-router";
 
 export interface Prop {
     user: User;

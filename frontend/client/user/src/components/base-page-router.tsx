@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 
 import { KouponBankApi } from "../api/kb-api";
 import { BusinessPageR } from "./business/business-page";
-import { DiscoverPageR } from "./Discover/discover-page";
+import { DiscoverPageR } from "./discover-page/discover-page";
 import { HomePageR } from "./homepage/homepage";
 import { InfoPage } from "./info/information-page";
 import { LoginPageR } from "./login/login-page";

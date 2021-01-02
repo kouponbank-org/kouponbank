@@ -4,7 +4,7 @@ import React from "react";
 
 import { Drawer, List, ListItem, ListItemText } from "@material-ui/core";
 
-import { TopNavBar } from "../navigation/navigation-top-bar";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 
 /**
  * Represents the required properties of the HomePage.

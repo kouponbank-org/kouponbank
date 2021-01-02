@@ -2,7 +2,7 @@ import "./homepage.scss";
 
 import React from "react";
 
-import { MapR } from "../naver-map/map";
+import { MapR } from "../discover-page/naver-map/map";
 
 export const HomepageForm = (): JSX.Element => {
     return (

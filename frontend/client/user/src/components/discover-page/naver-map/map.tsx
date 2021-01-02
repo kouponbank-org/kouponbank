@@ -5,15 +5,15 @@ import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { KouponBankApi } from "../../api/kb-api";
-import { Business, NaverMapBound, User } from "../../api/kb-types";
-import { getBusiness } from "../../store/business/business-reducer";
+import { KouponBankApi } from "../../../api/kb-api";
+import { Business, NaverMapBound, User } from "../../../api/kb-types";
+import { getBusiness } from "../../../store/business/business-reducer";
 import {
     getAllBusinessWithinNaverMapBounds,
     naverMapBoundChanged,
-} from "../../store/naver-map/naver-map-reducer";
-import { RootReducer } from "../../store/reducer";
-import { ApiContext } from "../base-page-router";
+} from "../../../store/naver-map/naver-map-reducer";
+import { RootReducer } from "../../../store/reducer";
+import { ApiContext } from "../../base-page-router";
 import { MapMarker } from "./map-marker";
 
 export interface Prop {
@@ -21,6 +21,7 @@ export interface Prop {
     naverMapBound: NaverMapBound;
     naverMapBusinesses: Business[];
     mapBoundaries: { width: string; height: string };
+    discoverNearMeClick?: (businesses: Business[]) => void;
     naverMapBoundChanged: (naverMapBound: NaverMapBound) => void;
     getAllBusinessWithinNaverMapBounds: (
         api: KouponBankApi,
@@ -57,8 +58,8 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     const handleGetBusinessesClick = () => {
         props
             .getAllBusinessWithinNaverMapBounds(api, naverMapBound)
-            .then(() => {
-                //
+            .then((businesses) => {
+                props.discoverNearMeClick(businesses);
             })
             .catch(() => {
                 //

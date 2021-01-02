@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { Business, Coupon, User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
-import { TopNavBar } from "../navigation/navigation-top-bar";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { HomepageForm } from "./homepage-form";
 
 /**

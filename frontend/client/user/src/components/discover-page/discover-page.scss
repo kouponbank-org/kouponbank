@@ -9,6 +9,10 @@
     flex-direction: column;
 }
 
+#kb-discover-page-margin-control-container {
+    margin-left: var(--side-nav-bar-width, 179px);
+}
+
 #discover-page-main-container {
     display: flex;
     flex-direction: row;
@@ -27,6 +31,11 @@
 }
 
 #business-list-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#business-list-business-container {
     // creates a flex-box layout
     // that will align the businesses from the loaded business mapping
     display: flex;
@@ -36,6 +45,13 @@
     // https://css-tricks.com/snippets/css/a-guide-to-flexbox/
     flex-flow: row wrap;
     justify-content: space-evenly;
+}
+
+#page-list-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items:  center;
 }
 
 /*Discover Business List CSS Styling*/

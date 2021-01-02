@@ -13,8 +13,8 @@ import { RootReducer } from "../../store/reducer";
 import { getUserDetail } from "../../store/user/user-detail-reducer";
 import { loginUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { TopNavBar } from "../navigation/navigation-top-bar";
-import { Notifications } from "../notifications/notifications";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
+import { Notifications } from "../common-components/notifications/notifications";
 import { LoginForm } from "./login-form";
 
 /**
