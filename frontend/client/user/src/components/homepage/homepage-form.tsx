@@ -5,11 +5,6 @@ import "./homepage.scss";
 import { Business, SearchQueries } from "../../api/kb-types";
 import { BusinessList } from "./business-list";
 
-const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
-    children,
-    ...props
-}) => <button {...props}>{children}</button>;
-
 export interface Prop {
     businesses: Business[];
     selectBusiness: (businessId) => void;
@@ -47,7 +42,7 @@ export const HomepageForm = (props: Prop): JSX.Element => {
                         <input type="datetime-local" className="starting-time" name="starting-time" placeholder="시작시간 | Starting time" onChange={searchInput}/>
                         <input type="time" className="period" name="period" placeholder="이용시간 | Period" onChange={searchInput} />
                         <input type="number" className="people" name="people" placeholder="인원 | People" onChange={searchInput} />
-                        <Button className="search-button" onClick={searchButton}>Search</Button>
+                        <button className="search-button" onClick={searchButton}>Search</button>
                     </div>
                 </div>
                 <div className="text">
@@ -59,7 +54,7 @@ export const HomepageForm = (props: Prop): JSX.Element => {
                         <div className="description">TEXT FIELD 24 - text field is going to be a general explanation of the service maybe.. a slight introduction to how to use this app. User would go through steps to find the ideal location/cafe using this service. Blah blah blah so much more </div>
                     </div>
                 </div>
-                <Button className="button" onClick={redirectToDiscoverPage}>Discover More</Button>
+                <button className="button" onClick={redirectToDiscoverPage}>Discover More</button>
             </div>
             <div className="recommend">
                 <div className="text">
@@ -71,7 +66,7 @@ export const HomepageForm = (props: Prop): JSX.Element => {
                         return <BusinessList key={business.id} business={business} selectBusiness={props.selectBusiness} />;
                     })}
                 </div>
-                <Button className="button">Discover More</Button>
+                <button className="button">Discover More</button>
             </div>
         </div>
     );

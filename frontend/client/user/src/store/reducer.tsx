@@ -1,5 +1,6 @@
 import { combineReducers, Dispatch } from "redux";
 import storage from "redux-persist/lib/storage";
+
 import { reducer as businessReducer } from "./business/business-reducer";
 import { CommonActionType } from "./common-action-type";
 import { reducer as couponReducer } from "./coupon/coupon-reducer";

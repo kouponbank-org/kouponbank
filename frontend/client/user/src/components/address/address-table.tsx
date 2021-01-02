@@ -1,7 +1,10 @@
-import { Button, TableCell, TableRow } from "@material-ui/core";
-import React from "react";
-import { AddressDetail } from "../../api/kb-types";
 import "./address.scss";
+
+import React from "react";
+
+import { Button, TableCell, TableRow } from "@material-ui/core";
+
+import { AddressDetail } from "../../api/kb-types";
 
 /**
  * Represents the required properties of the log in form.

@@ -1,11 +1,9 @@
 .naver-map {
-    // you have to set a position in order to have the div be an anchor point
-    // for the child div 
-    position: relative;
     // to center the discover-button on the map
     display: flex;
+    position: fixed;
+    right: 0;
     // The auto keyword means “look at my width or height property”
-    flex: auto;
     justify-content: center;
     align-items: center;
 

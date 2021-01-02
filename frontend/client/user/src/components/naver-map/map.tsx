@@ -1,7 +1,10 @@
+import "./map.scss";
+
 import React, { useContext, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, NaverMapBound, User } from "../../api/kb-types";
 import { getBusiness } from "../../store/business/business-reducer";
@@ -12,7 +15,6 @@ import {
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
 import { MapMarker } from "./map-marker";
-import "./map.scss";
 
 export interface Prop {
     user?: User;
@@ -99,7 +101,6 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        businesses: state.businessReducer.businesses,
         naverMapBound: state.naverMapReducer.naverMapBound,
         naverMapBusinesses: state.naverMapReducer.naverMapBusinesses,
     };

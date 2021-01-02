@@ -1,45 +1,50 @@
-/*Login Page Background layout*/
-.background {
-    position:fixed;
-    padding:0;
-    margin:0;
-
-    top:0;
-    left:0;
-
+.kb-business-page {
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #49D49D 10%, #A2C7E5 90%);
-};
-
-/*Login Component layout*/
-.layout {
-    width: 90%;
-    max-width: 340px;
-    margin: 10vh auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-};
-
-/*Login Form layout*/
-.form {
-    width: 100%;
-    margin-top: 24px;
-    padding-bottom: 10px;
-};
-
-/*Login Button layout*/
-.loginbutton {
-    margin-top: 24px;
-    padding: 0px 24px;
-};
-
-.sign-up-botton {
-    margin-top: 24px;
 }
 
-/*Information Grid layout*/
-.grid {
-    opacity: 0;
-};
+.business-form-container {
+    width: 60.8%;
+    margin: 2.6% auto;
+    display: flex;
+    flex-flow: column nowrap;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ffffff;
+}
+
+.business-title {
+    width: 94.5%;
+    height: 0.8%;
+    margin: 1.1% auto 0.3%;
+    font-family: NanumSquareB;
+    font-size: 24px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: left;
+    color: #000000;
+}
+
+.business-description {
+    width: 94.5%;
+    height: 2.2%;
+    margin: 0 auto 0.6%;
+    font-family: NanumSquareR;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: left;
+    color: #2d3748;
+}
+
+.business-picture {
+    width: 94.5%;
+    height: 46%;
+    margin: 2.2% auto;
+}

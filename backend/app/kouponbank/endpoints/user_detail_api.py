@@ -110,6 +110,7 @@ class UserDetailAPI(APIView):
         ]
     )
     def put(self, request, user_id):
+        print(request.data)
         user_detail = self.__get_user_detail(user_id)
         serializer = UserDetailSerializer(user_detail, data=request.data)
         if serializer.is_valid():

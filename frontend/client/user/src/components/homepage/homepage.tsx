@@ -10,7 +10,6 @@ import { getBusiness, getBusinesses } from "../../store/business/business-reduce
 import { TopNavBarR } from "../navigation/navigation-top-bar"
 import { BottomNavBar } from "../navigation/navigation-bottom-bar";
 import { HomepageForm } from "./homepage-form";
-import "./homepage.scss";
 
 /**
  * Represents the required properties of the HomePage.
