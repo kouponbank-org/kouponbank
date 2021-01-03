@@ -1,19 +1,32 @@
 /*KouponBankTopNavBar CSS Styling*/
 #nav-top-bar-container {
-    border-radius: 8px;
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.16);
+    position: sticky;
+    top: 0;
+    z-index: 1012;
+    backface-visibility: hidden;
 }
 
 #nav-top-bar-padding-control-container {
     padding: 20px 284px;
+    border-bottom: 1px solid #eeeeef;
+    background-color: #fff;
 }
 
 /*KouponBankSideTabNavBar CSS Styling*/
 #nav-side-tab-container {
     display: flex;
+}
+
+#nav-side-tab-sticky-control-container {
+    display: flex;
     flex-direction: column;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.16);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    border-right: 1px solid #eeeeef;
+    background-color: #fff;
+    z-index: 2021;
 }
 
 #homepage-button-container {

@@ -2,8 +2,6 @@ import "./navigation-bar.scss";
 
 import React, { ReactElement } from "react";
 
-
-
 export const TopNavBar = (): ReactElement => {
     return (
         <div id="nav-top-bar-container">

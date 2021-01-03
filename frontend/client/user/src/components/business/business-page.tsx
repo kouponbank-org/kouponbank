@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { Business } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
-import { TopNavBar } from "../navigation/navigation-top-bar";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { BusinessPageForm } from "./business-page-form";
 
 interface Prop {

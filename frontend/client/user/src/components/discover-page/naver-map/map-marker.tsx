@@ -1,7 +1,7 @@
 import React from "react";
 import { Marker } from "react-naver-maps";
 
-import { Business } from "../../api/kb-types";
+import { Business } from "../../../api/kb-types";
 
 export interface Prop {
     naverMapBusinesses: Business[];

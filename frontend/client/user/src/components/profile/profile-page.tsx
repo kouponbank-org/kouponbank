@@ -10,7 +10,7 @@ import { User, UserDetail } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
 import { updateUserDetail } from "../../store/user/user-detail-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { TopNavBar } from "../navigation/navigation-top-bar";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { UserProfileForm } from "./profile-form";
 
 /**
