@@ -10,7 +10,7 @@
 }
 
 #kb-discover-page-margin-control-container {
-    //margin-left: var(--side-nav-bar-width, 179px);
+    margin-left: var(--side-nav-bar-width, 179px);
     background-color: #fff;
 }
 
@@ -78,30 +78,30 @@
 
 #business-title {
     // top, left&right, bottom
-    margin: 6.3% 5.7% 1.6%;
-    font-family: NanumSquareEB;
-    font-size: 24px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1;
-    letter-spacing: normal;
-    text-align: left;
-    color: #000000;
-}
-
-#business-description {
-    // top, left&right, bottom
-    margin: 0px 5.7% 1.6%;
-    font-family: NanumSquareR;
+    margin: 17px 68px 3px 0;
+    font-family: NanumSquare;
     font-size: 16px;
-    font-weight: normal;
+    font-weight: 800;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.25;
     letter-spacing: normal;
     text-align: left;
     color: #2d3748;
+}
+
+#business-description {
+    // top, left&right, bottom
+    margin: 0 56px 8px 0;
+    font-family: NanumSquare;
+    font-size: 13px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 3.69;
+    letter-spacing: normal;
+    text-align: left;
+    color: #868e96;
 }
 
 #business-picture {

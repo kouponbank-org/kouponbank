@@ -19,11 +19,14 @@
 
 #nav-side-tab-sticky-control-container {
     display: flex;
-    position: sticky;
     flex-direction: column;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
     border-right: 1px solid #eeeeef;
-    flex-shrink: 0;
-    z-index: 999;
+    background-color: #fff;
+    z-index: 2021;
 }
 
 #homepage-button-container {
