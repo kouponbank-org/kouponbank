@@ -1,11 +1,9 @@
 #copyright-bottom-tab-container {
     display: flex;
-    height: 227px;
-    background-color: #dee2e6;
-}
-
-#copyright-padding-control-container {
-    padding: 80px 975px 79px 363px;
+    height: 150px;
+    background-color: #3b3b3b;
+    justify-content: center;
+    align-items: center;
 }
 
 #copyright-title-reserved-text {
@@ -17,5 +15,5 @@
     line-height: 3;
     letter-spacing: normal;
     text-align: left;
-    color: #212529;
+    color: #ffffff;
 }

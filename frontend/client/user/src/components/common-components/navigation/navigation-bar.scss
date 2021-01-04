@@ -1,39 +1,26 @@
-/*KouponBankTopNavBar CSS Styling*/
-#nav-top-bar-container {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 120px;
-    z-index: 1012;
-    backface-visibility: hidden;
-}
-
-#nav-top-bar-padding-control-container {
-    padding: 20px 284px;
-    border-bottom: 1px solid #eeeeef;
-    background-color: #fff;
-}
-
-/*KouponBankSideTabNavBar CSS Styling*/
 #nav-side-tab-container {
     display: flex;
+    position: fixed;
+    width: var(--side-nav-bar-width, 179px);
+    height: 100%;
+    z-index: 2021;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    border-right: solid 1px #000000;
 }
 
-#nav-side-tab-sticky-control-container {
+#nav-side-tab-column-control-container {
+    width: 100%;
     display: flex;
-    position: sticky;
     flex-direction: column;
-    border-right: 1px solid #eeeeef;
-    flex-shrink: 0;
-    z-index: 999;
 }
 
 #homepage-button-container {
-
-}
-
-#homepage-padding-control-container {
-    padding: 28px 57px 28px 58px;
+    display: flex;
+    height: var(--top-nav-bar-height, 120px);
+    justify-content: center;
+    align-items: center;
 }
 
 #homepage-button {
@@ -53,7 +40,9 @@
 
 .navigation-button-container {
     display: flex;
-    padding: 17px 0;
+    // padding: 17px 0; or height: 64px;
+    height: 64px;
+    align-items: center;
     justify-content: center;
 }
 
@@ -61,4 +50,22 @@
     max-height: 30px;
     max-width: 30px;
     cursor: pointer;
+}
+
+#nav-top-bar-container {
+    display: flex;
+    position: sticky;
+    height: var(--top-nav-bar-height, 120px);
+    width: 100%;
+    top: 0;
+    z-index: 2020;
+    background-color: #ffffff;
+    border-bottom: solid 1px #000000;
+}
+
+#nav-top-bar-padding-control-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }

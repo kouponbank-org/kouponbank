@@ -11,6 +11,7 @@ import { getBusiness } from "../../store/business/business-reducer";
 import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
+import { CopyRight } from "../common-components/copyright/copyright";
 import { KouponBankSideTabBarR } from "../common-components/navigation/navigation-side-tab-bar";
 import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { Pagination } from "../common-components/pagination/pagination";
@@ -39,8 +40,8 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [currentPageBusinesses, setCurrentPageBusinesses] = useState<Business[]>([]);
     const [mapBoundaries, setMapBoundaries] = useState({
-        width: "841px",
-        height: `${window.innerHeight * 0.948}px`,
+        width: "100%",
+        height: `960px`,
     });
     const businessesPerPage = 10;
 
@@ -85,38 +86,87 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div id="kb-discover-page">
-            <TopNavBar />
             <KouponBankSideTabBarR />
-            <div id="business-list-business-container">
-                {currentPageBusinesses.map((business) => {
-                    return (
-                        <DiscoverBusinessList
-                            key={business.id}
-                            business={business}
-                            directToBusinessPage={directToBusinessPage}
-                        />
-                    );
-                })}
+            <div id="kb-discover-page-top-nav-main-contents-container">
+                <TopNavBar />
+                <main id="kb-discover-page-main-contents-margin-control-container">
+                    <div id="discover-page-main-contents-container">
+                        <div id="left-content-container">
+                            <div id="left-main-content-container">
+                                <div id="business-list-main-container">
+                                    <div id="business-list-container">
+                                        {currentPageBusinesses.map((business) => {
+                                            return (
+                                                <DiscoverBusinessList
+                                                    key={business.id}
+                                                    business={business}
+                                                    directToBusinessPage={directToBusinessPage}
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                                <div id="page-list-container">
+                                    {pageNumbers.map((pageIndex) => {
+                                        return (
+                                            <Pagination
+                                                key={pageIndex}
+                                                pageIndex={pageIndex}
+                                                paginationClick={businessListPaginationClick}
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            <CopyRight />
+                        </div>
+                        <div id="right-content-container">
+                            <div id="discover-page-map">
+                                <MapR
+                                    mapBoundaries={mapBoundaries}
+                                    discoverNearMeClick={discoverNearMeClick}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </main>
             </div>
-            <div id="page-list-container">
-                {pageNumbers.map((pageIndex) => {
-                    return (
-                        <Pagination
-                            key={pageIndex}
-                            pageIndex={pageIndex}
-                            paginationClick={businessListPaginationClick}
-                        />
-                    );
-                })}
-            </div>
-            <MapR
-                mapBoundaries={mapBoundaries}
-                discoverNearMeClick={discoverNearMeClick}
-            />
         </div>
     );
 };
 
+/*
+                <div id="discover-page-main-container">
+                    <div id="business-list-business-container">
+                        {currentPageBusinesses.map((business) => {
+                            return (
+                                <DiscoverBusinessList
+                                    key={business.id}
+                                    business={business}
+                                    directToBusinessPage={directToBusinessPage}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div id="page-list-container">
+                        {pageNumbers.map((pageIndex) => {
+                            return (
+                                <Pagination
+                                    key={pageIndex}
+                                    pageIndex={pageIndex}
+                                    paginationClick={businessListPaginationClick}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div id="right-discover-page-main-container">
+                        <MapR
+                            mapBoundaries={mapBoundaries}
+                            discoverNearMeClick={discoverNearMeClick}
+                        />
+                    </div>
+                </div>
+*/
 const mapStateToProps = (state: RootReducer) => {
     console.log(state);
     return {

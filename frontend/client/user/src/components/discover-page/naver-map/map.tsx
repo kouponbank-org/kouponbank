@@ -73,9 +73,9 @@ export const Map: React.FC<Prop> = (props: Prop) => {
     // });
 
     return (
-        <div className="naver-map">
+        <div id="naver-map-container">
             <NaverMap
-                className="naver-map map"
+                id="naver-map-map"
                 style={{
                     width: props.mapBoundaries.width,
                     height: props.mapBoundaries.height,
@@ -89,7 +89,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                 <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
             </NaverMap>
             <button
-                className="naver-map discover-button"
+                id="naver-map-discover-button"
                 type="submit"
                 onClick={handleGetBusinessesClick}
             >
