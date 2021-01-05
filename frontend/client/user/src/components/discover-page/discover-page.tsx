@@ -39,10 +39,10 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
     const [pageNumbers, setPageNumbers] = useState<number[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [currentPageBusinesses, setCurrentPageBusinesses] = useState<Business[]>([]);
-    const [mapBoundaries, setMapBoundaries] = useState({
-        width: "100%",
-        height: `960px`,
-    });
+    // May need to turn this into useState
+    const mapBoundaries = {width: "100%", height: `${window.innerHeight-120}px`};
+    // Variable for setting pagination values
+    // Play around with the values in discover page and you will see :)
     const businessesPerPage = 10;
 
     useEffect(() => {

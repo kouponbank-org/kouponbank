@@ -18,9 +18,11 @@ export const Pagination = (props: Prop): JSX.Element => {
     };
 
     return (
-        <div id="page-button-container">
-            <div id="page-button" onClick={paginationClick}>
-                {props.pageIndex}
+        <div id="pagination-main-padding-control-container">
+            <div id="pagination-main-container">
+                <div id="page-button" onClick={paginationClick}>
+                    {props.pageIndex}
+                </div>
             </div>
         </div>
     );
