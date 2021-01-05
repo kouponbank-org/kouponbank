@@ -40,7 +40,7 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [currentPageBusinesses, setCurrentPageBusinesses] = useState<Business[]>([]);
     // May need to turn this into useState
-    const mapBoundaries = {width: "100%", height: `${window.innerHeight-120}px`};
+    const mapBoundaries = { width: "100%", height: `${window.innerHeight - 120}px` };
     // Variable for setting pagination values
     // Play around with the values in discover page and you will see :)
     const businessesPerPage = 10;
@@ -62,7 +62,7 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
 
         for (let i = 1; i <= Math.ceil(businesses.length / businessesPerPage); i++) {
             page.push(i);
-        };
+        }
 
         setPageNumbers(page);
     };
@@ -135,40 +135,7 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
     );
 };
 
-/*
-                <div id="discover-page-main-container">
-                    <div id="business-list-business-container">
-                        {currentPageBusinesses.map((business) => {
-                            return (
-                                <DiscoverBusinessList
-                                    key={business.id}
-                                    business={business}
-                                    directToBusinessPage={directToBusinessPage}
-                                />
-                            );
-                        })}
-                    </div>
-                    <div id="page-list-container">
-                        {pageNumbers.map((pageIndex) => {
-                            return (
-                                <Pagination
-                                    key={pageIndex}
-                                    pageIndex={pageIndex}
-                                    paginationClick={businessListPaginationClick}
-                                />
-                            );
-                        })}
-                    </div>
-                    <div id="right-discover-page-main-container">
-                        <MapR
-                            mapBoundaries={mapBoundaries}
-                            discoverNearMeClick={discoverNearMeClick}
-                        />
-                    </div>
-                </div>
-*/
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state);
     return {
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,

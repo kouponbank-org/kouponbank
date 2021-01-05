@@ -11,7 +11,6 @@ export interface Prop {
 }
 
 export const Pagination = (props: Prop): JSX.Element => {
-
     const paginationClick = (event: React.MouseEvent<HTMLElement>) => {
         props.paginationClick(props.pageIndex);
         event.preventDefault();

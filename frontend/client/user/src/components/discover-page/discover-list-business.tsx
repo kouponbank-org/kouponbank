@@ -31,7 +31,7 @@ export const DiscoverBusinessList = (props: Prop): JSX.Element => {
                 <div id="business-title">
                     {
                         /*props.business.business_name*/
-                        `Space Title`
+                        "Space Title"
                     }
                 </div>
                 <div id="business-description">
