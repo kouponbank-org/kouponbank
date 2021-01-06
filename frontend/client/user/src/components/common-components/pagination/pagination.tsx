@@ -11,16 +11,17 @@ export interface Prop {
 }
 
 export const Pagination = (props: Prop): JSX.Element => {
-
     const paginationClick = (event: React.MouseEvent<HTMLElement>) => {
         props.paginationClick(props.pageIndex);
         event.preventDefault();
     };
 
     return (
-        <div id="page-button-container">
-            <div id="page-button" onClick={paginationClick}>
-                {props.pageIndex}
+        <div id="pagination-main-padding-control-container">
+            <div id="pagination-main-container">
+                <div id="page-button" onClick={paginationClick}>
+                    {props.pageIndex}
+                </div>
             </div>
         </div>
     );

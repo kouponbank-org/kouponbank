@@ -18,10 +18,10 @@ export const KouponBankSideTabBar = (props: Prop): ReactElement => {
     const history = useHistory();
 
     const signOut = () => {
-        if (props.user.id ) {
+        if (props.user.id) {
             props.signOut();
             history.push(UrlPaths.HomePage);
-        };
+        }
     };
 
     const redirectToHomepage = (event: React.MouseEvent<HTMLImageElement>): void => {
@@ -36,11 +36,9 @@ export const KouponBankSideTabBar = (props: Prop): ReactElement => {
 
     return (
         <div id="nav-side-tab-container">
-            <div id="nav-side-tab-sticky-control-container">
+            <div id="nav-side-tab-column-control-container">
                 <div id="homepage-button-container">
-                    <div id="homepage-padding-control-container">
-                        <img id="homepage-button" src="/kouponbank.jpg" onClick={redirectToHomepage} />
-                    </div>
+                    <img id="homepage-button" src="/kouponbank.jpg" onClick={redirectToHomepage} />
                 </div>
                 <div id="navigation-container">
                     <div className="navigation-margin-control-container">
@@ -120,4 +118,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     };
 };
 
-export const KouponBankSideTabBarR = connect(mapStateToProps, mapDispatchToProps)(KouponBankSideTabBar);
+export const KouponBankSideTabBarR = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(KouponBankSideTabBar);

@@ -5,6 +5,7 @@ import { Business } from "../../../api/kb-types";
 
 export interface Prop {
     naverMapBusinesses: Business[];
+    directToBusinessPage: (business_id: string) => void;
 }
 
 export const MapMarker = (props: Prop): JSX.Element => {
@@ -20,7 +21,7 @@ export const MapMarker = (props: Prop): JSX.Element => {
                                   lng: naverMapBusiness.entX,
                               }}
                               onClick={() => {
-                                  alert(naverMapBusiness.roadAddr);
+                                  props.directToBusinessPage(naverMapBusiness.id);
                               }}
                           />
                       );

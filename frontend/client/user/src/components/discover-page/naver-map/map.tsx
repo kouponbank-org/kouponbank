@@ -1,12 +1,20 @@
 import "./map.scss";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import { KouponBankApi } from "../../../api/kb-api";
-import { Business, NaverMapBound, User } from "../../../api/kb-types";
+import { KoreaCoordinateBoundary, NaverMapDefaultCenter } from "../../../api/kb-const";
+import {
+    Business,
+    Coordinate,
+    GeolocationPosition,
+    NaverMapBound,
+    User,
+} from "../../../api/kb-types";
 import { getBusiness } from "../../../store/business/business-reducer";
 import {
     getAllBusinessWithinNaverMapBounds,
@@ -32,7 +40,9 @@ export interface Prop {
 
 export const Map: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
-    const [naverMapBound, setNaverMapBound] = useState(props.naverMapBound);
+    const history = useHistory();
+    const [naverMapBound, setNaverMapBound] = useState<NaverMapBound>(props.naverMapBound);
+    const [naverMapCenter, setNaverMapCenter] = useState<Coordinate>(NaverMapDefaultCenter);
 
     // FOR: handleChangeBounds method
     // Calculates the map boundary at each map movement
@@ -66,33 +76,75 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             });
     };
 
-    //현재 위치 정보 받기
-    // navigator.geolocation.getCurrentPosition(function(position) {
-    //     console.log("Latitude is :", position.coords.latitude);
-    //     console.log("Longitude is :", position.coords.longitude);
-    // });
+    // FOR: NaverMapMarker
+    // If the user clicks on the business image, it will direct them to the business page
+    const directToBusinessPage = (business_id: string) => {
+        props
+            .getBusiness(api, business_id)
+            .then((business) => {
+                history.push(`/business/${business.id}`);
+            })
+            .catch(() => {
+                // Currently does nothing
+            });
+    };
+
+    // FOR: Naver Map
+    // When geolocation is given,
+    // If the user's location is within korea, set the Naver Map Center to
+    // the user's position.
+    const centerMapPositionToUser = (lat: number, lng: number) => {
+        if (
+            KoreaCoordinateBoundary.lat_one > lat &&
+            KoreaCoordinateBoundary.lat_two < lat &&
+            KoreaCoordinateBoundary.lng_one > lng &&
+            KoreaCoordinateBoundary.lng_two < lng
+        ) {
+            setNaverMapCenter({ lat: lat, lng: lng });
+        }
+    };
+
+    const geolocationSuccess = (position: GeolocationPosition) => {
+        const coordinates = position.coords;
+        centerMapPositionToUser(coordinates.latitude, coordinates.longitude);
+    };
+
+    const geolocationFail = () => {
+        // TODO: Figure out what to do if geolocation fails.
+    };
+
+    const options = {
+        enableHighAccuracy: true,
+        maximumAge: 30000,
+        timeout: 27000,
+    };
+
+    // FOR: Naver Map Center
+    // Acquires current geolocation of the user.
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationFail, options);
+    }, []);
 
     return (
-        <div className="naver-map">
+        <div id="naver-map-container">
             <NaverMap
-                className="naver-map map"
+                id="naver-map-map"
                 style={{
                     width: props.mapBoundaries.width,
                     height: props.mapBoundaries.height,
                 }}
-                defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
+                defaultCenter={naverMapCenter}
                 defaultZoom={17}
                 minZoom={15}
                 maxZoom={19}
                 onBoundsChanged={handleChangeBounds}
             >
-                <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
+                <MapMarker
+                    naverMapBusinesses={props.naverMapBusinesses}
+                    directToBusinessPage={directToBusinessPage}
+                />
             </NaverMap>
-            <button
-                className="naver-map discover-button"
-                type="submit"
-                onClick={handleGetBusinessesClick}
-            >
+            <button id="naver-map-discover-button" type="submit" onClick={handleGetBusinessesClick}>
                 Discover Near Me
             </button>
         </div>
