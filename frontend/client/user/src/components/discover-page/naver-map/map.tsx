@@ -3,6 +3,7 @@ import "./map.scss";
 import React, { useContext, useEffect, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import { KouponBankApi } from "../../../api/kb-api";
@@ -39,6 +40,7 @@ export interface Prop {
 
 export const Map: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
+    const history = useHistory();
     const [naverMapBound, setNaverMapBound] = useState<NaverMapBound>(props.naverMapBound);
     const [naverMapCenter, setNaverMapCenter] = useState<Coordinate>(NaverMapDefaultCenter);
 
@@ -71,6 +73,19 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             })
             .catch(() => {
                 //
+            });
+    };
+
+    // FOR: NaverMapMarker
+    // If the user clicks on the business image, it will direct them to the business page
+    const directToBusinessPage = (business_id: string) => {
+        props
+            .getBusiness(api, business_id)
+            .then((business) => {
+                history.push(`/business/${business.id}`);
+            })
+            .catch(() => {
+                // Currently does nothing
             });
     };
 
@@ -124,7 +139,10 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                 maxZoom={19}
                 onBoundsChanged={handleChangeBounds}
             >
-                <MapMarker naverMapBusinesses={props.naverMapBusinesses} />
+                <MapMarker
+                    naverMapBusinesses={props.naverMapBusinesses}
+                    directToBusinessPage={directToBusinessPage}
+                />
             </NaverMap>
             <button id="naver-map-discover-button" type="submit" onClick={handleGetBusinessesClick}>
                 Discover Near Me
