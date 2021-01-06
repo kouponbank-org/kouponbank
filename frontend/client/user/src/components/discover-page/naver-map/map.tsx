@@ -6,7 +6,8 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { KouponBankApi } from "../../../api/kb-api";
-import { Business, NaverMapBound, User } from "../../../api/kb-types";
+import { KoreaCoordinateBoundary, NaverMapDefaultCenter } from "../../../api/kb-const";
+import { Business, Coordinate, NaverMapBound, User } from "../../../api/kb-types";
 import { getBusiness } from "../../../store/business/business-reducer";
 import {
     getAllBusinessWithinNaverMapBounds,
@@ -32,7 +33,8 @@ export interface Prop {
 
 export const Map: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
-    const [naverMapBound, setNaverMapBound] = useState(props.naverMapBound);
+    const [naverMapBound, setNaverMapBound] = useState<NaverMapBound>(props.naverMapBound);
+    const [naverMapCenter, setNaverMapCenter] = useState<Coordinate>(NaverMapDefaultCenter);
 
     // FOR: handleChangeBounds method
     // Calculates the map boundary at each map movement
@@ -66,11 +68,27 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             });
     };
 
-    //현재 위치 정보 받기
-    // navigator.geolocation.getCurrentPosition(function(position) {
-    //     console.log("Latitude is :", position.coords.latitude);
-    //     console.log("Longitude is :", position.coords.longitude);
-    // });
+    // FOR: Naver Map 
+    // When geolocation is given,
+    // If the user's location is within korea, set the Naver Map Center to
+    // the user's position.
+    const centerMapPositionToUser = (lat: number, lng: number) => {
+        if (
+            KoreaCoordinateBoundary.lat_one > lat &&
+            KoreaCoordinateBoundary.lat_two < lat &&
+            KoreaCoordinateBoundary.lng_one > lng &&
+            KoreaCoordinateBoundary.lng_two < lng
+        ) {
+            setNaverMapCenter({ lat: lat, lng: lng });
+        }
+    };
+
+    // FOR: 
+    // Acquires current geolocation of the user.
+    navigator.geolocation.getCurrentPosition(function(position) {
+        const coordinates = position.coords;
+        centerMapPositionToUser(coordinates.latitude, coordinates.longitude);
+    });
 
     return (
         <div id="naver-map-container">
@@ -80,7 +98,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
                     width: props.mapBoundaries.width,
                     height: props.mapBoundaries.height,
                 }}
-                defaultCenter={{ lat: 37.3093, lng: 127.0858 }}
+                defaultCenter={naverMapCenter}
                 defaultZoom={17}
                 minZoom={15}
                 maxZoom={19}
