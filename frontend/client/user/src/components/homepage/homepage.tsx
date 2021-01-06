@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 
 import { Business, Coupon, User } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
-import { BottomNavBar } from "../navigation/navigation-bottom-bar";
-import { TopNavBarR } from "../navigation/navigation-top-bar";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { HomepageForm } from "./homepage-form";
 
 /**
@@ -22,9 +21,8 @@ export interface Prop {
 export const HomePage: React.FC<Prop> = (props: Prop) => {
     return (
         <div className="homepage">
-            <TopNavBarR title={"Koupon Bank"} />
+            <TopNavBar />
             <HomepageForm />
-            <BottomNavBar />
         </div>
     );
 };

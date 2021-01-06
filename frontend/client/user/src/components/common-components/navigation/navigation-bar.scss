@@ -1,0 +1,79 @@
+/*Side Tab Navigation CSS*/
+
+#nav-side-tab-container {
+    display: flex;
+    // Side Tab is fixed.
+    position: fixed;
+    width: var(--side-nav-bar-width, 179px);
+    height: 100%;
+    // Z-index of side tab navigation is bigger than top navigation bar
+    z-index: 2021;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    border-right: solid 1px #000000;
+}
+
+#nav-side-tab-column-control-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#homepage-button-container {
+    display: flex;
+    height: var(--top-nav-bar-height, 120px);
+    justify-content: center;
+    align-items: center;
+}
+
+#homepage-button {
+    height: 64px;
+    width: 64px;
+    cursor: pointer;
+}
+
+#navigation-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.navigation-margin-control-container {
+    margin-top: 32px;
+}
+
+.navigation-button-container {
+    display: flex;
+    // padding: 17px 0; or height: 64px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation-button {
+    max-height: 30px;
+    max-width: 30px;
+    cursor: pointer;
+}
+
+/*Top Navigation Bar CSS*/
+#nav-top-bar-container {
+    display: flex;
+    // Top Nav Bar Container is sticky. Thus, you will need to create a parent div for the
+    // entire page -> see Discover Page 
+    position: sticky;
+    height: var(--top-nav-bar-height, 120px);
+    width: 100%;
+    top: 0;
+    // Z-index of side tab navigation is smaller than top navigation bar
+    z-index: 2020;
+    background-color: #ffffff;
+    border-bottom: solid 1px #000000;
+}
+
+#nav-top-bar-padding-control-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

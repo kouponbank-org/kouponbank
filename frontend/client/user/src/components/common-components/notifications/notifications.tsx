@@ -6,7 +6,7 @@ import { Collapse, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
-import { AlertType } from "../../api/kb-types";
+import { AlertType } from "../../../api/kb-types";
 
 export interface Prop {
     onClose?: () => void;

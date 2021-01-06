@@ -13,8 +13,8 @@ import { RootReducer } from "../../store/reducer";
 import { updateUserDetail } from "../../store/user/user-detail-reducer";
 import { createNewUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { TopNavBarR } from "../navigation/navigation-top-bar";
-import { Notifications } from "../notifications/notifications";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
+import { Notifications } from "../common-components/notifications/notifications";
 import { SignUpForm } from "./sign-up-form";
 
 /**
@@ -79,7 +79,7 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
                 createNewUserClick={createNewUserClick}
                 userCredentialsInput={userCredentialsInput}
             />
-            <TopNavBarR title="Sign Up" />
+            <TopNavBar />
             <Notifications
                 onClose={() => {
                     setShowAlert(false);

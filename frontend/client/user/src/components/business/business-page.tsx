@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { Business } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
-import { TopNavBarR } from "../navigation/navigation-top-bar";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { BusinessPageForm } from "./business-page-form";
 
 interface Prop {
@@ -15,7 +15,7 @@ interface Prop {
 export const BusinessPage: React.FC<Prop> = (props: Prop) => {
     return (
         <div className="kb-business-page">
-            <TopNavBarR title="Business Title Goes Here" />
+            <TopNavBar />
             <BusinessPageForm business={props.business} />
         </div>
     );

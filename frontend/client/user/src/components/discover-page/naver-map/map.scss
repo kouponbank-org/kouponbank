@@ -1,0 +1,39 @@
+#naver-map-container {
+    // to center the discover-button on the map
+    display: flex;
+    // The auto keyword means “look at my width or height property”
+    position: sticky;
+    top: 120px;
+    justify-content: center;
+    align-items: center;
+}
+
+#naver-map-discover-button {
+    // button css
+    // makes sure that the position of the button is on the parent map div
+    position: absolute;
+    // positions the button to be 4.5% above the bottom
+    top: 4.5%;
+    width: 97.3%;
+    height: 5.3%;
+    // border
+    border-radius: 24px;
+    outline: none;
+    // background
+    background-color: #364fc7;
+    cursor: pointer;
+    // font css from this point on
+    font-family: NanumSquareEB;
+    font-size: 15px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    
+    // css for button hover
+    &:hover {
+        background-color: #2f4de6;
+    }
+}
