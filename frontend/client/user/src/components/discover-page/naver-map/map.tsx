@@ -1,13 +1,19 @@
 import "./map.scss";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NaverMap } from "react-naver-maps";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { KouponBankApi } from "../../../api/kb-api";
 import { KoreaCoordinateBoundary, NaverMapDefaultCenter } from "../../../api/kb-const";
-import { Business, Coordinate, NaverMapBound, User } from "../../../api/kb-types";
+import {
+    Business,
+    Coordinate,
+    GeolocationPosition,
+    NaverMapBound,
+    User,
+} from "../../../api/kb-types";
 import { getBusiness } from "../../../store/business/business-reducer";
 import {
     getAllBusinessWithinNaverMapBounds,
@@ -68,7 +74,7 @@ export const Map: React.FC<Prop> = (props: Prop) => {
             });
     };
 
-    // FOR: Naver Map 
+    // FOR: Naver Map
     // When geolocation is given,
     // If the user's location is within korea, set the Naver Map Center to
     // the user's position.
@@ -83,12 +89,26 @@ export const Map: React.FC<Prop> = (props: Prop) => {
         }
     };
 
-    // FOR: 
-    // Acquires current geolocation of the user.
-    navigator.geolocation.getCurrentPosition(function(position) {
+    const geolocationSuccess = (position: GeolocationPosition) => {
         const coordinates = position.coords;
         centerMapPositionToUser(coordinates.latitude, coordinates.longitude);
-    });
+    };
+
+    const geolocationFail = () => {
+        // TODO: Figure out what to do if geolocation fails.
+    };
+
+    const options = {
+        enableHighAccuracy: true,
+        maximumAge: 30000,
+        timeout: 27000,
+    };
+
+    // FOR: Naver Map Center
+    // Acquires current geolocation of the user.
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationFail, options);
+    }, []);
 
     return (
         <div id="naver-map-container">

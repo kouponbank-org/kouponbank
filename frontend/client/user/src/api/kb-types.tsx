@@ -89,6 +89,21 @@ export interface Coordinate {
     lng: number | string;
 }
 
+export interface GeolocationPosition {
+    coords: GeolocationCoordinates;
+    timestamp?: number | string;
+}
+
+export interface GeolocationCoordinates {
+    accuracy?: number | string;
+    altitude?: number | string;
+    altitudeAccuracy?: number | string;
+    heading?: number | string;
+    latitude: number;
+    longitude: number;
+    speed?: number | string;
+}
+
 /**
  * Represents the required properties of a UserDetail
  */
