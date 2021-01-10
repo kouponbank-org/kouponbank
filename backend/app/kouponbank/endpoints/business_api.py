@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.db.models import Prefetch
 
 
 class OwnerBusinessListAPI(APIView):
@@ -244,17 +245,13 @@ class BusinessSearchListAPI(APIView):
     )
     def get(self, request):
         char = request.query_params["char"]
-        business = Business.objects.filter(
+        business = Business.objects.filter( 
             verified_business=True,
-            business_name__startswith=char,
+            roadAddr__contains=char,
         )[:10]
+        print(business)
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)
 
- 
-# 1. Add field in business models
-#     1-1. dates/time and period (time field) for a starting time
-#         1-1-1. set boolean condition if it is available
-#     1-2. seats (number)
-#     1-3. tags?
-# 2. filter the search with the input queries
+
+        

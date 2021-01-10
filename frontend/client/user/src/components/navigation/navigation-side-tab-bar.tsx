@@ -18,10 +18,10 @@ export const KouponBankSideTabBar = (props: Prop): ReactElement => {
     const history = useHistory();
 
     const signOut = () => {
-        if (props.user.id ) {
+        if (props.user.id) {
             props.signOut();
             history.push(UrlPaths.HomePage);
-        };
+        }
     };
 
     const redirectToHomepage = (event: React.MouseEvent<HTMLImageElement>): void => {
@@ -118,4 +118,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     };
 };
 
-export const KouponBankSideTabBarR = connect(mapStateToProps, mapDispatchToProps)(KouponBankSideTabBar);
+export const KouponBankSideTabBarR = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(KouponBankSideTabBar);

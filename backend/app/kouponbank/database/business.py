@@ -40,6 +40,7 @@ class Business(models.Model):
     zipNo = models.CharField(max_length=64, blank=False)
     entX = models.CharField(max_length=64, unique=True, blank=False)
     entY = models.CharField(max_length=64, unique=True, blank=False)
+    #business_hour = models.TimeField (blank=True, db_index=True)
 
 class BusinessSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,5 +58,5 @@ class BusinessSerializer(serializers.ModelSerializer):
             "jibunAddr",
             "zipNo",
             "entX",
-            "entY"
+            "entY",
         )

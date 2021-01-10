@@ -1,661 +1,197 @@
-// .background-home {
-//     position:fixed;
-//     background-color: #ffffff;
-//     padding: 0;
-//     margin: 0 auto;
-
-//     top:0;
-//     left:0;
-
-//     width: 100%;
-//     height: 100%;
-//     overflow-y: scroll;
-// }
-
-// /* On screens that are 992px wide or less, go from four columns to two columns */
-// @media screen and (max-width: 1920px) {
-//     .background-home {
-//         // position:fixed;
-//         // background-color: #ffffff;
-//         // padding: 0;
-//         // margin: 0;
-    
-//         // top:0;
-//         // left:0;
-    
-//         width: 100%;
-//         height: 100%;
-//         overflow-y: scroll;
-
-//         .search {
-//             width: 100%;
-//             //height: 67.4%; //728
-//             height: 728px;
-//             position: absolute;
-//             //margin-left: 19.2%;
-//             padding-left: 19.2%;
-//             padding-top: 136px;
-    
-//             .search-bar {
-//                 width: 61.7%;
-//                 height: 64px;
-//                 //margin-top: 12.5926%;
-//                 border-radius: 32px;
-//                 background-color: #f1f3f5;
-//             }
-    
-//             .text {
-//                 width: 61.7%;
-//                 // height: 25.275%;
-//                 height: 184px;
-//                 margin-top: 64px;
-//                 background-color: #f73707;
-//                 //margin-top: 5.926%;
-    
-//                 .text-left {
-//                     width: 49.32%;
-//                     //height: 65.217%; //184
-//                     height: 120px;
-//                     float:left;
-                
-//                     .title {
-//                         width: 100%;
-//                         //height: 53.333334%; //120
-//                         font-size: 64px;
-//                         text-align: left;
-//                         background-color: #f1f3f5;
-//                     }
-                    
-//                     .sub-title {
-//                         width: 100%;
-//                         //height: 26.6666667%; //120 
-//                         //margin-top: 14.07%;
-//                         margin-top: 24px;
-//                         font-size: 32px;
-//                         text-align: left;
-//                         background-color: #f1f3f5;
-//                     }
-//                 }
-    
-//                 .text-right {
-//                     width: 43.92%;
-//                     //height: 100%;
-//                     float: right;
-    
-//                     .description {
-//                         width: 100%;
-//                         //height: 13.043%; 
-//                         font-size: 24px;
-//                         text-align: left;
-//                         // margin-bottom: 4.35%;
-//                         margin-bottom: 8px;
-//                         background-color: #f1f3f5;
-//                     }
-//                 }
-//             }
-//             .button {
-//                 width: 12.5%;
-//                 height: 64px;
-//                 margin-left: 24.5%;
-//                 // margin-top: 21.978%;
-//                 margin-top: 160px;
-//                 border-radius: 32px;
-//                 background-color: #5c7cfa;
-//                 border-width: 0;
-//                 color: #ffffff;
-//             }
-//         }
-    
-//         .recommend {
-//             width: 100%;
-//             height: 1432px;
-//             margin-top: 728px;
-//             position: absolute;
-//             background-color: #91a7ff;
-//             padding-left: 19.2%;
-    
-//             .text {
-//                 width: 30.4%;
-//                 height: 136px;
-//                 margin-top: 64px;
-//                 float: left;
-    
-//                 .title {
-//                     width: 100%;
-//                     height: 64px; //136
-//                     font-size: 64px;
-//                     text-align: left;
-//                     background-color: #f1f3f5;
-//                 }
-                
-//                 .sub-title {
-//                     width: 100%;
-//                     height: 32px; //136 
-//                     margin-top: 40px; //1432
-//                     font-size: 32px;
-//                     text-align: left;
-//                     background-color: #f1f3f5;
-//                 }
-//             }
-    
-//             .button {
-//                 width: 12.5%;
-//                 height: 64px;
-//                 border-radius: 32px;
-//                 background-color: #ffffff;
-//                 color: #91a7ff;
-//                 border-width: 0;
-//                 margin-left: 18.8%;
-//                 margin-top: 72px;
-//                 margin-bottom: 128px;
-//             }
-    
-//             .business {
-//                 width: 61.6667%; //1184
-//                 height: 1024px; //1024
-    
-//                 .business-detail {
-//                     //width: 49.324%;
-//                     //height: 31.25%;
-//                     width: 100%;
-//                     //height: 100%;
-//                     background-color: #dee2e6;
-//                 }
-    
-//                 .business-name {
-//                     width: 97.3%;
-//                     height: 5%;
-//                     margin-top: 85%;
-//                     margin-bottom: 2.5%;
-//                     background-color: #f1f3f5;
-//                 }
-//                 .business-text {
-//                     width: 97.3%;
-//                     height: 5%;
-//                     background-color: #f1f3f5;
-//                 }
-//             }
-    
-//         }
-//     }
-//   }
-  
-// /* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
-// @media screen and (max-width: 600px) {
-//     .background-home {
-//         // position:fixed;
-//         // background-color: #ffffff;
-//         // padding: 0;
-//         // margin: 0;
-    
-//         // top:0;
-//         // left:0;
-    
-//         width: 100%;
-//         height: 100%;
-//         overflow-y: scroll;
-
-//         .search {
-//             width: 95.6%;
-//             //height: 67.4%; //728
-//             height: 728px;
-//             position: absolute;
-//             //margin-left: 19.2%;
-//             padding-left: 2.2%;
-//             padding-top: 136px;
-    
-//             .search-bar {
-//                 width: 100%;
-//                 height: 40px;
-//                 //margin-top: 12.5926%;
-//                 border-radius: 32px;
-//                 background-color: #f1f3f5;
-//             }
-    
-//             .text {
-//                 width: 100%;
-//                 // height: 25.275%;
-//                 height: 248px;
-//                 margin-top: 88px;
-//                 background-color: #f73707;
-//                 //margin-top: 5.926%;
-
-//                 .text-left {
-//                     width: 100%;
-//                     height: 80px;
-
-//                     .title {
-//                         width: 100%;
-//                         //height: 53.333334%; //120
-//                         font-size: 48px;
-//                         text-align: left;
-//                         background-color: #f1f3f5;
-//                     }
-                    
-//                     .sub-title {
-//                         width: 100%;
-//                         //height: 26.6666667%; //120 
-//                         //margin-top: 14.07%;
-//                         margin-top: 8px;
-//                         font-size: 24px;
-//                         text-align: left;
-//                         background-color: #f1f3f5;
-//                     }
-//                 }
-//                 .text-right{
-//                     width: 100%;
-//                     margin-top: 32px;
-//                     height: 136px;
-
-//                     .description {
-//                         width: 100%;
-//                         //height: 13.043%; 
-//                         font-size: 16px;
-//                         text-align: left;
-//                         // margin-bottom: 4.35%;
-//                         margin-bottom: 8px;
-//                         background-color: #f1f3f5;
-//                     }
-//                 } 
-//             }
-//             .button {
-//                 width: 66.7%;
-//                 height: 64px;
-//                 margin-left: 16.7%;
-//                 // margin-top: 21.978%;
-//                 margin-top: 40px;
-//                 border-radius: 32px;
-//                 background-color: #5c7cfa;
-//                 border-width: 0;
-//                 color: #ffffff;
-//                 font-size: 16px;
-//             }
-//         }
-    
-//         .recommend {
-//             width: 100%;
-//             height: 1664px;
-//             margin-top: 728px;
-//             position: absolute;
-//             background-color: #91a7ff;
-//             padding-left: 2.2%;
-    
-//             .text {
-//                 width: 95.6%;
-//                 height: 80px;
-//                 margin-top: 64px;
-    
-//                 .title {
-//                     width: 100%;
-//                     height: 48px; //136
-//                     font-size: 64px;
-//                     text-align: left;
-//                     background-color: #f1f3f5;
-//                 }
-                
-//                 .sub-title {
-//                     width: 100%;
-//                     height: 32px; //136 
-//                     margin-top: 8px; //1432
-//                     font-size: 24px;
-//                     text-align: left;
-//                     background-color: #f1f3f5;
-//                 }
-//             }
-    
-//             .button {
-//                 width: 66.7%;
-//                 height: 64px;
-//                 border-radius: 32px;
-//                 background-color: #ffffff;
-//                 color: #91a7ff;
-//                 border-width: 0;
-//                 margin-left: 16.7%;
-//                 margin-top: 40px;
-//                 margin-bottom: 40px;
-//                 font-size: 16px;
-//             }
-    
-//             .business {
-//                 width: 95.6%; //1184
-//                 height: 1232px; //1024
-    
-//                 .business-detail {
-//                     //width: 49.324%;
-//                     //height: 31.25%;
-//                     width: 100%;
-//                     //height: 100%;
-//                     background-color: #dee2e6;
-//                 }
-    
-//                 .business-name {
-//                     width: 97.3%;
-//                     height: 5%;
-//                     margin-top: 85%;
-//                     margin-bottom: 2.5%;
-//                     background-color: #f1f3f5;
-//                 }
-//                 .business-text {
-//                     width: 97.3%;
-//                     height: 5%;
-//                     background-color: #f1f3f5;
-//                 }
-//             }
-    
-//         }
-//     }
-// }
-
-    
-
-
-
-// .background-home {
-//     // position:fixed;
-//     // background-color: #ffffff;
-//     // padding: 0;
-//     // margin: 0;
-
-//     // top:0;
-//     // left:0;
-
-//     width: 100%;
-//     height: 100%;
-//     overflow-y: scroll;
-// }
-
-//     .search {
-//         width: 61.5%;
-//         height: 63.79%; //689
-//         position: absolute;;
-//         padding-left: 19.2%;
-//         padding-top: 19.739%;
-
-//         .search-bar {
-//             width: 100%;
-//             height: 4.644%;
-//             border-radius: 32px;
-//             background-color: #f1f3f5;
-//         }
-
-//         .text {
-//             width: 100%;
-//             height: 25.275%;
-//             margin-top: 5.926%;
-
-//             .text-left {
-//                 width: 49.32%;
-//                 height: 65.217%; //184
-//                 float:left;
-            
-//                 .title {
-//                     width: 100%;
-//                     height: 53.333334%; //120
-//                     font-size: 5vw;
-//                     text-align: left;
-//                     background-color: #f1f3f5;
-//                 }
-                
-//                 .sub-title {
-//                     width: 100%;
-//                     height: 26.6666667%; //120 
-//                     margin-top: 14.07%;
-//                     font-size: 2.5vw;
-//                     text-align: left;
-//                     background-color: #f1f3f5;
-//                 }
-//             }
-
-//             .text-right {
-//                 width: 43.92%;
-//                 height: 100%;
-//                 float: right;
-
-//                 .description {
-//                     width: 100%;
-//                     height: 13.043%; 
-//                     font-size: 1.75vw;
-//                     text-align: left;
-//                     margin-bottom: 4.35%;
-//                     background-color: #f1f3f5;
-//                 }
-//             }
-//         }
-//         .button {
-//             width: 12.5%;
-//             height: 8.791%;
-//             margin-left: 24.5%;
-//             margin-top: 21.978%;
-//             border-radius: 32px;
-//             background-color: #5c7cfa;
-//             border-width: 0;
-//             color: #ffffff;
-//         }
-//     }
-
-//     .recommend {
-//         width: 100%;
-//         height: 132.592%; //1432
-//         margin-top: 67.4%;
-//         position: absolute;
-//         background-color: #91a7ff;
-//         padding-left: 19.2%;
-
-//         .text {
-//             width: 30.4%;
-//             height: 9.50%;
-//             margin-top: 4.4692%;
-//             float: left;
-
-//             .title {
-//                 width: 100%;
-//                 height: 47.059%; //136
-//                 font-size: 5vw;
-//                 text-align: left;
-//                 background-color: #f1f3f5;
-//             }
-            
-//             .sub-title {
-//                 width: 100%;
-//                 height: 23.53%; //136 
-//                 margin-top: 2.79%; //1432
-//                 font-size: 2.5vw;
-//                 text-align: left;
-//                 background-color: #f1f3f5;
-//             }
-//         }
-
-//         .button {
-//             width: 12.5%;
-//             height: 4.469%;
-//             border-radius: 32px;
-//             background-color: #ffffff;
-//             color: #91a7ff;
-//             border-width: 0;
-//             margin-left: 18.8%;
-//             margin-top: 4.4692%;
-//             margin-bottom: 8.938%;
-//         }
-
-//         .business {
-//             width: 61.6667%; //1184
-//             height: 71.5%; //1024
-//             display: flex;
-//             flex-flow: row wrap;
-//             justify-content: space-evenly;
-
-//             .business-detail {
-//                 flex: initial;
-//                 width: 49.324%;
-//                 height: 31.25%;
-//                 // width: 100%;
-//                 // height: 100%;
-//                 margin-bottom: 2.5%;
-//                 background-color: #dee2e6;
-            
-
-//                 .business-name {
-//                     width: 97.3%;
-//                     height: 5%;
-//                     //margin-top: 85%;
-//                     margin-bottom: 2.5%;
-//                     background-color: #f1f3f5;
-//                 }
-//                 .business-text {
-//                     width: 97.3%;
-//                     height: 5%;
-//                     background-color: #f1f3f5;
-//                 }
-
-//                 .buseinss-picture {
-//                     width: 100%;
-//                     height: 80%;
-//                 }
-//             }
-//         }
-
-//     }
-
-
-
-.background-home {
-    width: 100%;
-    padding-top: 5%; //Top Nav Bar Height
-    padding-bottom: 10%; //Bot Nav Bar Height
-
-
-    .search {
-        width: 61.5%;
-        position: relative;
-        padding-left: 19.2%;
-        padding-top: 7.59%; //12.59% - 5% (top nav)
-        padding-bottom: 5.925%;
-
-        .search-bar {
-            width: 100%;
-            height: 32px;
-            border-radius: 32px;
-            background-color: #f1f3f5;
-        }
-
-        .text {
-            width: 100%;
-            margin-top: 5.926%;
-            display: flex;
-            justify-content: space-between;
-
-            .text-left {
-                width: 49.06%;
-            
-                .title {
-                    width: 100%;
-                    font-size: 5vw;
-                    text-align: left;
-                    background-color: #f1f3f5;
-                }
-                
-                .sub-title {
-                    width: 100%;
-                    margin-top: 14.07%;
-                    font-size: 2.5vw;
-                    text-align: left;
-                    background-color: #f1f3f5;
-                }
-            }
-
-            .text-right {
-                width: 50%;
-
-                .description {
-                    width: 100%;
-                    font-size: 1.75vw;
-                    text-align: left;
-                    margin-bottom: 4.35%;
-                    background-color: #f1f3f5;
-                }
-            }
-        }
-        .button {
-            width: 20.3%;
-            // height: 64px;
-            margin-left: 39.76%;
-            margin-top: 10.185%;
-            border-radius: 32px;
-            background-color: #5c7cfa;
-            border-width: 0;
-            padding: 1.574% 2.368%;
-            color: #ffffff;
-        }
-    }
-
-    .recommend {
-        width: 61.5%;
-        position: relative;
-        background-color: #91a7ff;
-        padding-top: 5.925%;
-        padding-left: 19.2%;
-        padding-right: 19.2%;
-
-        .text {
-            width: 100%;
-
-            .title {
-                width: 100%;
-                font-size: 5vw;
-                text-align: left;
-                background-color: #f1f3f5;
-            }
-            
-            .sub-title {
-                width: 100%;
-                margin-top: 3.7%;
-                font-size: 2.5vw;
-                text-align: left;
-                background-color: #f1f3f5;
-            }
-        }
-
-        .business {
-            width: 100%;
-            display: flex;
-            margin-top: 5.926%;
-            flex-flow: row wrap;
-            justify-content: space-evenly;
-
-            .business-detail {
-                flex: initial;
-                width: 49.07%;
-                margin-bottom: 2.5%;
-                background-color: #dee2e6;
-
-                .buseinss-picture {
-                    width: 100%;
-                    height: 80%;
-                }
-
-                .business-name {
-                    width: 97.3%;
-                    margin-bottom: 2.5%;
-                    background-color: #f1f3f5;
-                }
-
-                .business-text {
-                    width: 97.3%;
-                    background-color: #f1f3f5;
-                }
-            }
-        }
-
-        .button {
-            width: 20.3%;
-            border-radius: 32px;
-            background-color: #ffffff;
-            color: #91a7ff;
-            border-width: 0;
-            padding: 1.574% 2.368%;
-            margin: 10.185% 0 10% 39.76%;
-             //Margin bottom, Bottom Nav Bar height
-        }
-
-    }
+#background-home {
+    display: flex;
+    flex-direction: row;
 }
+
+#homepage-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#homepage-main-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#homepage-row1 { //1561, 624
+    //padding bottom, 31.01% = 335px/1080px
+    background-color: #7f705e;
+}
+
+#homepage-row1-container { //1561, 624
+    //padding bottom, 31.01% = 335px/1080px
+    padding: 10% 47.3% 31.01% 6.2%;
+}
+
+#homepage-row1-text {
+
+}   
+
+#homepage-row1-text-title {
+    width: 100%;
+    font-size: 3.75vw;
+    font-family: NanumSquare;
+    text-align: left;
+    color: #ffffff;
+}
+
+#homepage-row1-button {
+    width: 20.3%;
+    // height: 64px;
+    margin-left: 39.76%;
+    margin-top: 10.185%;
+    border-radius: 32px;
+    background-color: #5c7cfa;
+    border-width: 0;
+    padding: 1.574% 2.368%;
+    color: #ffffff;
+}
+
+#homepage-row2 {
+    background-color: #dbe4ff;
+    padding: 9.44% 9.9% 22.1% 9.9%; //bottom originally 42.1%
+    display: flex;
+    flex-direction: column;
+}
+
+#homepage-row2-text {
+    width: 100%;
+}
+
+#homepage-row2-text-title {
+    width: 100%;
+    font-size: 2.5vw;
+    text-align: center;
+}
+    
+#homepage-row2-text-subtitle {
+    width: 100%;
+    margin-top: 1.11111%;
+    font-size: 1.25vw;
+    text-align: center;
+}
+
+
+#homepage-row2-business {
+    width: 100%;
+    display: flex;
+    margin-top: 14.9%;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#homepage-row2-business-detail {
+    width: 32.1%;
+    background-color: #ffffff;
+    margin-left: 2.04%;
+    padding: 1.48% 1.4%;
+    cursor: pointer;
+}
+
+#homepage-row2-business-detail-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+#homepage-row2-buseinss-picture {
+    width: 100%;
+    height: 55.3%;
+}
+
+#homepage-row2-business-detail-info-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5.06%;
+}
+
+#homepage-row2-business-container-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 3.57%;
+}
+
+#homepage-row2-business-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#homepage-row2-business-name {
+    width: 100%;
+    margin-bottom: 0.892%;
+    font-family: NanumSquare;
+    font-size: 1.25vw;
+    color: #2d3748;
+}
+
+#homepage-row2-business-location {
+    width: 100%;
+    font-family: NanumSquare;
+    font-size: 1.015vw;
+    font-weight: bold;
+    color: #868e96;
+}
+
+#homepage-row2-business-fav {
+    max-width: 13%;
+}
+
+#homepage-row2-business-container-2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2.976%;
+}
+
+#homepage-row2-business-review {
+    font-size: 1.25vw;
+    font-family: NanumSquare;
+}
+
+#homepage-row2-business-view-detail {
+    width: 44.2%;
+    height: 10.5%;
+    font-size: 1.25vw;
+    font-family: NanumSquare;
+    border-radius: 8px;
+    border-width: 0;
+    color: #868e96;
+    background-color: #f2f3f4;
+}
+
+#homepage-row2-business-container-3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#homepage-row2-business-availablity {
+    font-size: 1.25vw;
+    font-family: NanumSquare;
+}
+
+#homepage-row2-business-reserve {
+    width: 44.2%;
+    height: 10.5%;
+    font-size: 1.25vw;
+    font-family: NanumSquare;
+    border-radius: 8px;
+    border-width: 0;
+    color: #ffffff;
+    background-color: #364fc7;
+}
+
+#homepage-row2-button {
+    width: 20.3%;
+    border-radius: 32px;
+    background-color: #ffffff;
+    color: #91a7ff;
+    border-width: 0;
+    padding: 1.574% 2.368%;
+    margin: 10.185% 0 10% 39.76%;
+        //Margin bottom, Bottom Nav Bar height
+}
+

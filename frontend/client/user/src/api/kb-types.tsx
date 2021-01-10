@@ -128,6 +128,6 @@ export interface AddressDetail {
 export interface SearchQueries {
     location?: string;
     starting_time?: number;
-    period?: number;
-    people?: number;
+    duration?: number;
+    guest?: number;
 }
