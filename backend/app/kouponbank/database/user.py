@@ -30,7 +30,8 @@ class UserSerializer(serializers.ModelSerializer):
             name="",
             gender="",
             birthday="",
-            location=""
+            address="",
+            cell_number="",
         )
 
         return user
