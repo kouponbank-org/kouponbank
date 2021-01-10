@@ -74,7 +74,7 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
             <div id="kb-discover-page-container">
                 <TopNavBar />
                 <div id="discover-page-main-container">
-                    <div id="business-list-margin-control-container" >
+                    <div id="business-list-margin-control-container">
                         <div id="business-list-main-container">
                             <div id="business-list-padding-control-container">
                                 <div id="business-list-container">

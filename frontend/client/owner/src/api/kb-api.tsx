@@ -99,12 +99,33 @@ export class KouponBankApi {
             });
     }
 
+    // async updateBusiness(
+    //     userId: string,
+    //     businessId: string,
+    //     business: Business,
+    // ): Promise<Business> {
+    //     return axios
+    //         .put<Business>(
+    //             `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`,
+    //             business,
+    //         )
+    //         .then((response) => {
+    //             return response.data;
+    //         });
+    // }
+
     async updateBusiness(
         userId: string,
         businessId: string,
         business: Business,
     ): Promise<Business> {
-        return axios
+        const form_data = new FormData();
+        for (const key in business) {
+            const value = business[key];
+            form_data.append(key, value);
+        }
+        if (business.business_picture === null) {
+            return axios
             .put<Business>(
                 `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`,
                 business,
@@ -112,7 +133,19 @@ export class KouponBankApi {
             .then((response) => {
                 return response.data;
             });
+        } else {
+            return axios
+                .put<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`, form_data, {
+                    headers: {
+                        "content-type": "multipart/form-data",
+                    },
+                })
+                .then((response) => {
+                    return response.data;
+                });
+        }
     }
+
 
     /* Business API - Everyone */
     async getBusiness(businessId: string): Promise<Business> {

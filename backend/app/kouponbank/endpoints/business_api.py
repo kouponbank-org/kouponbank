@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.db.models import Prefetch
 
 
 class OwnerBusinessListAPI(APIView):
@@ -244,9 +245,13 @@ class BusinessSearchListAPI(APIView):
     )
     def get(self, request):
         char = request.query_params["char"]
-        business = Business.objects.filter(
+        business = Business.objects.filter( 
             verified_business=True,
-            business_name__startswith=char,
+            roadAddr__contains=char,
         )[:10]
+        print(business)
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)
+
+
+        
