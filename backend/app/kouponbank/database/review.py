@@ -17,8 +17,6 @@ class Review(models.Model):
         to="kouponbank.Business",
         on_delete=models.CASCADE,
         related_name="business_review",
-        blank=True,
-        null=True,
     )
     user = models.ForeignKey(
         to="kouponbank.User",
