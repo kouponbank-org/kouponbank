@@ -7,8 +7,8 @@ import { RootReducer } from "../../store/reducer";
 import { KouponBankApi } from "../../api/kb-api";
 import { ApiContext } from "../base-page-router";
 import { getBusiness, getBusinesses } from "../../store/business/business-reducer";
-import { TopNavBar } from "../navigation/navigation-top-bar";
-import { KouponBankSideTabBarR } from "../navigation/navigation-side-tab-bar";
+import { KouponBankSideTabBarR } from "../common-components/navigation/navigation-side-tab-bar";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { HomepageForm } from "./homepage-form";
 
 /**

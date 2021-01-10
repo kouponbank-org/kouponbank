@@ -1,7 +1,7 @@
 import "./navigation-bar.scss";
-import { SearchQueries } from "../../api/kb-types";
+import { SearchQueries } from "../../../api/kb-types";
 import { useHistory } from "react-router-dom";
-import { UrlPaths } from "../base-page-router";
+import { UrlPaths } from "../../base-page-router";
 import React, { useState, ReactElement } from "react";
 
 export interface Prop {

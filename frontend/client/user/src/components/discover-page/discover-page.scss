@@ -1,0 +1,115 @@
+/*Discover Page CSS*/
+#kb-discover-page {
+    display: flex;
+}
+
+// Top Navigation Bar + Main Contents
+#kb-discover-page-top-nav-main-contents-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+// Main Contents
+#kb-discover-page-main-contents-margin-control-container {
+    display: flex;
+    position: relative;
+    margin-left: var(--side-nav-bar-width, 179px);
+}
+
+#discover-page-main-contents-container {
+    display: flex;
+    width: 100%;
+}
+
+// Left Contents
+#left-content-container {
+    display: flex;
+    flex-direction: column;
+    width: 51.7%;
+    min-width: 485px;
+}
+
+#left-main-content-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+// Business List Contents
+#business-list-main-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#business-list-container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 86.2%;
+}
+
+// Right Contents
+#right-content-container {
+    display: flex;
+    width: 48.3%;
+    min-width: 453px;
+}
+
+// Map Contents
+#discover-page-map {
+    width: 100%;
+}
+
+/*Discover List Business CSS*/
+#business-main-container {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+#business-content-container {
+    border: solid 1px #000000;
+    width: 91.5%;
+    margin-top: 24px;
+}
+
+#business-picture {
+    width: 100%;
+    height: 168px;
+    cursor: pointer;
+}
+
+#business-title {
+    width: 100%;
+    font-family: NanumSquare;
+    font-size: 16px;
+    font-weight: 800;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: left;
+    color: #2d3748;
+}
+
+#business-description {
+    width: 100%;
+    font-family: NanumSquare;
+    font-size: 13px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 3.69;
+    letter-spacing: normal;
+    text-align: left;
+    color: #868e96;
+}
+
+//Page List Container 
+#page-list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+}

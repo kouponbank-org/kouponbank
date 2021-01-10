@@ -64,7 +64,6 @@ export class KouponBankApi {
         const form_data = new FormData();
         for (const key in userDetail) {
             const value = userDetail[key];
-            console.log(key + value);
             form_data.append(key, value);
         }
 

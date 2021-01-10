@@ -11,10 +11,10 @@ import { getBusiness } from "../../store/business/business-reducer";
 import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
-import { MapR } from "../naver-map/map";
-import { KouponBankSideTabBarR } from "../navigation/navigation-side-tab-bar";
-import { TopNavBar } from "../navigation/navigation-top-bar";
-import { DiscoverBusinessList } from "./discover-list-business";
+import { MapR } from "../discover-page/naver-map/map";
+import { KouponBankSideTabBarR } from "../common-components/navigation/navigation-side-tab-bar";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
+import { DiscoverBusinessList } from "../discover-page/discover-list-business";
 
 /**
  * Represents the required properties of the HomePage.
