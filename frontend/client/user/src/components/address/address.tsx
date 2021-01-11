@@ -1,11 +1,14 @@
-import { Button, TableCell, TableRow, TextField } from "@material-ui/core";
+import "./address.scss";
+
 import React, { useContext, useState } from "react";
+
+import { Button, TableCell, TableRow, TextField } from "@material-ui/core";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { AddressDetail } from "../../api/kb-types";
 import { getAddressCoord, getAddressSearchResult } from "../../store/naver-map/naver-map-reducer";
 import { ApiContext } from "../base-page-router";
 import { AddressTable } from "./address-table";
-import "./address.scss";
 
 /**
  * Represents the required properties of the log in form.

@@ -84,6 +84,26 @@ export interface NaverMapBound {
     minLng: string;
 }
 
+export interface Coordinate {
+    lat: number | string;
+    lng: number | string;
+}
+
+export interface GeolocationPosition {
+    coords: GeolocationCoordinates;
+    timestamp?: number | string;
+}
+
+export interface GeolocationCoordinates {
+    accuracy?: number | string;
+    altitude?: number | string;
+    altitudeAccuracy?: number | string;
+    heading?: number | string;
+    latitude: number;
+    longitude: number;
+    speed?: number | string;
+}
+
 /**
  * Represents the required properties of a UserDetail
  */
@@ -123,11 +143,4 @@ export interface AddressDetail {
     zipNo?: string;
     entX?: string;
     entY?: string;
-}
-
-export interface SearchQueries {
-    location?: string;
-    starting_time?: number;
-    period?: number;
-    people?: number;
 }

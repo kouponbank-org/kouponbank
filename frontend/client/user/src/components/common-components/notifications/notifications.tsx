@@ -1,9 +1,12 @@
+import "./notifications.scss";
+
+import React from "react";
+
 import { Collapse, IconButton } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import { Alert, AlertTitle } from "@material-ui/lab";
-import React from "react";
-import { AlertType } from "../../api/kb-types";
-import "./notifications.scss";
+
+import { AlertType } from "../../../api/kb-types";
 
 export interface Prop {
     onClose?: () => void;

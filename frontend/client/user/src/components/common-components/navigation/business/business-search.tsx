@@ -1,19 +1,22 @@
-import { TableCell, TableRow, TextField } from "@material-ui/core";
+import "./business-search.scss";
+
 import React, { useContext, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
-import { KouponBankApi } from "../../../api/kb-api";
-import { Business, User } from "../../../api/kb-types";
+
+import { TableCell, TableRow, TextField } from "@material-ui/core";
+
+import { KouponBankApi } from "../../../../api/kb-api";
+import { Business, User } from "../../../../api/kb-types";
 import {
     getBusiness,
     getBusinessesFromSearch,
     initialState,
-} from "../../../store/business/business-reducer";
-import { RootReducer } from "../../../store/reducer";
-import { ApiContext } from "../../base-page-router";
+} from "../../../../store/business/business-reducer";
+import { RootReducer } from "../../../../store/reducer";
+import { ApiContext } from "../../../base-page-router";
 import { SearchedBusinessList } from "./business-search-list";
-import "./business-search.scss";
 
 export interface Prop {
     open: boolean;
@@ -96,7 +99,6 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        business: state.businessReducer.business,
     };
 };
 
