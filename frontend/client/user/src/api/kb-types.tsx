@@ -144,10 +144,3 @@ export interface AddressDetail {
     entX?: string;
     entY?: string;
 }
-
-export interface SearchQueries {
-    location?: string;
-    starting_time?: number;
-    duration?: number;
-    guest?: number;
-}
