@@ -19,7 +19,6 @@ class BusinessDetail(models.Model):
     )
     business_email = models.EmailField(max_length=254, blank=True)
     business_wifi = models.BooleanField(default=False)
-    business_overall_rating = models.DecimalField(max_digits=2, decimal_places=1)
     business_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,

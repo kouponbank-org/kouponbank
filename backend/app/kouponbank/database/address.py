@@ -12,11 +12,11 @@ class Address(models.Model):
         null=True,
         blank=True,
     )
-    roadAddr= models.CharField(max_length=64, unique=True, blank=False)
-    jibunAddr = models.CharField(max_length=64, unique=True, blank=False)
-    zipNo = models.CharField(max_length=64, blank=False)
-    entX = models.CharField(max_length=64, unique=True, blank=False)
-    entY = models.CharField(max_length=64, unique=True, blank=False)
+    roadAddr= models.TextField(munique=True)
+    jibunAddr = models.TextField(unique=True)
+    zipNo = models.CharField(max_length=5)
+    entX = models.TextField(unique=True)
+    entY = models.TextField(unique=True)
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:

@@ -11,7 +11,7 @@ class Payment(models.Model):
         related_name="user_payment_method"
     )
     card_holder_name = models.CharField(max_length=50)
-    card_number = models.CharField(max_length=50, unique=True)
+    card_number = models.CharField(max_length=16, unique=True)
     card_billing_address = models.TextField(),
     card_type = models.CharField(max_length=50)
 
