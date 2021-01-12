@@ -42,4 +42,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 };
 */
 
-export const HomePageR = connect(mapStateToProps, null)(HomePage);
+export const HomePageR = connect(mapStateToProps)(HomePage);
