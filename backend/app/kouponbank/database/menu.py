@@ -18,10 +18,18 @@ class Menu(models.Model):
         to="kouponbank.Business",
         on_delete=models.CASCADE,
         related_name="business_menu",
-        null=True
+        null=True,
+        blank=True,
+    )
+    order = models.ForeignKey(
+        to="kouponbank.Order",
+        related_name="order_menu",
+        null=True,
+        blank=True,
     )
     menu_title = models.CharField(max_length=50, blank=False)
-    description = models.TextField(default="", blank=False)
+    menu_description = models.TextField(default="", blank=False)
+    menu_price = models.CharField(max_length=50, blank=False)
     menu_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,
@@ -34,6 +42,7 @@ class MenuSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "menu_title",
-            "description",
-            "menu_picture"
+            "menu_description",
+            "menu_price",
+            "menu_picture",
         )

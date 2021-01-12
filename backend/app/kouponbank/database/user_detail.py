@@ -12,13 +12,14 @@ class UserDetail(models.Model):
     user = models.OneToOneField(
         to="kouponbank.User",
         on_delete=models.CASCADE,
-        related_name="user_details"
+        related_name="user_detail"
     )
-    name = models.CharField(max_length=20, default="", blank=True)
-    gender = models.CharField(max_length=50, default="", blank=True)
+    name = models.CharField(max_length=50, default="")
+    gender = models.CharField(max_length=50, default="")
     birthday = models.CharField(max_length=50, default="", blank=True)
-    location = models.CharField(max_length=50, default="", blank=True)
-    profile_picture = models.ImageField(
+    address = models.CharField(max_length=50, default="", blank=True)
+    cell_number = models.CharField(max_length=20, default="", blank=True)
+    user_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,
         null=True
@@ -32,6 +33,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "name",
             "gender",
             "birthday",
-            "location",
-            "profile_picture"
+            "address",
+            "cell_number",
+            "user_picture"
         )
