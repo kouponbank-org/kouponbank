@@ -15,7 +15,7 @@ class BusinessDetail(models.Model):
     business = models.OneToOneField(
         to="kouponbank.Business",
         on_delete=models.CASCADE,
-        related_name="business_menu",
+        related_name="business_detail",
     )
     business_email = models.EmailField(max_length=254, blank=True)
     business_wifi = models.BooleanField(default=False)
@@ -32,6 +32,5 @@ class BusinessDetailSerializer(serializers.ModelSerializer):
             "id",
             "business_email",
             "business_wifi",
-            "business_overall_rating",
             "business_picture",
         )
