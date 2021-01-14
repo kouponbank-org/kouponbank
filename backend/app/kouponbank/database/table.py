@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from rest_framework import serializers
+from kouponbank.database.timeslot import Timeslot
 
 class Table(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -24,4 +25,11 @@ class TableSerializer(serializers.ModelSerializer):
             "table_capacity",
             "table_outlet",
             "table_near_wall",
+        )
+    def create(self, validated_data):
+        table = Table.objects.create(**validated_data)
+        Timeslot.objects.create(
+            id=table.id,
+            times="",
+            date="",
         )

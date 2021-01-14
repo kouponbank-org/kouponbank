@@ -12,7 +12,7 @@ class Address(models.Model):
         null=True,
         blank=True,
     )
-    roadAddr= models.TextField(munique=True)
+    roadAddr= models.TextField(unique=True)
     jibunAddr = models.TextField(unique=True)
     zipNo = models.CharField(max_length=5)
     entX = models.TextField(unique=True)

@@ -12,12 +12,6 @@ class Timeslot(models.Model):
         null=True,
         blank=True,
     )
-    # reservation = models.ForeignKey(
-    #     to="kouponbank.Reservation",
-    #     related_name="reservation_timeslot",
-    #     null=True,
-    #     blank=True,
-    # )
     times = models.CharField(max_length=48)
     date = models.DateField()
 
