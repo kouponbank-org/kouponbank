@@ -9,21 +9,15 @@ class Reservation(models.Model):
         to="kouponbank.Table",
         on_delete=models.CASCADE,
         related_name = "table_reservation",
-        blank=True,
-        null=True,
     )
     business = models.ForeignKey(
         to="kouponbank.Business",
         on_delete=models.CASCADE,
         related_name="business_reservation",
-        blank=True,
-        null=True,
     )
     user = models.ForeignKey(
         to="kouponbank.User",
         related_name="user_reservation",
-        blank=True,
-        null=True,
     )
     start_time = models.TimeField()
     end_time = models.TimeField()

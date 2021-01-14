@@ -3,11 +3,12 @@ import uuid
 from django.db import models
 from rest_framework import serializers
 
-from kouponbank.database.user_detail import UserDetail, UserDetailSerializer
-
+from kouponbank.database.user_detail import UserDetail
+from kouponbank.database.owner import Owner
 
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    onwer = models.ManyToManyField(Owner)
     username = models.CharField(max_length=50, unique=True, blank=False)
     password = models.CharField(max_length=50, unique=False, blank=False)
     email = models.EmailField(max_length=254, unique=True, blank=False)
