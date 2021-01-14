@@ -249,7 +249,6 @@ class BusinessSearchListAPI(APIView):
             verified_business=True,
             roadAddr__contains=char,
         )[:10]
-        print(business)
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)
 
