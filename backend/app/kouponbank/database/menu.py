@@ -1,8 +1,11 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
 
+from kouponbank.database.order import Order
+from kouponbank.database.business import Business
 
 def upload_to(instance, filename):
     return '/'.join([
@@ -15,18 +18,13 @@ def upload_to(instance, filename):
 class Menu(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     business = models.ForeignKey(
-        to="kouponbank.Business",
+        Business,
         on_delete=models.CASCADE,
         related_name="business_menu",
         null=True,
         blank=True,
     )
-    order = models.ForeignKey(
-        to="kouponbank.Order",
-        related_name="order_menu",
-        null=True,
-        blank=True,
-    )
+    order = models.ManyToManyField(Order)
     menu_title = models.CharField(max_length=50, blank=False)
     menu_description = models.TextField(default="", blank=False)
     menu_price = models.CharField(max_length=50, blank=False)
