@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
 ## List of all menus in a business owned by an owner (Get, Post)
 class BusinessMenuListAPI(APIView):
     @swagger_auto_schema(

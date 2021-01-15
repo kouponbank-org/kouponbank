@@ -58,6 +58,7 @@ class OwnerBusinessListAPI(APIView):
         ]
     )
     def post(self, request, owner_id):
+        # TODO: Make this more optimized? or cleaner.
         business_owner = self.__get_owner(owner_id)
         business_serializer = BusinessSerializer(data=request.data["business"])
         business_detail_serializer = BusinessDetailSerializer(data=request.data["business_detail"])

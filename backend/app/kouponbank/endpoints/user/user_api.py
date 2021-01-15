@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 
 from kouponbank.database.user import User, UserSerializer
 from kouponbank.database.user_detail import UserDetail, UserDetailSerializer
+from kouponbank.database.business import Business
 
 
 class UserListAPI(APIView):
@@ -102,12 +103,22 @@ class UserAPI(APIView):
         ]
     )
     def put(self, request, user_id):
+        #TODO: optimize this with Try/Except
         user = self.__get_user(user_id)
+        if request.data.get("business_id") is not None:
+            business_id = request.data["business_id"]
+            business = self.__get_business(business_id)
+            user.businesses.add(business)
         serializer = UserSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def __get_business(self, business_id):
+        try:
+            return Business.objects.get(pk=business_id)
+        except Business.DoesNotExist:
+            raise Http404("Business not found")
 
     @swagger_auto_schema(
         responses={200: UserSerializer(many=True)}

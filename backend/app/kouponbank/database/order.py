@@ -2,7 +2,9 @@
 import uuid
 
 from django.db import models
+from kouponbank.database.menu import Menu
 from rest_framework import serializers
+
 
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -11,6 +13,7 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         related_name="reservation_order",
     )
+    menus = models.ManyToManyField(Menu)
     total_price = models.DecimalField(decimal_places=2)
     total_quantity = models.IntegerField(default=1)
     order_complete_status = models.BooleanField(default=False)
