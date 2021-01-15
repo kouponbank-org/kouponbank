@@ -1,8 +1,8 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
-
 
 def upload_to(instance, filename):
     return '/'.join([str(instance.owner.username), filename])

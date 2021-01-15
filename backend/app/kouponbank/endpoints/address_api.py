@@ -1,3 +1,4 @@
+# pylint: disable=import-error
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -17,8 +18,7 @@ class OwnerBusinessAddressAPI(APIView):
     )
     def get(self, request, owner_id, business_id):
         business = self.__get_business(business_id)
-        address = business.business_address
-        serializer = AddressSerializer(address, many=True)
+        serializer = AddressSerializer(business.business_address)
         return Response(serializer.data)
     def __get_business(self, business_id):
         try:

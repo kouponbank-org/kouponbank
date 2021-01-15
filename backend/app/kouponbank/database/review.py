@@ -1,7 +1,11 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
+
+from kouponbank.database.business import Business
+from kouponbank.database.user import User
 
 def upload_to(instance, filename):
     return '/'.join([
@@ -14,12 +18,12 @@ def upload_to(instance, filename):
 class Review(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     business = models.ForeignKey(
-        to="kouponbank.Business",
+        Business,
         on_delete=models.CASCADE,
         related_name="business_review",
     )
     user = models.ForeignKey(
-        to="kouponbank.User",
+        User,
         related_name="user_review",
         blank=True,
         null=True,
