@@ -10,6 +10,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
+## Returns the detail of a user given an id of a user
 class UserDetailAPI(APIView):
     @swagger_auto_schema(
         responses={200: UserDetailSerializer(many=True)},

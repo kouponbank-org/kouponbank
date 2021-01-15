@@ -2,11 +2,13 @@
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from kouponbank.database.user import User
 from kouponbank.database.reservation import Reservation, ReservationSerializer
+from kouponbank.database.user import User
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
+## Returns the list of reservations that the user has made given an id of a user
 class UserReservationListAPI(APIView):
     @swagger_auto_schema(
         responses={200: ReservationSerializer(many=True)},
@@ -22,6 +24,7 @@ class UserReservationListAPI(APIView):
         except User.DoesNotExist:
             raise Http404("User not found")
 
+## Returns a reservation that the user has made given an id of a user and an id of the reservation
 class UserReservationAPI(APIView):
     @swagger_auto_schema(
         responses={200: ReservationSerializer(many=True)},

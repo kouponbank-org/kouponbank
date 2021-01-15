@@ -25,6 +25,7 @@ class ReservationOrderAPI(APIView):
         except Reservation.DoesNotExist:
             raise Http404("Reservation cannot be found")
 
+## List of all menus that are contained in the order (Get)
 class OrderMenuListAPI(APIView):
     @swagger_auto_schema(
         responses={200: MenuSerializer(many=True)},
