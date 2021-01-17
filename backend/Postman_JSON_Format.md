@@ -31,7 +31,7 @@ OR TO ADD A BUSINESS TO THE USER FAVORITE
 {
     "business": {
         "business_name": "test_business_name_1",
-        "business_number": "1234567890",
+        "business_number": "000000001",
         "business_description": "test_business_description_1"
     },
     "business_detail": {
@@ -46,3 +46,5 @@ OR TO ADD A BUSINESS TO THE USER FAVORITE
         "entY": "test_y_coord_1"
     }
 }
+
+
