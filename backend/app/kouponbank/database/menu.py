@@ -2,10 +2,9 @@
 import uuid
 
 from django.db import models
+from kouponbank.database.business import Business
 from rest_framework import serializers
 
-from kouponbank.database.order import Order
-from kouponbank.database.business import Business
 
 def upload_to(instance, filename):
     return '/'.join([
@@ -24,7 +23,6 @@ class Menu(models.Model):
         null=True,
         blank=True,
     )
-    order = models.ManyToManyField(Order)
     menu_title = models.CharField(max_length=50, blank=False)
     menu_description = models.TextField(default="", blank=False)
     menu_price = models.CharField(max_length=50, blank=False)

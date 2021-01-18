@@ -2,16 +2,17 @@
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from kouponbank.database.address import Address, AddressSerializer
+from kouponbank.database.business import Business
+from pyproj import Transformer, transform
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from pyproj import Transformer, transform
 
-from kouponbank.database.address import Address, AddressSerializer
-from kouponbank.database.business import Business
 
-## Address of Each Business (Get, Put)
+## Returns the address of the business (owner) given owner_id and business_id
+## Updates the address of the business (owner) given owner_id and business_id
 class OwnerBusinessAddressAPI(APIView):
     @swagger_auto_schema(
         responses={200: AddressSerializer(many=True)}
