@@ -1,14 +1,16 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
 from kouponbank.database.timeslot import Timeslot
 import datetime
+from kouponbank.database.business import Business
 
 class Table(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     business = models.ForeignKey(
-        to="kouponbank.Business",
+        Business,
         on_delete=models.CASCADE,
         related_name="business_table",
         null=True,
@@ -35,3 +37,10 @@ class TableSerializer(serializers.ModelSerializer):
     #         date=datetime.date.today()
     #     )
     #     return table
+    def create(self, validated_data):
+        table = Table.objects.create(**validated_data)
+        Timeslot.objects.create(
+            id=table.id,
+            times="",
+            date="",
+        )

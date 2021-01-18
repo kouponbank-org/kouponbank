@@ -1,24 +1,28 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
+from kouponbank.database.business import Business
+from kouponbank.database.table import Table
+from kouponbank.database.user import User
 
 class Reservation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     table = models.ForeignKey(
-        to="kouponbank.Table",
+        Table,
         on_delete=models.CASCADE,
         related_name = "table_reservation",
     )
     business = models.ForeignKey(
-        to="kouponbank.Business",
+        Business,
         on_delete=models.CASCADE,
         related_name="business_reservation",
     )
     user = models.ForeignKey(
-        to="kouponbank.User",
-        related_name="user_reservation",
+        User,
         on_delete=models.CASCADE,
+        related_name="user_reservation",
     )
     start_time = models.TimeField()
     end_time = models.TimeField()

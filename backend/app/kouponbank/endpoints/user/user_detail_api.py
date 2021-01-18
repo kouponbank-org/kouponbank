@@ -1,3 +1,4 @@
+# pylint: disable=import-error
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
@@ -9,53 +10,17 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+
+## Returns the detail of a user given an id of a user
 class UserDetailAPI(APIView):
     @swagger_auto_schema(
         responses={200: UserDetailSerializer(many=True)},
-        manual_parameters=
-        [
-            openapi.Parameter(
-                'name',
-                openapi.IN_QUERY,
-                description="Gets the name of the user",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                'gender',
-                openapi.IN_QUERY,
-                description="Gets the gender of the user",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                'birthday',
-                openapi.IN_QUERY,
-                description="Gets the birthday of the userr",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                'location',
-                openapi.IN_QUERY,
-                description="Gset the location of the user",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                'picture',
-                openapi.IN_QUERY,
-                description="Gets the picture of the user",
-                type=openapi.TYPE_STRING,
-                required=True
-            )
-        ]
     )
     # This allows us to get UserDetail @ /users/user_id(pk)/detail
     def get(self, request, user_id):
         user = self.__get_user(user_id)
         # related name = user_details (check user_detail.py)
-        serializer = UserDetailSerializer(user.user_details)
+        serializer = UserDetailSerializer(user.user_detail)
         return Response(serializer.data)
     def __get_user(self, user_id):
         try:
@@ -73,40 +38,40 @@ class UserDetailAPI(APIView):
         manual_parameters=
         [
             openapi.Parameter(
-                'name',
+                'Name',
                 openapi.IN_QUERY,
-                description="Updates the name of the user",
+                description="Full name of the user",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                'gender',
+                'Gender',
                 openapi.IN_QUERY,
-                description="Updates the gender of the user",
+                description="Gender of the user",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                'birthday',
+                'Birthday',
                 openapi.IN_QUERY,
-                description="Updates the birthday of the userr",
+                description="Birthday of the user",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                'location',
+                'Address',
                 openapi.IN_QUERY,
-                description="Updates the location of the user",
+                description="Home address of the user",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                'picture',
+                'Picture',
                 openapi.IN_QUERY,
-                description="Updates the picture of the user",
+                description="Profile picture of the user",
                 type=openapi.TYPE_STRING,
                 required=True
-            )
+            ),
         ]
     )
     def put(self, request, user_id):

@@ -1,3 +1,4 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
@@ -7,9 +8,9 @@ from rest_framework import serializers
 
 class Owner(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(max_length=50, unique=True, blank=False)
-    password = models.CharField(max_length=50, unique=False, blank=False)
-    email = models.EmailField(max_length=254, unique=True, blank=False)
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=50)
+    email = models.EmailField(max_length=254, unique=True)
 
 class OwnerSerializer(serializers.ModelSerializer):
     #owner_detail = OwnerDetailSerializer(source="owner_details", read_only=True)
@@ -31,7 +32,8 @@ class OwnerSerializer(serializers.ModelSerializer):
             name="",
             gender="",
             birthday="",
-            location=""
+            address="",
+            cell_number="",
         )
 
         return owner

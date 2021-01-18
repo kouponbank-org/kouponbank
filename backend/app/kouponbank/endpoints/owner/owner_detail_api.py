@@ -1,3 +1,4 @@
+# pylint: disable=import-error
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -13,96 +14,53 @@ from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
 class OwnerDetailAPI(APIView):
     @swagger_auto_schema(
         responses={200: OwnerDetailSerializer(many=True)},
-        manual_parameters=
-        [
-            openapi.Parameter(
-                'name',
-                openapi.IN_QUERY,
-                description="Gets the name of the owner",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                'gender',
-                openapi.IN_QUERY,
-                description="Gets the gender of the owner",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                'birthday',
-                openapi.IN_QUERY,
-                description="Gets the birthday of the owner",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                'location',
-                openapi.IN_QUERY,
-                description="Gets the location of the owner",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
-                'picture',
-                openapi.IN_QUERY,
-                description="Gets the picture of the owner",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-        ]
     )
     def get(self, request, owner_id):
         owner = self.__get_owner(owner_id)
-        serializer = OwnerDetailSerializer(owner.owner_details)
+        serializer = OwnerDetailSerializer(owner.owner_detail)
         return Response(serializer.data)
     def __get_owner(self, owner_id):
         try:
             return Owner.objects.get(pk=owner_id)
         except Owner.DoesNotExist:
             raise Http404("Owner not found")
-    def __get_owner_detail(self, owner_id):
-        try:
-            return OwnerDetail.objects.get(pk=owner_id)
-        except OwnerDetail.DoesNotExist:
-            raise Http404("Owner details not found")
 
     @swagger_auto_schema(
         responses={200: OwnerDetailSerializer(many=True)},
         manual_parameters=
         [
             openapi.Parameter(
-                'name',
+                'Name',
                 openapi.IN_QUERY,
-                description="Updates the name of the owner",
+                description="Full name of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                'gender',
+                'Gender',
                 openapi.IN_QUERY,
-                description="Updates the gender of the owner",
+                description="Gender of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                'birthday',
+                'Birthday',
                 openapi.IN_QUERY,
-                description="Updates the birthday of the owner",
+                description="Birthday of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                'location',
+                'Address',
                 openapi.IN_QUERY,
-                description="Updates the location of the owner",
+                description="Home address of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
-                'picture',
+                'Picture',
                 openapi.IN_QUERY,
-                description="Updates the picture of the owner",
+                description="Profile picture of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
@@ -115,3 +73,8 @@ class OwnerDetailAPI(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def __get_owner_detail(self, owner_id):
+        try:
+            return OwnerDetail.objects.get(pk=owner_id)
+        except OwnerDetail.DoesNotExist:
+            raise Http404("Owner detail not found")

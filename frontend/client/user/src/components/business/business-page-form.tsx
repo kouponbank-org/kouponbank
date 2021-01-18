@@ -14,7 +14,9 @@ export interface Prop {
 export const BusinessPageForm = (props: Prop): JSX.Element => {
     return (
         <div className="business-form-container">
-            <div className="business-title">{`Space Title ${props.business.business_name}`}</div>
+            <div className="business-title">
+                {`Space Title ${props.business.business_name}`}
+            </div>
             <div className="business-description">
                 {
                     /*props.business.description*/

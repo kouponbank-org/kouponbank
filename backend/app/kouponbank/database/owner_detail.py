@@ -1,8 +1,8 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
-
 
 def upload_to(instance, filename):
     return '/'.join([str(instance.owner.username), filename])
@@ -12,13 +12,14 @@ class OwnerDetail(models.Model):
     owner = models.OneToOneField(
         to="kouponbank.Owner",
         on_delete=models.CASCADE,
-        related_name="owner_details"
+        related_name="owner_detail"
     )
-    name = models.CharField(max_length=20, default="", blank=True)
-    gender = models.CharField(max_length=50, default="", blank=True)
+    name = models.CharField(max_length=50, default="")
+    gender = models.CharField(max_length=50, default="")
     birthday = models.CharField(max_length=50, default="", blank=True)
-    location = models.CharField(max_length=50, default="", blank=True)
-    profile_picture = models.ImageField(
+    address = models.CharField(max_length=50, default="", blank=True)
+    cell_number = models.CharField(max_length=20, default="", blank=True)
+    owner_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,
         null=True
@@ -32,6 +33,7 @@ class OwnerDetailSerializer(serializers.ModelSerializer):
             "name",
             "gender",
             "birthday",
-            "location",
-            "profile_picture"
+            "address",
+            "cell_number",
+            "owner_picture"
         )

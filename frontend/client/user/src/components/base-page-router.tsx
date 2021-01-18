@@ -78,7 +78,6 @@ const BasePageRouter = () => {
 /*
 const mapStateToProps = state => {
     return {
-
     };
 };*/
 
