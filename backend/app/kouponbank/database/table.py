@@ -1,12 +1,15 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
 
+from kouponbank.database.business import Business
+
 class Table(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     business = models.ForeignKey(
-        to="kouponbank.Business",
+        Business,
         on_delete=models.CASCADE,
         related_name="business_table",
         null=True,

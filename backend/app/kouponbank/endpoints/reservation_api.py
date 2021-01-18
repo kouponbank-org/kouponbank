@@ -1,15 +1,17 @@
+# pylint: disable=import-error
 from django.http import Http404
-from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from kouponbank.database.business import Business
-from kouponbank.database.table import Table
+from kouponbank.database.menu import Menu
+from kouponbank.database.order import Order, OrderSerializer
 from kouponbank.database.reservation import Reservation, ReservationSerializer
+from kouponbank.database.table import Table
 from kouponbank.database.user import User
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 
 ## List of all reservations for a table in a business owned by an owner (Get, Post)
 class BusinessTableReservationListAPI(APIView):
@@ -48,18 +50,37 @@ class BusinessTableReservationListAPI(APIView):
         ]
     )
     def post(self, request, owner_id, business_id, table_id):
+        #TODO: Optimize better, make it cleaner.
+        # Current post requests creates reservation, order, and puts menus connected to order.
         table = self.__get_table(table_id)
         business = self.__get_business(business_id)
         user = self.__get_user(request.data["user_id"])
-        serializer = ReservationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(
+        reservation_serializer = ReservationSerializer(data=request.data["reservation"])
+        order_serializer = OrderSerializer(data=request.data["order"])
+        menus = request.data["menu"]
+        if reservation_serializer.is_valid() and order_serializer:
+            reservation_serializer.save(
                 table=table,
                 business=business,
                 user=user,
             )
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            reservation = self.__get_reservation(reservation_serializer.data["id"])
+            order_serializer.save(
+                id=reservation.id,
+                reservation=reservation,
+            )
+            order_id = order_serializer.data["id"]
+            order = self.__get_order(order_id)
+            # adding menus to orders
+            for menu_id in menus:
+                menu = Menu.objects.get(pk=menu_id)
+                order.menus.add(menu)
+            response_data = {
+                "reservation": reservation_serializer.data,
+                "order": order_serializer.data,
+            }
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(reservation_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def __get_business(self, business_id):
         try:
             return Business.objects.get(pk=business_id)
@@ -70,6 +91,11 @@ class BusinessTableReservationListAPI(APIView):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             raise Http404("User not found")
+    def __get_order(self, order_id):
+        try:
+            return Order.objects.get(pk=order_id)
+        except Order.DoesNotExist:
+            raise Http404("Order not found")
 
 ## Individual menu in a business owned by an owner (Get, Put, Delete)
 class BusinessTableReservationAPI(APIView):
@@ -84,7 +110,7 @@ class BusinessTableReservationAPI(APIView):
         try:
             return Reservation.objects.get(pk=reservation_id)
         except Reservation.DoesNotExist:
-            raise Http404("Reservation cannot  befound")
+            raise Http404("Reservation cannot be found")
 
     @swagger_auto_schema(
         responses={200: ReservationSerializer(many=True)},
@@ -125,3 +151,5 @@ class BusinessTableReservationAPI(APIView):
         ## Some code here
         reservation.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+

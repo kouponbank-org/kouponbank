@@ -1,6 +1,8 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
+from kouponbank.database.business import Business
 from rest_framework import serializers
 
 
@@ -15,15 +17,9 @@ def upload_to(instance, filename):
 class Menu(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     business = models.ForeignKey(
-        to="kouponbank.Business",
+        Business,
         on_delete=models.CASCADE,
         related_name="business_menu",
-        null=True,
-        blank=True,
-    )
-    order = models.ForeignKey(
-        to="kouponbank.Order",
-        related_name="order_menu",
         null=True,
         blank=True,
     )

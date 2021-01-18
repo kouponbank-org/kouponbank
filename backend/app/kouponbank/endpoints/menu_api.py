@@ -1,3 +1,4 @@
+# pylint: disable=import-error
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
@@ -8,6 +9,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 
 ## List of all menus in a business owned by an owner (Get, Post)
 class BusinessMenuListAPI(APIView):

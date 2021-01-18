@@ -1,17 +1,18 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
 
 from kouponbank.database.user_detail import UserDetail
-from kouponbank.database.owner import Owner
+from kouponbank.database.business import Business
 
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    onwer = models.ManyToManyField(Owner)
-    username = models.CharField(max_length=50, unique=True, blank=False)
-    password = models.CharField(max_length=50, unique=False, blank=False)
-    email = models.EmailField(max_length=254, unique=True, blank=False)
+    businesses = models.ManyToManyField(Business)
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=50, unique=False)
+    email = models.EmailField(max_length=254, unique=True)
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

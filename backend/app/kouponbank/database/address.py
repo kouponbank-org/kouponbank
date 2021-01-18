@@ -1,3 +1,4 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
@@ -22,6 +23,7 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = (
+            "id",
             "roadAddr",
             "jibunAddr",
             "zipNo",
