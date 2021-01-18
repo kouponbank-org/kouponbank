@@ -1,80 +1,80 @@
+# pylint: disable=import-error
 from django.http import Http404
-from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from kouponbank.database.user import User
-from kouponbank.database.user_detail import UserDetail, UserDetailSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-class UserDetailAPI(APIView):
+from kouponbank.database.owner import Owner
+from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
+
+
+class OwnerDetailAPI(APIView):
     @swagger_auto_schema(
-        responses={200: UserDetailSerializer(many=True)},
+        responses={200: OwnerDetailSerializer(many=True)},
     )
-    # This allows us to get UserDetail @ /users/user_id(pk)/detail
-    def get(self, request, user_id):
-        user = self.__get_user(user_id)
-        # related name = user_details (check user_detail.py)
-        serializer = UserDetailSerializer(user.user_detail)
+    def get(self, request, owner_id):
+        owner = self.__get_owner(owner_id)
+        serializer = OwnerDetailSerializer(owner.owner_detail)
         return Response(serializer.data)
-    def __get_user(self, user_id):
+    def __get_owner(self, owner_id):
         try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            raise Http404("User not found")
-    def __get_user_detail(self, user_id):
-        try:
-            return UserDetail.objects.get(pk=user_id)
-        except UserDetail.DoesNotExist:
-            raise Http404("User details not found")
+            return Owner.objects.get(pk=owner_id)
+        except Owner.DoesNotExist:
+            raise Http404("Owner not found")
 
     @swagger_auto_schema(
-        responses={200: UserDetailSerializer(many=True)},
+        responses={200: OwnerDetailSerializer(many=True)},
         manual_parameters=
         [
             openapi.Parameter(
                 'Name',
                 openapi.IN_QUERY,
-                description="Full name of the user",
+                description="Full name of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
                 'Gender',
                 openapi.IN_QUERY,
-                description="Gender of the user",
+                description="Gender of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
                 'Birthday',
                 openapi.IN_QUERY,
-                description="Birthday of the user",
+                description="Birthday of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
                 'Address',
                 openapi.IN_QUERY,
-                description="Home address of the user",
+                description="Home address of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
             openapi.Parameter(
                 'Picture',
                 openapi.IN_QUERY,
-                description="Profile picture of the user",
+                description="Profile picture of the owner",
                 type=openapi.TYPE_STRING,
                 required=True
             ),
         ]
     )
-    def put(self, request, user_id):
-        user_detail = self.__get_user_detail(user_id)
-        serializer = UserDetailSerializer(user_detail, data=request.data)
+    def put(self, request, owner_id):
+        owner_detail = self.__get_owner_detail(owner_id)
+        serializer = OwnerDetailSerializer(owner_detail, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def __get_owner_detail(self, owner_id):
+        try:
+            return OwnerDetail.objects.get(pk=owner_id)
+        except OwnerDetail.DoesNotExist:
+            raise Http404("Owner detail not found")

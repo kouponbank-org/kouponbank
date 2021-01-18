@@ -1,12 +1,14 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
+from kouponbank.database.user import User
 
 class Payment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
-        to="kouponbank.User",
+        User,
         on_delete=models.CASCADE,
         related_name="user_payment_method"
     )
