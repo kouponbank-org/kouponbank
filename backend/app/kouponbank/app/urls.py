@@ -22,6 +22,12 @@ from kouponbank.endpoints.owner_api import OwnerAPI, OwnerListAPI
 from kouponbank.endpoints.owner_detail_api import OwnerDetailAPI
 from kouponbank.endpoints.user_api import UserAPI, UserListAPI
 from kouponbank.endpoints.user_detail_api import UserDetailAPI
+from kouponbank.endpoints.reservation_api import (BusinessTableReservationListAPI,
+                                                   BusinessTableReservationAPI)
+from kouponbank.endpoints.table_api import (BusinessTableListAPI,
+                                             BusinessTableAPI,
+                                             TableListAPI)
+from kouponbank.endpoints.timeslot_api import TableTimeslotListAPI, TableTimeslotAPI, TableBookingAPI
 from rest_framework import permissions
 
 from .router import router
@@ -65,6 +71,13 @@ urlpatterns = [
    path('business/<uuid:business_id>/menu/<uuid:menu_id>/', MenuAPI.as_view(), name="menu"),
    path('business/<uuid:business_id>/coupon/', CouponListAPI.as_view(), name="coupon-list"),
    path('business/<uuid:business_id>/coupon/<uuid:coupon_id>/', CouponAPI.as_view(), name="coupon"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/business_tables/', BusinessTableListAPI.as_view(), name="business-table-list"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/business_tables/<uuid:table_id>/', BusinessTableAPI.as_view(), name="business-table"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/business_tables/<uuid:table_id>/timeslot/', TableTimeslotListAPI.as_view(), name="timeslot-list"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/business_tables/<uuid:table_id>/timeslot/<uuid:timeslot_id>', TableTimeslotAPI.as_view(), name="timeslot"),
+   path('owners/book', TableBookingAPI.as_view(), name="book"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/business_tables/<uuid:table_id>/table_reservations/', BusinessTableReservationListAPI.as_view(), name="table-reservation-list"),
+   path('owners/<uuid:owner_id>/detail/business/<uuid:business_id>/business_tables/<uuid:table_id>/table_reservations/<uuid:reservation_id>/', BusinessTableReservationAPI.as_view(), name="table-reservation")
 ]
 
 # For Photos
