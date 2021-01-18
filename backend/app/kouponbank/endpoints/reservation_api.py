@@ -47,6 +47,13 @@ class BusinessTableReservationListAPI(APIView):
                 type=openapi.TYPE_STRING,
                 required=True
             ),
+            openapi.Parameter(
+                "Date",
+                openapi.IN_QUERY,
+                description="Date of the reservation",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
         ]
     )
     def post(self, request, owner_id, business_id, table_id):
@@ -105,6 +112,13 @@ class BusinessTableReservationAPI(APIView):
                 "End Time",
                 openapi.IN_QUERY,
                 description="End Time of the reservation",
+                type=openapi.TYPE_STRING,
+                required=True
+            ),
+            openapi.Parameter(
+                "Date",
+                openapi.IN_QUERY,
+                description="Date of the reservation",
                 type=openapi.TYPE_STRING,
                 required=True
             ),

@@ -22,6 +22,7 @@ class Reservation(models.Model):
     )
     start_time = models.TimeField()
     end_time = models.TimeField()
+    date = models.DateField()
 
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,4 +31,5 @@ class ReservationSerializer(serializers.ModelSerializer):
             "id",
             "start_time",
             "end_time",
+            "date"
         )

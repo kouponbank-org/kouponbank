@@ -109,14 +109,14 @@ class TableBookingAPI(APIView):
         responses={200: TimeslotSerializer(many=True)}
     )
 
-    def get (self, request, start_time, end_time):
+    def get (self, request, start_time, end_time, date):
         # start_time=request.query_params["time"]
         # end_time=request.query_params["time"]
         # date=request.query_params["date"]
         # start_time="22:00"
         # end_time="23:00"
         # testing one: 3f599a92-1d2c-4ad7-96d5-25d0c88ca2d0
-        date="2020-01-15"
+        # date="2020-01-15"
         input_slots = self.time_slot_to_regex(self, start_time, end_time)
         times = Timeslot.objects.filter(date=date, times__regex=input_slots)
         print(times)
