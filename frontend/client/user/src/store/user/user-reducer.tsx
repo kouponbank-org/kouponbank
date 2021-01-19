@@ -2,7 +2,7 @@ import { produce } from "immer";
 import { Dispatch } from "redux";
 
 import { KouponBankApi } from "../../api/kb-api";
-import { Status, User } from "../../api/kb-types";
+import { Status, User, UserDetail } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
 import { UserActionType } from "./action-type";
@@ -21,6 +21,14 @@ export interface UserState {
 
 const initialState: UserState = {
     user: {
+        user_detail: {
+            name: "",
+            gender: "",
+            birthday: "",
+            address: "",
+            cell_number: "",
+            user_picture: null,
+        },
         username: "",
         password: "",
         email: "",
@@ -59,8 +67,17 @@ interface LoginUserFailAction {
     type: UserActionType.LoginUserFailAction;
 }
 
-interface SignOutAction {
-    type: UserActionType.SignOutAction;
+interface UpdateUserDetailAction {
+    type: UserActionType.UpdateUserDetailAction;
+}
+
+interface UpdateUserDetailSuccessAction {
+    user: User;
+    type: UserActionType.UpdateUserDetailSuccessAction;
+}
+
+interface UpdateUserDetailFailAction {
+    type: UserActionType.UpdateUserDetailFailAction;
 }
 
 /**
@@ -75,7 +92,9 @@ export type Action =
     | LoginUserAction
     | LoginUserSuccessAction
     | LoginUserFailAction
-    | SignOutAction;
+    | UpdateUserDetailAction
+    | UpdateUserDetailSuccessAction
+    | UpdateUserDetailFailAction;
 
 /**
  * Reducer가 필요한 Parameters "state"하고 "action"
@@ -111,28 +130,69 @@ export const reducer = (state: UserState = initialState, action: Action): UserSt
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
+        case UserActionType.UpdateUserDetailAction:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Running;
+            });
+        case UserActionType.UpdateUserDetailSuccessAction:
+            return produce(state, (draftState) => {
+                draftState.user = action.user;
+            });
+        case UserActionType.UpdateUserDetailFailAction:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Failed;
+            });
         default:
             return state;
     }
 };
 
-// 새로운 유저를 생성하기 위한 API Call + Reducer State Update
-export const createNewUser = async (
+export const loginUser = async (
     api: KouponBankApi,
     user: User,
     dispatch: Dispatch,
-): Promise<User> => {
+): Promise<void> => {
+    dispatch({
+        type: UserActionType.LoginUserAction,
+    });
+    return api
+        .loginUser(user)
+        .then((user) => {
+            dispatch({
+                type: UserActionType.LoginUserSucessAction,
+                user: user,
+            });
+        })
+        .catch((err) => {
+            dispatch({
+                type: UserActionType.LoginUserFailAction,
+            });
+            dispatch({
+                type: AlertsActionType.DisplayError,
+                header: "ERROR",
+                body: "다시 시도해 주세요",
+            } as DisplayError);
+            throw err;
+        });
+};
+
+// Creates a new user and returns the user's information.
+export const createNewUser = async (
+    api: KouponBankApi,
+    user: User,
+    userDetail: UserDetail,
+    dispatch: Dispatch,
+): Promise<void> => {
     dispatch({
         type: UserActionType.CreateNewUserAction,
     });
     return api
-        .createUser(user)
+        .createUser(user, userDetail)
         .then((user) => {
             dispatch({
                 type: UserActionType.CreateNewUserSuccessAction,
                 user: user,
             });
-            return user;
         })
         .catch((err) => {
             dispatch({
@@ -147,32 +207,26 @@ export const createNewUser = async (
         });
 };
 
-export const loginUser = async (
+export const updateUserDetail = async (
     api: KouponBankApi,
-    user: User,
+    id: string,
+    userDetail: UserDetail,
     dispatch: Dispatch,
-): Promise<User> => {
+): Promise<void> => {
     dispatch({
-        type: UserActionType.LoginUserAction,
+        type: UserActionType.UpdateUserDetailAction,
     });
     return api
-        .loginUser(user)
+        .updateUserDetail(id, userDetail)
         .then((user) => {
             dispatch({
-                type: UserActionType.LoginUserSucessAction,
+                type: UserActionType.UpdateUserDetailSuccessAction,
                 user: user,
             });
-            return user;
         })
-        .catch((err) => {
+        .catch(() => {
             dispatch({
-                type: UserActionType.LoginUserFailAction,
+                type: UserActionType.UpdateUserDetailFailAction,
             });
-            dispatch({
-                type: AlertsActionType.DisplayError,
-                header: "ERROR",
-                body: "다시 시도해 주세요",
-            } as DisplayError);
-            throw err;
         });
 };

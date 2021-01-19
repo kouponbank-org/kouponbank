@@ -23,9 +23,9 @@ class Menu(models.Model):
         null=True,
         blank=True,
     )
-    menu_title = models.CharField(max_length=50, blank=False)
-    menu_description = models.TextField(default="", blank=False)
-    menu_price = models.CharField(max_length=50, blank=False)
+    menu_title = models.CharField(max_length=50)
+    menu_description = models.TextField(default="")
+    menu_price = models.IntegerField()
     menu_picture = models.ImageField(
         upload_to=upload_to,
         blank=True,

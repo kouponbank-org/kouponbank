@@ -13,8 +13,8 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         related_name="reservation_order",
     )
-    menus = models.ManyToManyField(Menu)
-    total_price = models.DecimalField(decimal_places=2)
+    menus = models.ManyToManyField(Menu, blank=True)
+    total_price = models.IntegerField()
     total_quantity = models.IntegerField(default=1)
     order_complete_status = models.BooleanField(default=False)
 

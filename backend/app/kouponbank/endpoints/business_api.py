@@ -1,18 +1,20 @@
 # pylint: disable=import-error
+from django.db.models import Q
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from kouponbank.database.business import Business, BusinessSerializer
 from kouponbank.database.address import Address, AddressSerializer
-from kouponbank.database.business_detail import BusinessDetail, BusinessDetailSerializer
+from kouponbank.database.business import Business, BusinessSerializer
+from kouponbank.database.business_detail import (BusinessDetail,
+                                                 BusinessDetailSerializer)
 from kouponbank.database.owner import Owner
-from kouponbank.database.user import User
 from kouponbank.database.owner_detail import OwnerDetail
+from kouponbank.database.user import User
+from pyproj import Transformer, transform
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.db.models import Q
+
 
 ## List of all businesses owned by an owner (Get, Post)
 class OwnerBusinessListAPI(APIView):
@@ -68,6 +70,16 @@ class OwnerBusinessListAPI(APIView):
                 owner = business_owner,
             )
             business = self.__get_business(business_serializer.data["id"])
+            '''
+            entX, entY = self.transform_utmk_to_wgs84(request.data["address"]["entX"], request.data["address"]["entY"])
+            address_serializer.save(
+                id=business.id,
+                business=business,
+                entX = entX,
+                entY = entY
+            )
+            '''
+            ## TODO: After testing postman and reformat complete, use the above code instead of the address_serializer.save() that is currently being used.
             address_serializer.save(
                 id=business.id,
                 business=business,
@@ -76,29 +88,19 @@ class OwnerBusinessListAPI(APIView):
                 id=business.id,
                 business=business,
             )
-            response_data = {
-                "business": business_serializer.data,
-                "business_detail": business_detail_serializer.data,
-                "address": address_serializer.data,
-            }
-            return Response(response_data, status=status.HTTP_201_CREATED)
+            return_serializer = BusinessSerializer(business)
+            return Response(return_serializer.data, status=status.HTTP_201_CREATED)
         return Response(business_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def __get_owner(self, owner_id):
-        try:
-            return Owner.objects.get(pk=owner_id)
-        except Owner.DoesNotExist:
-            raise Http404("Business owner is not found")
     def __get_business(self, business_id):
         try:
             return Business.objects.get(pk=business_id)
         except Business.DoesNotExist:
             raise Http404("Business not found")
-    def __get_address(self, business_id):
-        try:
-            return Address.objects.get(pk=business_id)
-        except Address.DoesNotExist:
-            raise Http404("Address not found")
-
+    def transform_utmk_to_wgs84(self, x, y):
+        transformer = Transformer.from_crs("+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs", "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+        entX, entY = transformer.transform(x, y)
+        print(entX, entY)
+        return entX, entY
 
 ## Individual Owner Business (Get, Put, Delete)
 class OwnerBusinessAPI(APIView):

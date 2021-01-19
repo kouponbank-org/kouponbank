@@ -19,12 +19,11 @@ import { User, UserDetail } from "../../api/kb-types";
  * Represents the required properties of the user profile page.
  */
 export interface Prop {
-    temp: UserDetail;
-    editDetails: (event) => void;
+    user: User;
+    userDetail: UserDetail;
+    editDetailInput: (event) => void;
     uploadImage: (event) => void;
-    submitChange: (event) => void;
-    userDetailCredentials: UserDetail;
-    userCredentials: User;
+    updateUserDetailClick: (event) => void;
 }
 
 export const UserProfileForm = (props: Prop): JSX.Element => {
@@ -38,12 +37,12 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
         }
     };
 
-    const editDetails = (event): void => {
-        props.editDetails(event);
+    const editDetailInput = (event): void => {
+        props.editDetailInput(event);
     };
 
-    const submitChange = (event): void => {
-        props.submitChange(event);
+    const updateUserDetailClick = (event): void => {
+        props.updateUserDetailClick(event);
         modalStatus();
     };
 
@@ -61,7 +60,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             fullWidth
                             label="Username"
                             id="username"
-                            value={props.userCredentials.username}
+                            value={props.user.username}
                         />
                         <TextField
                             disabled
@@ -69,7 +68,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             label="Email"
                             fullWidth
                             id="email"
-                            defaultValue={props.userCredentials.email}
+                            defaultValue={props.user.email}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -80,7 +79,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             id="name"
                             label="Name"
                             disabled
-                            value={props.userDetailCredentials.name}
+                            value={props.user.user_detail.name}
                         />
                         <TextField
                             variant="outlined"
@@ -89,7 +88,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             id="gender"
                             label="Gender"
                             disabled
-                            value={props.userDetailCredentials.gender}
+                            value={props.user.user_detail.gender}
                         />
                         <TextField
                             variant="outlined"
@@ -98,7 +97,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             id="birthday"
                             label="Birthday"
                             disabled
-                            value={props.userDetailCredentials.birthday}
+                            value={props.user.user_detail.birthday}
                         />
                     </Grid>
                     <form className="form">
@@ -113,7 +112,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                         </Button>
                     </form>
                     <img
-                        src={`${process.env.REACT_APP_API_BASE_URL}${props.userDetailCredentials.profile_picture}`}
+                        src={`${process.env.REACT_APP_API_BASE_URL}${props.user.user_detail.user_picture}`}
                     />
                 </Grid>
                 <Dialog open={open} onClose={modalStatus} aria-labelledby="form-dialog">
@@ -126,8 +125,8 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             id="name-update"
                             label="Name"
                             fullWidth
-                            onChange={editDetails}
-                            value={props.temp.name}
+                            onChange={editDetailInput}
+                            value={props.userDetail.name}
                         />
                         <TextField
                             autoFocus
@@ -136,8 +135,8 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             id="gender-update"
                             label="Gender"
                             fullWidth
-                            onChange={editDetails}
-                            value={props.temp.gender}
+                            onChange={editDetailInput}
+                            value={props.userDetail.gender}
                         />
                         <TextField
                             autoFocus
@@ -146,8 +145,8 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                             id="birthday-update"
                             label="Birthday"
                             fullWidth
-                            onChange={editDetails}
-                            value={props.temp.birthday}
+                            onChange={editDetailInput}
+                            value={props.userDetail.birthday}
                         />
                         <input type="file" name="profile_picture" onChange={props.uploadImage} />
                     </DialogContent>
@@ -155,7 +154,7 @@ export const UserProfileForm = (props: Prop): JSX.Element => {
                         <Button onClick={modalStatus} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={submitChange} color="primary">
+                        <Button onClick={updateUserDetailClick} color="primary">
                             Submit Change
                         </Button>
                     </DialogActions>

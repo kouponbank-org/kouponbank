@@ -8,7 +8,7 @@ import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { User, UserDetail } from "../../api/kb-types";
 import { RootReducer } from "../../store/reducer";
-import { updateUserDetail } from "../../store/user/user-detail-reducer";
+import { updateUserDetail } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { UserProfileForm } from "./profile-form";
@@ -17,7 +17,6 @@ import { UserProfileForm } from "./profile-form";
  * Represents the required properties of the User Profile Page
  */
 export interface Prop {
-    userDetail: UserDetail;
     user: User;
     updateUserDetail: (api: KouponBankApi, id: string, userDetail: UserDetail) => Promise<void>;
 }
@@ -25,20 +24,22 @@ export interface Prop {
 export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
-    const [userDetailCredentials, setUserDetailCredentials] = useState(props.userDetail);
+    const [userDetail, setUserDetail] = useState(props.user.user_detail);
 
-    const editDetails = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setUserDetailCredentials({
-            ...userDetailCredentials,
+    const editDetailInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setUserDetail({
+            ...userDetail,
             [event.target.name]: event.target.value,
         });
     };
 
-    const submitChange = (event: React.MouseEvent<HTMLElement>): void => {
+    const updateUserDetailClick = (event: React.MouseEvent<HTMLElement>): void => {
         props
-            .updateUserDetail(api, props.user.id, userDetailCredentials)
+            .updateUserDetail(api, props.user.id, userDetail)
             .then(() => {
                 history.push(UrlPaths.ProfilePage);
+                // TODO: useEffect to refresh the page with changes, rather than using 
+                // A history.push
             })
             .catch(() => {
                 // currently does nothing
@@ -54,8 +55,8 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
         if (target.files[0].size > 2097152) {
             alert("File is too big!");
         } else {
-            setUserDetailCredentials({
-                ...userDetailCredentials,
+            setUserDetail({
+                ...userDetail,
                 [target.name]: target.files[0],
             });
         }
@@ -65,12 +66,11 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
         <div className="background">
             <TopNavBar />
             <UserProfileForm
-                temp={userDetailCredentials}
-                userCredentials={props.user}
-                userDetailCredentials={props.userDetail}
-                editDetails={editDetails}
+                user={props.user}
+                userDetail={userDetail}
+                editDetailInput={editDetailInput}
                 uploadImage={uploadImage}
-                submitChange={submitChange}
+                updateUserDetailClick={updateUserDetailClick}
             />
         </div>
     );
@@ -79,7 +79,6 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        userDetail: state.userDetailReducer.userDetail,
     };
 };
 

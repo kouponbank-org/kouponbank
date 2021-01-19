@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { AddressDetail, Business, Coupon, NaverMapBound, User, UserDetail } from "./kb-types";
+import { AddressDetail, Business, NaverMapBound, User, UserDetail } from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -32,8 +32,14 @@ export class KouponBankApi {
     }
 
     /*USER API*/
-    async createUser(user: User): Promise<User> {
-        return axios.post<User>(`${this.BASE_URL}/users/`, user).then((response) => {
+    async createUser(user: User, userDetail): Promise<User> {
+        return axios
+            .post<User>(`${this.BASE_URL}/users/`, {
+                    user: user,
+                    user_detail: userDetail,
+                }
+            )
+            .then((response) => {
             return response.data;
         });
     }
@@ -44,38 +50,29 @@ export class KouponBankApi {
         });
     }
 
-    async removeUser(userId: string): Promise<void> {
-        return axios.delete<void>(`${this.BASE_URL}/users/${userId}`).then((response) => {
+    async removeUser(user_id: string): Promise<void> {
+        return axios.delete<void>(`${this.BASE_URL}/users/${user_id}`).then((response) => {
             return response.data;
         });
     }
 
     /*User Detail API*/
-    async getUserDetail(userId: string): Promise<UserDetail> {
-        return axios
-            .get<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`)
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    //having if else condition for cases when the picture is or is not uploaded
-    async updateUserDetail(userId: string, userDetail: UserDetail): Promise<UserDetail> {
+    async updateUserDetail(user_id: string, userDetail: UserDetail): Promise<UserDetail> {
         const form_data = new FormData();
         for (const key in userDetail) {
             const value = userDetail[key];
             form_data.append(key, value);
         }
 
-        if (userDetail.profile_picture === null) {
+        if (userDetail.user_picture === null) {
             return axios
-                .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, userDetail)
+                .put<UserDetail>(`${this.BASE_URL}/users/${user_id}/detail/`, userDetail)
                 .then((response) => {
                     return response.data;
                 });
         } else {
             return axios
-                .put<UserDetail>(`${this.BASE_URL}/users/${userId}/detail/`, form_data, {
+                .put<UserDetail>(`${this.BASE_URL}/users/${user_id}/detail/`, form_data, {
                     headers: {
                         "content-type": "multipart/form-data",
                     },
@@ -87,8 +84,8 @@ export class KouponBankApi {
     }
 
     /*Business API*/
-    async getBusiness(businessId: string): Promise<Business> {
-        return axios.get<Business>(`${this.BASE_URL}/business/${businessId}`).then((response) => {
+    async getBusiness(business_id: string): Promise<Business> {
+        return axios.get<Business>(`${this.BASE_URL}/business/${business_id}`).then((response) => {
             return response.data;
         });
     }
@@ -159,31 +156,4 @@ export class KouponBankApi {
                 return response.data.results.juso[0];
             });
     }
-
-    /* Coupon API */
-    async getCoupons(businessId: string): Promise<Coupon[]> {
-        return axios
-            .get<Coupon[]>(`${this.BASE_URL}/business/${businessId}/coupon/`)
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    /* Upload Image */
-    /*
-    async uploadImage(userId: string, image: any): Promise<void> {
-        const picture = new FormData();
-        picture.append('image', image)
-        console.log(picture);
-        return axios
-            .put(`${this.BASE_URL}/users/${userId}/detail/`, picture, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            })
-            .then((response) => {
-                return response.data;
-            });
-    }
-    */
 }
