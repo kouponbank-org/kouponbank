@@ -1,8 +1,17 @@
 #### POST: http://127.0.0.1:8000/users/
 {
-    "username": "test_user_1",
-    "password": "test_user_password_1",
-    "email": "test_user_email_1@em.com"
+    "user": {
+        "username": "test_user_1",
+        "password": "test_user_password_1",
+        "email": "test_user_email_1@em.com"
+    },
+    "user_detail": {
+        "name": "test_user_first_last_middle_name",
+        "gender": "test_user_gender",
+        "birthday": "test_user_birthday",
+        "address": "test_user_address",
+        "cell_number": "test_cell_number"
+    }
 }
 
 #### PUT: http://127.0.0.1:8000/users/<uuid:user_id>/

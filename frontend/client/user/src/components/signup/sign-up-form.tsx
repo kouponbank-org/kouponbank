@@ -14,8 +14,8 @@ const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({ ...props
 
 export interface Prop {
     createNewUserClick: (event) => void;
-    userCredentialsInput: (event) => void;
-    userDetailCredentialsInput: (event) => void;
+    userSignUpInput: (event) => void;
+    userDetailSignUpInput: (event) => void;
 }
 
 export const SignUpForm = (props: Prop): JSX.Element => {
@@ -23,12 +23,12 @@ export const SignUpForm = (props: Prop): JSX.Element => {
         props.createNewUserClick(event);
     };
 
-    const userCredentialsInput = (event: React.FormEvent): void => {
-        props.userCredentialsInput(event);
+    const userSignUpInput = (event: React.FormEvent): void => {
+        props.userSignUpInput(event);
     };
 
-    const userDetailCredentialsInput = (event: React.FormEvent): void => {
-        props.userDetailCredentialsInput(event);
+    const userDetailSignUpInput = (event: React.FormEvent): void => {
+        props.userDetailSignUpInput(event);
     };
 
     //TODO:
@@ -44,7 +44,7 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                     type="email"
                     className="textfield"
                     name="email"
-                    onChange={userCredentialsInput}
+                    onChange={userSignUpInput}
                     placeholder="Email"
                 ></Input>
                 <label className="textfield-label">Password</label>
@@ -52,7 +52,7 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                     type="password"
                     className="textfield"
                     name="password"
-                    onChange={userCredentialsInput}
+                    onChange={userSignUpInput}
                     placeholder="Password"
                 ></Input>
                 <label className="textfield-label">Confirm Password</label>
@@ -67,7 +67,7 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                     type="text"
                     className="textfield"
                     name="username"
-                    onChange={userCredentialsInput}
+                    onChange={userSignUpInput}
                     placeholder="Username"
                 ></Input>
                 <section className="birthday-gender-container">
@@ -77,7 +77,7 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                         type="date"
                         className="birthday-textfield"
                         name="birthday"
-                        onChange={userDetailCredentialsInput}
+                        onChange={userDetailSignUpInput}
                     ></Input>
                     <Input
                         type="radio"
@@ -85,7 +85,7 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                         className="gender-textfield"
                         name="gender"
                         value="male"
-                        onChange={userDetailCredentialsInput}
+                        onChange={userDetailSignUpInput}
                     ></Input>
                     <label htmlFor="male">Male</label>
                     <Input
@@ -94,7 +94,7 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                         className="gender-textfield"
                         name="gender"
                         value="female"
-                        onChange={userDetailCredentialsInput}
+                        onChange={userDetailSignUpInput}
                     ></Input>
                     <label htmlFor="female">Female</label>
                 </section>

@@ -75,11 +75,8 @@ class BusinessTableReservationListAPI(APIView):
             for menu_id in menus:
                 menu = Menu.objects.get(pk=menu_id)
                 order.menus.add(menu)
-            response_data = {
-                "reservation": reservation_serializer.data,
-                "order": order_serializer.data,
-            }
-            return Response(response_data, status=status.HTTP_201_CREATED)
+            return_serializer = ReservationSerializer(reservation)
+            return Response(return_serializer.data, status=status.HTTP_201_CREATED)
         return Response(reservation_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def __get_business(self, business_id):
         try:

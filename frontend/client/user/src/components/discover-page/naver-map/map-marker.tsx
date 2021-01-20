@@ -17,8 +17,8 @@ export const MapMarker = (props: Prop): JSX.Element => {
                           <Marker
                               key={index}
                               position={{
-                                  lat: naverMapBusiness.entY,
-                                  lng: naverMapBusiness.entX,
+                                  lat: naverMapBusiness.business_address.entY,
+                                  lng: naverMapBusiness.business_address.entX,
                               }}
                               onClick={() => {
                                   props.directToBusinessPage(naverMapBusiness.id);

@@ -10,7 +10,6 @@ import { Business, User, UserDetail } from "../../api/kb-types";
 import { getBusinesses } from "../../store/business/business-reducer";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
-import { getUserDetail } from "../../store/user/user-detail-reducer";
 import { loginUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
@@ -21,8 +20,7 @@ import { LoginForm } from "./login-form";
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    loginUser: (api: KouponBankApi, user: User) => Promise<User>;
-    getUserDetail: (api: KouponBankApi, id: string) => void;
+    loginUser: (api: KouponBankApi, user: User) => Promise<void>;
     getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
     user: User;
     userDetail: UserDetail;
@@ -33,38 +31,30 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const alert = props.alertState.alert;
     const history = useHistory();
-    const [userCredentials, setUserCredentials] = useState(props.user);
+    const [user, setUser] = useState(props.user);
     const [showAlert, setShowAlert] = useState(true);
 
-    const userCredentialsInput = (event: React.FormEvent): void => {
+    const userLoginInput = (event: React.FormEvent): void => {
         const target = event.target as HTMLInputElement;
-        setUserCredentials({
-            ...userCredentials,
+        setUser({
+            ...user,
             [target.name]: target.value,
         });
     };
 
     const loginUserClick = (event: React.MouseEvent<HTMLElement>): void => {
         props
-            .loginUser(api, userCredentials)
-            .then((user) => {
-                props.getUserDetail(api, user.id);
-                props
-                    .getBusinesses(api)
-                    .then(() => {
-                        history.push(UrlPaths.HomePage);
-                    })
-                    .catch(() => {
-                        // Currently does nothing
-                    });
+            .loginUser(api, user)
+            .then(() => {
+                history.push(UrlPaths.HomePage);
             })
             .catch(() => {
-                // Currently does nothing
+                // Nothing here for now
             });
         event.preventDefault();
     };
 
-    const signUpClick = (): void => {
+    const directToSignUpPageClick = (): void => {
         history.push(UrlPaths.SignUpPage);
     };
 
@@ -72,9 +62,9 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
         <div className="background">
             <TopNavBar />
             <LoginForm
-                signUpClick={signUpClick}
-                userCredentials={userCredentials}
-                userCredentialsInput={userCredentialsInput}
+                directToSignUpPageClick={directToSignUpPageClick}
+                user={user}
+                userLoginInput={userLoginInput}
                 loginUserClick={loginUserClick}
             />
             <Notifications
@@ -94,7 +84,6 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        userDetail: state.userDetailReducer.userDetail,
         alertState: state.notificationReducer,
     };
 };
@@ -103,12 +92,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         loginUser: async (api: KouponBankApi, user: User) => {
             return loginUser(api, user, dispatch);
-        },
-        getUserDetail: async (api: KouponBankApi, id: string) => {
-            return getUserDetail(api, id, dispatch);
-        },
-        getBusinesses: async (api: KouponBankApi) => {
-            return getBusinesses(api, dispatch);
         },
     };
 };

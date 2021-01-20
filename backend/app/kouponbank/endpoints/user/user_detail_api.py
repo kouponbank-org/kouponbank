@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from kouponbank.database.user import User
+from kouponbank.database.user import User, UserSerializer
 from kouponbank.database.user_detail import UserDetail, UserDetailSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -79,5 +79,7 @@ class UserDetailAPI(APIView):
         serializer = UserDetailSerializer(user_detail, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user = self.__get_user(user_id)
+            user_serializer = UserSerializer(user)
+            return Response(user_serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

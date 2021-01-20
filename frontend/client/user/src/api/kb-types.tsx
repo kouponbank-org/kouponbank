@@ -9,16 +9,6 @@ export enum Status {
 }
 
 /**
- * Represents the required properties of a User
- */
-export interface User {
-    id?: string;
-    username: string;
-    password: string | number;
-    email: string | number;
-}
-
-/**
  * Represents the required properties of an Alert
  */
 export enum AlertType {
@@ -34,25 +24,25 @@ export interface Alert {
 }
 
 /**
- * Represents the required properties of a Coupon
+ * Represents the required properties of a User
  */
-export interface Coupon {
+export interface User {
     id?: string;
-    coupon_title: string;
-    description: string;
-    coupon_code: string;
-    coupon_picture?: string;
+    user_detail?: UserDetail;
+    favorite_businesses?: Business[];
+    username: string;
+    password: string;
+    email: string;
 }
 
-/**
- * Represents the required properties of a CouponBasket
- */
-export interface CouponBasket {
+export interface UserDetail {
     id?: string;
-    business_key: string;
-    business_name: string;
-    coupon_code: string;
-    coupon_title?: string;
+    name?: string;
+    gender?: string;
+    birthday?: string;
+    address?: string;
+    cell_number?: string;
+    user_picture?: File | null | undefined | string;
 }
 
 /**
@@ -60,18 +50,74 @@ export interface CouponBasket {
  */
 export interface Business {
     id?: string;
-    verified_business?: boolean;
-    verified_owner?: boolean;
-    verified_email?: boolean;
+    business_address?: BusinessAddress;
+    business_detail?: BusinessDetail;
     business_name: string;
+    business_number: string;
+    business_description: string;
+}
+
+export interface BusinessDetail {
+    id?: string;
     business_email: string;
-    description: string;
-    business_picture?: string;
-    jibunAddr: string;
+    business_wifi: boolean;
+    business_picture?: File | null | undefined | string;
+}
+
+export interface BusinessAddress {
+    id?: string;
     roadAddr: string;
+    jibunAddr: string;
     zipNo: string;
-    entX: string; // longitude
-    entY: string; // latitude
+    entX: number | string;
+    entY: number | string;
+}
+
+export interface BusinessVerification {
+    id?: string;
+    verified_business: boolean;
+    verified_owner: boolean;
+    verified_email: boolean;
+}
+
+/**
+ * Represents the required properties of a Menu
+ */
+export interface Menu {
+    id?: string;
+    menu_title: string;
+    menu_description: string;
+    menu_price: number;
+    menu_picture?: File | null | undefined | string;
+}
+
+/**
+ * Represents the required properties of a Table
+ */
+export interface Table {
+    id?: string;
+    table_capacity: number;
+    table_outlet: boolean;
+    table_near_wall: boolean;
+}
+
+/**
+ * Represents the required properties of a Reservation
+ */
+export interface Reservation {
+    id?: string;
+    start_time: string;
+    end_time: string;
+}
+
+/**
+ * Represents the required properties of a Order
+ */
+export interface Order {
+    id?: string;
+    total_price: number;
+    total_quantity: number;
+    order_complete_status: boolean;
 }
 
 /**
@@ -102,18 +148,6 @@ export interface GeolocationCoordinates {
     latitude: number;
     longitude: number;
     speed?: number | string;
-}
-
-/**
- * Represents the required properties of a UserDetail
- */
-export interface UserDetail {
-    id?: string;
-    name?: string;
-    gender?: string;
-    birthday?: string;
-    location?: string;
-    profile_picture?: File | null | undefined | string;
 }
 
 export interface AddressDetail {

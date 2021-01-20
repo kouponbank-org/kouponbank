@@ -4,9 +4,8 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from kouponbank.database.business import Business
 from kouponbank.database.user import User, UserSerializer
-from kouponbank.database.user_detail import UserDetail, UserDetailSerializer
+from kouponbank.database.user_detail import UserDetailSerializer
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -54,13 +53,23 @@ class UserListAPI(APIView):
         ]
     )
     def post(self, request):
-        # using request data to send to UserSerialzer
-        serializer = UserSerializer(data=request.data)
-        # then check if the data is correct according to serializer
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        user_serializer = UserSerializer(data=request.data["user"])
+        user_detail_serializer = UserDetailSerializer(data=request.data["user_detail"])
+        if user_serializer.is_valid() and user_detail_serializer.is_valid():
+            user_serializer.save()
+            user = self.__get_user(user_serializer.data["id"])
+            user_detail_serializer.save(
+                id=user.id,
+                user=user,
+            )
+            return_serializer = UserSerializer(user)
+            return Response(return_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def __get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            raise Http404("User not found")
 
 ## Returns a user given an id of a user (Get)
 ## Updates a user information given an id of a user and returns it (Put)

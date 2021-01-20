@@ -17,14 +17,20 @@ export interface BusinessState {
 
 export const initialState: BusinessState = {
     business: {
+        business_address: {
+            roadAddr: "",
+            jibunAddr: "",
+            zipNo: "",
+            entX: "",
+            entY: "",
+        },
+        business_detail: {
+            business_email: "",
+            business_wifi: false,
+        },
         business_name: "",
-        business_email: "",
-        description: "",
-        roadAddr: "",
-        jibunAddr: "",
-        zipNo: "",
-        entX: "",
-        entY: "",
+        business_number: "",
+        business_description: "",
     },
     businesses: [],
     searchedBusinesses: [],
