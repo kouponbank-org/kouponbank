@@ -34,10 +34,10 @@ export class KouponBankApi {
     /**
      * Coupon
      */
-    async createCoupon(userId: string, businessId: string, coupon: Coupon): Promise<Coupon> {
+    async createCoupon(ownerId: string, businessId: string, coupon: Coupon): Promise<Coupon> {
         return axios
             .post<Coupon>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/`,
+                `${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/coupon/`,
                 {
                     coupon_title: coupon.coupon_title,
                     description: coupon.description,
@@ -50,10 +50,10 @@ export class KouponBankApi {
             });
     }
 
-    async getCoupon(userId: string, businessId: string, couponId: string): Promise<Coupon> {
+    async getCoupon(ownerId: string, businessId: string, couponId: string): Promise<Coupon> {
         return axios
             .get<Coupon>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
+                `${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/coupon/${couponId}/`,
             )
             .then((response) => {
                 return response.data;
@@ -61,14 +61,14 @@ export class KouponBankApi {
     }
 
     async updateCoupon(
-        userId: string,
+        ownerId: string,
         businessId: string,
         couponId: string,
         coupon: Coupon,
     ): Promise<Coupon> {
         return axios
             .put<Coupon>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
+                `${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/coupon/${couponId}/`,
                 coupon,
             )
             .then((response) => {
@@ -76,16 +76,16 @@ export class KouponBankApi {
             });
     }
 
-    async removeCoupon(userId: string, businessId: string, couponId: string): Promise<void> {
+    async removeCoupon(ownerId: string, businessId: string, couponId: string): Promise<void> {
         return axios
             .delete<void>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
+                `${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/coupon/${couponId}/`,
             )
             .then((response) => {
                 return response.data;
             });
     }
-    
+
     /**
      * Owner
      */
@@ -96,10 +96,8 @@ export class KouponBankApi {
     //         return response.data;
     //     });
     // }
-
-    // NEW, added userId
-    async createOwner(owner: Owner, userId: string): Promise<Owner> {
-        return axios.post<Owner>(`${this.BASE_URL}/owners/${userId}`, owner).then((response) => {
+    async createOwner(owner: Owner): Promise<Owner> {
+        return axios.post<Owner>(`${this.BASE_URL}/owners`, owner).then((response) => {
             return response.data;
         });
     }
@@ -112,16 +110,16 @@ export class KouponBankApi {
         });
     }
 
-    async getOwner(userId: string): Promise<Owner> {
-        return axios.get<Owner>(`${this.BASE_URL}/owners/${userId}`).then((response) => {
+    async getOwner(ownerId: string): Promise<Owner> {
+        return axios.get<Owner>(`${this.BASE_URL}/owners/${ownerId}`).then((response) => {
             return response.data;
         });
     }
 
     /* update ? */
 
-    async removeOwner(userId: string): Promise<void> {
-        return axios.delete<void>(`${this.BASE_URL}/owners/${userId}`).then((response) => {
+    async removeOwner(ownerId: string): Promise<void> {
+        return axios.delete<void>(`${this.BASE_URL}/owners/${ownerId}`).then((response) => {
             return response.data;
         });
     }
@@ -132,17 +130,17 @@ export class KouponBankApi {
 
     /* create ? */
 
-    async getOwnerDetail(userId: string): Promise<OwnerDetail> {
+    async getOwnerDetail(ownerId: string): Promise<OwnerDetail> {
         return axios
-            .get<OwnerDetail>(`${this.BASE_URL}/owners/${userId}/detail/`)
+            .get<OwnerDetail>(`${this.BASE_URL}/owners/${ownerId}/detail/`)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async updateOwnerDetail(userId: string, ownerDetail: OwnerDetail): Promise<OwnerDetail> {
+    async updateOwnerDetail(ownerId: string, ownerDetail: OwnerDetail): Promise<OwnerDetail> {
         return axios
-            .put<OwnerDetail>(`${this.BASE_URL}/owners/${userId}/detail/`, ownerDetail)
+            .put<OwnerDetail>(`${this.BASE_URL}/owners/${ownerId}/detail/`, ownerDetail)
             .then((response) => {
                 return response.data;
             });
@@ -153,25 +151,25 @@ export class KouponBankApi {
     /**
      * Owner Business
      */
-    async createOwnerBusiness(userId: string, business: Business): Promise<Business> {
+    async createOwnerBusiness(ownerId: string, business: Business): Promise<Business> {
         return axios
-            .post<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/`, business)
+            .post<Business>(`${this.BASE_URL}/owners/${ownerId}/detail/business/`, business)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async getOwnerBusiness(userId: string, businessId: string): Promise<Business> {
+    async getOwnerBusiness(ownerId: string, businessId: string): Promise<Business> {
         return axios
-            .get<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`)
+            .get<Business>(`${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/`)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async getOwnerBusinesses(userId: string): Promise<Business[]> {
+    async getOwnerBusinesses(ownerId: string): Promise<Business[]> {
         return axios
-            .get<Business[]>(`${this.BASE_URL}/owners/${userId}/detail/business/`)
+            .get<Business[]>(`${this.BASE_URL}/owners/${ownerId}/detail/business/`)
             .then((response) => {
                 return response.data;
             });
@@ -218,41 +216,41 @@ export class KouponBankApi {
      */
     // TODO: ADD MENU TYPE TO kb-types.tsx
     // NEW
-    async createOwnerMenu(userId: string, businessId: string): Promise<Menu> {
+    async createOwnerMenu(ownerId: string, businessId: string): Promise<Menu> {
         return axios
-            .post<Menu>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/menu`)
+            .post<Menu>(`${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/menu`)
             .then((response) => {
                 return response.data;
             });
     }
     
-    async getOwnerMenu(userId: string, businessId: string, menuId: string): Promise<Menu> {
+    async getOwnerMenu(ownerId: string, businessId: string, menuId: string): Promise<Menu> {
         return axios
-            .get<Menu>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/menu/${menuId}`)
+            .get<Menu>(`${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/menu/${menuId}`)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async getOwnerMenus(userId: string, businessId: string): Promise<Menu> {
+    async getOwnerMenus(ownerId: string, businessId: string): Promise<Menu> {
         return axios
-            .get<Menu>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/menu`)
+            .get<Menu>(`${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/menu`)
             .then((response) => {
                 return response.data;
             });
     }
     
-    async updateOwnerMenu(userId: string, businessId: string, menuId: string, menu: Menu): Promise<Menu> {
+    async updateOwnerMenu(ownerId: string, businessId: string, menuId: string, menu: Menu): Promise<Menu> {
         return axios
-            .put<Menu>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/menu/${menuId}`)
+            .put<Menu>(`${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/menu/${menuId}`)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async removeOwnerMenu(userId: string, businessId: string, menuId: string): Promise<void> {
+    async removeOwnerMenu(ownerId: string, businessId: string, menuId: string): Promise<void> {
         return axios
-            .delete<void>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/menu/${menuId}`)
+            .delete<void>(`${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/menu/${menuId}`)
             .then((response) => {
                 return response.data;
             });
@@ -351,13 +349,13 @@ export class KouponBankApi {
     }
 
     // async updateBusiness(
-    //     userId: string,
+    //     ownerId: string,
     //     businessId: string,
     //     business: Business,
     // ): Promise<Business> {
     //     return axios
     //         .put<Business>(
-    //             `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`,
+    //             `${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/`,
     //             business,
     //         )
     //         .then((response) => {
@@ -366,7 +364,7 @@ export class KouponBankApi {
     // }
 
     async updateBusiness(
-        userId: string,
+        ownerId: string,
         businessId: string,
         business: Business,
     ): Promise<Business> {
@@ -378,7 +376,7 @@ export class KouponBankApi {
         if (business.business_picture === null) {
             return axios
             .put<Business>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`,
+                `${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/`,
                 business,
             )
             .then((response) => {
@@ -386,7 +384,7 @@ export class KouponBankApi {
             });
         } else {
             return axios
-                .put<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`, form_data, {
+                .put<Business>(`${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/`, form_data, {
                     headers: {
                         "content-type": "multipart/form-data",
                     },
@@ -397,9 +395,9 @@ export class KouponBankApi {
         }
     }
 
-    async removeBusiness(userId: string, businessId: string): Promise<void> {
+    async removeBusiness(ownerId: string, businessId: string): Promise<void> {
         return axios
-            .delete<void>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`)
+            .delete<void>(`${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/`)
             .then((response) => {
                 return response.data;
             });
