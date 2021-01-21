@@ -7,10 +7,10 @@ from rest_framework import serializers
 
 class Timeslot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    reservation = models.ForeignKey(
-        to="kouponbank.Reservation",
+    table = models.ForeignKey(
+        to="kouponbank.Table",
         on_delete=models.CASCADE,
-        related_name="reservation_timeslot",
+        related_name="table_timeslot",
         null=True,
         blank=True,
     )

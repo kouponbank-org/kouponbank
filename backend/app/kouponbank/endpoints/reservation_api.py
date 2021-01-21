@@ -88,10 +88,10 @@ class BusinessTableReservationListAPI(APIView):
                 id=reservation.id,
                 reservation=reservation,
             )
-            timeslot_serializer.save(
-                id=reservation.id,
-                reservation=reservation,
-            )
+            # timeslot_serializer.save(
+            #     id=reservation.id,
+            #     reservation=reservation,
+            # )
             order_id = order_serializer.data["id"]
             order = self.__get_order(order_id)
             # adding menus to orders
@@ -101,7 +101,7 @@ class BusinessTableReservationListAPI(APIView):
             response_data = {
                 "reservation": reservation_serializer.data,
                 "order": order_serializer.data,
-                "timeslot": timeslot_serializer.data,
+                # "timeslot": timeslot_serializer.data,
             }
             return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(reservation_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -145,11 +145,11 @@ class BusinessTableReservationAPI(APIView):
             return Reservation.objects.get(pk=reservation_id)
         except Reservation.DoesNotExist:
             raise Http404("Reservation cannot be found")
-    def __get_timeslot(self, timeslot_id):
-        try:
-            return Timeslot.objects.get(pk=timeslot_id)
-        except Timeslot.DoesNotExist:
-            raise Http404("Timeslot not found")
+    # def __get_timeslot(self, timeslot_id):
+    #     try:
+    #         return Timeslot.objects.get(pk=timeslot_id)
+    #     except Timeslot.DoesNotExist:
+    #         raise Http404("Timeslot not found")
 
     @swagger_auto_schema(
         responses={200: ReservationSerializer(many=True)},
@@ -181,16 +181,17 @@ class BusinessTableReservationAPI(APIView):
     def put(self, request, owner_id, business_id, table_id, reservation_id):
         reservation = self.__get_reservation(reservation_id)
         reservation_serializer = ReservationSerializer(reservation, data=request.data)
-        timeslot = self.__get_timeslot(reservation_id)
-        #define reservation_input to convert reservation to timeslot as well
-        reservation_input = request.data
-        print(reservation_input)
+        # timeslot = self.__get_timeslot(reservation_id)
+        # #define reservation_input to convert reservation to timeslot as well
+        # reservation_input = request.data
+        # print(reservation_input)
         
-        #converts reservation info to timeslot
-        reservation_to_timeslot = TableBookingAPI.time_slot_to_str(TableBookingAPI, reservation_input['start_time'], reservation_input['end_time'])
-        timeslot_input = {'times': reservation_to_timeslot, 'date': reservation_input['date']}
-        timeslot_serializer = TimeslotSerializer(timeslot, data=timeslot_input)
-        if reservation_serializer.is_valid() and timeslot_serializer.is_valid():
+        # #converts reservation info to timeslot
+        # reservation_to_timeslot = TableBookingAPI.time_slot_to_str(TableBookingAPI, reservation_input['start_time'], reservation_input['end_time'])
+        # timeslot_input = {'times': reservation_to_timeslot, 'date': reservation_input['date']}
+        # timeslot_serializer = TimeslotSerializer(timeslot, data=timeslot_input)
+        # and timeslot_serializer.is_valid()
+        if reservation_serializer.is_valid():
             reservation_serializer.save()
             timeslot_serializer.save()
             response_data = {
