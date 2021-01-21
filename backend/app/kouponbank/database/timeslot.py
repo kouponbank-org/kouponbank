@@ -15,7 +15,7 @@ class Timeslot(models.Model):
     )
     times = models.CharField(max_length=48)
     date = models.DateField()
-
+    
 class TimeslotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Timeslot

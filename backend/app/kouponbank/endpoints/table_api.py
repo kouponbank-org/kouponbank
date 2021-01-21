@@ -59,6 +59,7 @@ class BusinessTableListAPI(APIView):
         serializer = TableSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(business=business)
+            print(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

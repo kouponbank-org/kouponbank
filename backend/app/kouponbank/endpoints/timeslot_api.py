@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from kouponbank.database.business import Business
-from kouponbank.database.table import Table
+from kouponbank.database.table import Table, TableSerializer
 from kouponbank.database.timeslot import Timeslot, TimeslotSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -18,9 +18,12 @@ class TableTimeslotListAPI(APIView):
     )
     def get (self, request, owner_id, business_id, table_id):
         table = self.__get_table(table_id)
+        print(table)
+        t_serializer = TableSerializer(table.table_timeslot)
+        print(t_serializer.data)
         times = table.table_timeslot
         serializer = TimeslotSerializer(times, many=True)
-        print(serializer)
+        print(serializer.data)
         return Response(serializer.data)
     def __get_table(self, table_id):
         try:
