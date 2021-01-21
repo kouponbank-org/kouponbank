@@ -14,7 +14,7 @@ class Order(models.Model):
         related_name="reservation_order",
     )
     menus = models.ManyToManyField(Menu)
-    total_price = models.DecimalField(decimal_places=2)
+    total_price = models.DecimalField(max_digits=2, decimal_places=2)
     total_quantity = models.IntegerField(default=1)
     order_complete_status = models.BooleanField(default=False)
 

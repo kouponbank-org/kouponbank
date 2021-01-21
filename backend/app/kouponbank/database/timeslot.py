@@ -1,14 +1,16 @@
+# pylint: disable=import-error
 import uuid
 
 from django.db import models
 from rest_framework import serializers
+#from kouponbank.database.table import Table
 
 class Timeslot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    table = models.ForeignKey(
-        to="kouponbank.Table",
+    reservation = models.ForeignKey(
+        to="kouponbank.Reservation",
         on_delete=models.CASCADE,
-        related_name="table_timeslot",
+        related_name="reservation_timeslot",
         null=True,
         blank=True,
     )

@@ -3,7 +3,6 @@ import uuid
 
 from django.db import models
 from rest_framework import serializers
-from kouponbank.database.timeslot import Timeslot
 import datetime
 from kouponbank.database.business import Business
 
@@ -28,19 +27,4 @@ class TableSerializer(serializers.ModelSerializer):
             "table_capacity",
             "table_outlet",
             "table_near_wall",
-        )
-    # def create(self, validated_data):
-    #     table = Table.objects.create(**validated_data)
-    #     Timeslot.objects.create(
-    #         table=table,
-    #         times="000000000000000000000000000000000000000000000000",
-    #         date=datetime.date.today()
-    #     )
-    #     return table
-    def create(self, validated_data):
-        table = Table.objects.create(**validated_data)
-        Timeslot.objects.create(
-            id=table.id,
-            times="",
-            date="",
         )
