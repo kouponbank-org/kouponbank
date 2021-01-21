@@ -13,10 +13,14 @@ from rest_framework.views import APIView
 
 ## Individual timeslot for a table (Get, Put, Delete)
 class TableTimeslotListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: TimeslotSerializer(many=True)}
+    )
     def get (self, request, owner_id, business_id, table_id):
         table = self.__get_table(table_id)
         times = table.table_timeslot
         serializer = TimeslotSerializer(times, many=True)
+        print(serializer)
         return Response(serializer.data)
     def __get_table(self, table_id):
         try:
@@ -49,7 +53,6 @@ class TableTimeslotListAPI(APIView):
         serializer = TimeslotSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(
-                id=table.id
                 table=table
                 )
             return Response(serializer.data, status=status.HTTP_201_CREATED)

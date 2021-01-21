@@ -193,10 +193,10 @@ class BusinessTableReservationAPI(APIView):
         # and timeslot_serializer.is_valid()
         if reservation_serializer.is_valid():
             reservation_serializer.save()
-            timeslot_serializer.save()
+            #timeslot_serializer.save()
             response_data = {
                 "reservation": reservation_serializer.data,
-                "timeslot": timeslot_serializer.data,
+                #"timeslot": timeslot_serializer.data,
             }
             return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(reservation_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
