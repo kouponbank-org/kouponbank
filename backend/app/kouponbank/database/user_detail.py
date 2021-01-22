@@ -17,7 +17,7 @@ class UserDetail(models.Model):
         blank=True,
         null=True
     )
-    name = models.CharField(max_length=50, default="", blank=True)
+    name = models.CharField(max_length=50, default="", blank=True )
     gender = models.CharField(max_length=50, default="")
     birthday = models.CharField(max_length=50, default="")
     address = models.CharField(max_length=50, default="", blank=True)

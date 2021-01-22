@@ -64,19 +64,6 @@ interface GetBusinessListFailAction {
     type: BusinessActionType.GetBusinessListFail;
 }
 
-interface SetBusinessAction {
-    type: BusinessActionType.SetBusiness;
-}
-
-interface SetBusinessSuccessAction {
-    type: BusinessActionType.SetBusinessSuccess;
-    business: Business;
-}
-
-interface SetBusinessFailAction {
-    type: BusinessActionType.SetBusinessFail;
-}
-
 interface GetBusinessFromSearchAction {
     type: BusinessActionType.GetBusinessesFromSearch;
 }
@@ -97,9 +84,6 @@ export type Action =
     | GetBusinessListAction
     | GetBusinessListSuccessAction
     | GetBusinessListFailAction
-    | SetBusinessAction
-    | SetBusinessSuccessAction
-    | SetBusinessFailAction
     | GetBusinessFromSearchAction
     | GetBusinessFromSearchActionSuccess
     | GetBusinessFromSearchActionFail;
@@ -129,19 +113,6 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
                 draftState.businesses = action.businesses;
             });
         case BusinessActionType.GetBusinessListFail:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Failed;
-            });
-        case BusinessActionType.SetBusiness:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Running;
-            });
-        case BusinessActionType.SetBusinessSuccess:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Succeeded;
-                draftState.business = action.business;
-            });
-        case BusinessActionType.SetBusinessFail:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });

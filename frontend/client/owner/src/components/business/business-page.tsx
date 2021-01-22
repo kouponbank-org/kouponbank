@@ -1,20 +1,21 @@
+import "./business-page.scss";
+
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { useHistory } from "react-router-dom";
+import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, Coupon, Owner } from "../../api/kb-types";
+import { Business, Owner } from "../../api/kb-types";
 import { updateBusiness } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { TopNavBarR } from "../navigation/navigation-bar";
 import { BusinesspageForm } from "./business-page-form";
-import "./business-page.scss";
 
 export interface Prop {
     business: Business;
     owner: Owner;
-    coupon: Coupon;
     updateBusiness: (
         api: KouponBankApi,
         userId: string,
@@ -68,18 +69,15 @@ export const BusinessPage: React.FC<Prop> = (props: Prop) => {
                 editDetails={editDetails}
                 uploadImage={uploadImage}
                 submitChange={submitChange}
-                coupon={props.coupon}
             />
         </div>
     );
 };
 
 const mapStateToProps = (state: RootReducer) => {
-    console.log(state)
     return {
         owner: state.ownerReducer.owner,
         business: state.businessReducer.business,
-        coupon: state.couponReducer.coupon,
     };
 };
 

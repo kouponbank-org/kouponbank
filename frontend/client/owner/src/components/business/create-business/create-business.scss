@@ -34,11 +34,12 @@
     height: 50%;
     width: 100%;
     grid-template-columns: 100%;
-    grid-template-rows: 10% 10% 15% 5% 8.5% 8.5% 8.5% 10% 10%;
+    grid-template-rows: 9% 9% 9% 9% 5% 7% 7% 7% 10% 10%;
     gap: 9%;
     grid-template-areas:
     "business-name"
     "business-email"
+    "business-number"
     "business-description"
     "search-address"
     "road-address"
@@ -52,6 +53,10 @@
     
     .business-email {
         grid-area: business-email;
+    }
+
+    .business-number {
+        grid-area: business-number;
     }
     
     .business-description {

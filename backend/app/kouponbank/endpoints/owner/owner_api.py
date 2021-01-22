@@ -55,7 +55,8 @@ class OwnerListAPI(APIView):
                 id=owner.id,
                 owner=owner,
             )
-            return Response(owner_serializer.data, status=status.HTTP_201_CREATED)
+            return_serializer = OwnerSerializer(owner)
+            return Response(return_serializer.data, status=status.HTTP_201_CREATED)
         return Response(owner_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def __get_owner(self, owner_id):
         try:

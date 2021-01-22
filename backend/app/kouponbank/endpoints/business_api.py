@@ -70,19 +70,12 @@ class OwnerBusinessListAPI(APIView):
                 owner = business_owner,
             )
             business = self.__get_business(business_serializer.data["id"])
-            '''
             entX, entY = self.transform_utmk_to_wgs84(request.data["address"]["entX"], request.data["address"]["entY"])
             address_serializer.save(
                 id=business.id,
                 business=business,
                 entX = entX,
                 entY = entY
-            )
-            '''
-            ## TODO: After testing postman and reformat complete, use the above code instead of the address_serializer.save() that is currently being used.
-            address_serializer.save(
-                id=business.id,
-                business=business,
             )
             business_detail_serializer.save(
                 id=business.id,

@@ -1,7 +1,8 @@
 import { produce } from "immer";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, Status } from "../../api/kb-types";
+import { Business, BusinessAddress, BusinessDetail, Status } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
 import { BusinessActionType } from "./action-type";
@@ -16,15 +17,20 @@ export interface BusinessState {
 
 export const initialState: BusinessState = {
     business: {
+        business_address: {
+            roadAddr: "",
+            jibunAddr: "",
+            zipNo: "",
+            entX: "",
+            entY: "",
+        },
+        business_detail: {
+            business_email: "",
+            business_wifi: false,
+        },
         business_name: "",
-        business_email: "",
-        description: "",
-        roadAddr: "",
-        jibunAddr: "",
-        zipNo: "",
-        entX: "",
-        entY: "",
-        business_picture: null,
+        business_number: "",
+        business_description: "",
     },
     businesses: [],
     searchedBusinesses: [],
@@ -84,19 +90,6 @@ interface UpdateBusinessFailAction {
     type: BusinessActionType.UpdateBusinessFail;
 }
 
-interface SetBusinessAction {
-    type: BusinessActionType.SetBusiness;
-}
-
-interface SetBusinessSuccessAction {
-    type: BusinessActionType.SetBusinessSuccess;
-    business: Business;
-}
-
-interface SetBusinessFailAction {
-    type: BusinessActionType.SetBusinessFail;
-}
-
 interface GetBusinessFromSearchAction {
     type: BusinessActionType.GetBusinessesFromSearch;
 }
@@ -123,9 +116,6 @@ export type Action =
     | UpdateBusinessAction
     | UpdateBusinessSuccessAction
     | UpdateBusinessFailAction
-    | SetBusinessAction
-    | SetBusinessSuccessAction
-    | SetBusinessFailAction
     | GetBusinessFromSearchAction
     | GetBusinessFromSearchActionSuccess
     | GetBusinessFromSearchActionFail;
@@ -184,19 +174,6 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
-        case BusinessActionType.SetBusiness:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Running;
-            });
-        case BusinessActionType.SetBusinessSuccess:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Succeeded;
-                draftState.business = action.business;
-            });
-        case BusinessActionType.SetBusinessFail:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Failed;
-            });
         case BusinessActionType.GetBusinessesFromSearch:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Running;
@@ -219,14 +196,14 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
 
 export const getOwnerBusinesses = async (
     api: KouponBankApi,
-    userId: string,
+    ownerId: string,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
         type: BusinessActionType.GetBusinessList,
     });
     return api
-        .getOwnerBusinesses(userId)
+        .getOwnerBusinesses(ownerId)
         .then((businesses) => {
             dispatch({
                 type: BusinessActionType.GetBusinessListSuccess,
@@ -248,15 +225,17 @@ export const getOwnerBusinesses = async (
 
 export const createBusiness = async (
     api: KouponBankApi,
-    userId: string,
+    ownerId: string,
     business: Business,
+    businessDetail: BusinessDetail,
+    businessAddress: BusinessAddress,
     dispatch: Dispatch,
 ): Promise<Business> => {
     dispatch({
         type: BusinessActionType.CreateBusiness,
     });
     return api
-        .createBusiness(userId, business)
+        .createBusiness(ownerId, business, businessDetail, businessAddress)
         .then((business) => {
             dispatch({
                 type: BusinessActionType.CreateBusinessSuccess,
@@ -279,7 +258,7 @@ export const createBusiness = async (
 
 export const updateBusiness = async (
     api: KouponBankApi,
-    userId: string,
+    ownerId: string,
     businessId: string,
     business: Business,
     dispatch: Dispatch,
@@ -288,7 +267,7 @@ export const updateBusiness = async (
         type: BusinessActionType.UpdateBusiness,
     });
     return api
-        .updateBusiness(userId, businessId, business)
+        .updateBusiness(ownerId, businessId, business)
         .then((business) => {
             dispatch({
                 type: BusinessActionType.UpdateBusinessSuccess,

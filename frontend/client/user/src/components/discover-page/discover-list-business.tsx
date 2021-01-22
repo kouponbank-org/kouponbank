@@ -9,7 +9,7 @@ import { Business } from "../../api/kb-types";
  */
 export interface Prop {
     business: Business;
-    directToBusinessPage: (business_id: string) => void;
+    directToBusinessPage: (businessId: string) => void;
 }
 
 export const DiscoverBusinessList = (props: Prop): JSX.Element => {

@@ -1,11 +1,11 @@
 import React, { useLayoutEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+
 import { KouponBankApi } from "../api/kb-api";
 import { BusinessListPageR } from "./business-list/business-list-page";
 import { BusinessPageR } from "./business/business-page";
 import { CreateBusinessPageR } from "./business/create-business/create-business-page";
-import { CreateCouponPageR } from "./coupon/create-coupon-page";
 import { HomePageR } from "./homepage/homepage";
 import { InfoPage } from "./info/information-page";
 import { LoginPageR } from "./login/login-page";
@@ -21,7 +21,6 @@ export enum UrlPaths {
     ProfilePage = "/kbprofile",
     CreateBusinessPage = "/kbnewbusiness",
     BusinessPage = "/business/:businessId",
-    CreateCouponPage = "/newcoupon",
     InfoPage = "/info",
     BusinessListPage = "/businesses"
 }
@@ -62,7 +61,6 @@ const BasePageRouter = () => {
         <ApiContext.Provider value={api}>
             <Switch>
                 <Route path={UrlPaths.InfoPage} component={InfoPage} />
-                <Route path={UrlPaths.CreateCouponPage} component={CreateCouponPageR} />
                 <Route path={UrlPaths.BusinessPage} component={BusinessPageR} />
                 <Route path={UrlPaths.CreateBusinessPage} component={CreateBusinessPageR} />
                 <Route path={UrlPaths.ProfilePage} component={ProfilePageR} />

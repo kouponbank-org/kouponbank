@@ -50,14 +50,14 @@ export class KouponBankApi {
         });
     }
 
-    async removeUser(user_id: string): Promise<void> {
-        return axios.delete<void>(`${this.BASE_URL}/users/${user_id}`).then((response) => {
+    async removeUser(userId: string): Promise<void> {
+        return axios.delete<void>(`${this.BASE_URL}/users/${userId}`).then((response) => {
             return response.data;
         });
     }
 
     /*User Detail API*/
-    async updateUserDetail(user_id: string, userDetail: UserDetail): Promise<UserDetail> {
+    async updateUserDetail(userId: string, userDetail: UserDetail): Promise<User> {
         const form_data = new FormData();
         for (const key in userDetail) {
             const value = userDetail[key];
@@ -66,13 +66,13 @@ export class KouponBankApi {
 
         if (userDetail.user_picture === null) {
             return axios
-                .put<UserDetail>(`${this.BASE_URL}/users/${user_id}/detail/`, userDetail)
+                .put<User>(`${this.BASE_URL}/users/${userId}/detail/`, userDetail)
                 .then((response) => {
                     return response.data;
                 });
         } else {
             return axios
-                .put<UserDetail>(`${this.BASE_URL}/users/${user_id}/detail/`, form_data, {
+                .put<User>(`${this.BASE_URL}/users/${userId}/detail/`, form_data, {
                     headers: {
                         "content-type": "multipart/form-data",
                     },
@@ -84,8 +84,8 @@ export class KouponBankApi {
     }
 
     /*Business API*/
-    async getBusiness(business_id: string): Promise<Business> {
-        return axios.get<Business>(`${this.BASE_URL}/business/${business_id}`).then((response) => {
+    async getBusiness(businessId: string): Promise<Business> {
+        return axios.get<Business>(`${this.BASE_URL}/business/${businessId}`).then((response) => {
             return response.data;
         });
     }
@@ -111,7 +111,7 @@ export class KouponBankApi {
     /* Business API used for Naver Map API */
     async getAllBusinessWithinNaverMapBounds(naverMapBound: NaverMapBound): Promise<Business[]> {
         return axios
-            .get<Business[]>(`${this.BASE_URL}/map/`, {
+            .get<Business[]>(`${this.BASE_URL}/business_map/`, {
                 params: {
                     maxLat: naverMapBound.maxLat,
                     minLat: naverMapBound.minLat,

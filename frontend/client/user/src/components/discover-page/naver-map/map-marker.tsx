@@ -5,7 +5,7 @@ import { Business } from "../../../api/kb-types";
 
 export interface Prop {
     naverMapBusinesses: Business[];
-    directToBusinessPage: (business_id: string) => void;
+    directToBusinessPage: (businessId: string) => void;
 }
 
 export const MapMarker = (props: Prop): JSX.Element => {
