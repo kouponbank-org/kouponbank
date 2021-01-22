@@ -5,6 +5,7 @@ import {
     Business,
     BusinessAddress,
     BusinessDetail,
+    Menu,
     NaverMapBound,
     Owner,
     OwnerDetail,
@@ -34,11 +35,11 @@ export class KouponBankApi {
 
     /*LOGIN API*/
     async loginOwner(owner: Owner): Promise<Owner> {
-        return axios.post<Owner>(`${this.BASE_URL}/login/owner/`, owner).then((response) => {
+        return axios.post<Owner>(`${this.BASE_URL}/login/owners/`, owner).then((response) => {
             return response.data;
         });
     }
-
+    
     /*OWNER API*/
     async createOwner(owner: Owner, ownerDetail: OwnerDetail): Promise<Owner> {
         return axios
@@ -114,21 +115,6 @@ export class KouponBankApi {
             });
     }
 
-    // async updateBusiness(
-    //     ownerId: string,
-    //     businessId: string,
-    //     business: Business,
-    // ): Promise<Business> {
-    //     return axios
-    //         .put<Business>(
-    //             `${this.BASE_URL}/owners/${ownerId}/detail/business/${businessId}/`,
-    //             business,
-    //         )
-    //         .then((response) => {
-    //             return response.data;
-    //         });
-    // }
-
     async updateBusiness(
         ownerId: string,
         businessId: string,
@@ -161,8 +147,45 @@ export class KouponBankApi {
         }
     }
 
+    /** 
+      * Menu
+      */
+    async createMenu(businessId: string): Promise<Menu> {
+        return axios
+            .post<Menu>(`${this.BASE_URL}/owners/detail/business/${businessId}/menu`)
+            .then((response) => {
+                return response.data;
+            });
+    }
 
-    /* Business API - Everyone */
+    async getMenus(businessId: string): Promise<Menu> {
+        return axios
+            .get<Menu>(`${this.BASE_URL}/owners/detail/business/${businessId}/menu`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async getMenu(businessId: string, menuId: string): Promise<Menu> {
+        return axios
+            .get<Menu>(`${this.BASE_URL}/owners/detail/business/${businessId}/menu/${menuId}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async removeMenu(businessId: string, menuId: string): Promise<void> {
+        return axios
+            .delete<void>(`${this.BASE_URL}/owners/detail/business/${businessId}/menu/${menuId}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    /** 
+     * Business
+     */
+
     async getBusiness(businessId: string): Promise<Business> {
         return axios.get<Business>(`${this.BASE_URL}/business/${businessId}`).then((response) => {
             return response.data;

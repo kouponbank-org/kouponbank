@@ -121,6 +121,17 @@ export interface Order {
 }
 
 /**
+ * Menu Type
+ */
+export interface Menu {
+    id?: string;
+    title: string;
+    description: string;
+    price: number;
+    picture?: File | null | undefined | string;
+}
+
+/**
  * Represents the required properties for the Naver Map Api
  */
 export interface NaverMapBound {
