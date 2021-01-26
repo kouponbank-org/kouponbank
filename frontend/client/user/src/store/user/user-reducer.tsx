@@ -209,7 +209,7 @@ export const createNewUser = async (
 
 export const updateUserDetail = async (
     api: KouponBankApi,
-    id: string,
+    userId: string,
     userDetail: UserDetail,
     dispatch: Dispatch,
 ): Promise<void> => {
@@ -217,7 +217,7 @@ export const updateUserDetail = async (
         type: UserActionType.UpdateUserDetailAction,
     });
     return api
-        .updateUserDetail(id, userDetail)
+        .updateUserDetail(userId, userDetail)
         .then((user) => {
             dispatch({
                 type: UserActionType.UpdateUserDetailSuccessAction,

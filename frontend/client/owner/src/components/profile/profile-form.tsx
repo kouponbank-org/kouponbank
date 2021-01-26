@@ -1,3 +1,7 @@
+import "./profile-page.scss";
+
+import React from "react";
+
 import {
     Button,
     Dialog,
@@ -6,21 +10,19 @@ import {
     DialogTitle,
     Grid,
     TextField,
-    Typography
+    Typography,
 } from "@material-ui/core";
-import React from "react";
+
 import { Owner, OwnerDetail } from "../../api/kb-types";
-import "./profile-page.scss";
 
 /**
  * Represents the required properties of the owner profile page.
  */
 export interface Prop {
-    temp: OwnerDetail;
+    owner: Owner;
+    ownerDetail: OwnerDetail;
     editDetails: (event) => void;
     submitChange: (event) => void;
-    userDetailCredentials: OwnerDetail;
-    userCredentials: Owner;
 }
 
 export const ProfileForm = (props: Prop): JSX.Element => {
@@ -57,7 +59,7 @@ export const ProfileForm = (props: Prop): JSX.Element => {
                             fullWidth
                             label="Username"
                             id="username"
-                            value={props.userCredentials.username}
+                            value={props.owner.username}
                         />
                         <TextField
                             disabled
@@ -65,7 +67,7 @@ export const ProfileForm = (props: Prop): JSX.Element => {
                             label="Email"
                             fullWidth
                             id="email"
-                            defaultValue={props.userCredentials.email}
+                            defaultValue={props.owner.email}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -76,7 +78,7 @@ export const ProfileForm = (props: Prop): JSX.Element => {
                             id="name"
                             label="Name"
                             disabled
-                            value={props.userDetailCredentials.name}
+                            value={props.owner.owner_detail.name}
                         />
                         <TextField
                             variant="outlined"
@@ -85,7 +87,7 @@ export const ProfileForm = (props: Prop): JSX.Element => {
                             id="gender"
                             label="Gender"
                             disabled
-                            value={props.userDetailCredentials.gender}
+                            value={props.owner.owner_detail.gender}
                         />
                         <TextField
                             variant="outlined"
@@ -94,7 +96,7 @@ export const ProfileForm = (props: Prop): JSX.Element => {
                             id="birthday"
                             label="Birthday"
                             disabled
-                            value={props.userDetailCredentials.birthday}
+                            value={props.owner.owner_detail.birthday}
                         />
                     </Grid>
                     <form className="form">
@@ -120,7 +122,7 @@ export const ProfileForm = (props: Prop): JSX.Element => {
                             label="Name"
                             fullWidth
                             onChange={editDetails}
-                            value={props.temp.name}
+                            value={props.ownerDetail.name}
                         />
                         <TextField
                             autoFocus
@@ -130,7 +132,7 @@ export const ProfileForm = (props: Prop): JSX.Element => {
                             label="Gender"
                             fullWidth
                             onChange={editDetails}
-                            value={props.temp.gender}
+                            value={props.ownerDetail.gender}
                         />
                         <TextField
                             autoFocus
@@ -140,7 +142,7 @@ export const ProfileForm = (props: Prop): JSX.Element => {
                             label="Birthday"
                             fullWidth
                             onChange={editDetails}
-                            value={props.temp.birthday}
+                            value={props.ownerDetail.birthday}
                         />
                     </DialogContent>
                     <DialogActions>

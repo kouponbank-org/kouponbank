@@ -1,39 +1,36 @@
+import "./sign-up-page.scss";
+
 import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, Owner } from "../../api/kb-types";
-import { getBusinesses } from "../../store/business/business-reducer";
-import { AlertState } from "../../store/notification/notification-reducer";
+import { Owner, OwnerDetail } from "../../api/kb-types";
 import { createNewOwner } from "../../store/owner/owner-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { TopNavBarR } from "../navigation/navigation-bar";
-import { Notifications } from "../notifications/notifications";
 import { SignUpForm } from "./sign-up-form";
-import "./sign-up-page.scss";
 
+// TODO: FIX SIGNUP PAGE AND SIGNUP FORM
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    createNewOwner: (api: KouponBankApi, owner: Owner) => Promise<void>;
-    getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
+    createNewOwner: (api: KouponBankApi, owner: Owner, ownerDetail: OwnerDetail) => Promise<void>;
     owner: Owner;
-    alertState: AlertState;
 }
 
 export const SignUpPage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
-    const alert = props.alertState.alert;
-    const [userCredentials, setUserCredentials] = useState(props.owner);
-    const [showAlert, setShowAlert] = useState(true);
+    const [owner, setOwner] = useState(props.owner);
+    const [ownerDetail, setOwnerDetail] = useState(props.owner.owner_detail);
 
-    const createNewUserClick = (event: React.FormEvent): void => {
+    const createNewOwnerClick = (event: React.FormEvent): void => {
         props
-            .createNewOwner(api, userCredentials)
+            .createNewOwner(api, owner, ownerDetail)
             .then(() => {
                 history.push(UrlPaths.HomePage);
             })
@@ -43,31 +40,29 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         event.preventDefault();
     };
 
-    const userCredentialsInput = (event: React.FormEvent): void => {
+    const ownerSignUpInput = (event: React.FormEvent): void => {
         const target = event.target as HTMLInputElement;
-        setUserCredentials({
-            ...userCredentials,
+        setOwner({
+            ...owner,
+            [target.name]: target.value,
+        });
+    };
+
+    const ownerDetailSignUpInput = (event: React.FormEvent): void => {
+        const target = event.target as HTMLInputElement;
+        setOwnerDetail({
+            ...ownerDetail,
             [target.name]: target.value,
         });
     };
 
     return (
-        <div className="background">
-            <TopNavBarR title={"Signup Page"} />
+        <div>
+            <TopNavBarR />
             <SignUpForm
-                userCredentials={userCredentials}
-                createNewUserClick={createNewUserClick}
-                userCredentialsInput={userCredentialsInput}
-            />
-            <Notifications
-                onClose={() => {
-                    setShowAlert(false);
-                }}
-                showAlert={showAlert}
-                displayAlert={alert.displayAlert}
-                alertType={alert.alertType}
-                alertHeader={alert.alertHeader}
-                alertBody={alert.alertBody}
+                createNewOwnerClick={createNewOwnerClick}
+                ownerDetailSignUpInput={ownerDetailSignUpInput}
+                ownerSignUpInput={ownerSignUpInput}
             />
         </div>
     );
@@ -76,18 +71,13 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         owner: state.ownerReducer.owner,
-        business: state.businessReducer.businesses,
-        alertState: state.notificationReducer,
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        createNewOwner: async (api: KouponBankApi, owner: Owner) => {
-            return createNewOwner(api, owner, dispatch);
-        },
-        getBusinesses: async (api: KouponBankApi) => {
-            return getBusinesses(api, dispatch);
+        createNewOwner: async (api: KouponBankApi, owner: Owner, ownerDetail: OwnerDetail) => {
+            return createNewOwner(api, owner, ownerDetail, dispatch);
         },
     };
 };

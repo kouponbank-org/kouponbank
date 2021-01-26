@@ -17,9 +17,9 @@ class OwnerDetail(models.Model):
         blank=True,
         null=True
     )
-    name = models.CharField(max_length=50, default="")
+    name = models.CharField(max_length=50, default="", blank=True)
     gender = models.CharField(max_length=50, default="")
-    birthday = models.CharField(max_length=50, default="", blank=True)
+    birthday = models.CharField(max_length=50, default="")
     address = models.CharField(max_length=50, default="", blank=True)
     cell_number = models.CharField(max_length=20, default="", blank=True)
     owner_picture = models.ImageField(

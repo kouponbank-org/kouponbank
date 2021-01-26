@@ -18,7 +18,7 @@ import { UserProfileForm } from "./profile-form";
  */
 export interface Prop {
     user: User;
-    updateUserDetail: (api: KouponBankApi, id: string, userDetail: UserDetail) => Promise<void>;
+    updateUserDetail: (api: KouponBankApi, userId: string, userDetail: UserDetail) => Promise<void>;
 }
 
 export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
@@ -84,8 +84,8 @@ const mapStateToProps = (state: RootReducer) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        updateUserDetail: async (api: KouponBankApi, id: string, userDetail: UserDetail) => {
-            return updateUserDetail(api, id, userDetail, dispatch);
+        updateUserDetail: async (api: KouponBankApi, userId: string, userDetail: UserDetail) => {
+            return updateUserDetail(api, userId, userDetail, dispatch);
         },
     };
 };
