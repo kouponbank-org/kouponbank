@@ -148,5 +148,3 @@ class BusinessTableReservationAPI(APIView):
         ## Some code here
         reservation.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-

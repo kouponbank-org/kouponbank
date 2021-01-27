@@ -5,6 +5,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from kouponbank.database.business import Business
 from kouponbank.database.table import Table, TableSerializer
+from kouponbank.database.timeslot import Timeslot, TimeslotSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -136,3 +137,43 @@ class TableListAPI(APIView):
             return Business.objects.get(pk=business_id)
         except Business.DoesNotExist:
             raise Http404("Business not found")
+
+
+class TableBookingAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: TableSerializer(many=True)}
+    )
+
+    def time_slot_to_regex(start_time, end_time):
+        # times should be in HH:MM format
+        start_hour, start_minutes = start_time.split(':')
+        end_hour, end_minutes = end_time.split(':')
+
+        # number of timeslots that we can skip. ex) 9 am - 11am, we do not need first 18 time slots. 
+        slots_before_needed_time = (int(start_hour)*2 + int(start_minutes)/30)
+
+        # compute how many hours are between given times and find out # of slots
+        hour_duration_slots = (int(end_hour) - int(start_hour)) * 2  # 2 slots in each hour
+
+        # adjust # of slots according to minutes in provided times. 
+        # e.g. 9:30 to 11:30
+        # Looking at HOURS ONLY, we have 11-9=2 hour, which is 4 time slots, 
+        # but we need to subtract 1 time slots, because we don't have full time 
+        # of 9:00 to 10:00, but only from 9:30 to 10:00. So we subtract 30/30= 1 timeslot
+        # Then, referring to MINUTES, add what is left from the incomplete hour of 11:30 time,
+        # which is 30/30 minutes = 1 slot, ending up with total 4 timeslots
+        minute_duration_slots = int(end_minutes)/15 - int(start_minutes)/15
+        total_duration = hour_duration_slots + minute_duration_slots
+        regular_expression = r'^[01]{%d}1{%d}' % (slots_before_needed_time, total_duration)
+        return regular_expression
+    
+    def post_booking (self, request, date, start_time, end_time):
+        input_slots = time_slot_to_regex(start_time, end_time)
+        timeslot = Timeslot.objects.filter(date=date, times__regex=input_slots)
+        #filters timeslot and check if the input slots can be updated in timeslot
+        serializer = TimeslotSerializer(timeslot, data=request.data)
+        if timeslot is None:
+            raise Http404("Not available time")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
