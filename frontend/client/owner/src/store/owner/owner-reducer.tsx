@@ -1,10 +1,11 @@
 import { produce } from "immer";
 import { Dispatch } from "redux";
+
 import { KouponBankApi } from "../../api/kb-api";
-import { Owner, Status } from "../../api/kb-types";
+import { Owner, OwnerDetail, Status } from "../../api/kb-types";
 import { AlertsActionType } from "../notification/action-type";
 import { DisplayError } from "../notification/notification-reducer";
-import { UserActionType } from "./action-type";
+import { OwnerActionType } from "./action-type";
 
 /**
  * 프로젝트 Global Variable State 트래킹
@@ -12,14 +13,22 @@ import { UserActionType } from "./action-type";
  * Reducer이 정상적으로 돌아갈려면 필요한 아주 중요한 Interface.
  */
 
-export interface UserState {
+export interface OwnerState {
     owner: Owner;
     fetchStatus: Status;
     updateStatus: Status;
 }
 
-const initialState: UserState = {
+const initialState: OwnerState = {
     owner: {
+        owner_detail: {
+            name: "",
+            gender: "",
+            birthday: "",
+            address: "",
+            cell_number: "",
+            owner_picture: null,
+        },
         username: "",
         password: "",
         email: "",
@@ -32,34 +41,43 @@ const initialState: UserState = {
  * 우리 Reducer가 사용하는 액션들을 설정하는 공간
  */
 
-interface CreateNewUserAction {
-    type: UserActionType.CreateNewUserAction;
+interface CreateNewOwnerAction {
+    type: OwnerActionType.CreateNewOwnerAction;
 }
 
-interface CreateNewUserSuccessAction {
+interface CreateNewOwnerSuccessAction {
     owner: Owner;
-    type: UserActionType.CreateNewUserSuccessAction;
+    type: OwnerActionType.CreateNewOwnerSuccessAction;
 }
 
-interface CreateNewUserFailAction {
-    type: UserActionType.CreateNewUserFailAction;
+interface CreateNewOwnerFailAction {
+    type: OwnerActionType.CreateNewOwnerFailAction;
 }
 
-interface LoginUserAction {
-    type: UserActionType.LoginUserAction;
+interface LoginOwnerAction {
+    type: OwnerActionType.LoginOwnerAction;
 }
 
-interface LoginUserSuccessAction {
+interface LoginOwnerSuccessAction {
     owner: Owner;
-    type: UserActionType.LoginUserSucessAction;
+    type: OwnerActionType.LoginOwnerSucessAction;
 }
 
-interface LoginUserFailAction {
-    type: UserActionType.LoginUserFailAction;
+interface LoginOwnerFailAction {
+    type: OwnerActionType.LoginOwnerFailAction;
 }
 
-interface SignOutAction {
-    type: UserActionType.SignOutAction;
+interface UpdateOwnerDetailAction {
+    type: OwnerActionType.UpdateOwnerDetailAction;
+}
+
+interface UpdateOwnerDetailSuccessAction {
+    owner: Owner;
+    type: OwnerActionType.UpdateOwnerDetailSuccessAction;
+}
+
+interface UpdateOwnerDetailFailAction {
+    type: OwnerActionType.UpdateOwnerDetailFailAction;
 }
 
 /**
@@ -68,45 +86,58 @@ interface SignOutAction {
  * 이제 우리가 사용할 "Action"들을 설정할시간
  */
 export type Action =
-    | CreateNewUserAction
-    | CreateNewUserSuccessAction
-    | CreateNewUserFailAction
-    | LoginUserAction
-    | LoginUserSuccessAction
-    | LoginUserFailAction
-    | SignOutAction;
-
+    | CreateNewOwnerAction
+    | CreateNewOwnerSuccessAction
+    | CreateNewOwnerFailAction
+    | LoginOwnerAction
+    | LoginOwnerSuccessAction
+    | LoginOwnerFailAction
+    | UpdateOwnerDetailAction
+    | UpdateOwnerDetailSuccessAction
+    | UpdateOwnerDetailFailAction;
 /**
  * Reducer가 필요한 Parameters "state"하고 "action"
  * @param state
  * @param action
  * Reducer가 우리 Global State을 업데이트 시켜준다
  */
-export const reducer = (state: UserState = initialState, action: Action): UserState => {
+export const reducer = (state: OwnerState = initialState, action: Action): OwnerState => {
     switch (action.type) {
-        case UserActionType.CreateNewUserAction:
+        case OwnerActionType.CreateNewOwnerAction:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Running;
             });
-        case UserActionType.CreateNewUserSuccessAction:
+        case OwnerActionType.CreateNewOwnerSuccessAction:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
                 draftState.owner = action.owner;
             });
-        case UserActionType.CreateNewUserFailAction:
+        case OwnerActionType.CreateNewOwnerFailAction:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
-        case UserActionType.LoginUserAction:
+        case OwnerActionType.LoginOwnerAction:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Running;
             });
-        case UserActionType.LoginUserSucessAction:
+        case OwnerActionType.LoginOwnerSucessAction:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Succeeded;
                 draftState.owner = action.owner;
             });
-        case UserActionType.LoginUserFailAction:
+        case OwnerActionType.LoginOwnerFailAction:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Failed;
+            });
+        case OwnerActionType.UpdateOwnerDetailAction:
+            return produce(state, (draftState) => {
+                draftState.updateStatus = Status.Running;
+            });
+        case OwnerActionType.UpdateOwnerDetailSuccessAction:
+            return produce(state, (draftState) => {
+                draftState.owner = action.owner;
+            });
+        case OwnerActionType.UpdateOwnerDetailFailAction:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });
@@ -119,23 +150,23 @@ export const reducer = (state: UserState = initialState, action: Action): UserSt
 export const createNewOwner = async (
     api: KouponBankApi,
     owner: Owner,
+    ownerDetail: OwnerDetail,
     dispatch: Dispatch,
 ): Promise<void> => {
     dispatch({
-        type: UserActionType.CreateNewUserAction,
+        type: OwnerActionType.CreateNewOwnerAction,
     });
     return api
-        .createOwner(owner)
+        .createOwner(owner, ownerDetail)
         .then((owner) => {
             dispatch({
-                type: UserActionType.CreateNewUserSuccessAction,
+                type: OwnerActionType.CreateNewOwnerSuccessAction,
                 owner: owner,
-                isUser: false,
             });
         })
         .catch((err) => {
             dispatch({
-                type: UserActionType.CreateNewUserFailAction,
+                type: OwnerActionType.CreateNewOwnerFailAction,
             });
             dispatch({
                 type: AlertsActionType.DisplayError,
@@ -150,23 +181,21 @@ export const loginOwner = async (
     api: KouponBankApi,
     owner: Owner,
     dispatch: Dispatch,
-): Promise<Owner> => {
+): Promise<void> => {
     dispatch({
-        type: UserActionType.LoginUserAction,
+        type: OwnerActionType.LoginOwnerAction,
     });
     return api
         .loginOwner(owner)
         .then((owner) => {
             dispatch({
-                type: UserActionType.LoginUserSucessAction,
+                type: OwnerActionType.LoginOwnerSucessAction,
                 owner: owner,
-                isUser: false,
             });
-            return owner;
         })
         .catch((err) => {
             dispatch({
-                type: UserActionType.LoginUserFailAction,
+                type: OwnerActionType.LoginOwnerFailAction,
             });
             dispatch({
                 type: AlertsActionType.DisplayError,
@@ -174,5 +203,29 @@ export const loginOwner = async (
                 body: "다시 시도해 주세요",
             } as DisplayError);
             throw err;
+        });
+};
+
+export const updateOwnerDetail = async (
+    api: KouponBankApi,
+    id: string,
+    ownerDetail: OwnerDetail,
+    dispatch: Dispatch,
+): Promise<void> => {
+    dispatch({
+        type: OwnerActionType.UpdateOwnerDetailAction,
+    });
+    return api
+        .updateOwnerDetail(id, ownerDetail)
+        .then((owner) => {
+            dispatch({
+                type: OwnerActionType.UpdateOwnerDetailSuccessAction,
+                owner: owner,
+            });
+        })
+        .catch(() => {
+            dispatch({
+                type: OwnerActionType.UpdateOwnerDetailFailAction,
+            });
         });
 };

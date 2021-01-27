@@ -10,6 +10,7 @@ from kouponbank.endpoints.timeslot_api import TableTimeslotListAPI, TableTimeslo
 
 from functools import reduce
 import numpy as np
+import math
 
 class TableBookingAPI(APIView):
     @swagger_auto_schema(
@@ -58,7 +59,8 @@ class TableBookingAPI(APIView):
     def time_validate(self, table_time, start_time, end_time):
         table_time = table_time
         processed_time = self.time_process(start_time, end_time)
-        return False if "1" in table_time[processed_time[0]:processed_time[0]+processed_time[1]] else True
+        next_available_time_in_hours = self.next_available_time_in_hours(table_time, processed_time[0])
+        return next_available_time_in_hours if "1" in table_time[processed_time[0]:processed_time[0]+processed_time[1]] else True
 
     #FOR: Replace the string of timeslot that already exists
     #If timeslot is available, call put request on timeslot_api's TableTimeslotAPI.put (PUT Request), after replacing the timeslot
@@ -67,9 +69,19 @@ class TableBookingAPI(APIView):
         processed_time = self.time_process(reservation_input['start_time'], reservation_input['end_time'])
         #timeslot already exists
         time_validate=self.time_validate(self, times_date_filtered_set[0].times, reservation_input['start_time'], reservation_input['end_time'])
-        if time_validate:
+        if type(time_validate) is bool:
             #timeslot put request to create timeslot on the existing timeslot (indicated with True)
             return TableTimeslotAPI.put(TableTimeslotAPI, request, owner_id, business_id, table_id, times_date_filtered_set[0].id, processed_time, True)
         else:
             #timeslot is full
-            raise serializers.ValidationError("Timeslot is full, please choose different timeslot")
+            raise serializers.ValidationError("Timeslot is full, nearest available starting hour: " + str(time_validate))
+    
+    def next_available_time_in_hours(table_time, slots_before_start_time):
+        next_available_time = table_time[slots_before_start_time:].index(next(filter(lambda x: x!="1", table_time[slots_before_start_time:])))
+        #next_available_time_in_hours = next_available_time * 0.5
+        time_in_float = (next_available_time + slots_before_start_time) / 2
+        hours = int(math.modf(time_in_float)[1])
+        minutes = math.modf(time_in_float)[0]
+        minutes = "30" if minutes == 0.5 else "00"
+        time_in_str = str(hours) + ":" + minutes
+        return time_in_str

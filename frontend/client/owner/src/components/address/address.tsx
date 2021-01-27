@@ -1,11 +1,14 @@
-import { Button, TableCell, TableRow, TextField } from "@material-ui/core";
+import "./address.scss";
+
 import React, { useContext, useState } from "react";
+
+import { Button, TableCell, TableRow, TextField } from "@material-ui/core";
+
 import { KouponBankApi } from "../../api/kb-api";
 import { AddressDetail } from "../../api/kb-types";
 import { getAddressCoord, getAddressSearchResult } from "../../store/naver-map/naver-map-reducer";
 import { ApiContext } from "../base-page-router";
 import { AddressTable } from "./address-table";
-import "./address.scss";
 
 /**
  * Represents the required properties of the log in form.
@@ -23,7 +26,7 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
      * 3) 건물명 (bdNm)
      * 4) 우편번호 (zipNo)
      */
-    const [searchedAddress, setSearchedAddress] = useState<AddressDetail[]>([]);
+    const [searchedAddresses, setSearchedAddresses] = useState<AddressDetail[]>([]);
 
     /* Owner Input of the Address */
     const setAddressInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -38,7 +41,7 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
     const findAddress = (event: React.FormEvent<HTMLFormElement>) => {
         getAddressSearchResult(api, address)
             .then((address) => {
-                setSearchedAddress(address);
+                setSearchedAddresses(address);
             })
             .catch(() => {
                 // Currently does nothing
@@ -53,9 +56,11 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
      * Backend server transforms UTM-K into WGS84 (lat, lng)
      * @param address
      */
-    const findAddressCoord = (address: AddressDetail) => {
+    const handleSelectAddressClick = (address: AddressDetail) => {
         getAddressCoord(api, address)
             .then((addressCoord) => {
+                console.log(address);
+                console.log(addressCoord);
                 props.handleSelectAddressClick(address, addressCoord);
             })
             .catch(() => {
@@ -103,12 +108,12 @@ export const AddressInput: React.FC<Prop> = (props: Prop) => {
                 </div>
             </div>
             <div>
-                {searchedAddress.map((address, index) => {
+                {searchedAddresses.map((address, index) => {
                     return (
                         <AddressTable
                             key={index}
                             address={address}
-                            handleSelectAddressClick={findAddressCoord}
+                            handleSelectAddressClick={handleSelectAddressClick}
                         />
                     );
                 })}

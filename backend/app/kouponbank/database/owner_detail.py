@@ -4,6 +4,7 @@ import uuid
 from django.db import models
 from rest_framework import serializers
 
+
 def upload_to(instance, filename):
     return '/'.join([str(instance.owner.username), filename])
 
@@ -12,11 +13,13 @@ class OwnerDetail(models.Model):
     owner = models.OneToOneField(
         to="kouponbank.Owner",
         on_delete=models.CASCADE,
-        related_name="owner_detail"
+        related_name="owner_detail",
+        blank=True,
+        null=True
     )
-    name = models.CharField(max_length=50, default="")
+    name = models.CharField(max_length=50, default="", blank=True)
     gender = models.CharField(max_length=50, default="")
-    birthday = models.CharField(max_length=50, default="", blank=True)
+    birthday = models.CharField(max_length=50, default="")
     address = models.CharField(max_length=50, default="", blank=True)
     cell_number = models.CharField(max_length=20, default="", blank=True)
     owner_picture = models.ImageField(

@@ -29,7 +29,7 @@ export interface Prop {
         api: KouponBankApi,
         naverMapBound: NaverMapBound,
     ) => Promise<Business[]>;
-    getBusiness: (api: KouponBankApi, business_id: string) => Promise<Business>;
+    getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
 }
 
 export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
@@ -69,9 +69,9 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
 
     // FOR: DiscoverBusinessList
     // If the user clicks on the business image, it will direct them to the business page
-    const directToBusinessPage = (business_id: string) => {
+    const directToBusinessPage = (businessId: string) => {
         props
-            .getBusiness(api, business_id)
+            .getBusiness(api, businessId)
             .then((business) => {
                 history.push(`/business/${business.id}`);
             })
@@ -151,8 +151,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         ) => {
             return getAllBusinessWithinNaverMapBounds(api, naverMapBound, dispatch);
         },
-        getBusiness: async (api: KouponBankApi, business_id: string) => {
-            return getBusiness(api, business_id, dispatch);
+        getBusiness: async (api: KouponBankApi, businessId: string) => {
+            return getBusiness(api, businessId, dispatch);
         },
     };
 };

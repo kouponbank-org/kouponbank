@@ -1,6 +1,7 @@
 /*Sign Up Page Background layout*/
-.background {
+.background-sign-up {
     position:fixed;
+    background-color: #ffffff;
     padding:0;
     margin:0;
 
@@ -9,34 +10,62 @@
 
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #49D49D 10%, #A2C7E5 90%);
+    overflow: scroll;
 };
 
-/*Sign Up Component layout*/
-.layout {
-    width: 90%;
-    max-width: 340px;
-    margin: 10vh auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-};
+.textfield-container {
+    width: 62.5%;
+    height: 68.888889%;
+    margin-top: 15.6%;
+    margin-left: 18.8%;
 
-/*Sign Up Form layout*/
-.form {
-    width: 100%;
-    margin-top: 24px;
-    padding-bottom: 10px;
-};
+    .textfield {
+        width: 100%;
+        height: 5.5%;
+        margin: 9.6% 0;
+        border-width: 0;
+        background-color: #f1f3f5;
+    }
 
-/*Sign Up Button layout*/
-.signupbutton {
-    margin-top: 24px;
-    padding: 0px 24px;
-};
+    .textfield-label {
+        float: left;
+        width: 50%;
+        height: 2.7%;
+    }
 
-/*Information Grid layout*/
-.grid {
-    opacity: 0;
-};
+    .birthday-gender-container {
+        width: 100%;
+        height: 17.8%;
+    }
 
+    .birthday-textfield {
+        width: 50%;
+        height: 20%;
+        margin: 9.6% 0;
+        border-width: 0;
+        background-color: #f1f3f5;
+    }
+
+    .gender-textfield {
+        width: 10%;
+        height: 20%;
+    }
+}
+
+.button-container {
+    width: 62.5%;
+    height: 5.9%;
+    margin-top: 20%;
+    margin-left: 18.8%;
+    border-width: 0;
+
+    .button {
+        width: 100%;
+        height: 100%;
+        padding: 37.5% auto;
+        border-radius: 32px;
+        border-width: 0;
+        color: #ffffff;
+        background-color: #364fc7;
+    }
+}

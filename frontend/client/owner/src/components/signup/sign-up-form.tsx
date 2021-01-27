@@ -1,81 +1,109 @@
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
-import React from "react";
-import { Owner } from "../../api/kb-types";
 import "./sign-up-page.scss";
 
+//import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import React from "react";
+
+const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+    children,
+    ...props
+}) => <button {...props}>{children}</button>;
+
+const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => (
+    <input {...props} />
+);
+
 export interface Prop {
-    userCredentials: Owner;
-    createNewUserClick: (event) => void;
-    userCredentialsInput: (event) => void;
+    createNewOwnerClick: (event) => void;
+    ownerSignUpInput: (event) => void;
+    ownerDetailSignUpInput: (event) => void;
 }
 
 export const SignUpForm = (props: Prop): JSX.Element => {
-    const createNewUserClick = (event: React.FormEvent): void => {
-        props.createNewUserClick(event);
+    const createNewOwnerClick = (event: React.FormEvent): void => {
+        props.createNewOwnerClick(event);
     };
 
-    const userCredentialsInput = (event: React.FormEvent): void => {
-        props.userCredentialsInput(event);
+    const ownerSignUpInput = (event: React.FormEvent): void => {
+        props.ownerSignUpInput(event);
     };
+
+    const ownerDetailSignUpInput = (event: React.FormEvent): void => {
+        props.ownerDetailSignUpInput(event);
+    };
+
+    //TODO:
+    //Password Confirmation
+    //Margin error fix
+    //Media Query
 
     return (
-        <div className="layout">
-            <Typography component="h1" variant="h5">
-                Sign Up
-            </Typography>
-            <form className="form" onSubmit={createNewUserClick} noValidate>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email"
-                            name="email"
-                            autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.email}
+        <div className="background-sign-up">
+            <section className="textfield-container">
+                <label className="textfield-label">Email</label>
+                    <Input
+                        type="email"
+                        className="textfield"
+                        name="email"
+                        onChange={ownerSignUpInput}
+                        placeholder="Email"
+                    />
+                <label className="textfield-label">Password</label>
+                    <Input
+                        type="password"
+                        className="textfield"
+                        name="password"
+                        onChange={ownerSignUpInput}
+                        placeholder="Password"
+                    />
+                <label className="textfield-label">Confirm Password</label>
+                    <Input
+                        type="password"
+                        className="textfield"
+                        name="password-confirmation"
+                        placeholder="Password Confirmation"
+                    />
+                <label className="textfield-label">Username</label>
+                    <Input
+                        type="text"
+                        className="textfield"
+                        name="username"
+                        onChange={ownerSignUpInput}
+                        placeholder="Username"
+                    />
+                <section className="birthday-gender-container">
+                    <label className="textfield-label">Birthday</label>
+                        <Input
+                            type="date"
+                            className="birthday-textfield"
+                            name="birthday"
+                            onChange={ownerDetailSignUpInput}
                         />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.username}
+                    <label className="textfield-label">Gender</label>
+                        <Input
+                            type="radio"
+                            id="male"
+                            className="gender-textfield"
+                            name="gender"
+                            value="male"
+                            onChange={ownerDetailSignUpInput}
                         />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="on"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.password}
+                    <label htmlFor="male">Male</label>
+                        <Input
+                            type="radio"
+                            id="female"
+                            className="gender-textfield"
+                            name="gender"
+                            value="female"
+                            onChange={ownerDetailSignUpInput}
                         />
-                    </Grid>
-                </Grid>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="signupbutton"
-                >
+                    <label htmlFor="female">Female</label>
+                </section>
+            </section>
+            <section className="button-container">
+                <Button className="button" onClick={createNewOwnerClick}>
                     Sign Up
                 </Button>
-            </form>
+            </section>
         </div>
     );
 };

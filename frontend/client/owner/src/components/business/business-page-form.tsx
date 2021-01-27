@@ -1,3 +1,7 @@
+import "./business-page.scss";
+
+import React from "react";
+
 import {
     Button,
     Dialog,
@@ -6,11 +10,10 @@ import {
     DialogTitle,
     Grid,
     TextField,
-    Typography
+    Typography,
 } from "@material-ui/core";
-import React from "react";
-import { Business, Coupon } from "../../api/kb-types";
-import "./business-page.scss";
+
+import { Business } from "../../api/kb-types";
 
 /**
  * Represents the required properties of the log in form.
@@ -18,7 +21,6 @@ import "./business-page.scss";
 export interface Prop {
     businessInput?: Business;
     business: Business;
-    coupon: Coupon;
     editDetails?: (event) => void;
     submitChange?: (event) => void;
     uploadImage: (event) => void;
@@ -53,8 +55,8 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
                 <div>
                     <Grid item xs={12}>
                         {props.business.business_name}
-                        {props.business.business_email}
-                        {props.business.description}
+                        {props.business.business_detail.business_email}
+                        {props.business.business_description}
                     </Grid>
                 </div>
                 <Grid item xs={12}>
@@ -91,7 +93,7 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
                             label="Business Email"
                             fullWidth
                             onChange={editDetails}
-                            value={props.businessInput.business_email}
+                            value={props.businessInput.business_detail.business_email}
                         />
                         <TextField
                             autoFocus
@@ -101,7 +103,7 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
                             label="Business Description"
                             fullWidth
                             onChange={editDetails}
-                            value={props.businessInput.description}
+                            value={props.businessInput.business_description}
                         />
                         <input type="file" name="business_picture" onChange={props.uploadImage} />
                     </DialogContent>
@@ -116,23 +118,8 @@ export const BusinesspageForm = (props: Prop): JSX.Element => {
                 </Dialog>
                 
             </Grid>
-
-            {/* Need to redirect to create coupon page or add it on spot like a dialog? */}
-            {props.coupon.coupon_title === "" ? (
-                <Button fullWidth variant="contained" color="primary" className="editbutton">
-                    Add Coupon
-                </Button>
-            ) : (
-                <Grid>
-                    <Typography component="h1" variant="h5">
-                        Coupon
-                    </Typography>
-                    {props.coupon.coupon_title}
-                    {props.coupon.coupon_code}
-                </Grid>
-            )}
             <img
-                src={`${process.env.REACT_APP_API_BASE_URL}${props.business.business_picture}`}
+                src={`${process.env.REACT_APP_API_BASE_URL}${props.business.business_detail.business_picture}`}
             />
         </div>
     );

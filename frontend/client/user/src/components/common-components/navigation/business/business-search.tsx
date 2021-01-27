@@ -46,7 +46,7 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
             });
     }, [businessName]);
 
-    const selectBusiness = (businessId) => {
+    const selectBusiness = (businessId: string) => {
         props
             .getBusiness(api, businessId)
             .then((business) => {

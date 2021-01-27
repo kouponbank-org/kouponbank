@@ -9,16 +9,6 @@ export enum Status {
 }
 
 /**
- * Represents the required properties of a Owner
- */
-export interface Owner {
-    id?: string;
-    username: string;
-    password: string | number;
-    email: string | number;
-}
-
-/**
  * Represents the required properties of an Alert
  */
 export enum AlertType {
@@ -32,23 +22,113 @@ export interface Alert {
     alertHeader: string | JSX.Element;
     alertBody: string | JSX.Element;
 }
+
+/**
+ * Represents the required properties of an Owner
+ */
+export interface Owner {
+    id?: string;
+    owner_detail?: OwnerDetail;
+    favorite_businesses?: Business[];
+    username: string;
+    password: string;
+    email: string;
+}
+
+export interface OwnerDetail {
+    id?: string;
+    name?: string;
+    gender?: string;
+    birthday?: string;
+    address?: string;
+    cell_number?: string;
+    owner_picture?: File | null | undefined | string;
+}
+
 /**
  * Represents the required properties of a Business
  */
 export interface Business {
     id?: string;
-    verified_business?: boolean;
-    verified_owner?: boolean;
-    verified_email?: boolean;
+    business_address?: BusinessAddress;
+    business_detail?: BusinessDetail;
     business_name: string;
+    business_number: string;
+    business_description: string;
+}
+
+export interface BusinessDetail {
+    id?: string;
     business_email: string;
-    description: string;
+    business_wifi: boolean;
     business_picture?: File | null | undefined | string;
-    jibunAddr: string;
+}
+
+export interface BusinessAddress {
+    id?: string;
     roadAddr: string;
+    jibunAddr: string;
     zipNo: string;
-    entX: string; // longitude
-    entY: string; // latitude
+    entX: number | string;
+    entY: number | string;
+}
+
+export interface BusinessVerification {
+    id?: string;
+    verified_business: boolean;
+    verified_owner: boolean;
+    verified_email: boolean;
+}
+
+/**
+ * Represents the required properties of a Menu
+ */
+export interface Menu {
+    id?: string;
+    menu_title: string;
+    menu_description: string;
+    menu_price: number;
+    menu_picture?: File | null | undefined | string;
+}
+
+/**
+ * Represents the required properties of a Table
+ */
+export interface Table {
+    id?: string;
+    table_capacity: number;
+    table_outlet: boolean;
+    table_near_wall: boolean;
+}
+
+/**
+ * Represents the required properties of a Reservation
+ */
+export interface Reservation {
+    id?: string;
+    start_time: string;
+    end_time: string;
+}
+
+/**
+ * Represents the required properties of a Order
+ */
+export interface Order {
+    id?: string;
+    total_price: number;
+    total_quantity: number;
+    order_complete_status: boolean;
+}
+
+/**
+ * Menu Type
+ */
+export interface Menu {
+    id?: string;
+    title: string;
+    description: string;
+    price: number;
+    picture?: File | null | undefined | string;
 }
 
 /**
@@ -61,16 +141,24 @@ export interface NaverMapBound {
     minLng: string;
 }
 
-/**
- * Represents the required properties of a OwnerDetail
- */
-export interface OwnerDetail {
-    id?: string;
-    name: string;
-    gender: string;
-    birthday: string;
-    location: number | string;
-    profile_picture?: File | null | undefined | string;
+export interface Coordinate {
+    lat: number | string;
+    lng: number | string;
+}
+
+export interface GeolocationPosition {
+    coords: GeolocationCoordinates;
+    timestamp?: number | string;
+}
+
+export interface GeolocationCoordinates {
+    accuracy?: number | string;
+    altitude?: number | string;
+    altitudeAccuracy?: number | string;
+    heading?: number | string;
+    latitude: number;
+    longitude: number;
+    speed?: number | string;
 }
 
 export interface AddressDetail {

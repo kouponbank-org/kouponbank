@@ -1,17 +1,13 @@
 /* Setting ActionTypes to be used in 'main-reducer.tsx' */
 
-export enum UserActionType {
-    CreateNewUserAction = "CREATE_NEW_USER_ACTION",
-    CreateNewUserSuccessAction = "CREATE_NEW_USER_SUCCESS_ACTION",
-    CreateNewUserFailAction = "CREATE_NEW_USER_FAIL_ACTION",
-    LoginUserAction = "LOGIN_USER_ACTION",
-    LoginUserSucessAction = "LOGIN_USER_SUCCESS_ACTION",
-    LoginUserFailAction = "LOGIN_USER_FAIL_ACTION",
-    SignOutAction = "SIGN_OUT",
-    UpdateUserDetailAction = "UPDATE_USER_DETAIL_ACTION",
-    UpdateUserDetailSuccessAction = "UPDATE_USER_DETAIL_SUCCESS_ACTION",
-    UpdateUserDetailFailAction = "UPDATE_USER_DETAIL_FAIL_ACTION",
-    GetUserDetailAction = "Get_USER_DETAIL_ACTION",
-    GetUserDetailSuccessAction = "GET_USER_DETAIL_SUCCESS_ACTION",
-    GetUserDetailFailAction = "GET_USER_DETAIL_FAIL_ACTION",
+export enum OwnerActionType {
+    CreateNewOwnerAction = "CREATE_NEW_OWNER_ACTION",
+    CreateNewOwnerSuccessAction = "CREATE_NEW_OWNER_SUCCESS_ACTION",
+    CreateNewOwnerFailAction = "CREATE_NEW_OWNER_FAIL_ACTION",
+    LoginOwnerAction = "LOGIN_OWNER_ACTION",
+    LoginOwnerSucessAction = "LOGIN_OWNER_SUCCESS_ACTION",
+    LoginOwnerFailAction = "LOGIN_OWNER_FAIL_ACTION",
+    UpdateOwnerDetailAction = "UPDATE_OWNER_DETAIL_ACTION",
+    UpdateOwnerDetailSuccessAction = "UPDATE_OWNER_DETAIL_SUCCESS_ACTION",
+    UpdateOwnerDetailFailAction = "UPDATE_OWNER_DETAIL_FAIL_ACTION",
 }

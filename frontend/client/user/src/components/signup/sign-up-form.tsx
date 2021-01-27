@@ -14,8 +14,8 @@ const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({ ...props
 
 export interface Prop {
     createNewUserClick: (event) => void;
-    userCredentialsInput: (event) => void;
-    userDetailCredentialsInput: (event) => void;
+    userSignUpInput: (event) => void;
+    userDetailSignUpInput: (event) => void;
 }
 
 export const SignUpForm = (props: Prop): JSX.Element => {
@@ -23,12 +23,12 @@ export const SignUpForm = (props: Prop): JSX.Element => {
         props.createNewUserClick(event);
     };
 
-    const userCredentialsInput = (event: React.FormEvent): void => {
-        props.userCredentialsInput(event);
+    const userSignUpInput = (event: React.FormEvent): void => {
+        props.userSignUpInput(event);
     };
 
-    const userDetailCredentialsInput = (event: React.FormEvent): void => {
-        props.userDetailCredentialsInput(event);
+    const userDetailSignUpInput = (event: React.FormEvent): void => {
+        props.userDetailSignUpInput(event);
     };
 
     //TODO:
@@ -40,62 +40,62 @@ export const SignUpForm = (props: Prop): JSX.Element => {
         <div className="background-sign-up">
             <section className="textfield-container">
                 <label className="textfield-label">Email</label>
-                <Input
-                    type="email"
-                    className="textfield"
-                    name="email"
-                    onChange={userCredentialsInput}
-                    placeholder="Email"
-                ></Input>
+                    <Input
+                        type="email"
+                        className="textfield"
+                        name="email"
+                        onChange={userSignUpInput}
+                        placeholder="Email"
+                    />
                 <label className="textfield-label">Password</label>
-                <Input
-                    type="password"
-                    className="textfield"
-                    name="password"
-                    onChange={userCredentialsInput}
-                    placeholder="Password"
-                ></Input>
+                    <Input
+                        type="password"
+                        className="textfield"
+                        name="password"
+                        onChange={userSignUpInput}
+                        placeholder="Password"
+                    />
                 <label className="textfield-label">Confirm Password</label>
-                <Input
-                    type="password"
-                    className="textfield"
-                    name="password-confirmation"
-                    placeholder="Password Confrimation"
-                ></Input>
+                    <Input
+                        type="password"
+                        className="textfield"
+                        name="password-confirmation"
+                        placeholder="Password Confirmation"
+                    />
                 <label className="textfield-label">Username</label>
-                <Input
-                    type="text"
-                    className="textfield"
-                    name="username"
-                    onChange={userCredentialsInput}
-                    placeholder="Username"
-                ></Input>
+                    <Input
+                        type="text"
+                        className="textfield"
+                        name="username"
+                        onChange={userSignUpInput}
+                        placeholder="Username"
+                    />
                 <section className="birthday-gender-container">
                     <label className="textfield-label">Birthday</label>
                     <label className="textfield-label">Gender</label>
-                    <Input
-                        type="date"
-                        className="birthday-textfield"
-                        name="birthday"
-                        onChange={userDetailCredentialsInput}
-                    ></Input>
-                    <Input
-                        type="radio"
-                        id="male"
-                        className="gender-textfield"
-                        name="gender"
-                        value="male"
-                        onChange={userDetailCredentialsInput}
-                    ></Input>
+                        <Input
+                            type="date"
+                            className="birthday-textfield"
+                            name="birthday"
+                            onChange={userDetailSignUpInput}
+                        />
+                        <Input
+                            type="radio"
+                            id="male"
+                            className="gender-textfield"
+                            name="gender"
+                            value="male"
+                            onChange={userDetailSignUpInput}
+                        />
                     <label htmlFor="male">Male</label>
-                    <Input
-                        type="radio"
-                        id="female"
-                        className="gender-textfield"
-                        name="gender"
-                        value="female"
-                        onChange={userDetailCredentialsInput}
-                    ></Input>
+                        <Input
+                            type="radio"
+                            id="female"
+                            className="gender-textfield"
+                            name="gender"
+                            value="female"
+                            onChange={userDetailSignUpInput}
+                        />
                     <label htmlFor="female">Female</label>
                 </section>
             </section>

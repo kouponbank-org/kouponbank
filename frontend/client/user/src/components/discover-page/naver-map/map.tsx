@@ -78,9 +78,9 @@ export const Map: React.FC<Prop> = (props: Prop) => {
 
     // FOR: NaverMapMarker
     // If the user clicks on the business image, it will direct them to the business page
-    const directToBusinessPage = (business_id: string) => {
+    const directToBusinessPage = (businessId: string) => {
         props
-            .getBusiness(api, business_id)
+            .getBusiness(api, businessId)
             .then((business) => {
                 history.push(`/business/${business.id}`);
             })

@@ -1,5 +1,6 @@
 import React from "react";
 import { Marker } from "react-naver-maps";
+
 import { Business } from "../../api/kb-types";
 
 export interface Prop {
@@ -15,11 +16,11 @@ export const MapMarker = (props: Prop): JSX.Element => {
                           <Marker
                               key={index}
                               position={{
-                                  lat: naverMapBusiness.entY,
-                                  lng: naverMapBusiness.entX,
+                                  lat: naverMapBusiness.business_address.entY,
+                                  lng: naverMapBusiness.business_address.entX,
                               }}
                               onClick={() => {
-                                  alert(naverMapBusiness.roadAddr);
+                                  alert(naverMapBusiness.business_address.roadAddr);
                               }}
                           />
                       );
