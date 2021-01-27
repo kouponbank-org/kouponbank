@@ -10,20 +10,14 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import numpy as np
 
 ## Individual timeslot for a table (Get, Put, Delete)
 class TableTimeslotListAPI(APIView):
-    @swagger_auto_schema(
-        responses={200: TimeslotSerializer(many=True)}
-    )
     def get (self, request, owner_id, business_id, table_id):
         table = self.__get_table(table_id)
-        print(table)
-        t_serializer = TableSerializer(table.table_timeslot)
-        print(t_serializer.data)
         times = table.table_timeslot
         serializer = TimeslotSerializer(times, many=True)
-        print(serializer.data)
         return Response(serializer.data)
     def __get_table(self, table_id):
         try:
@@ -51,8 +45,15 @@ class TableTimeslotListAPI(APIView):
             )
         ]
     )
+
+    #get timeslot.date,
+    #if false, post a new one in this format "000000000000000000000000000000000000000000000000"
+    #if true, then check if the timeslot is already existing for the input slots
+        #if true, put the str 
+        #if false, return error
+
     def post(self, request, owner_id, business_id, table_id):
-        table = self.__get_table(table_id)
+        table = self.__get_table(self, table_id)
         serializer = TimeslotSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(
@@ -95,19 +96,24 @@ class TableTimeslotAPI(APIView):
             )
         ]
     )
-    def put(self, request, owner_id, business_id, table_id, timeslot_id):
-        times = self.__get_times(timeslot_id)
-        serializer = TimeslotSerializer(times, data=request.data)
+    def put(self, request, owner_id, business_id, table_id, timeslot_id, processed_time, create_or_delete):
+        timeslot_original = self.__get_times(self, timeslot_id)
+        times = timeslot_original.times
+        replacement = np.ones(processed_time[1], dtype = str) if create_or_delete == True else np.zeros(processed_time[1], dtype = int).astype(str)
+        times = '%s%s%s'%(times[:processed_time[0]],"".join(replacement),times[processed_time[0]+processed_time[1]:])
+        timeslot_updated = {'times': times, 'date': timeslot_original.date}
+        serializer = TimeslotSerializer(timeslot_original, data=timeslot_updated)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return serializer
+            #return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
         responses={200: TimeslotSerializer(many=True)}
     )
     def delete(self, request, owner_id, business_id, table_id, timeslot_id):
-        times = self.__get_times(timeslot_id)
+        times = self.__get_times(self, timeslot_id)
         if times is None:
             raise Http404("timeslot cannot be found")
         times.delete()

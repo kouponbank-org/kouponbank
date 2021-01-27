@@ -39,15 +39,9 @@ class ReservationSerializer(serializers.ModelSerializer):
             "date"
         )
 
+    #FOR: reservation validation
+    #Comepare input timeslots to check if start_time is before end_time
     def validate(self, attrs):
         if attrs['start_time'] >= attrs['end_time']:
             raise serializers.ValidationError("end_time should be greater than start_time")
-        start_time = attrs['start_time'].strftime("%H:%M")
-        end_time = attrs['end_time'].strftime("%H:%M")
-        get_timeslot=TableBookingAPI.get(TableBookingAPI, start_time, end_time, attrs["date"])
-        print(get_timeslot)
-        if len(get_timeslot)!=0:
-            raise serializers.ValidationError("Timeslot is full, please select for the different time")
         return attrs
-
-# TODO: get table list for only available slots.

@@ -29,14 +29,3 @@ class TableSerializer(serializers.ModelSerializer):
             "table_outlet",
             "table_near_wall",
         )
-
-    def create(self, validated_data):
-        table = Table.objects.create(**validated_data)
-        Timeslot.objects.create(
-            times="000000000000000000000000000000000000000000000000",
-            date="2021-01-21",
-        )
-        return table
-
-#table -> timeslot (master), 
-#Reservation: convert to timeslot format -> if it can be found, then no

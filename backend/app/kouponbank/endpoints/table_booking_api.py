@@ -2,33 +2,31 @@
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status
+from rest_framework import status, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from kouponbank.database.timeslot import Timeslot, TimeslotSerializer
+from kouponbank.endpoints.timeslot_api import TableTimeslotListAPI, TableTimeslotAPI
+
+from functools import reduce
+import numpy as np
 
 class TableBookingAPI(APIView):
     @swagger_auto_schema(
         responses={200: TimeslotSerializer(many=True)}
     )
 
-    # TODO: if reserved outside of the range, i can still post. 4-5pm on the db,
-    # I can still post 3-4, 
-
-    def get(self, start_time, end_time, date):
-        input_slots = self.time_slot_to_regex(self, start_time, end_time)
-        times = Timeslot.objects.filter(date=date, times__regex=input_slots)
-        #times = times.filter(date=date, times__regex='^[01]{10}1{1}')
-        #filters timeslot and check if the input slots can be updated in timeslot
-        return times
-
-    def time_process(self, start_time, end_time):
+    #FOR: Process the times of reservation inputs
+    #Return the list of information
+    #1.How many slots of timeslot_string(length of 48) to skip (change starting slot)
+    #2. How many slots to replace 0s to 1s (duration)
+    def time_process(start_time, end_time):
         # times should be in HH:MM format
         start_hour, start_minutes = start_time.split(':')
         end_hour, end_minutes = end_time.split(':')
 
-        # number of timeslots that we can skip. ex) 9 am - 11am, we do not need first 18 time slots. 
-        slots_before_needed_time = int((int(start_hour)*2 + int(start_minutes)/30))
+        # number of timeslots before the start time. ex) 9 am - 11am, we do not need first 18 time slots. 
+        slots_before_start_time = int((int(start_hour)*2 + int(start_minutes)/30))
 
         # compute how many hours are between given times and find out # of slots
         hour_duration_slots = (int(end_hour) - int(start_hour)) * 2  # 2 slots in each hour
@@ -42,24 +40,36 @@ class TableBookingAPI(APIView):
         # which is 30/30 minutes = 1 slot, ending up with total 4 timeslots
         minute_duration_slots = int(end_minutes)/30 - int(start_minutes)/30
         total_duration = int(hour_duration_slots + minute_duration_slots)
-        
-        #return list of processed 2 info that we need to find time slot in regex and str format
-        return [slots_before_needed_time, total_duration]
+        return [slots_before_start_time, total_duration]
 
-    def time_slot_to_regex(self, start_time, end_time):
-        slots_before_needed_time = self.time_process(self, start_time, end_time)[0]
-        total_duration = self.time_process(self, start_time, end_time)[1]
-        time_regular_expression = r'^[01]{%d}1{%d}' % (slots_before_needed_time, total_duration)
-        return time_regular_expression
-
+    #FOR: Get the timeslot in string format from the reservation request information
+    #Return the timeslot in a string format
     def time_slot_to_str(self, start_time, end_time):
-        slots_before_needed_time = self.time_process(self, start_time, end_time)[0]
-        total_duration = self.time_process(self, start_time, end_time)[1]
+        #Processed_time[0] = slots before the start time, Processed_time[1] = total duration of the reservation 
+        processed_time = self.time_process(start_time, end_time)
         time_string = "000000000000000000000000000000000000000000000000"
-        replacement = ""
-        for i in range(total_duration):
-            replacement += "1"
-        time_string = '%s%s%s'%(time_string[:slots_before_needed_time],replacement,time_string[slots_before_needed_time + total_duration:])
+        replacement = np.ones(processed_time[1], dtype = str)
+        time_string = '%s%s%s'%(time_string[:processed_time[0]],"".join(replacement),time_string[processed_time[0] + processed_time[1]:])
         return time_string
 
-# print(TableBookingAPI.get(TableBookingAPI, "12:00", "13:00", "2021-01-01"))
+    #FOR: Validate the timeslot if timeslot is full or not
+    #Compare the slots that needed to be updated from reservation input times with existing timeslot of table
+    #Return True if timeslot can be posted, else, return false.
+    def time_validate(self, table_time, start_time, end_time):
+        table_time = table_time
+        processed_time = self.time_process(start_time, end_time)
+        return False if "1" in table_time[processed_time[0]:processed_time[0]+processed_time[1]] else True
+
+    #FOR: Replace the string of timeslot that already exists
+    #If timeslot is available, call put request on timeslot_api's TableTimeslotAPI.put (PUT Request), after replacing the timeslot
+    #If timeslot is full, return response bad.request
+    def time_exists(self, request, owner_id, business_id, table_id, times_date_filtered_set, reservation_input):
+        processed_time = self.time_process(reservation_input['start_time'], reservation_input['end_time'])
+        #timeslot already exists
+        time_validate=self.time_validate(self, times_date_filtered_set[0].times, reservation_input['start_time'], reservation_input['end_time'])
+        if time_validate:
+            #timeslot put request to create timeslot on the existing timeslot (indicated with True)
+            return TableTimeslotAPI.put(TableTimeslotAPI, request, owner_id, business_id, table_id, times_date_filtered_set[0].id, processed_time, True)
+        else:
+            #timeslot is full
+            raise serializers.ValidationError("Timeslot is full, please choose different timeslot")
