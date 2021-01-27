@@ -1,35 +1,38 @@
-import { Button, Grid, TextField } from "@material-ui/core";
-import React from "react";
-import { Owner } from "../../api/kb-types";
 import "./login.scss";
+
+import React from "react";
+
+import { Button, Grid, TextField } from "@material-ui/core";
+
+import { Owner } from "../../api/kb-types";
 
 /**
  * Represents the required properties of the log in form.
  */
 export interface Prop {
-    userCredentials: Owner;
-    userCredentialsInput: (event) => void;
-    signUpClick?: (event) => void;
-    loginUserClick: (event) => void;
+    owner: Owner;
+    ownerLoginInput: (event) => void;
+    directToSignUpPageClick?: (event) => void;
+    loginOwnerClick: (event) => void;
 }
 
 export const LoginForm = (props: Prop): JSX.Element => {
-    const loginUserClick = (event: React.FormEvent): void => {
-        props.loginUserClick(event);
+    const loginOwnerClick = (event: React.FormEvent): void => {
+        props.loginOwnerClick(event);
         event.preventDefault();
     };
 
-    const signUpClick = (event: React.MouseEvent<HTMLElement>): void => {
-        props.signUpClick(event);
+    const directToSignUpPageClick = (event: React.MouseEvent<HTMLElement>): void => {
+        props.directToSignUpPageClick(event);
     };
 
-    const userCredentialsInput = (event: React.FormEvent): void => {
-        props.userCredentialsInput(event);
+    const ownerLoginInput = (event: React.FormEvent): void => {
+        props.ownerLoginInput(event);
     };
 
     return (
         <div className="layout">
-            <form className="form" onSubmit={loginUserClick} autoComplete="off">
+            <form className="form" onSubmit={loginOwnerClick} autoComplete="off">
                 <Grid container>
                     <Grid item xs={12}>
                         <TextField
@@ -41,8 +44,8 @@ export const LoginForm = (props: Prop): JSX.Element => {
                             label="Username"
                             autoComplete="off"
                             type="text"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.username}
+                            onChange={ownerLoginInput}
+                            value={props.owner.username}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -55,8 +58,8 @@ export const LoginForm = (props: Prop): JSX.Element => {
                             label="Email"
                             autoComplete="off"
                             type="text"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.email}
+                            onChange={ownerLoginInput}
+                            value={props.owner.email}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -69,8 +72,8 @@ export const LoginForm = (props: Prop): JSX.Element => {
                             label="Password"
                             autoComplete="off"
                             type="text"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.password}
+                            onChange={ownerLoginInput}
+                            value={props.owner.password}
                         />
                     </Grid>
                 </Grid>
@@ -90,7 +93,7 @@ export const LoginForm = (props: Prop): JSX.Element => {
                 variant="contained"
                 color="primary"
                 className="sign-up-button"
-                onClick={signUpClick}
+                onClick={directToSignUpPageClick}
             >
                 Sign up
             </Button>

@@ -6,25 +6,21 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, User, UserDetail } from "../../api/kb-types";
-import { getBusinesses } from "../../store/business/business-reducer";
+import { User, UserDetail } from "../../api/kb-types";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
-import { updateUserDetail } from "../../store/user/user-detail-reducer";
 import { createNewUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
 import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { Notifications } from "../common-components/notifications/notifications";
 import { SignUpForm } from "./sign-up-form";
 
+// TODO: FIX SIGNUP PAGE AND SIGNUP FORM
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
-    createNewUser: (api: KouponBankApi, user: User) => Promise<User>;
-    updateUserDetail: (api: KouponBankApi, id: string, userDetail: UserDetail) => Promise<void>;
-    getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
-    userDetail: UserDetail;
+    createNewUser: (api: KouponBankApi, user: User, userDetail: UserDetail) => Promise<void>;
     user: User;
     alertState: AlertState;
 }
@@ -33,22 +29,15 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
     const alert = props.alertState.alert;
-    const [userCredentials, setUserCredentials] = useState(props.user);
-    const [userDetailCredentials, setUserDetailCredentials] = useState(props.userDetail);
+    const [user, setUser] = useState(props.user);
+    const [userDetail, setUserDetail] = useState(props.user.user_detail);
     const [showAlert, setShowAlert] = useState(true);
 
     const createNewUserClick = (event: React.FormEvent): void => {
         props
-            .createNewUser(api, userCredentials)
-            .then((user) => {
-                props
-                    .updateUserDetail(api, user.id, userDetailCredentials)
-                    .then(() => {
-                        history.push(UrlPaths.HomePage);
-                    })
-                    .catch(() => {
-                        //currently does nothing
-                    });
+            .createNewUser(api, user, userDetail)
+            .then(() => {
+                history.push(UrlPaths.HomePage);
             })
             .catch(() => {
                 //currently does nothing
@@ -56,18 +45,18 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         event.preventDefault();
     };
 
-    const userCredentialsInput = (event: React.FormEvent): void => {
+    const userSignUpInput = (event: React.FormEvent): void => {
         const target = event.target as HTMLInputElement;
-        setUserCredentials({
-            ...userCredentials,
+        setUser({
+            ...user,
             [target.name]: target.value,
         });
     };
 
-    const userDetailCredentialsInput = (event: React.FormEvent): void => {
+    const userDetailSignUpInput = (event: React.FormEvent): void => {
         const target = event.target as HTMLInputElement;
-        setUserDetailCredentials({
-            ...userDetailCredentials,
+        setUserDetail({
+            ...userDetail,
             [target.name]: target.value,
         });
     };
@@ -75,9 +64,9 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
     return (
         <div>
             <SignUpForm
-                userDetailCredentialsInput={userDetailCredentialsInput}
                 createNewUserClick={createNewUserClick}
-                userCredentialsInput={userCredentialsInput}
+                userDetailSignUpInput={userDetailSignUpInput}
+                userSignUpInput={userSignUpInput}
             />
             <TopNavBar />
             <Notifications
@@ -97,22 +86,14 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
 const mapStateToProps = (state: RootReducer) => {
     return {
         user: state.userReducer.user,
-        userDetail: state.userDetailReducer.userDetail,
-        business: state.businessReducer.businesses,
         alertState: state.notificationReducer,
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        createNewUser: async (api: KouponBankApi, user: User) => {
-            return createNewUser(api, user, dispatch);
-        },
-        getBusinesses: async (api: KouponBankApi) => {
-            return getBusinesses(api, dispatch);
-        },
-        updateUserDetail: async (api: KouponBankApi, id: string, userDetail: UserDetail) => {
-            return updateUserDetail(api, id, userDetail, dispatch);
+        createNewUser: async (api: KouponBankApi, user: User, userDetail: UserDetail) => {
+            return createNewUser(api, user, userDetail, dispatch);
         },
     };
 };

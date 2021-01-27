@@ -1,5 +1,15 @@
 import axios from "axios";
-import { AddressDetail, Business, Coupon, NaverMapBound, Owner, OwnerDetail } from "./kb-types";
+
+import {
+    AddressDetail,
+    Business,
+    BusinessAddress,
+    BusinessDetail,
+    Menu,
+    NaverMapBound,
+    Owner,
+    OwnerDetail,
+} from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -25,97 +35,88 @@ export class KouponBankApi {
 
     /*LOGIN API*/
     async loginOwner(owner: Owner): Promise<Owner> {
-        return axios.post<Owner>(`${this.BASE_URL}/login/owner/`, owner).then((response) => {
+        return axios.post<Owner>(`${this.BASE_URL}/login/owners/`, owner).then((response) => {
             return response.data;
         });
     }
-
+    
     /*OWNER API*/
-    async createOwner(owner: Owner): Promise<Owner> {
-        return axios.post<Owner>(`${this.BASE_URL}/owners/`, owner).then((response) => {
-            return response.data;
-        });
-    }
-
-    async getOwner(userId: string): Promise<Owner> {
-        return axios.get<Owner>(`${this.BASE_URL}/owners/${userId}`).then((response) => {
-            return response.data;
-        });
-    }
-
-    async removeOwner(userId: string): Promise<void> {
-        return axios.delete<void>(`${this.BASE_URL}/owners/${userId}`).then((response) => {
-            return response.data;
-        });
-    }
-
-    /*Owner Detail API*/
-    async getOwnerDetail(userId: string): Promise<OwnerDetail> {
+    async createOwner(owner: Owner, ownerDetail: OwnerDetail): Promise<Owner> {
         return axios
-            .get<OwnerDetail>(`${this.BASE_URL}/owners/${userId}/detail/`)
+            .post<Owner>(`${this.BASE_URL}/owners/`, {
+                owner: owner,
+                owner_detail: ownerDetail,
+            })
             .then((response) => {
                 return response.data;
             });
     }
 
-    async updateOwnerDetail(userId: string, ownerDetail: OwnerDetail): Promise<OwnerDetail> {
+    async getOwner(ownerId: string): Promise<Owner> {
+        return axios.get<Owner>(`${this.BASE_URL}/owners/${ownerId}`).then((response) => {
+            return response.data;
+        });
+    }
+
+    async removeOwner(ownerId: string): Promise<void> {
+        return axios.delete<void>(`${this.BASE_URL}/owners/${ownerId}`).then((response) => {
+            return response.data;
+        });
+    }
+
+    /*Owner Detail API*/
+    async updateOwnerDetail(ownerId: string, ownerDetail: OwnerDetail): Promise<Owner> {
         return axios
-            .put<OwnerDetail>(`${this.BASE_URL}/owners/${userId}/detail/`, ownerDetail)
+            .put<Owner>(`${this.BASE_URL}/owners/${ownerId}/detail/`, ownerDetail)
             .then((response) => {
                 return response.data;
             });
     }
 
     /* Business API - OWNER */
-    async createBusiness(userId: string, business: Business): Promise<Business> {
+    async createBusiness(
+        ownerId: string,
+        business: Business,
+        businessDetail: BusinessDetail,
+        businessAddress: BusinessAddress,
+    ): Promise<Business> {
         return axios
-            .post<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/`, business)
+            .post<Business>(`${this.BASE_URL}/owners/${ownerId}/business/`, {
+                business: business,
+                business_detail: businessDetail,
+                address: businessAddress,
+            })
             .then((response) => {
                 return response.data;
             });
     }
 
-    async getOwnerBusiness(userId: string, businessId: string): Promise<Business> {
+    async getOwnerBusiness(ownerId: string, businessId: string): Promise<Business> {
         return axios
-            .get<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`)
+            .get<Business>(`${this.BASE_URL}/owners/${ownerId}/business/${businessId}/`)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async getOwnerBusinesses(userId: string): Promise<Business[]> {
+    async getOwnerBusinesses(ownerId: string): Promise<Business[]> {
         return axios
-            .get<Business[]>(`${this.BASE_URL}/owners/${userId}/detail/business/`)
+            .get<Business[]>(`${this.BASE_URL}/owners/${ownerId}/business/`)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async removeBusiness(userId: string, businessId: string): Promise<void> {
+    async removeBusiness(ownerId: string, businessId: string): Promise<void> {
         return axios
-            .delete<void>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`)
+            .delete<void>(`${this.BASE_URL}/owners/${ownerId}/business/${businessId}/`)
             .then((response) => {
                 return response.data;
             });
     }
-
-    // async updateBusiness(
-    //     userId: string,
-    //     businessId: string,
-    //     business: Business,
-    // ): Promise<Business> {
-    //     return axios
-    //         .put<Business>(
-    //             `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`,
-    //             business,
-    //         )
-    //         .then((response) => {
-    //             return response.data;
-    //         });
-    // }
 
     async updateBusiness(
-        userId: string,
+        ownerId: string,
         businessId: string,
         business: Business,
     ): Promise<Business> {
@@ -124,10 +125,10 @@ export class KouponBankApi {
             const value = business[key];
             form_data.append(key, value);
         }
-        if (business.business_picture === null) {
+        if (business.business_detail.business_picture === null) {
             return axios
             .put<Business>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`,
+                `${this.BASE_URL}/owners/${ownerId}/business/${businessId}/`,
                 business,
             )
             .then((response) => {
@@ -135,7 +136,7 @@ export class KouponBankApi {
             });
         } else {
             return axios
-                .put<Business>(`${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/`, form_data, {
+                .put<Business>(`${this.BASE_URL}/owners/${ownerId}/business/${businessId}/`, form_data, {
                     headers: {
                         "content-type": "multipart/form-data",
                     },
@@ -146,8 +147,45 @@ export class KouponBankApi {
         }
     }
 
+    /** 
+      * Menu
+      */
+    async createMenu(businessId: string): Promise<Menu> {
+        return axios
+            .post<Menu>(`${this.BASE_URL}/owners/detail/business/${businessId}/menu`)
+            .then((response) => {
+                return response.data;
+            });
+    }
 
-    /* Business API - Everyone */
+    async getMenus(businessId: string): Promise<Menu> {
+        return axios
+            .get<Menu>(`${this.BASE_URL}/owners/detail/business/${businessId}/menu`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async getMenu(businessId: string, menuId: string): Promise<Menu> {
+        return axios
+            .get<Menu>(`${this.BASE_URL}/owners/detail/business/${businessId}/menu/${menuId}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async removeMenu(businessId: string, menuId: string): Promise<void> {
+        return axios
+            .delete<void>(`${this.BASE_URL}/owners/detail/business/${businessId}/menu/${menuId}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    /** 
+     * Business
+     */
+
     async getBusiness(businessId: string): Promise<Business> {
         return axios.get<Business>(`${this.BASE_URL}/business/${businessId}`).then((response) => {
             return response.data;
@@ -188,7 +226,7 @@ export class KouponBankApi {
     /* Business API used for Naver Map API */
     async getAllBusinessWithinNaverMapBounds(naverMapBound: NaverMapBound): Promise<Business[]> {
         return axios
-            .get<Business[]>(`${this.BASE_URL}/map/`, {
+            .get<Business[]>(`${this.BASE_URL}/business_map/`, {
                 params: {
                     maxLat: naverMapBound.maxLat,
                     minLat: naverMapBound.minLat,
@@ -231,59 +269,6 @@ export class KouponBankApi {
             )
             .then((response) => {
                 return response.data.results.juso[0];
-            });
-    }
-
-    /* Coupon API */
-    async getCoupon(userId: string, businessId: string, couponId: string): Promise<Coupon> {
-        return axios
-            .get<Coupon>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
-            )
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    async removeCoupon(userId: string, businessId: string, couponId: string): Promise<void> {
-        return axios
-            .delete<void>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
-            )
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    async createCoupon(userId: string, businessId: string, coupon: Coupon): Promise<Coupon> {
-        return axios
-            .post<Coupon>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/`,
-                {
-                    coupon_title: coupon.coupon_title,
-                    description: coupon.description,
-                    coupon_code: coupon.coupon_code,
-                    coupon_picture: null,
-                },
-            )
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    async updateCoupon(
-        userId: string,
-        businessId: string,
-        couponId: string,
-        coupon: Coupon,
-    ): Promise<Coupon> {
-        return axios
-            .put<Coupon>(
-                `${this.BASE_URL}/owners/${userId}/detail/business/${businessId}/coupon/${couponId}/`,
-                coupon,
-            )
-            .then((response) => {
-                return response.data;
             });
     }
 }

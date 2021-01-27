@@ -10,9 +10,9 @@ import { User } from "../../api/kb-types";
  * Represents the required properties of the log in form.
  */
 export interface Prop {
-    userCredentials: User;
-    userCredentialsInput: (event) => void;
-    signUpClick?: (event) => void;
+    user: User;
+    userLoginInput: (event) => void;
+    directToSignUpPageClick?: (event) => void;
     loginUserClick: (event) => void;
 }
 
@@ -22,12 +22,12 @@ export const LoginForm = (props: Prop): JSX.Element => {
         event.preventDefault();
     };
 
-    const signUpClick = (event: React.MouseEvent<HTMLElement>): void => {
-        props.signUpClick(event);
+    const directToSignUpPageClick = (event: React.MouseEvent<HTMLElement>): void => {
+        props.directToSignUpPageClick(event);
     };
 
-    const userCredentialsInput = (event: React.FormEvent): void => {
-        props.userCredentialsInput(event);
+    const userLoginInput = (event: React.FormEvent): void => {
+        props.userLoginInput(event);
     };
 
     return (
@@ -44,8 +44,8 @@ export const LoginForm = (props: Prop): JSX.Element => {
                             label="Username"
                             autoComplete="off"
                             type="text"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.username}
+                            onChange={userLoginInput}
+                            value={props.user.username}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -58,8 +58,8 @@ export const LoginForm = (props: Prop): JSX.Element => {
                             label="Email"
                             autoComplete="off"
                             type="text"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.email}
+                            onChange={userLoginInput}
+                            value={props.user.email}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -72,8 +72,8 @@ export const LoginForm = (props: Prop): JSX.Element => {
                             label="Password"
                             autoComplete="off"
                             type="text"
-                            onChange={userCredentialsInput}
-                            value={props.userCredentials.password}
+                            onChange={userLoginInput}
+                            value={props.user.password}
                         />
                     </Grid>
                 </Grid>
@@ -93,7 +93,7 @@ export const LoginForm = (props: Prop): JSX.Element => {
                 variant="contained"
                 color="primary"
                 className="sign-up-button"
-                onClick={signUpClick}
+                onClick={directToSignUpPageClick}
             >
                 Sign up
             </Button>

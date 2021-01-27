@@ -2,13 +2,11 @@
 from django.http import Http404
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from kouponbank.database.owner import Owner, OwnerSerializer
+from kouponbank.database.owner_detail import OwnerDetailSerializer
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from kouponbank.database.owner import Owner, OwnerSerializer
-from kouponbank.database.owner_detail import OwnerDetail, OwnerDetailSerializer
 
 
 class OwnerListAPI(APIView):
@@ -48,11 +46,23 @@ class OwnerListAPI(APIView):
         ]
     )
     def post(self, request):
-        serializer = OwnerSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        owner_serializer = OwnerSerializer(data=request.data["owner"])
+        owner_detail_serializer = OwnerDetailSerializer(data=request.data["owner_detail"])
+        if owner_serializer.is_valid() and owner_detail_serializer.is_valid():
+            owner_serializer.save()
+            owner = self.__get_owner(owner_serializer.data["id"])
+            owner_detail_serializer.save(
+                id=owner.id,
+                owner=owner,
+            )
+            return_serializer = OwnerSerializer(owner)
+            return Response(return_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(owner_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def __get_owner(self, owner_id):
+        try:
+            return Owner.objects.get(pk=owner_id)
+        except Owner.DoesNotExist:
+            raise Http404("Owner not found")
 
 class OwnerAPI(APIView):
     @swagger_auto_schema(

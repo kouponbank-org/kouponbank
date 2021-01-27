@@ -17,14 +17,20 @@ export interface BusinessState {
 
 export const initialState: BusinessState = {
     business: {
+        business_address: {
+            roadAddr: "",
+            jibunAddr: "",
+            zipNo: "",
+            entX: "",
+            entY: "",
+        },
+        business_detail: {
+            business_email: "",
+            business_wifi: false,
+        },
         business_name: "",
-        business_email: "",
-        description: "",
-        roadAddr: "",
-        jibunAddr: "",
-        zipNo: "",
-        entX: "",
-        entY: "",
+        business_number: "",
+        business_description: "",
     },
     businesses: [],
     searchedBusinesses: [],
@@ -58,19 +64,6 @@ interface GetBusinessListFailAction {
     type: BusinessActionType.GetBusinessListFail;
 }
 
-interface SetBusinessAction {
-    type: BusinessActionType.SetBusiness;
-}
-
-interface SetBusinessSuccessAction {
-    type: BusinessActionType.SetBusinessSuccess;
-    business: Business;
-}
-
-interface SetBusinessFailAction {
-    type: BusinessActionType.SetBusinessFail;
-}
-
 interface GetBusinessFromSearchAction {
     type: BusinessActionType.GetBusinessesFromSearch;
 }
@@ -91,9 +84,6 @@ export type Action =
     | GetBusinessListAction
     | GetBusinessListSuccessAction
     | GetBusinessListFailAction
-    | SetBusinessAction
-    | SetBusinessSuccessAction
-    | SetBusinessFailAction
     | GetBusinessFromSearchAction
     | GetBusinessFromSearchActionSuccess
     | GetBusinessFromSearchActionFail;
@@ -123,19 +113,6 @@ export const reducer = (state: BusinessState = initialState, action: Action): Bu
                 draftState.businesses = action.businesses;
             });
         case BusinessActionType.GetBusinessListFail:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Failed;
-            });
-        case BusinessActionType.SetBusiness:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Running;
-            });
-        case BusinessActionType.SetBusinessSuccess:
-            return produce(state, (draftState) => {
-                draftState.updateStatus = Status.Succeeded;
-                draftState.business = action.business;
-            });
-        case BusinessActionType.SetBusinessFail:
             return produce(state, (draftState) => {
                 draftState.updateStatus = Status.Failed;
             });

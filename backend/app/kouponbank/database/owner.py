@@ -13,28 +13,15 @@ class Owner(models.Model):
     email = models.EmailField(max_length=254, unique=True)
 
 class OwnerSerializer(serializers.ModelSerializer):
-    #owner_detail = OwnerDetailSerializer(source="owner_details", read_only=True)
+    owner_detail = OwnerDetailSerializer(read_only=True)
     #To include owner_detail in the db and api list, add 'owner_detail' to fields
     class Meta:
         model = Owner
         fields = (
             "id",
+            "owner_detail",
             "username",
             "password",
             "email",
         )
-
-    def create(self, validated_data):
-        owner = Owner.objects.create(**validated_data)
-        OwnerDetail.objects.create(
-            id=owner.id,
-            owner=owner,
-            name="",
-            gender="",
-            birthday="",
-            address="",
-            cell_number="",
-        )
-
-        return owner
 

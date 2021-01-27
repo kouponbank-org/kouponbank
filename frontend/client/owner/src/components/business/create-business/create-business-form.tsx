@@ -1,16 +1,22 @@
-import { Button, Dialog, TextField } from "@material-ui/core";
-import React, { useState } from "react";
-import { AddressDetail, Business } from "../../../api/kb-types";
-import { AddressInput } from "../../address/address";
 import "./create-business.scss";
+
+import React, { useState } from "react";
+
+import { Button, Dialog, TextField } from "@material-ui/core";
+
+import { AddressDetail, Business, BusinessAddress, BusinessDetail } from "../../../api/kb-types";
+import { AddressInput } from "../../address/address";
 
 /**
  * Represents the required properties of the log in form.
  */
 export interface Prop {
     business: Business;
-    businessInformationInput: (event) => void;
-    setBusinessAddress: (address: AddressDetail, addressCoord: AddressDetail) => void;
+    businessDetail: BusinessDetail;
+    businessAddress: BusinessAddress;
+    businessCreateInput: (event) => void;
+    businessDetailCreateInput: (event) => void;
+    handleSelectAddressClick: (address: AddressDetail, addressCoord: AddressDetail) => void;
     createBusinessClick: (event) => void;
 }
 
@@ -18,19 +24,8 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
     const [open, setOpen] = useState(false);
 
     const handleSelectAddressClick = (address: AddressDetail, addressCoord: AddressDetail) => {
-        props.setBusinessAddress(address, addressCoord);
+        props.handleSelectAddressClick(address, addressCoord);
         setOpen(false);
-    };
-
-    // 사업장 정보 (이름, 이메일)
-    const businessInformationInput = (event): void => {
-        props.businessInformationInput(event);
-    };
-
-    // 사업장 가입하기 클립
-    const createBusinessClick = (event: React.FormEvent<HTMLFormElement>): void => {
-        props.createBusinessClick(event);
-        event.preventDefault();
     };
 
     return (
@@ -46,7 +41,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         label="Business Name"
                         autoComplete="off"
                         type="text"
-                        onChange={businessInformationInput}
+                        onChange={props.businessCreateInput}
                         value={props.business.business_name}
                     />
                 </div>
@@ -60,8 +55,22 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         label="Business Email"
                         autoComplete="off"
                         type="text"
-                        onChange={businessInformationInput}
-                        value={props.business.business_email}
+                        onChange={props.businessDetailCreateInput}
+                        value={props.businessDetail.business_email}
+                    />
+                </div>
+                <div className="business-number">
+                    <TextField
+                        variant="outlined"
+                        fullWidth
+                        required
+                        name="business_number"
+                        id="business_number"
+                        label="Business Number"
+                        autoComplete="off"
+                        type="text"
+                        onChange={props.businessCreateInput}
+                        value={props.business.business_number}
                     />
                 </div>
                 <div className="business-description">
@@ -69,13 +78,13 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         variant="outlined"
                         fullWidth
                         required
-                        name="description"
-                        id="description"
+                        name="business_description"
+                        id="business_description"
                         label="Business Description"
                         autoComplete="off"
                         type="text"
-                        onChange={businessInformationInput}
-                        value={props.business.description}
+                        onChange={props.businessCreateInput}
+                        value={props.business.business_description}
                     />
                 </div>
                 <div className="search-address-modal">
@@ -99,7 +108,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         label="Road Address"
                         autoComplete="off"
                         type="text"
-                        value={props.business.roadAddr || ""}
+                        value={props.businessAddress.roadAddr || ""}
                     />
                 </div>
                 <div className="jibun-address">
@@ -114,7 +123,7 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         label="Jibun Address"
                         autoComplete="off"
                         type="text"
-                        value={props.business.jibunAddr || ""}
+                        value={props.businessAddress.jibunAddr || ""}
                     />
                 </div>
                 <div className="zipcode">
@@ -129,10 +138,10 @@ export const CreateBusinessForm = (props: Prop): JSX.Element => {
                         label="Zipcode"
                         autoComplete="off"
                         type="text"
-                        value={props.business.zipNo || ""}
+                        value={props.businessAddress.zipNo || ""}
                     />
                 </div>
-                <form onSubmit={createBusinessClick} autoComplete="off">
+                <form onSubmit={props.createBusinessClick} autoComplete="off">
                     <div className="create-business-button">
                         <Button
                             type="submit"

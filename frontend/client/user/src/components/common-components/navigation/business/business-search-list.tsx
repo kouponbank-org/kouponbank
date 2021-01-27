@@ -22,9 +22,9 @@ export const SearchedBusinessList: React.FC<Prop> = (props: Prop) => {
     return (
         <div className="search-business">
             <TableRow className="search-business table">
-                <TableCell>{props.business.business_picture}</TableCell>
+                <TableCell>{props.business.business_detail.business_picture}</TableCell>
                 <TableCell>{props.business.business_name}</TableCell>
-                <TableCell>{props.business.roadAddr}</TableCell>
+                <TableCell>{props.business.business_address.roadAddr}</TableCell>
                 <TableCell>
                     <Button
                         type="submit"

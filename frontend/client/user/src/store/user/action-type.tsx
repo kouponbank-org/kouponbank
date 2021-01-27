@@ -7,11 +7,7 @@ export enum UserActionType {
     LoginUserAction = "LOGIN_USER_ACTION",
     LoginUserSucessAction = "LOGIN_USER_SUCCESS_ACTION",
     LoginUserFailAction = "LOGIN_USER_FAIL_ACTION",
-    SignOutAction = "SIGN_OUT",
     UpdateUserDetailAction = "UPDATE_USER_DETAIL_ACTION",
     UpdateUserDetailSuccessAction = "UPDATE_USER_DETAIL_SUCCESS_ACTION",
     UpdateUserDetailFailAction = "UPDATE_USER_DETAIL_FAIL_ACTION",
-    GetUserDetailAction = "Get_USER_DETAIL_ACTION",
-    GetUserDetailSuccessAction = "GET_USER_DETAIL_SUCCESS_ACTION",
-    GetUserDetailFailAction = "GET_USER_DETAIL_FAIL_ACTION",
 }
