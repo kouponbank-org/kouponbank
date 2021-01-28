@@ -6,6 +6,7 @@ from rest_framework import serializers
 from kouponbank.database.business import Business
 from kouponbank.database.table import Table
 from kouponbank.database.user import User
+from kouponbank.endpoints.table_booking import TableBooking
 
 class Reservation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -26,6 +27,7 @@ class Reservation(models.Model):
     )
     start_time = models.TimeField()
     end_time = models.TimeField()
+    date = models.DateField()
 
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,4 +36,12 @@ class ReservationSerializer(serializers.ModelSerializer):
             "id",
             "start_time",
             "end_time",
+            "date"
         )
+
+    #FOR: reservation validation
+    #Comepare input timeslots to check if start_time is before end_time
+    def validate(self, attrs):
+        if attrs['start_time'] >= attrs['end_time']:
+            raise serializers.ValidationError("end_time should be greater than start_time")
+        return attrs

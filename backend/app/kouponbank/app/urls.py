@@ -27,6 +27,8 @@ from kouponbank.endpoints.reservation_api import (
     BusinessTableReservationAPI, BusinessTableReservationListAPI)
 from kouponbank.endpoints.table_api import (BusinessTableAPI,
                                             BusinessTableListAPI, TableListAPI)
+from kouponbank.endpoints.timeslot_api import TableTimeslotListAPI, TableTimeslotAPI, TimeslotListAPI
+from kouponbank.endpoints.table_booking import TableBooking
 from kouponbank.endpoints.user.user_api import UserAPI, UserListAPI
 from kouponbank.endpoints.user.user_business_api import UserBusinessListAPI
 from kouponbank.endpoints.user.user_detail_api import UserDetailAPI
@@ -75,6 +77,9 @@ urlpatterns = [
    path('owners/<uuid:owner_id>/business/<uuid:business_id>/table/<uuid:table_id>/reservation/<uuid:reservation_id>/', BusinessTableReservationAPI.as_view(), name="individual-reservation-in-table-business"),
    path('owners/<uuid:owner_id>/business/<uuid:business_id>/table/<uuid:table_id>/reservation/<uuid:reservation_id>/order/', ReservationOrderAPI.as_view(), name="reservation-order"),
    path('owners/<uuid:owner_id>/business/<uuid:business_id>/table/<uuid:table_id>/reservation/<uuid:reservation_id>/order/menus/', OrderMenuListAPI.as_view(), name="menus-ordered"),
+   path('owners/<uuid:owner_id>/business/<uuid:business_id>/table/<uuid:table_id>/timeslot/', TableTimeslotListAPI.as_view(), name="timeslot-list"),
+   path('owners/<uuid:owner_id>/business/<uuid:business_id>/table/<uuid:table_id>/timeslot/<uuid:timeslot_id>', TableTimeslotAPI.as_view(), name="timeslot"),
+   path('owners/book', TimeslotListAPI.as_view(), name="book"),
    path('business/', BusinessListAPI.as_view(), name="list-of-all-businesses"),
    path('unverified_business/', UnverifiedBusinessListAPI.as_view(), name="list-of-all-unverified-businesses"),
    path('business/<uuid:business_id>/', BusinessAPI.as_view(), name="individual-business"),
@@ -84,6 +89,5 @@ urlpatterns = [
    path('business/<uuid:business_id>/table/', TableListAPI.as_view(), name="tables-of-business"),
    path('business_map/', BusinessMapListAPI.as_view(), name="list-of-business-within-map-bounds"),
 ]
-
 # For Photos
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

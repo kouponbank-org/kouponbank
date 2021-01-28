@@ -4,8 +4,9 @@ import uuid
 from django.db import models
 from kouponbank.database.business import Business
 from rest_framework import serializers
+import datetime
+from kouponbank.database.business import Business
 from kouponbank.database.timeslot import Timeslot
-
 
 class Table(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
