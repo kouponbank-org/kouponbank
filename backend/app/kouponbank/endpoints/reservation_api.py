@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from kouponbank.database.timeslot import Timeslot, TimeslotSerializer
 from kouponbank.endpoints.timeslot_api import TableTimeslotListAPI, TableTimeslotAPI
-from kouponbank.endpoints.table_booking_api import TableBookingAPI
+from kouponbank.endpoints.table_booking import TableBooking
 
 ## List of all reservations for a table in a business owned by an owner (Get, Post)
 class BusinessTableReservationListAPI(APIView):
@@ -59,50 +59,43 @@ class BusinessTableReservationListAPI(APIView):
         ]
     )
 
+    # FOR -> Update the timeslot that already exists for reservation date of the table
+    # IF -> Return true
+    # ELSE -> Return the next_available_time_in_hours (dtype=string)
+    # 1. get the reservation, order and menu data
+    # 2. check if #1 information are valid
+    # 2-1. If -> 3, ELSE -> return Response BAD REQUEST
+    # 3. get table data
+    # 4. translate reservation data to timeslot(dtype=str)
+    # 5. Filter the timeslots to get only those matching with reservation date
+    # 6. Define timeslot_serializer under condition if the timeslot for given date and table already exists or not
+    # 6-1. IF -> timeslot serializer is processed and updated with TableBooking.time_exists function, 
+    # 6-2. ELSE -> create new timesloe serializer from the reservation data
+    # 7. check if #6 information (timeslot serializer) is valid
+    # 7-1. If -> 8, ELSE -> return Response BAD REQUEST
+    # 8. save serializer and so on
     def post(self, request, owner_id, business_id, table_id):
         #TODO: Optimize better, make it cleaner.
         # Current post requests creates reservation, order, and puts menus connected to order.
-        table = self.__get_table(table_id)
-        business = self.__get_business(business_id)
-        user = self.__get_user(request.data["user_id"])
-
-        #define reservation_input to convert reservation to timeslot as well
-        reservation_input = request.data["reservation"]
-        reservation_serializer = ReservationSerializer(data=reservation_input)
+        reservation_data = request.data["reservation"]
+        reservation_serializer = ReservationSerializer(data=reservation_data)
         order_serializer = OrderSerializer(data=request.data["order"])
         menus = request.data["menu"]
-
-        #FOR: Check all inputs are valid
-        #Check with serializers if they are valid (for reservation and order models)
+        #2
         if reservation_serializer.is_valid() and order_serializer.is_valid():
-            #For: Reservation translate to timeslot
-            #Converts reservation input to timeslot in a string format
-            reservation_to_timeslot = TableBookingAPI.time_slot_to_str(TableBookingAPI, reservation_input['start_time'], reservation_input['end_time'])
-            
-            #Filter the timeslots with those match with reservation date
-            times_date_filtered_set = table.table_timeslot.filter(date=reservation_input['date'])
-            
-            #For: Define timeslot_serializer under condition if the timeslot for given date and table exists or not
-            #If it exists, then call TableBookingAPI.time_exists function
-            #Else, define timeslot that was translated from reservation input
+            table = self.__get_table(table_id)
+            reservation_to_timeslot = TableBooking.time_slot_to_str(TableBooking, reservation_data['start_time'], reservation_data['end_time'])
+            times_date_filtered_set = table.table_timeslot.filter(date=reservation_data['date'])
+            #6
             if len(times_date_filtered_set) != 0:
-                temp = TableBookingAPI.time_exists(TableBookingAPI, request, owner_id, business_id, table_id, times_date_filtered_set, reservation_input)
-                #For: function TableBookingAPI.time_exists checks if timeslot is available or not. 
-                #If available, return the timeserializer that calls PUT request on the existing timeslot for the input date and table
-                #Else, return the response BAD REQUEST 400 bc timeslot is full
-                if isinstance(temp, TimeslotSerializer):
-                    timeslot_serializer = temp
-                else:
-                    return temp
+                timeslot_serializer = TableBooking.time_exists(TableBooking, request, owner_id, business_id, table_id, times_date_filtered_set, reservation_data)
             else:
-                timeslot = {'times': reservation_to_timeslot, 'date': reservation_input['date']}
+                timeslot = {'times': reservation_to_timeslot, 'date': reservation_data['date']}
                 timeslot_serializer = TimeslotSerializer(data=timeslot)
-
-            #For: check if timeslot_serializer is valid 
-            #After defining timeslot_serializer, check if it is valid
-            #If valid, save the serializer and return response successs
-            #Else, return bad request
-            if timeslot_serializer.is_valid():   
+            #7
+            if timeslot_serializer.is_valid():
+                business = self.__get_business(business_id)
+                user = self.__get_user(request.data["user_id"])   
                 timeslot_serializer.save(table=table)
                 reservation_serializer.save(
                     table=table,
@@ -226,7 +219,7 @@ class BusinessTableReservationAPI(APIView):
         if reservation is None:
             raise Http404("Reservation cannot be found")
         times_date_filtered_set = table.table_timeslot.filter(date=reservation.date)
-        processed_time = TableBookingAPI.time_process(reservation.start_time.strftime("%H:%M"), reservation.end_time.strftime("%H:%M"))
+        processed_time = TableBooking.time_process(reservation.start_time.strftime("%H:%M"), reservation.end_time.strftime("%H:%M"))
         reservation.delete()
         #Updating the timeslot with deletion
         TableTimeslotAPI.put(TableTimeslotAPI, request, owner_id, business_id, table_id, times_date_filtered_set[0].id, processed_time, False)

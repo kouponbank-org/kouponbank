@@ -28,7 +28,7 @@ from kouponbank.endpoints.reservation_api import (
 from kouponbank.endpoints.table_api import (BusinessTableAPI,
                                             BusinessTableListAPI, TableListAPI)
 from kouponbank.endpoints.timeslot_api import TableTimeslotListAPI, TableTimeslotAPI, TimeslotListAPI
-from kouponbank.endpoints.table_booking_api import TableBookingAPI
+from kouponbank.endpoints.table_booking import TableBooking
 from kouponbank.endpoints.user.user_api import UserAPI, UserListAPI
 from kouponbank.endpoints.user.user_business_api import UserBusinessListAPI
 from kouponbank.endpoints.user.user_detail_api import UserDetailAPI

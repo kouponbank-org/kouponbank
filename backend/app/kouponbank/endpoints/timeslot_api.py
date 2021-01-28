@@ -46,12 +46,6 @@ class TableTimeslotListAPI(APIView):
         ]
     )
 
-    #get timeslot.date,
-    #if false, post a new one in this format "000000000000000000000000000000000000000000000000"
-    #if true, then check if the timeslot is already existing for the input slots
-        #if true, put the str 
-        #if false, return error
-
     def post(self, request, owner_id, business_id, table_id):
         table = self.__get_table(self, table_id)
         serializer = TimeslotSerializer(data=request.data)
@@ -96,6 +90,9 @@ class TableTimeslotAPI(APIView):
             )
         ]
     )
+    # FOR -> Put Request of Timeslot according to POST or DELETE Request from Reservation (update with replacement of 0s -> 1s for POST, 1s -> 0s for DELETE)
+    # IF -> Return TimeslotSerializer 
+    # ELSE -> Return Response BAD REQUEST
     def put(self, request, owner_id, business_id, table_id, timeslot_id, processed_time, create_or_delete):
         timeslot_original = self.__get_times(self, timeslot_id)
         times = timeslot_original.times
@@ -104,9 +101,7 @@ class TableTimeslotAPI(APIView):
         timeslot_updated = {'times': times, 'date': timeslot_original.date}
         serializer = TimeslotSerializer(timeslot_original, data=timeslot_updated)
         if serializer.is_valid():
-            serializer.save()
             return serializer
-            #return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(

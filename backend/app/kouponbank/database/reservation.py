@@ -6,7 +6,7 @@ from rest_framework import serializers
 from kouponbank.database.business import Business
 from kouponbank.database.table import Table
 from kouponbank.database.user import User
-from kouponbank.endpoints.table_booking_api import TableBookingAPI
+from kouponbank.endpoints.table_booking import TableBooking
 
 class Reservation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
