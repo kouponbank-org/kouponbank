@@ -15,6 +15,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from kouponbank.database.table import Table
+from kouponbank.database.timeslot import Timeslot
+from kouponbank.endpoints.table_booking import TableBooking
+
 
 ## List of all businesses owned by an owner (Get, Post)
 class OwnerBusinessListAPI(APIView):
@@ -209,5 +213,33 @@ class UnverifiedBusinessListAPI(APIView):
             Q(business_verification__verified_owner=False) |
             Q(business_verification__verified_email=False)
         )
+        serializer = BusinessSerializer(business, many=True)
+        return Response(serializer.data)
+
+class FilterSearchBusinessListAPI(APIView):
+    @swagger_auto_schema(
+        responses={200: BusinessSerializer(many=True)},
+    )
+    def get(self, request):
+        #add sggNm: "용인시 수지구"
+        #siNm: "경기도" to model?
+        tables = Table.objects.all()
+        for table in tables:
+            times_date_filtered_set = table.table_timeslot.filter(date=request.query_params['date'])
+            time_validate=TableBooking.time_validate(TableBooking, times_date_filtered_set[0].times, request.query_params['start_time'], request.query_params['end_time'])
+            print(time_validate)
+            if time_validate != True:
+                tables=Table.objects.exclude(id=table.id)
+            #else return next available timeslot?
+        print(tables)
+        business = Business.objects.filter(
+            Q(business_verification__verified_business=False) &
+            Q(business_verification__verified_owner=False) &
+            Q(business_verification__verified_email=False) &
+            Q(business_table__table_capacity=request.query_params["guest"]) &
+            Q(business_address__emdNm=request.query_params["emdNm"]) &
+            Q(business_table__in=tables)
+        )
+        print(business)
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)

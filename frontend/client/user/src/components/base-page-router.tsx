@@ -1,15 +1,15 @@
-import React, { useLayoutEffect, useState } from "react";
-import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import React, { useLayoutEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 
-import { KouponBankApi } from "../api/kb-api";
-import { BusinessPageR } from "./business/business-page";
-import { DiscoverPageR } from "./discover-page/discover-page";
-import { HomePageR } from "./homepage/homepage";
-import { InfoPage } from "./info/information-page";
-import { LoginPageR } from "./login/login-page";
-import { UserProfilePageR } from "./profile/profile-page";
-import { SignUpPageR } from "./signup/sign-up-page";
+import { KouponBankApi } from '../api/kb-api';
+import { BusinessPageR } from './business/business-page';
+import { DiscoverPageR } from './discover-page/discover-page';
+import { HomePageR } from './homepage/homepage';
+import { InfoPage } from './info/information-page';
+import { LoginPageR } from './login/login-page';
+import { UserProfilePageR } from './profile/profile-page';
+import { SignUpPageR } from './signup/sign-up-page';
 
 export const ApiContext = React.createContext(null);
 

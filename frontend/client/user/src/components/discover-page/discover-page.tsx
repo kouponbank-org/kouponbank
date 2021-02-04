@@ -1,22 +1,22 @@
-import "./discover-page.scss";
+import './discover-page.scss';
 
-import React, { useContext, useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { Dispatch } from "redux";
+import React, { useContext, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
-import { KouponBankApi } from "../../api/kb-api";
-import { Business, NaverMapBound } from "../../api/kb-types";
-import { getBusiness } from "../../store/business/business-reducer";
-import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-map-reducer";
-import { RootReducer } from "../../store/reducer";
-import { ApiContext } from "../base-page-router";
-import { CopyRight } from "../common-components/copyright/copyright";
-import { KouponBankSideTabBarR } from "../common-components/navigation/navigation-side-tab-bar";
-import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
-import { Pagination } from "../common-components/pagination/pagination";
-import { DiscoverBusinessList } from "./discover-list-business";
-import { MapR } from "./naver-map/map";
+import { KouponBankApi } from '../../api/kb-api';
+import { Business, NaverMapBound } from '../../api/kb-types';
+import { getBusiness } from '../../store/business/business-reducer';
+import { getAllBusinessWithinNaverMapBounds } from '../../store/naver-map/naver-map-reducer';
+import { RootReducer } from '../../store/reducer';
+import { ApiContext } from '../base-page-router';
+import { CopyRight } from '../common-components/copyright/copyright';
+import { KouponBankSideTabBarR } from '../common-components/navigation/navigation-side-tab-bar';
+import { TopNavBar } from '../common-components/navigation/navigation-top-bar';
+import { Pagination } from '../common-components/pagination/pagination';
+import { DiscoverBusinessList } from './discover-list-business';
+import { MapR } from './naver-map/map';
 
 /**
  * Represents the required properties of the HomePage.
@@ -25,6 +25,7 @@ export interface Prop {
     business: Business;
     businesses: Business[];
     naverMapBound: NaverMapBound;
+    searchedBusiness: Business[];
     getAllBusinessWithinNaverMapBounds: (
         api: KouponBankApi,
         naverMapBound: NaverMapBound,
@@ -84,6 +85,10 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
         setCurrentPage(pageIndex);
     };
 
+    //TODO: For now, I set it to be conditional 
+    // the map searching feature of discover page and searching from the homepage.
+    // it should be combined together. 
+
     return (
         <div id="kb-discover-page">
             <KouponBankSideTabBarR />
@@ -95,7 +100,30 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
                             <div id="left-main-content-container">
                                 <div id="business-list-main-container">
                                     <div id="business-list-container">
-                                        {currentPageBusinesses.map((business) => {
+                                        {
+                                            props.searchedBusiness.length != 0 ? (
+                                                props.searchedBusiness.map((business) => {
+                                                    return (
+                                                        <DiscoverBusinessList
+                                                            key={business.id}
+                                                            business={business}
+                                                            directToBusinessPage={directToBusinessPage}
+                                                        />
+                                                    );
+                                                })
+                                            ):(
+                                                currentPageBusinesses.map((business) => {
+                                                    return (
+                                                        <DiscoverBusinessList
+                                                            key={business.id}
+                                                            business={business}
+                                                            directToBusinessPage={directToBusinessPage}
+                                                        />
+                                                    );
+                                                })
+                                            )
+                                        }
+                                        {/* {props.searchedBusiness.map((business) => {
                                             return (
                                                 <DiscoverBusinessList
                                                     key={business.id}
@@ -103,7 +131,16 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
                                                     directToBusinessPage={directToBusinessPage}
                                                 />
                                             );
-                                        })}
+                                        })} */}
+                                        {/* {currentPageBusinesses.map((business) => {
+                                            return (
+                                                <DiscoverBusinessList
+                                                    key={business.id}
+                                                    business={business}
+                                                    directToBusinessPage={directToBusinessPage}
+                                                />
+                                            );
+                                        })} */}
                                     </div>
                                 </div>
                                 <div id="page-list-container">
@@ -140,6 +177,7 @@ const mapStateToProps = (state: RootReducer) => {
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,
         naverMapBound: state.naverMapReducer.naverMapBound,
+        searchedBusiness: state.businessReducer.searchedBusinesses,
     };
 };
 

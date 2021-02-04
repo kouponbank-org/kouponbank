@@ -178,3 +178,11 @@ export interface AddressDetail {
     entX?: string;
     entY?: string;
 }
+
+export interface BusinessFilterDetail {
+    date: string;
+    start_time: string;
+    end_time: string;
+    guest: number;
+    emdNm: string;
+}

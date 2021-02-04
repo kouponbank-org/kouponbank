@@ -1,6 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { AddressDetail, Business, NaverMapBound, User, UserDetail } from "./kb-types";
+import {
+    AddressDetail, Business, BusinessFilterDetail, NaverMapBound, User, UserDetail
+} from './kb-types';
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -96,14 +98,20 @@ export class KouponBankApi {
         });
     }
 
-    async getBusinessesFromSearch(char: string): Promise<Business[]> {
+    async getBusinessesFromSearch(businessFilterDetail: BusinessFilterDetail): Promise<Business[]> {
+        console.log(businessFilterDetail)
         return axios
-            .get<Business[]>(`${this.BASE_URL}/search/`, {
+            .get<Business[]>(`${this.BASE_URL}/business/search/`, {
                 params: {
-                    char: char,
+                    date: businessFilterDetail.date,
+                    start_time: businessFilterDetail.start_time,
+                    end_time: businessFilterDetail.end_time,
+                    guest: businessFilterDetail.guest,
+                    emdNm: businessFilterDetail.emdNm
                 },
             })
             .then((response) => {
+                console.log(response.data)
                 return response.data;
             });
     }

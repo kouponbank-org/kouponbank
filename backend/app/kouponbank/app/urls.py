@@ -11,7 +11,8 @@ from kouponbank.endpoints.business_api import (BusinessAPI, BusinessListAPI,
                                                BusinessMapListAPI,
                                                OwnerBusinessAPI,
                                                OwnerBusinessListAPI,
-                                               UnverifiedBusinessListAPI)
+                                               UnverifiedBusinessListAPI,
+                                               FilterSearchBusinessListAPI)
 from kouponbank.endpoints.business_detail_api import (BusinessDetailAPI,
                                                       OwnerBusinessDetailAPI)
 from kouponbank.endpoints.business_verification_api import \
@@ -81,6 +82,7 @@ urlpatterns = [
    path('owners/<uuid:owner_id>/business/<uuid:business_id>/table/<uuid:table_id>/timeslot/<uuid:timeslot_id>', TableTimeslotAPI.as_view(), name="timeslot"),
    path('owners/book', TimeslotListAPI.as_view(), name="book"),
    path('business/', BusinessListAPI.as_view(), name="list-of-all-businesses"),
+   path('business/search/', FilterSearchBusinessListAPI.as_view(), name="businesses-search"),
    path('unverified_business/', UnverifiedBusinessListAPI.as_view(), name="list-of-all-unverified-businesses"),
    path('business/<uuid:business_id>/', BusinessAPI.as_view(), name="individual-business"),
    path('business/<uuid:business_id>/detail/', BusinessDetailAPI.as_view(), name="detail-of-business"),
