@@ -1,10 +1,8 @@
-import "./login.scss";
+import './login.scss';
 
-import React from "react";
+import React from 'react';
 
-import { Button, Grid, TextField } from "@material-ui/core";
-
-import { User } from "../../api/kb-types";
+import { User } from '../../api/kb-types';
 
 /**
  * Represents the required properties of the log in form.
@@ -26,77 +24,45 @@ export const LoginForm = (props: Prop): JSX.Element => {
         props.directToSignUpPageClick(event);
     };
 
+    const directToForgotPasswordPageClick = (event: React.MouseEvent<HTMLElement>): void => {
+        console.log("direct to forgot my password")
+    };
+
     const userLoginInput = (event: React.FormEvent): void => {
         props.userLoginInput(event);
     };
 
     return (
-        <div className="layout">
-            <form className="form" onSubmit={loginUserClick} autoComplete="off">
-                <Grid container>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            fullWidth
-                            required
-                            name="username"
-                            id="username"
-                            label="Username"
-                            autoComplete="off"
-                            type="text"
-                            onChange={userLoginInput}
-                            value={props.user.username}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            fullWidth
-                            required
-                            name="email"
-                            id="email"
-                            label="Email"
-                            autoComplete="off"
-                            type="text"
-                            onChange={userLoginInput}
-                            value={props.user.email}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            fullWidth
-                            required
-                            name="password"
-                            id="password"
-                            label="Password"
-                            autoComplete="off"
-                            type="text"
-                            onChange={userLoginInput}
-                            value={props.user.password}
-                        />
-                    </Grid>
-                </Grid>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className="loginbutton"
-                >
-                    Login
-                </Button>
-            </form>
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className="sign-up-button"
-                onClick={directToSignUpPageClick}
-            >
-                Sign up
-            </Button>
+        <div id="login-page-main">
+            <main id="login-page-main-container">
+                <div id="login-page-main-column1">
+                    <div id="login-page-main-column1-text">
+                        <div id="login-page-main-column1-text-row1">
+                            로그인
+                        </div>
+                        <div id="login-page-main-column1-text-row2">
+                            Lorem ipsum dolor sit amet, 
+                            consetetur sadipscing elitr, sed diam 
+                            nonumy eirmod tempor invidunt ut 
+                            labore et dolore magna aliquyam erat, 
+                            sed diam voluptua. 
+                        </div>
+                    </div>
+                </div>
+                <div id="login-page-main-column2">
+                    <div id="login-page-main-column2-row1">
+                        <input id="login-page-main-column2-row1-textfield1" required type="email" name="email" placeholder="E-mail" onChange={userLoginInput}/>
+                        <input id="login-page-main-column2-row1-textfield2" required type="password" name="password" placeholder="password" onChange={userLoginInput}/>
+                    </div>
+                    <div id="login-page-main-column2-row2">
+                        <button id="login-page-main-column2-row2-button" onClick={loginUserClick}> 로그인 </button>
+                    </div>
+                    <div id="login-page-main-column2-row3">
+                        <button id="login-page-main-column2-row3-button1" onClick={directToSignUpPageClick}> 회원가입 </button>
+                        <button id="login-page-main-column2-row3-button2" onClick={directToForgotPasswordPageClick}> 비밀번호 찾기 </button>
+                    </div>
+                </div>
+            </main>
         </div>
     );
 };

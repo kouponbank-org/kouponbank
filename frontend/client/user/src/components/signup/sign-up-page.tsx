@@ -1,19 +1,19 @@
-import "./sign-up-page.scss";
+import './sign-up-page.scss';
 
-import React, { useContext, useState } from "react";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { Dispatch } from "redux";
+import React, { useContext, useState } from 'react';
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Dispatch } from 'redux';
 
-import { KouponBankApi } from "../../api/kb-api";
-import { User, UserDetail } from "../../api/kb-types";
-import { AlertState } from "../../store/notification/notification-reducer";
-import { RootReducer } from "../../store/reducer";
-import { createNewUser } from "../../store/user/user-reducer";
-import { ApiContext, UrlPaths } from "../base-page-router";
-import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
-import { Notifications } from "../common-components/notifications/notifications";
-import { SignUpForm } from "./sign-up-form";
+import { KouponBankApi } from '../../api/kb-api';
+import { User, UserDetail } from '../../api/kb-types';
+import { AlertState } from '../../store/notification/notification-reducer';
+import { RootReducer, signOut } from '../../store/reducer';
+import { createNewUser } from '../../store/user/user-reducer';
+import { ApiContext, UrlPaths } from '../base-page-router';
+import { TopNavBar } from '../common-components/navigation/navigation-top-bar';
+import { Notifications } from '../common-components/notifications/notifications';
+import { SignUpForm } from './sign-up-form';
 
 // TODO: FIX SIGNUP PAGE AND SIGNUP FORM
 /**
@@ -22,7 +22,9 @@ import { SignUpForm } from "./sign-up-form";
 export interface Prop {
     createNewUser: (api: KouponBankApi, user: User, userDetail: UserDetail) => Promise<void>;
     user: User;
+    userDetail: UserDetail;
     alertState: AlertState;
+    signOut?: () => void;
 }
 
 export const SignUpPage: React.FC<Prop> = (props: Prop) => {
@@ -30,8 +32,9 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
     const history = useHistory();
     const alert = props.alertState.alert;
     const [user, setUser] = useState(props.user);
-    const [userDetail, setUserDetail] = useState(props.user.user_detail);
+    const [userDetail, setUserDetail] = useState(props.userDetail);
     const [showAlert, setShowAlert] = useState(true);
+    const [passwordConfirmationInput, setPasswordConfirmationInput] = useState("");
 
     const createNewUserClick = (event: React.FormEvent): void => {
         props
@@ -45,12 +48,21 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         event.preventDefault();
     };
 
+    //TODO: need to deal with username and password confirmation
     const userSignUpInput = (event: React.FormEvent): void => {
         const target = event.target as HTMLInputElement;
         setUser({
             ...user,
             [target.name]: target.value,
+            ["username"]: "gg",
         });
+    };
+
+    const passwordConfirmation = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setPasswordConfirmationInput (event.target.value);
+        if (user.password!=passwordConfirmationInput) {
+            // console.log("return error")
+        }
     };
 
     const userDetailSignUpInput = (event: React.FormEvent): void => {
@@ -61,14 +73,21 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         });
     };
 
+    //added signout button for the convenience.
+    const signOut = () => {
+        props.signOut();
+        history.push(UrlPaths.HomePage);
+    };
+
     return (
-        <div>
+        <div id="signup-page">
+            <TopNavBar />
             <SignUpForm
                 createNewUserClick={createNewUserClick}
                 userDetailSignUpInput={userDetailSignUpInput}
                 userSignUpInput={userSignUpInput}
+                passwordConfirmation={passwordConfirmation}
             />
-            <TopNavBar />
             <Notifications
                 onClose={() => {
                     setShowAlert(false);
@@ -79,6 +98,7 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
                 alertHeader={alert.alertHeader}
                 alertBody={alert.alertBody}
             />
+            <button onClick={signOut}></button>
         </div>
     );
 };
@@ -94,6 +114,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         createNewUser: async (api: KouponBankApi, user: User, userDetail: UserDetail) => {
             return createNewUser(api, user, userDetail, dispatch);
+        },
+        signOut: () => {
+            return signOut(dispatch);
         },
     };
 };

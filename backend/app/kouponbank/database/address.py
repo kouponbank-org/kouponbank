@@ -19,6 +19,8 @@ class Address(models.Model):
     entX = models.TextField(unique=True)
     entY = models.TextField(unique=True)
     emdNm = models.TextField(unique=False)
+    sggNm = models.TextField(unique=False)
+    siNm = models.TextField(unique=False)
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,5 +32,7 @@ class AddressSerializer(serializers.ModelSerializer):
             "zipNo",
             "entX",
             "entY",
-            "emdNm"
+            "emdNm",
+            "sggNm",
+            "siNm"
         )

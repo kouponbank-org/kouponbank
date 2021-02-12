@@ -30,7 +30,7 @@ export interface User {
     id?: string;
     user_detail?: UserDetail;
     favorite_businesses?: Business[];
-    username: string;
+    username?: string;
     password: string;
     email: string;
 }
@@ -185,4 +185,6 @@ export interface BusinessFilterDetail {
     end_time: string;
     guest: number;
     emdNm: string;
+    sggNm: string;
+    siNm: string;
 }

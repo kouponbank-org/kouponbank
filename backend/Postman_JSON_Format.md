@@ -30,7 +30,7 @@ OR TO ADD A BUSINESS TO THE USER FAVORITE
 
 #### POST: http://127.0.0.1:8000/owners/
 {
-    owner: {
+    "owner": {
         "username": "test_owner_1",
         "password": "test_owner_password_1",
         "email": "test_owner_email_1@em.com"

@@ -30,3 +30,12 @@ class TableSerializer(serializers.ModelSerializer):
             "table_outlet",
             "table_near_wall",
         )
+        
+    def create(self, validated_data):
+        table = Table.objects.create(**validated_data)
+        Timeslot.objects.create(
+            table=table,
+            times="000000000000000000000000000000000000000000000000",
+            date=datetime.datetime.now()
+        )
+        return table

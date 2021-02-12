@@ -10,7 +10,7 @@ from rest_framework import serializers
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     favorite_businesses = models.ManyToManyField(Business, blank=True)
-    username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=50, unique=True, blank=True)
     password = models.CharField(max_length=50)
     email = models.EmailField(max_length=254, unique=True)
 

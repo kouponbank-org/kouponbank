@@ -34,7 +34,7 @@ export class KouponBankApi {
     }
 
     /*USER API*/
-    async createUser(user: User, userDetail): Promise<User> {
+    async createUser(user: User, userDetail: UserDetail): Promise<User> {
         return axios
             .post<User>(`${this.BASE_URL}/users/`, {
                     user: user,
@@ -99,7 +99,6 @@ export class KouponBankApi {
     }
 
     async getBusinessesFromSearch(businessFilterDetail: BusinessFilterDetail): Promise<Business[]> {
-        console.log(businessFilterDetail)
         return axios
             .get<Business[]>(`${this.BASE_URL}/business/search/`, {
                 params: {
@@ -107,11 +106,12 @@ export class KouponBankApi {
                     start_time: businessFilterDetail.start_time,
                     end_time: businessFilterDetail.end_time,
                     guest: businessFilterDetail.guest,
-                    emdNm: businessFilterDetail.emdNm
+                    siNm: businessFilterDetail.siNm,
+                    sggNm: businessFilterDetail.sggNm,
+                    emdNm: businessFilterDetail.emdNm,
                 },
             })
             .then((response) => {
-                console.log(response.data)
                 return response.data;
             });
     }

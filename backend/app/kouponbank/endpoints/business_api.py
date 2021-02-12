@@ -79,7 +79,7 @@ class OwnerBusinessListAPI(APIView):
                 id=business.id,
                 business=business,
                 entX = entX,
-                entY = entY
+                entY = entY,
             )
             business_detail_serializer.save(
                 id=business.id,
@@ -196,8 +196,8 @@ class BusinessMapListAPI(APIView):
         maxLng = request.query_params["maxLng"]
         # TODO: We need to optimize this filter query if possible.
         business = Business.objects.filter(
-            address__entX__range=(minLng, maxLng),
-            address__entY__range=(minLat, maxLat)
+            business_address__entX__range=(minLng, maxLng),
+            business_address__entY__range=(minLat, maxLat)
         )
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)
@@ -224,22 +224,25 @@ class FilterSearchBusinessListAPI(APIView):
         #add sggNm: "용인시 수지구"
         #siNm: "경기도" to model?
         tables = Table.objects.all()
+        exclude_list = []
         for table in tables:
             times_date_filtered_set = table.table_timeslot.filter(date=request.query_params['date'])
-            time_validate=TableBooking.time_validate(TableBooking, times_date_filtered_set[0].times, request.query_params['start_time'], request.query_params['end_time'])
-            print(time_validate)
-            if time_validate != True:
-                tables=Table.objects.exclude(id=table.id)
-            #else return next available timeslot?
-        print(tables)
+            if len(times_date_filtered_set) != 0:
+                time_validate=TableBooking.time_validate(TableBooking, times_date_filtered_set[0].times, request.query_params['start_time'], request.query_params['end_time'])
+                print(time_validate)
+                if time_validate != True:
+                    exclude_list.append(table.id)
+        tables=Table.objects.exclude(id__in=exclude_list)    
         business = Business.objects.filter(
-            Q(business_verification__verified_business=False) &
-            Q(business_verification__verified_owner=False) &
-            Q(business_verification__verified_email=False) &
-            Q(business_table__table_capacity=request.query_params["guest"]) &
+            # Q(business_verification__verified_business=False) &
+            # Q(business_verification__verified_owner=False) &
+            # Q(business_verification__verified_email=False) &
+            Q(business_address__siNm=request.query_params["siNm"]) &
+            Q(business_address__sggNm=request.query_params["sggNm"]) &
             Q(business_address__emdNm=request.query_params["emdNm"]) &
+            Q(business_table__table_capacity=request.query_params["guest"]) &
             Q(business_table__in=tables)
         )
-        print(business)
+        print(len(business))
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)

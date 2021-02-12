@@ -44,11 +44,13 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
     return (
         <div className="layout">
             <div className="grid-container-address">
-                <input type="date" name="date" id="homepage-row1-search-container-search-bar-input1" placeholder="date" onChange={searchBusinessInput}/>
-                <input type="time" name="start_time" id="homepage-row1-search-container-search-bar-input2" placeholder="start_time" onChange={searchBusinessInput}/>
-                <input type="time" name="end_time" id="homepage-row1-search-container-search-bar-input3" placeholder="end_time" onChange={searchBusinessInput}/>
-                <input type="number" name="guest" id="homepage-row1-search-container-search-bar-input4" placeholder="guest" onChange={searchBusinessInput}/>
-                <input type="text" name="emdNm" id="homepage-row1-search-container-search-bar-input5" placeholder="emdNm" onChange={searchBusinessInput}/>
+                <input type="date" name="date" id="search-bar-input1" placeholder="date" onChange={searchBusinessInput}/>
+                <input type="time" name="start_time" id="search-bar-input2" placeholder="start_time" onChange={searchBusinessInput}/>
+                <input type="time" name="end_time" id="search-bar-input3" placeholder="end_time" onChange={searchBusinessInput}/>
+                <input type="number" name="guest" id="search-bar-input4" placeholder="guest" onChange={searchBusinessInput}/>
+                <input type="text" name="siNm" id="search-bar-input5" placeholder="siNm" onChange={searchBusinessInput}/>
+                <input type="text" name="sggNm" id="search-bar-input6" placeholder="sggNm" onChange={searchBusinessInput}/>
+                <input type="text" name="emdNm" id="search-bar-input7" placeholder="emdNm" onChange={searchBusinessInput}/>
                 <button onClick={filterSearchClick}> 검색하기 </button>
             </div>
         </div>
