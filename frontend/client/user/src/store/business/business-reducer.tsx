@@ -1,11 +1,11 @@
-import { produce } from 'immer';
-import { Dispatch } from 'redux';
+import { produce } from "immer";
+import { Dispatch } from "redux";
 
-import { KouponBankApi } from '../../api/kb-api';
-import { Business, BusinessFilterDetail, Status } from '../../api/kb-types';
-import { AlertsActionType } from '../notification/action-type';
-import { DisplayError } from '../notification/notification-reducer';
-import { BusinessActionType } from './action-type';
+import { KouponBankApi } from "../../api/kb-api";
+import { Business, BusinessFilterDetail, Status } from "../../api/kb-types";
+import { AlertsActionType } from "../notification/action-type";
+import { DisplayError } from "../notification/notification-reducer";
+import { BusinessActionType } from "./action-type";
 
 export interface BusinessState {
     business: Business;
@@ -197,7 +197,7 @@ export const getBusinessesFromSearch = async (
     api: KouponBankApi,
     businessFilterDetail: BusinessFilterDetail,
     dispatch: Dispatch,
-): Promise<Business[]> => {
+): Promise<void> => {
     dispatch({
         type: BusinessActionType.GetBusinessesFromSearch,
     });
@@ -208,7 +208,6 @@ export const getBusinessesFromSearch = async (
                 type: BusinessActionType.GetBusinessesFromSearchSuccess,
                 searchedBusinesses: searchedBusinesses,
             });
-            return searchedBusinesses;
         })
         .catch((err) => {
             dispatch({

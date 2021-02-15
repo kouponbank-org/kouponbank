@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
 import {
     AddressDetail, Business, BusinessFilterDetail, NaverMapBound, User, UserDetail
-} from './kb-types';
+} from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -37,13 +37,12 @@ export class KouponBankApi {
     async createUser(user: User, userDetail: UserDetail): Promise<User> {
         return axios
             .post<User>(`${this.BASE_URL}/users/`, {
-                    user: user,
-                    user_detail: userDetail,
-                }
-            )
+                user: user,
+                user_detail: userDetail,
+            })
             .then((response) => {
-            return response.data;
-        });
+                return response.data;
+            });
     }
 
     async getUser(userId: string): Promise<User> {

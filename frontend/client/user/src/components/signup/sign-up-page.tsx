@@ -1,19 +1,19 @@
-import './sign-up-page.scss';
+import "./sign-up-page.scss";
 
-import React, { useContext, useState } from 'react';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Dispatch } from 'redux';
+import React, { useContext, useState } from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Dispatch } from "redux";
 
-import { KouponBankApi } from '../../api/kb-api';
-import { User, UserDetail } from '../../api/kb-types';
-import { AlertState } from '../../store/notification/notification-reducer';
-import { RootReducer, signOut } from '../../store/reducer';
-import { createNewUser } from '../../store/user/user-reducer';
-import { ApiContext, UrlPaths } from '../base-page-router';
-import { TopNavBar } from '../common-components/navigation/navigation-top-bar';
-import { Notifications } from '../common-components/notifications/notifications';
-import { SignUpForm } from './sign-up-form';
+import { KouponBankApi } from "../../api/kb-api";
+import { User, UserDetail } from "../../api/kb-types";
+import { AlertState } from "../../store/notification/notification-reducer";
+import { RootReducer, signOut } from "../../store/reducer";
+import { createNewUser } from "../../store/user/user-reducer";
+import { ApiContext, UrlPaths } from "../base-page-router";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
+import { Notifications } from "../common-components/notifications/notifications";
+import { SignUpForm } from "./sign-up-form";
 
 // TODO: FIX SIGNUP PAGE AND SIGNUP FORM
 /**
@@ -59,8 +59,8 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
     };
 
     const passwordConfirmation = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setPasswordConfirmationInput (event.target.value);
-        if (user.password!=passwordConfirmationInput) {
+        setPasswordConfirmationInput(event.target.value);
+        if (user.password != passwordConfirmationInput) {
             // console.log("return error")
         }
     };

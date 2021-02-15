@@ -38,7 +38,7 @@ export const UserProfilePage: React.FC<Prop> = (props: Prop) => {
             .updateUserDetail(api, props.user.id, userDetail)
             .then(() => {
                 history.push(UrlPaths.ProfilePage);
-                // TODO: useEffect to refresh the page with changes, rather than using 
+                // TODO: useEffect to refresh the page with changes, rather than using
                 // A history.push
             })
             .catch(() => {

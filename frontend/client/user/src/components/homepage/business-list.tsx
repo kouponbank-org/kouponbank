@@ -1,8 +1,8 @@
-import './homepage.scss';
+import "./homepage.scss";
 
-import React from 'react';
+import React from "react";
 
-import { Business } from '../../api/kb-types';
+import { Business } from "../../api/kb-types";
 
 export interface Prop {
     business: Business;
@@ -43,9 +43,12 @@ export const BusinessList = (props: Prop): JSX.Element => {
                                 src="/side-nav-search.png"
                                 alt="Quote"
                             />
-                            <div id="homepage-row3-column2-business-detail-container-column2-button1-text">
+                            <button
+                                id="homepage-row3-column2-business-detail-container-column2-button1-text"
+                                onClick={selectBusiness}
+                            >
                                 상세보기
-                            </div>
+                            </button>
                         </button>
                         <button id="homepage-row3-column2-business-detail-container-column2-button2">
                             <img

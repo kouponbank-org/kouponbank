@@ -1,19 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Dispatch } from 'redux';
+import React, { useContext, useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Dispatch } from "redux";
 
-import { KouponBankApi } from '../../api/kb-api';
-import { Business, BusinessFilterDetail, User } from '../../api/kb-types';
+import { KouponBankApi } from "../../api/kb-api";
+import { Business, BusinessFilterDetail, User } from "../../api/kb-types";
 import {
-    getBusiness, getBusinesses, getBusinessesFromSearch
-} from '../../store/business/business-reducer';
-import { RootReducer } from '../../store/reducer';
-import { ApiContext } from '../base-page-router';
-import { SearchBusiness } from '../common-components/navigation/business/business-search';
-import { KouponBankSideTabBarR } from '../common-components/navigation/navigation-side-tab-bar';
-import { TopNavBar } from '../common-components/navigation/navigation-top-bar';
-import { HomepageForm } from './homepage-form';
+    getBusiness,
+    getBusinesses,
+    getBusinessesFromSearch,
+} from "../../store/business/business-reducer";
+import { RootReducer } from "../../store/reducer";
+import { ApiContext } from "../base-page-router";
+import { SearchBusiness } from "../common-components/navigation/business/business-search";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
+import { HomepageForm } from "./homepage-form";
 
 /**
  * Represents the required properties of the HomePage.
@@ -23,7 +24,10 @@ export interface Prop {
     business: Business;
     businesses: Business[];
     getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
-    getBusinessesFromSearch: (api: KouponBankApi, businessFilterDetail: BusinessFilterDetail) => Promise<Business[]>;
+    getBusinessesFromSearch: (
+        api: KouponBankApi,
+        businessFilterDetail: BusinessFilterDetail,
+    ) => Promise<void>;
     getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
 }
 
@@ -66,7 +70,7 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
         <div id="background-home">
             <div id="homepage-container">
                 <TopNavBar />
-                <SearchBusiness getBusinessesFromSearch={props.getBusinessesFromSearch}/>
+                <SearchBusiness getBusinessesFromSearch={props.getBusinessesFromSearch} />
                 <HomepageForm businesses={businesses} selectBusiness={selectBusiness} />
             </div>
         </div>
@@ -86,8 +90,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         getBusiness: async (api: KouponBankApi, businessId: string) => {
             return getBusiness(api, businessId, dispatch);
         },
-        getBusinessesFromSearch: async (api: KouponBankApi,
-            businessFilterDetail: BusinessFilterDetail) => {
+        getBusinessesFromSearch: async (
+            api: KouponBankApi,
+            businessFilterDetail: BusinessFilterDetail,
+        ) => {
             return getBusinessesFromSearch(api, businessFilterDetail, dispatch);
         },
         getBusinesses: async (api: KouponBankApi) => {

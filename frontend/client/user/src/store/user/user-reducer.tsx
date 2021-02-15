@@ -1,11 +1,11 @@
-import { produce } from 'immer';
-import { Dispatch } from 'redux';
+import { produce } from "immer";
+import { Dispatch } from "redux";
 
-import { KouponBankApi } from '../../api/kb-api';
-import { Status, User, UserDetail } from '../../api/kb-types';
-import { AlertsActionType } from '../notification/action-type';
-import { DisplayError } from '../notification/notification-reducer';
-import { UserActionType } from './action-type';
+import { KouponBankApi } from "../../api/kb-api";
+import { Status, User, UserDetail } from "../../api/kb-types";
+import { AlertsActionType } from "../notification/action-type";
+import { DisplayError } from "../notification/notification-reducer";
+import { UserActionType } from "./action-type";
 
 /**
  * 프로젝트 Global Variable State 트래킹

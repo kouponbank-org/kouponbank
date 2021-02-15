@@ -19,6 +19,8 @@ from kouponbank.database.table import Table
 from kouponbank.database.timeslot import Timeslot
 from kouponbank.endpoints.table_booking import TableBooking
 
+from django.db.models import Prefetch
+
 
 ## List of all businesses owned by an owner (Get, Post)
 class OwnerBusinessListAPI(APIView):
@@ -220,19 +222,15 @@ class FilterSearchBusinessListAPI(APIView):
     @swagger_auto_schema(
         responses={200: BusinessSerializer(many=True)},
     )
+
+    # FOR: return business list according to search queries
+    # 1. obtain business list filtered by its location and table capacity
+    # 2. IF (business exists from 1), ELSE: just return empty list from 1
+    # 2-1. Get table list of the businesses in the business list
+    # 2-2. go thru the table list and check if timeslot is not free during the input times
+    # 2-2-1. IF: exclude from the table list
+    # 3. filter business list again with table list
     def get(self, request):
-        #add sggNm: "용인시 수지구"
-        #siNm: "경기도" to model?
-        tables = Table.objects.all()
-        exclude_list = []
-        for table in tables:
-            times_date_filtered_set = table.table_timeslot.filter(date=request.query_params['date'])
-            if len(times_date_filtered_set) != 0:
-                time_validate=TableBooking.time_validate(TableBooking, times_date_filtered_set[0].times, request.query_params['start_time'], request.query_params['end_time'])
-                print(time_validate)
-                if time_validate != True:
-                    exclude_list.append(table.id)
-        tables=Table.objects.exclude(id__in=exclude_list)    
         business = Business.objects.filter(
             # Q(business_verification__verified_business=False) &
             # Q(business_verification__verified_owner=False) &
@@ -240,9 +238,20 @@ class FilterSearchBusinessListAPI(APIView):
             Q(business_address__siNm=request.query_params["siNm"]) &
             Q(business_address__sggNm=request.query_params["sggNm"]) &
             Q(business_address__emdNm=request.query_params["emdNm"]) &
-            Q(business_table__table_capacity=request.query_params["guest"]) &
-            Q(business_table__in=tables)
+            Q(business_table__table_capacity=request.query_params["guest"])
         )
-        print(len(business))
+        if len(business) != 0:
+            tables = Table.objects.filter(business__in=business)
+            exclude_list = []
+            for table in tables:
+                times_date_filtered_set = table.table_timeslot.filter(date=request.query_params['date'])
+                if len(times_date_filtered_set) != 0:
+                    time_validate=TableBooking.time_validate(TableBooking, times_date_filtered_set[0].times, request.query_params['start_time'], request.query_params['end_time'])
+                    if time_validate != True:
+                        exclude_list.append(table.id)
+            tables=tables.exclude(id__in=exclude_list)    
+            business = Business.objects.filter(
+                Q(business_table__in=tables)
+            )
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)

@@ -1,27 +1,25 @@
-import './login.scss';
+import "./login.scss";
 
-import React, { useContext, useState } from 'react';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Dispatch } from 'redux';
+import React, { useContext, useState } from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Dispatch } from "redux";
 
-import { KouponBankApi } from '../../api/kb-api';
-import { Business, User, UserDetail } from '../../api/kb-types';
-import { getBusinesses } from '../../store/business/business-reducer';
-import { AlertState } from '../../store/notification/notification-reducer';
-import { RootReducer } from '../../store/reducer';
-import { loginUser } from '../../store/user/user-reducer';
-import { ApiContext, UrlPaths } from '../base-page-router';
-import { TopNavBar } from '../common-components/navigation/navigation-top-bar';
-import { Notifications } from '../common-components/notifications/notifications';
-import { LoginForm } from './login-form';
+import { KouponBankApi } from "../../api/kb-api";
+import { User, UserDetail } from "../../api/kb-types";
+import { AlertState } from "../../store/notification/notification-reducer";
+import { RootReducer } from "../../store/reducer";
+import { loginUser } from "../../store/user/user-reducer";
+import { ApiContext, UrlPaths } from "../base-page-router";
+import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
+import { Notifications } from "../common-components/notifications/notifications";
+import { LoginForm } from "./login-form";
 
 /**
  * Represents the required properties of the HomePage.
  */
 export interface Prop {
     loginUser: (api: KouponBankApi, user: User) => Promise<void>;
-    getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
     user: User;
     userDetail: UserDetail;
     alertState: AlertState;
@@ -57,7 +55,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
     const directToSignUpPageClick = (): void => {
         history.push(UrlPaths.SignUpPage);
     };
-    
+
     return (
         <div id="login-page">
             <TopNavBar />

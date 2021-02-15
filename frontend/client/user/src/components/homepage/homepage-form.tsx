@@ -1,11 +1,11 @@
-import './homepage.scss';
+import "./homepage.scss";
 
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import { useHistory } from "react-router-dom";
 
-import { Business } from '../../api/kb-types';
-import { UrlPaths } from '../base-page-router';
-import { BusinessList } from './business-list';
+import { Business } from "../../api/kb-types";
+import { UrlPaths } from "../base-page-router";
+import { BusinessList } from "./business-list";
 
 export interface Prop {
     businesses: Business[];
@@ -40,12 +40,14 @@ export const HomepageForm = (props: Prop): JSX.Element => {
             <div id="homepage-row1">
                 <div id="homepage-row1-container">
                     <div id="homepage-row1-text">
-                        <div id="homepage-row1-text-title">
-                            Find your own Space
-                        </div>
+                        <div id="homepage-row1-text-title">Find your own Space</div>
                     </div>
                     <div id="homepage-row1-search-container">
-                        <input type="text" id="homepage-row1-search-container-search-bar-input" placeholder="Search for a space title"/>
+                        <input
+                            type="text"
+                            id="homepage-row1-search-container-search-bar-input"
+                            placeholder="Search for a space title"
+                        />
                         <div id="homepage-row1-search-container-search-button">
                             <img
                                 id="homepage-row1-search-container-search-button-icon"
@@ -105,16 +107,32 @@ export const HomepageForm = (props: Prop): JSX.Element => {
                     <div id="homepage-row3-column2">
                         <div id="homepage-row3-column2-container">
                             <div id="homepage-row3-column2-filter-container">
-                                <div id="homepage-row3-column2-filter-container-text">
-                                    정렬순서
+                                <div id="homepage-row3-column2-filter-container-text">정렬순서</div>
+                                <div id="homepage-row3-column2-filter-container-filter">
+                                    <input
+                                        type="checkbox"
+                                        id="homepage-row3-column2-filter-container-filter-checkbox"
+                                        name="ratings"
+                                    />
+                                    <label
+                                        id="homepage-row3-column2-filter-container-filter-text"
+                                        htmlFor="ratings"
+                                    >
+                                        별점
+                                    </label>
                                 </div>
                                 <div id="homepage-row3-column2-filter-container-filter">
-                                    <input type="checkbox" id="homepage-row3-column2-filter-container-filter-checkbox" name="ratings"/>
-                                    <label id="homepage-row3-column2-filter-container-filter-text" htmlFor="ratings">별점순</label>
-                                </div>
-                                <div id="homepage-row3-column2-filter-container-filter">
-                                    <input type="checkbox" id="homepage-row3-column2-filter-container-filter-checkbox" name="name"/>
-                                    <label id="homepage-row3-column2-filter-container-filter-text" htmlFor="name">이름순</label>
+                                    <input
+                                        type="checkbox"
+                                        id="homepage-row3-column2-filter-container-filter-checkbox"
+                                        name="name"
+                                    />
+                                    <label
+                                        id="homepage-row3-column2-filter-container-filter-text"
+                                        htmlFor="name"
+                                    >
+                                        이름순
+                                    </label>
                                 </div>
                             </div>
                             {props.businesses.slice(0, 3).map((business) => {
