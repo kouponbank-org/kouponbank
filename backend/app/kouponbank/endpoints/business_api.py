@@ -249,9 +249,10 @@ class FilterSearchBusinessListAPI(APIView):
                     time_validate=TableBooking.time_validate(TableBooking, times_date_filtered_set[0].times, request.query_params['start_time'], request.query_params['end_time'])
                     if time_validate != True:
                         exclude_list.append(table.id)
-            tables=tables.exclude(id__in=exclude_list)    
-            business = Business.objects.filter(
+            tables=tables.exclude(id__in=exclude_list) 
+            business = business.filter(
                 Q(business_table__in=tables)
-            )
+            ).distinct()
+            print(business)
         serializer = BusinessSerializer(business, many=True)
         return Response(serializer.data)
