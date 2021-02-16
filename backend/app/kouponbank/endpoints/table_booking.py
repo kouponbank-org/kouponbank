@@ -39,7 +39,6 @@ class TableBooking():
     # IF -> Return true
     # ELSE -> Return the next_available_time_in_hours (dtype=string)
     def time_validate(self, table_time, start_time, end_time):
-        table_time = table_time
         processed_time = self.time_process(start_time, end_time)
         next_available_time_in_hours = self.next_available_time_in_hours(table_time, processed_time[0])
         return next_available_time_in_hours if "1" in table_time[processed_time[0]:processed_time[0]+processed_time[1]] else True

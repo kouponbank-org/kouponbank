@@ -1,6 +1,8 @@
 import axios from "axios";
 
-import { AddressDetail, Business, NaverMapBound, User, UserDetail } from "./kb-types";
+import {
+    AddressDetail, Business, BusinessFilterDetail, NaverMapBound, User, UserDetail
+} from "./kb-types";
 
 export class KouponBankApi {
     BASE_URL: string;
@@ -32,16 +34,15 @@ export class KouponBankApi {
     }
 
     /*USER API*/
-    async createUser(user: User, userDetail): Promise<User> {
+    async createUser(user: User, userDetail: UserDetail): Promise<User> {
         return axios
             .post<User>(`${this.BASE_URL}/users/`, {
-                    user: user,
-                    user_detail: userDetail,
-                }
-            )
+                user: user,
+                user_detail: userDetail,
+            })
             .then((response) => {
-            return response.data;
-        });
+                return response.data;
+            });
     }
 
     async getUser(userId: string): Promise<User> {
@@ -96,11 +97,17 @@ export class KouponBankApi {
         });
     }
 
-    async getBusinessesFromSearch(char: string): Promise<Business[]> {
+    async getBusinessesFromSearch(businessFilterDetail: BusinessFilterDetail): Promise<Business[]> {
         return axios
-            .get<Business[]>(`${this.BASE_URL}/search/`, {
+            .get<Business[]>(`${this.BASE_URL}/business/search/`, {
                 params: {
-                    char: char,
+                    date: businessFilterDetail.date,
+                    start_time: businessFilterDetail.start_time,
+                    end_time: businessFilterDetail.end_time,
+                    guest: businessFilterDetail.guest,
+                    siNm: businessFilterDetail.siNm,
+                    sggNm: businessFilterDetail.sggNm,
+                    emdNm: businessFilterDetail.emdNm,
                 },
             })
             .then((response) => {

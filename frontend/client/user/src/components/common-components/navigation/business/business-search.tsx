@@ -1,96 +1,102 @@
 import "./business-search.scss";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 
-import { TableCell, TableRow, TextField } from "@material-ui/core";
-
 import { KouponBankApi } from "../../../../api/kb-api";
-import { Business, User } from "../../../../api/kb-types";
-import {
-    getBusiness,
-    getBusinessesFromSearch,
-    initialState,
-} from "../../../../store/business/business-reducer";
+import { BusinessFilterDetail } from "../../../../api/kb-types";
+import { getBusinessesFromSearch } from "../../../../store/business/business-reducer";
 import { RootReducer } from "../../../../store/reducer";
-import { ApiContext } from "../../../base-page-router";
-import { SearchedBusinessList } from "./business-search-list";
+import { ApiContext, UrlPaths } from "../../../base-page-router";
 
 export interface Prop {
-    open: boolean;
-    user?: User;
-    getBusinessesFromSearch: (api: KouponBankApi, char: string) => Promise<Business[]>;
-    getBusiness: (api: KouponBankApi, businessId: string) => Promise<Business>;
+    getBusinessesFromSearch: (
+        api: KouponBankApi,
+        businessFilterDetail: BusinessFilterDetail,
+    ) => Promise<void>;
 }
 
 export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
     const api = useContext<KouponBankApi>(ApiContext);
     const history = useHistory();
-    const [businessName, setBusinessName] = useState("");
-    const [businessList, setBusinessList] = useState<Business[]>(initialState.searchedBusinesses);
+    const [businessFilter, setBusinessFilter] = useState<BusinessFilterDetail>();
 
-    const searchBusinessInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setBusinessName(event.target.value);
+    const searchBusinessInput = (event: React.FormEvent): void => {
+        const target = event.target as HTMLInputElement;
+        setBusinessFilter({
+            ...businessFilter,
+            [target.name]: target.value,
+        });
     };
 
-    useEffect(() => {
+    //FOR: Search with Filter
+    const filterSearchClick = (event: React.MouseEvent<HTMLElement>): void => {
         props
-            .getBusinessesFromSearch(api, businessName)
-            .then((searchedBusinesses) => {
-                setBusinessList(searchedBusinesses);
+            .getBusinessesFromSearch(api, businessFilter)
+            .then(() => {
+                history.push(UrlPaths.DiscoverPage);
             })
             .catch(() => {
-                // Currently does nothing
+                // Nothing here for now
             });
-    }, [businessName]);
-
-    const selectBusiness = (businessId: string) => {
-        props
-            .getBusiness(api, businessId)
-            .then((business) => {
-                history.push(`/business/${business.id}`);
-            })
-            .catch(() => {
-                // Currently does nothing
-            });
+        event.preventDefault();
     };
 
     return (
         <div className="layout">
             <div className="grid-container-address">
-                <div className="business-input">
-                    <TextField
-                        variant="outlined"
-                        fullWidth
-                        required
-                        name="business search"
-                        label="Business Search"
-                        autoComplete="off"
-                        type="text"
-                        onChange={searchBusinessInput}
-                        value={businessName}
-                    />
-                </div>
-                <div className="searched-business-list">
-                    <TableRow>
-                        <TableCell>Business Picture</TableCell>
-                        <TableCell align="right">Business Name</TableCell>
-                        <TableCell align="right">Business Address</TableCell>
-                    </TableRow>
-                </div>
-            </div>
-            <div>
-                {businessList.map((business) => {
-                    return (
-                        <SearchedBusinessList
-                            key={business.id}
-                            business={business}
-                            selectBusiness={selectBusiness}
-                        />
-                    );
-                })}
+                <input
+                    type="date"
+                    name="date"
+                    id="search-bar-input1"
+                    placeholder="date"
+                    onChange={searchBusinessInput}
+                />
+                <input
+                    type="time"
+                    name="start_time"
+                    id="search-bar-input2"
+                    placeholder="start_time"
+                    onChange={searchBusinessInput}
+                />
+                <input
+                    type="time"
+                    name="end_time"
+                    id="search-bar-input3"
+                    placeholder="end_time"
+                    onChange={searchBusinessInput}
+                />
+                <input
+                    type="number"
+                    name="guest"
+                    id="search-bar-input4"
+                    placeholder="guest"
+                    onChange={searchBusinessInput}
+                />
+                <input
+                    type="text"
+                    name="siNm"
+                    id="search-bar-input5"
+                    placeholder="siNm"
+                    onChange={searchBusinessInput}
+                />
+                <input
+                    type="text"
+                    name="sggNm"
+                    id="search-bar-input6"
+                    placeholder="sggNm"
+                    onChange={searchBusinessInput}
+                />
+                <input
+                    type="text"
+                    name="emdNm"
+                    id="search-bar-input7"
+                    placeholder="emdNm"
+                    onChange={searchBusinessInput}
+                />
+                <button onClick={filterSearchClick}> 검색하기 </button>
             </div>
         </div>
     );
@@ -98,17 +104,17 @@ export const SearchBusiness: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
-        user: state.userReducer.user,
+        searchedBusiness: state.businessReducer.searchedBusinesses,
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        getBusinessesFromSearch: async (api: KouponBankApi, char: string) => {
-            return getBusinessesFromSearch(api, char, dispatch);
-        },
-        getBusiness: async (api: KouponBankApi, businessId: string) => {
-            return getBusiness(api, businessId, dispatch);
+        getBusinessesFromSearch: async (
+            api: KouponBankApi,
+            businessFilterDetail: BusinessFilterDetail,
+        ) => {
+            return getBusinessesFromSearch(api, businessFilterDetail, dispatch);
         },
     };
 };

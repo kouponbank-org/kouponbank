@@ -16,13 +16,6 @@ class LoginUserAPI(APIView):
         manual_parameters=
         [
             openapi.Parameter(
-                "username",
-                openapi.IN_QUERY,
-                description="Username of the user to login",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
-            openapi.Parameter(
                 "email",
                 openapi.IN_QUERY,
                 description="Email of the user to log in",
@@ -40,7 +33,6 @@ class LoginUserAPI(APIView):
     )
     def post(self, request):
         user = self.__login_user(
-            username=request.data['username'],
             email=request.data['email'],
             password=request.data['password']
         )
@@ -48,10 +40,9 @@ class LoginUserAPI(APIView):
         if serializer.is_valid():
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def __login_user(self, username, email, password):
+    def __login_user(self, email, password):
         try:
             return User.objects.get(
-                username=username,
                 email=email,
                 password=password
             ) 
@@ -63,13 +54,6 @@ class LoginOwnerAPI(APIView):
         responses={200: OwnerSerializer(many=True)},
         manual_parameters=
         [
-            openapi.Parameter(
-                "username",
-                openapi.IN_QUERY,
-                description="Username of the owner to login",
-                type=openapi.TYPE_STRING,
-                required=True
-            ),
             openapi.Parameter(
                 "email",
                 openapi.IN_QUERY,
@@ -88,7 +72,6 @@ class LoginOwnerAPI(APIView):
     )
     def post(self, request):
         owner = self.__login_owner(
-            username=request.data['username'],
             email=request.data['email'],
             password=request.data['password']
         )
@@ -96,10 +79,9 @@ class LoginOwnerAPI(APIView):
         if serializer.is_valid():
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def __login_owner(self, username, email, password):
+    def __login_owner(self, email, password):
         try:
             return Owner.objects.get(
-                username=username,
                 email=email,
                 password=password
             ) 

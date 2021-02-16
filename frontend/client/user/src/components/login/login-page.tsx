@@ -6,8 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, User, UserDetail } from "../../api/kb-types";
-import { getBusinesses } from "../../store/business/business-reducer";
+import { User, UserDetail } from "../../api/kb-types";
 import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
 import { loginUser } from "../../store/user/user-reducer";
@@ -21,7 +20,6 @@ import { LoginForm } from "./login-form";
  */
 export interface Prop {
     loginUser: (api: KouponBankApi, user: User) => Promise<void>;
-    getBusinesses: (api: KouponBankApi) => Promise<Business[]>;
     user: User;
     userDetail: UserDetail;
     alertState: AlertState;
@@ -59,7 +57,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
     };
 
     return (
-        <div className="background">
+        <div id="login-page">
             <TopNavBar />
             <LoginForm
                 directToSignUpPageClick={directToSignUpPageClick}

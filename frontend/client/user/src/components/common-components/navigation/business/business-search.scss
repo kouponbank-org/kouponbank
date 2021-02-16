@@ -6,14 +6,8 @@
 };
 
 .grid-container-address {
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 15% 15%;
-    gap: 15%;
-    grid-template-areas:
-    "business-input"
-    "searched-business-list";
-
+    display: flex;
+    flex-direction: row;
     justify-items: space-evenly;
 
     .address-input { 

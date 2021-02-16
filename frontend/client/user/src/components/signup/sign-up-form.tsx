@@ -3,19 +3,11 @@ import "./sign-up-page.scss";
 //import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
 
-const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
-    children,
-    ...props
-}) => <button {...props}>{children}</button>;
-
-const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = ({ ...props }) => (
-    <input {...props} />
-);
-
 export interface Prop {
     createNewUserClick: (event) => void;
     userSignUpInput: (event) => void;
     userDetailSignUpInput: (event) => void;
+    passwordConfirmation: (event) => void;
 }
 
 export const SignUpForm = (props: Prop): JSX.Element => {
@@ -31,79 +23,95 @@ export const SignUpForm = (props: Prop): JSX.Element => {
         props.userDetailSignUpInput(event);
     };
 
+    const passwordConfirmation = (event: React.FormEvent): void => {
+        props.passwordConfirmation(event);
+    };
+
     //TODO:
     //Password Confirmation
-    //Margin error fix
-    //Media Query
 
     return (
-        <div className="background-sign-up">
-            <section className="textfield-container">
-                <label className="textfield-label">Email</label>
-                    <Input
-                        type="email"
-                        className="textfield"
-                        name="email"
-                        onChange={userSignUpInput}
-                        placeholder="Email"
-                    />
-                <label className="textfield-label">Password</label>
-                    <Input
-                        type="password"
-                        className="textfield"
-                        name="password"
-                        onChange={userSignUpInput}
-                        placeholder="Password"
-                    />
-                <label className="textfield-label">Confirm Password</label>
-                    <Input
-                        type="password"
-                        className="textfield"
-                        name="password-confirmation"
-                        placeholder="Password Confirmation"
-                    />
-                <label className="textfield-label">Username</label>
-                    <Input
-                        type="text"
-                        className="textfield"
-                        name="username"
-                        onChange={userSignUpInput}
-                        placeholder="Username"
-                    />
-                <section className="birthday-gender-container">
-                    <label className="textfield-label">Birthday</label>
-                    <label className="textfield-label">Gender</label>
-                        <Input
-                            type="date"
-                            className="birthday-textfield"
-                            name="birthday"
-                            onChange={userDetailSignUpInput}
+        <div id="signup-page-main">
+            <main id="signup-page-main-container">
+                <div id="signup-page-main-column1">
+                    <div id="signup-page-main-column1-text">
+                        <div id="signup-page-main-column1-text-row1">회원가입</div>
+                        <div id="signup-page-main-column1-text-row2">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                            eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                            voluptua.
+                        </div>
+                    </div>
+                </div>
+                <div id="signup-page-main-column2">
+                    <div id="signup-page-main-column2-row1">
+                        <div id="signup-page-main-column2-row1-textfield1">
+                            <input
+                                id="signup-page-main-column2-row1-textfield1-textfield"
+                                required
+                                type="email"
+                                name="email"
+                                placeholder="E-mail"
+                                onChange={userSignUpInput}
+                            />
+                            <button id="signup-page-main-column2-row1-textfield1-button">
+                                인증
+                            </button>
+                        </div>
+                        <input
+                            id="signup-page-main-column2-row1-textfield2"
+                            required
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            onChange={userSignUpInput}
                         />
-                        <Input
-                            type="radio"
-                            id="male"
-                            className="gender-textfield"
-                            name="gender"
-                            value="male"
-                            onChange={userDetailSignUpInput}
+                        <input
+                            id="signup-page-main-column2-row1-textfield3"
+                            required
+                            type="password"
+                            name="passwordConfirmation"
+                            placeholder="Password Confirmation"
+                            onChange={passwordConfirmation}
                         />
-                    <label htmlFor="male">Male</label>
-                        <Input
-                            type="radio"
-                            id="female"
-                            className="gender-textfield"
-                            name="gender"
-                            value="female"
-                            onChange={userDetailSignUpInput}
-                        />
-                    <label htmlFor="female">Female</label>
-                </section>
-            </section>
-            <section className="button-container">
-                <Button className="button" onClick={createNewUserClick}>
-                    Sign Up
-                </Button>
-            </section>
+                        <div id="signup-page-main-column2-row1-textfield4">
+                            <div id="signup-page-main-column2-row1-textfield4-row1">생일, 성별</div>
+                            <div id="signup-page-main-column2-row1-textfield4-row2">
+                                <input
+                                    id="signup-page-main-column2-row1-textfield4-row2-textfield1"
+                                    required
+                                    type="date"
+                                    name="birthday"
+                                    placeholder="Birthday"
+                                    onChange={userDetailSignUpInput}
+                                />
+                                <select
+                                    id="signup-page-main-column2-row1-textfield4-row2-textfield2"
+                                    required
+                                    name="gender"
+                                    onChange={userDetailSignUpInput}
+                                >
+                                    <option>--</option>
+                                    <option value="Male"> 남 </option>
+                                    <option value="Female"> 여 </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="signup-page-main-column2-row2">
+                        <button
+                            id="signup-page-main-column2-row2-button"
+                            onClick={createNewUserClick}
+                        >
+                            회원가입
+                        </button>
+                    </div>
+                    <div id="signup-page-main-column2-row3">
+                        <button id="signup-page-main-column2-row3-button1"> 구글 </button>
+                        <button id="signup-page-main-column2-row3-button2"> 카카오 </button>
+                    </div>
+                </div>
+            </main>
         </div>
     );
 };

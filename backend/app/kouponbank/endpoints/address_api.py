@@ -66,6 +66,27 @@ class OwnerBusinessAddressAPI(APIView):
                 type=openapi.TYPE_STRING,
                 required=True
             ),
+            openapi.Parameter(
+                "emdNm",
+                openapi.IN_QUERY,
+                description="동",
+                type=openapi.TYPE_STRING,
+                required=False
+            ),
+            openapi.Parameter(
+                "sggNm",
+                openapi.IN_QUERY,
+                description="시,구",
+                type=openapi.TYPE_STRING,
+                required=False
+            ),
+            openapi.Parameter(
+                "siNm",
+                openapi.IN_QUERY,
+                description="도",
+                type=openapi.TYPE_STRING,
+                required=False
+            ),
         ]
     )
     def put(self, request, owner_id, business_id):
