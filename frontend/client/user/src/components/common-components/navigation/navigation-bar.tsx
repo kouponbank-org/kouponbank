@@ -27,15 +27,12 @@ export const NavBar: React.FC<Prop> = (props: Prop) => {
         history.push(UrlPaths.ProfilePage);
     };
 
-    console.log(props.user)
+    //For the pages not loading user info, show login button
+    //Else IF user logged in, show the direction buttons
     useEffect(() => {
-        if (props.user == undefined)
-            setLoggedIn(false)
-        else
-            if (props.user.id != "")
-                setLoggedIn(true)
-            else
-                setLoggedIn(false)
+        if (props.user == undefined) setLoggedIn(false);
+        else if (props.user.id != "") setLoggedIn(true);
+        else setLoggedIn(false);
     }, []);
 
     return (

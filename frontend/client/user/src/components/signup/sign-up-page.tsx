@@ -41,6 +41,13 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
     const [showAlert, setShowAlert] = useState(true);
     const [passwordConfirmationInput, setPasswordConfirmationInput] = useState("");
 
+    //FOR: checking username already exists or not
+    //Set usernameOpen to 0, 1, 2 under condition which indicates
+    // "0" - Does not say anything
+    // "1" - updates with checkUsernameClick call (when user checks username)
+    // Say either username is available or already exists
+    // "2" - updates with createNewUserClick (when user didn't check username)
+    // say please check if username exists or not
     const checkUsernameClick = (event: React.FormEvent): void => {
         props.usernameCheck(api, user).then((boolean) => {
             if (boolean) setUsernamePass(true);
@@ -50,6 +57,10 @@ export const SignUpPage: React.FC<Prop> = (props: Prop) => {
         event.preventDefault();
     };
 
+    //FOR: create user + password confirmation + username has been checked?
+    //IF passwordOpen is true, return password and its confirmation do not match
+    //ELSE -> IF username is valid/available, create user
+    //        ELSE setUsernameName Open("2") -> please check username again
     const createNewUserClick = (event: React.FormEvent): void => {
         if (user.password != passwordConfirmationInput) setPasswordOpen(true);
         else if (usernamePass)

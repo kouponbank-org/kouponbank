@@ -6,7 +6,9 @@ import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, BusinessFilterDetail, User } from "../../api/kb-types";
 import {
-    getBusiness, getBusinesses, getBusinessesFromSearch
+    getBusiness,
+    getBusinesses,
+    getBusinessesFromSearch,
 } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
