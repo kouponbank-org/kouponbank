@@ -17,7 +17,7 @@ from kouponbank.endpoints.business_detail_api import (BusinessDetailAPI,
                                                       OwnerBusinessDetailAPI)
 from kouponbank.endpoints.business_verification_api import \
     BusinessVerificationAPI
-from kouponbank.endpoints.login_api import LoginOwnerAPI, LoginUserAPI
+from kouponbank.endpoints.login_api import LoginOwnerAPI, LoginUserAPI, UsernameCheck
 from kouponbank.endpoints.menu_api import (BusinessMenuAPI,
                                            BusinessMenuListAPI, MenuListAPI)
 from kouponbank.endpoints.order_api import (OrderMenuListAPI,
@@ -55,6 +55,7 @@ urlpatterns = [
    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    path('admin/', admin.site.urls),
    path('login/user/', LoginUserAPI.as_view(), name="login-user"),
+   path('username_check/', UsernameCheck.as_view(), name="username-check"),
    path('login/owner/', LoginOwnerAPI.as_view(), name="login-owner"),
    path('users/', UserListAPI.as_view(), name="list-of-all-users"),
    path('users/<uuid:user_id>/', UserAPI.as_view(), name="individual-user"),

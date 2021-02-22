@@ -5,12 +5,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { KouponBankApi } from "../../api/kb-api";
-import { Business, NaverMapBound } from "../../api/kb-types";
+import { Business, NaverMapBound, User } from "../../api/kb-types";
 import { getBusiness } from "../../store/business/business-reducer";
 import { getAllBusinessWithinNaverMapBounds } from "../../store/naver-map/naver-map-reducer";
 import { RootReducer } from "../../store/reducer";
+import { NavBar } from "../common-components/navigation/navigation-bar";
 import { KouponBankSideTabBarR } from "../common-components/navigation/navigation-side-tab-bar";
-import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
 import { DiscoverPageForm } from "./discover-page-form";
 
 /**
@@ -18,6 +18,7 @@ import { DiscoverPageForm } from "./discover-page-form";
  */
 export interface Prop {
     businesses: Business[];
+    user: User;
     naverMapBound: NaverMapBound;
     searchedBusiness: Business[];
     getAllBusinessWithinNaverMapBounds: (
@@ -34,9 +35,8 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div id="kb-discover-page">
-            <KouponBankSideTabBarR />
             <div id="kb-discover-page-top-nav-main-contents-container">
-                <TopNavBar />
+                <NavBar user={props.user} />
                 <main id="kb-discover-page-main-contents-margin-control-container">
                     <DiscoverPageForm
                         naverMapBound={props.naverMapBound}
@@ -51,6 +51,7 @@ export const DiscoverPage: React.FC<Prop> = (props: Prop) => {
 
 const mapStateToProps = (state: RootReducer) => {
     return {
+        user: state.userReducer.user,
         business: state.businessReducer.business,
         businesses: state.businessReducer.businesses,
         naverMapBound: state.naverMapReducer.naverMapBound,

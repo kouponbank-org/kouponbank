@@ -6,14 +6,12 @@ import { Dispatch } from "redux";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, BusinessFilterDetail, User } from "../../api/kb-types";
 import {
-    getBusiness,
-    getBusinesses,
-    getBusinessesFromSearch,
+    getBusiness, getBusinesses, getBusinessesFromSearch
 } from "../../store/business/business-reducer";
 import { RootReducer } from "../../store/reducer";
 import { ApiContext } from "../base-page-router";
 import { SearchBusiness } from "../common-components/navigation/business/business-search";
-import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
+import { NavBar } from "../common-components/navigation/navigation-bar";
 import { HomepageForm } from "./homepage-form";
 
 /**
@@ -69,7 +67,7 @@ export const HomePage: React.FC<Prop> = (props: Prop) => {
     return (
         <div id="background-home">
             <div id="homepage-container">
-                <TopNavBar />
+                <NavBar user={props.user} />
                 <SearchBusiness getBusinessesFromSearch={props.getBusinessesFromSearch} />
                 <HomepageForm businesses={businesses} selectBusiness={selectBusiness} />
             </div>

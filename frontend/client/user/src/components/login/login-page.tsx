@@ -11,7 +11,7 @@ import { AlertState } from "../../store/notification/notification-reducer";
 import { RootReducer } from "../../store/reducer";
 import { loginUser } from "../../store/user/user-reducer";
 import { ApiContext, UrlPaths } from "../base-page-router";
-import { TopNavBar } from "../common-components/navigation/navigation-top-bar";
+import { NavBar } from "../common-components/navigation/navigation-bar";
 import { Notifications } from "../common-components/notifications/notifications";
 import { LoginForm } from "./login-form";
 
@@ -58,7 +58,7 @@ export const LoginPage: React.FC<Prop> = (props: Prop) => {
 
     return (
         <div id="login-page">
-            <TopNavBar />
+            <NavBar />
             <LoginForm
                 directToSignUpPageClick={directToSignUpPageClick}
                 user={user}

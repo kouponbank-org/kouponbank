@@ -48,6 +48,22 @@ class LoginUserAPI(APIView):
             ) 
         except User.DoesNotExist:
             raise Http404("User Not Found")
+
+
+class UsernameCheck(APIView):
+    @swagger_auto_schema(
+        responses={200: UserSerializer(many=True)},
+    )
+    def post(self, request):
+        try: 
+            User.objects.get(
+                username=request.data['username']
+            )
+            # raise Http404("이미 존재하는 유저네임입니다.")
+            return Response(data=False)
+        except User.DoesNotExist:
+            return Response(data=True)
+
         
 class LoginOwnerAPI(APIView):
     @swagger_auto_schema(

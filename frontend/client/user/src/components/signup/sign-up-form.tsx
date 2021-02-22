@@ -1,10 +1,13 @@
 import "./sign-up-page.scss";
 
-//import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
 
 export interface Prop {
     createNewUserClick: (event) => void;
+    checkUsernameClick: (event) => void;
+    usernameOpen: string;
+    passwordOpen: boolean;
+    usernamePass: boolean;
     userSignUpInput: (event) => void;
     userDetailSignUpInput: (event) => void;
     passwordConfirmation: (event) => void;
@@ -13,6 +16,10 @@ export interface Prop {
 export const SignUpForm = (props: Prop): JSX.Element => {
     const createNewUserClick = (event: React.FormEvent): void => {
         props.createNewUserClick(event);
+    };
+
+    const checkUsernameClick = (event: React.FormEvent): void => {
+        props.checkUsernameClick(event);
     };
 
     const userSignUpInput = (event: React.FormEvent): void => {
@@ -49,15 +56,49 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                             <input
                                 id="signup-page-main-column2-row1-textfield1-textfield"
                                 required
-                                type="email"
-                                name="email"
-                                placeholder="E-mail"
+                                type="text"
+                                name="username"
+                                placeholder="Username"
                                 onChange={userSignUpInput}
                             />
-                            <button id="signup-page-main-column2-row1-textfield1-button">
-                                인증
+                            <button
+                                id="signup-page-main-column2-row1-textfield1-button"
+                                onClick={checkUsernameClick}
+                            >
+                                중복확인
                             </button>
                         </div>
+                        {props.usernameOpen == "1" ? (
+                            <div>
+                                {props.usernamePass ? (
+                                    <div id="signup-page-main-column2-row1-username-not-passed">
+                                        사용 가능한 유저네임입니다.
+                                    </div>
+                                ) : (
+                                    <div id="signup-page-main-column2-row1-username-not-passed">
+                                        이미 존재하는 유저네임입니다.
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div>
+                                {props.usernameOpen == "2" ? (
+                                    <div id="signup-page-main-column2-row1-username-not-passed">
+                                        유저네임을 확인해주세요
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
+                            </div>
+                        )}
+                        <input
+                            id="signup-page-main-column2-row1-textfield5"
+                            required
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            onChange={userSignUpInput}
+                        />
                         <input
                             id="signup-page-main-column2-row1-textfield2"
                             required
@@ -74,6 +115,13 @@ export const SignUpForm = (props: Prop): JSX.Element => {
                             placeholder="Password Confirmation"
                             onChange={passwordConfirmation}
                         />
+                        {props.passwordOpen ? (
+                            <div id="signup-page-main-column2-row1-password-not-same">
+                                비밀번호가 일치하지 않습니다.
+                            </div>
+                        ) : (
+                            ""
+                        )}
                         <div id="signup-page-main-column2-row1-textfield4">
                             <div id="signup-page-main-column2-row1-textfield4-row1">생일, 성별</div>
                             <div id="signup-page-main-column2-row1-textfield4-row2">
