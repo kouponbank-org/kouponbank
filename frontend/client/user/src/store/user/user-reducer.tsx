@@ -230,3 +230,18 @@ export const updateUserDetail = async (
             });
         });
 };
+
+export const usernameCheck = async (
+    api: KouponBankApi,
+    user: User,
+    dispatch: Dispatch,
+): Promise<boolean> => {
+    return api.usernameCheck(user).catch((err) => {
+        dispatch({
+            type: AlertsActionType.DisplayError,
+            header: "ERROR",
+            body: "이미 존재하는 유저입니다.",
+        } as DisplayError);
+        throw err;
+    });
+};

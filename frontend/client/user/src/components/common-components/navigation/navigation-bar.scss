@@ -1,79 +1,57 @@
-/*Side Tab Navigation CSS*/
-
-#nav-side-tab-container {
-    display: flex;
-    // Side Tab is fixed.
-    position: fixed;
-    width: var(--side-nav-bar-width, 179px);
-    height: 100%;
-    // Z-index of side tab navigation is bigger than top navigation bar
-    z-index: 2021;
-    top: 0;
-    left: 0;
+#nav-bar {
+    padding: 1.25% 10.6%;
+    box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.06);
     background-color: #ffffff;
-    border-right: solid 1px #000000;
 }
 
-#nav-side-tab-column-control-container {
-    width: 100%;
+#nav-bar-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-#homepage-button-container {
+#nav-bar-container-column1 {
+    width: 14.9%;
+}
+
+#nav-bar-container-column2 {
+    width: 38%;
     display: flex;
-    height: var(--top-nav-bar-height, 120px);
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2.15% 0%;
 }
 
-#homepage-button {
-    height: 64px;
-    width: 64px;
-    cursor: pointer;
+#nav-bar-container-column2-column1,
+#nav-bar-container-column2-column2,
+#nav-bar-container-column2-column3,
+#nav-bar-container-column2-column4 {
+    padding: 0;
+    font-family: NanumSquareEB;
+    font-size: 1.25vw;
+    line-height: 1.13;
+    text-align: left;
+    color: #868e96;
+    border-width: 0;
+    background-color: unset;
 }
 
-#navigation-container {
+#nav-bar-container-logged-in {
+    width: 10%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
-.navigation-margin-control-container {
-    margin-top: 32px;
-}
-
-.navigation-button-container {
-    display: flex;
-    // padding: 17px 0; or height: 64px;
-    height: 64px;
-    align-items: center;
-    justify-content: center;
-}
-
-.navigation-button {
-    max-height: 30px;
-    max-width: 30px;
-    cursor: pointer;
-}
-
-/*Top Navigation Bar CSS*/
-#nav-top-bar-container {
-    display: flex;
-    // Top Nav Bar Container is sticky. Thus, you will need to create a parent div for the
-    // entire page -> see Discover Page 
-    position: sticky;
-    height: var(--top-nav-bar-height, 120px);
-    width: 100%;
-    top: 0;
-    // Z-index of side tab navigation is smaller than top navigation bar
-    z-index: 2020;
-    background-color: #ffffff;
-    border-bottom: solid 1px #000000;
-}
-
-#nav-top-bar-padding-control-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+#nav-bar-container-logged-in-button {
+    padding: 3.17% 7% 2.46%;
+    border-radius: 2px;
+    border-width: 0;
+    background-color: #304ffe;
+    font-family: NanumSquare;
+    font-size: 1.25vw;
+    font-weight: bold;
+    line-height: 1.19;
+    text-align: center;
+    color: #ffffff;
 }

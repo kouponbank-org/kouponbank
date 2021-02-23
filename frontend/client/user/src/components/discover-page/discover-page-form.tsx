@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { KouponBankApi } from "../../api/kb-api";
 import { Business, NaverMapBound } from "../../api/kb-types";
 import { ApiContext } from "../base-page-router";
-import { CopyRight } from "../common-components/copyright/copyright";
+import { Footer } from "../common-components/footer/footer";
 import { Pagination } from "../common-components/pagination/pagination";
 import { DiscoverPageFilter } from "./discover-filter";
 import { DiscoverBusinessList } from "./discover-list-business";
@@ -137,7 +137,7 @@ export const DiscoverPageForm: React.FC<Prop> = (props: Prop) => {
                         })}
                     </div>
                 </div>
-                <CopyRight />
+                <Footer />
             </div>
             <div id="right-content-container">
                 {!filterView ? (

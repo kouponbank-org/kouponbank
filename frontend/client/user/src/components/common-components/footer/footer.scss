@@ -1,0 +1,72 @@
+#footer { //1440
+    padding: 4.4444% 10.6% 3.19444% 12.5%;
+    background-color: #f7f7f7;
+}
+
+#footer-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#footer-container-row1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#footer-container-row1-column1 {
+    width: 14.9%;
+}
+
+#footer-container-row1-column2, #footer-container-row1-column3, #footer-container-row1-column4 {
+    width: 12.6%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 3.3%;
+}
+
+#footer-container-row1-column2-row1,
+#footer-container-row1-column3-row1,
+#footer-container-row1-column4-row1 {
+    font-family: NanumSquareEB;
+    font-size: 1.25vw;
+    line-height: 1.13;
+    text-align: left;
+    color: #868e96;
+    border-width: 0;
+    margin-bottom: 17.58%;
+    background-color: unset;
+}
+
+#footer-container-row1-column2-row2,
+#footer-container-row1-column2-row3,
+#footer-container-row1-column3-row2,
+#footer-container-row1-column3-row3,
+#footer-container-row1-column3-row4,
+#footer-container-row1-column4-row2,
+#footer-container-row1-column4-row3,
+#footer-container-row1-column4-row4,
+#footer-container-row1-column4-row5 {
+    font-family: NanumSquareB;
+    font-size: 1.25vw;
+    line-height: 1.13;
+    text-align: left;
+    color: #343a40;
+    border-width: 0;
+    margin-bottom: 9.34%;
+    background-color: unset;
+}
+
+#footer-container-row2 {
+    width: 100%;
+    border-top: 1px solid #dee2e6;
+    margin: 3.47% 0 1.11%;
+}
+
+#footer-container-row3 {
+    font-family: NanumSquareB;
+    font-size: 1.25vw;
+    line-height: 1.13;
+    text-align: left;
+    color: #868e96;
+}

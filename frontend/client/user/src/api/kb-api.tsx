@@ -1,7 +1,13 @@
 import axios from "axios";
 
 import {
-    AddressDetail, Business, BusinessFilterDetail, NaverMapBound, User, UserDetail
+    AddressDetail,
+    Business,
+    BusinessFilterDetail,
+    NaverMapBound,
+    Status,
+    User,
+    UserDetail,
 } from "./kb-types";
 
 export class KouponBankApi {
@@ -29,6 +35,13 @@ export class KouponBankApi {
     /*LOGIN API*/
     async loginUser(user: User): Promise<User> {
         return axios.post<User>(`${this.BASE_URL}/login/user/`, user).then((response) => {
+            return response.data;
+        });
+    }
+
+    /*SignUp Username Checking API*/
+    async usernameCheck(user: User): Promise<boolean> {
+        return axios.post<boolean>(`${this.BASE_URL}/username_check/`, user).then((response) => {
             return response.data;
         });
     }
