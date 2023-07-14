@@ -123,12 +123,6 @@ Endpoints를 접근 하려면 http://127.0.0.1:8000/{endpoints} 으로 가세요
 
 <br>
 
-## SUPERUSER
-Superuser for API: <br>
-Username: Kouponbank <br>
-Email: kouponbank@gmail.com <br>
-Password: znvhsqodzm1! <br>
-
 
 
 
